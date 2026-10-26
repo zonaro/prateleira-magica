@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "books": [
+    {
+      "id": "ellie-e-o-trem-travesso",
+      "data": "books/ellie-e-o-trem-travesso.json",
+      "title": "Ellie e o Trem Travesso",
+      "subtitle": "Uma aventura com TRA, TRE, TRI, TRO e TRU",
+      "cover": "assets/illustrations/ellie/cover.svg",
+      "color": "#f96b91",
+      "language": "pt-BR",
+      "label": "Disponível agora",
+      "syllables": [
+        "TRA",
+        "TRE",
+        "TRI",
+        "TRO",
+        "TRU"
+      ]
+    }
+  ]
+}

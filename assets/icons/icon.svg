@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="Ícone Prateleira de Livrinhos">
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ff92ae"/><stop offset="1" stop-color="#f36d98"/></linearGradient><filter id="shadow"><feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#a54172" flood-opacity=".2"/></filter></defs>
+  <rect width="512" height="512" rx="132" fill="url(#bg)"/>
+  <g filter="url(#shadow)"><path d="M93 147q77-42 163 2v225q-88-45-163-6z" fill="#fff4d3"/><path d="M419 147q-77-42-163 2v225q88-45 163-6z" fill="#fff"/><path d="M256 149v225" stroke="#e9d5c8" stroke-width="12"/>
+  <path d="M115 185q58-27 116 0m-116 35q58-25 116 0m-116 35q58-25 116 0" fill="none" stroke="#efb78f" stroke-width="14" stroke-linecap="round"/>
+  <path d="M280 185q58-27 116 0m-116 35q58-25 116 0m-116 35q58-25 116 0" fill="none" stroke="#cdb6ee" stroke-width="14" stroke-linecap="round"/></g>
+  <path d="m257 81 19 41 45 6-33 31 8 45-39-22-39 22 8-45-33-31 45-6z" fill="#ffe38e" stroke="#fff6c3" stroke-width="8"/>
+  <circle cx="133" cy="95" r="10" fill="#fff4d3"/><circle cx="389" cy="115" r="8" fill="#fff4d3"/><circle cx="414" cy="315" r="9" fill="#ffe38e"/>
+</svg>

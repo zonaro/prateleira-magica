@@ -1,0 +1,94 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import vm from 'node:vm';
+
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const scope = 'https://zonaro.github.io/livrinho-infantil-treino/';
+const listeners = {};
+const stores = new Map();
+let online = true;
+
+function key(request, ignoreSearch = false) {
+  const address = new URL(typeof request === 'string' ? request : request.url);
+  if (ignoreSearch) address.search = '';
+  return address.href;
+}
+const caches = {
+  async open(name) {
+    if (!stores.has(name)) stores.set(name, new Map());
+    const store = stores.get(name);
+    return {
+      async addAll(urls) {
+        for (const url of urls) {
+          const result = await localFetch(url);
+          if (!result.ok) throw Error(`Pré-cache falhou em ${url}`);
+          store.set(key(url), result.clone());
+        }
+      },
+      async put(url, response) { store.set(key(url), response.clone()); },
+      async match(request, options = {}) {
+        const target = key(request, options.ignoreSearch);
+        for (const [url, response] of store) {
+          if (key(url, options.ignoreSearch) === target) return response.clone();
+        }
+        return undefined;
+      }
+    };
+  },
+  async keys() { return [...stores.keys()]; },
+  async delete(name) { return stores.delete(name); }
+};
+
+async function localFetch(request) {
+  if (!online) throw Error('Sem internet');
+  const address = new URL(typeof request === 'string' ? request : request.url);
+  assert(address.href.startsWith(scope), `URL fora do escopo: ${address.href}`);
+  const relative = decodeURIComponent(address.pathname.slice(new URL(scope).pathname.length)) || 'index.html';
+  const pathname = path.join(root, relative);
+  if (!fs.existsSync(pathname)) return new Response('Não encontrado', { status: 404 });
+  return new Response(fs.readFileSync(pathname), { status: 200 });
+}
+
+const self = {
+  registration: { scope },
+  clients: { async claim() {} },
+  async skipWaiting() {},
+  addEventListener(name, callback) { listeners[name] = callback; }
+};
+const source = fs.readFileSync(path.join(root, 'sw.js'), 'utf8');
+vm.runInNewContext(source, { self, caches, fetch: localFetch, URL, Response, console, Promise }, { filename: 'sw.js' });
+
+let pending;
+listeners.install({ waitUntil(promise) { pending = promise; } });
+await pending;
+const cache = await caches.open('prateleira-de-livrinhos-v1');
+const bookPath = `${scope}books/ellie-e-o-trem-travesso.json`;
+const artPath = `${scope}assets/illustrations/ellie/cover.svg`;
+assert(await cache.match(bookPath), 'Livro não foi salvo offline');
+assert(await cache.match(artPath), 'Ilustração não foi salva offline');
+
+listeners.activate({ waitUntil(promise) { pending = promise; } });
+await pending;
+online = false;
+
+async function offlineRequest(pathname, mode) {
+  const request = { url: new URL(pathname, scope).href, method: 'GET', mode };
+  let responsePromise;
+  listeners.fetch({ request, respondWith(promise) { responsePromise = promise; } });
+  assert(responsePromise, 'O Service Worker não respondeu');
+  return await responsePromise;
+}
+
+const shelf = await offlineRequest('index.html', 'navigate');
+assert((await shelf.text()).includes('Prateleira de Livrinhos'));
+const reader = await offlineRequest('livro.html?livro=ellie-e-o-trem-travesso', 'navigate');
+assert((await reader.text()).includes('readerApp'));
+const data = await offlineRequest('books/ellie-e-o-trem-travesso.json', 'cors');
+assert.equal((await data.json()).pages.length, 14);
+const illustration = await offlineRequest('assets/illustrations/ellie/cover.svg', 'cors');
+assert((await illustration.text()).includes('<svg'));
+
+console.log('✓ Pré-cache de todos os livros e ilustrações');
+console.log('✓ Prateleira, leitor com query string, JSON e SVG acessíveis sem internet');

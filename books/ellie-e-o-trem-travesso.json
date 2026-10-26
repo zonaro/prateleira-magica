@@ -1,0 +1,409 @@
+{
+  "schemaVersion": 1,
+  "id": "ellie-e-o-trem-travesso",
+  "title": "Ellie e o Trem Travesso",
+  "subtitle": "Uma aventura com TRA, TRE, TRI, TRO e TRU",
+  "language": "pt-BR",
+  "cover": "assets/illustrations/ellie/cover.svg",
+  "color": "#f96b91",
+  "syllables": [
+    "TRA",
+    "TRE",
+    "TRI",
+    "TRO",
+    "TRU"
+  ],
+  "pronunciation": {
+    "names": {
+      "Ellie": "Éli"
+    },
+    "syllables": {
+      "TRA": {
+        "sound": "trá",
+        "example": "trator"
+      },
+      "TRE": {
+        "sound": "trê",
+        "example": "trevo"
+      },
+      "TRI": {
+        "sound": "trí",
+        "example": "triciclo"
+      },
+      "TRO": {
+        "sound": "tró",
+        "example": "troca"
+      },
+      "TRU": {
+        "sound": "trú",
+        "example": "truque"
+      }
+    }
+  },
+  "exercises": [
+    {
+      "syllable": "TRA",
+      "text": "O trator travesso trabalha atrás da trave."
+    },
+    {
+      "syllable": "TRE",
+      "text": "Três trevos estão dentro do trem."
+    },
+    {
+      "syllable": "TRI",
+      "text": "Três triciclos trilham uma trilha."
+    },
+    {
+      "syllable": "TRO",
+      "text": "O trompetista trocou o trompete pelo troféu."
+    },
+    {
+      "syllable": "TRU",
+      "text": "A trupe fez um truque com três trufas."
+    }
+  ],
+  "pages": [
+    {
+      "type": "cover",
+      "illustration": "assets/illustrations/ellie/cover.svg",
+      "sticker": "O LIVRO DA ELLIE",
+      "chapter": "Um livrinho só seu ✨",
+      "title": "Ellie e o Trem Travesso",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Uma aventura divertida para ler, brincar e treinar os sons TRA, TRE, TRI, TRO e TRU!"
+        }
+      ],
+      "speech": "Ellie e o Trem Travesso. Uma aventura divertida para ler, brincar e treinar os sons tra, tre, tri, tro e tru.",
+      "tip": "Aperte “Começar” para abrir seu livrinho.",
+      "callout": "🌈 Você é a estrela desta história!"
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/ellie/syllables.svg",
+      "sticker": "AQUECIMENTO",
+      "chapter": "Antes de começar",
+      "title": "Vamos aquecer a voz?",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Leia devagar, uma sílaba de cada vez."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Depois, tente novamente no seu ritmo. Você consegue!"
+        }
+      ],
+      "syllables": [
+        "TRA",
+        "TRE",
+        "TRI",
+        "TRO",
+        "TRU"
+      ],
+      "speech": "Vamos aquecer a voz? Trá, como em trator. Trê, como em trevo. Trí, como em triciclo. Tró, como em troca. Trú, como em truque. Muito bem!",
+      "tip": "Toque numa sílaba para ouvir seu som e uma palavra de exemplo."
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/ellie/train.svg",
+      "sticker": "COMEÇA A AVENTURA",
+      "chapter": "Capítulo 1 · TRA e TRE",
+      "title": "O trem travesso",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Era uma vez uma menina chamada Ellie, que adorava passear de [[trem]]."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Um dia, ela encontrou um [[trem]] muito [[travesso]] perto de uma [[trilha]]."
+        },
+        {
+          "kind": "paragraph",
+          "text": "O [[trem]] tinha [[três]] vagões brilhantes!"
+        }
+      ],
+      "syllables": [
+        "TRA",
+        "TRE",
+        "TRI"
+      ]
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/ellie/trainhello.svg",
+      "sticker": "OLÁ, ELLIE!",
+      "chapter": "Capítulo 2 · TRA e TRU",
+      "title": "O Trem Trapalhão",
+      "blocks": [
+        {
+          "kind": "dialogue",
+          "text": "— Eu sou o [[Trem]] [[Trapalhão]]! — disse a locomotiva."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Adoro fazer [[truques]] e conhecer novas [[trilhas]]!"
+        },
+        {
+          "kind": "paragraph",
+          "text": "Ellie entrou no [[trem]] e sorriu."
+        }
+      ],
+      "syllables": [
+        "TRA",
+        "TRU"
+      ]
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/ellie/clovers.svg",
+      "sticker": "TRÊS TREVOS",
+      "chapter": "Capítulo 3 · TRE e TRI",
+      "title": "A trilha dos trevos",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "O [[trem]] atravessou uma [[trilha]] cheia de árvores."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Perto de um [[tronco]], Ellie encontrou [[três]] [[trevos]]."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— [[Três]] [[trevos]] na [[trilha]]! Que alegria!"
+        }
+      ],
+      "syllables": [
+        "TRE",
+        "TRI",
+        "TRO"
+      ]
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/ellie/tractor.svg",
+      "sticker": "UM AMIGO NO CAMINHO",
+      "chapter": "Capítulo 4 · TRA e TRU",
+      "title": "O trator trabalhador",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "De repente, apareceu um [[trator]] vermelho."
+        },
+        {
+          "kind": "paragraph",
+          "text": "O [[trator]] [[transportava]] [[trigo]], [[trufas]] e [[três]] [[trutas]]!"
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Que [[trator]] [[trabalhador]]! — disse Ellie."
+        }
+      ],
+      "syllables": [
+        "TRA",
+        "TRI",
+        "TRU"
+      ]
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/ellie/trumpet.svg",
+      "sticker": "MÚSICA NA FLORESTA",
+      "chapter": "Capítulo 5 · TRO",
+      "title": "O trompete do esquilo",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Mais adiante, um esquilo tocava [[trompete]]!"
+        },
+        {
+          "kind": "paragraph",
+          "text": "Ele dava pequenos [[trotes]] ao redor de um [[tronco]]."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Eu [[treino]] meu [[trompete]] [[três]] vezes por dia!"
+        }
+      ],
+      "syllables": [
+        "TRO",
+        "TRE"
+      ]
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/ellie/storm.svg",
+      "sticker": "QUE SUSTO!",
+      "chapter": "Capítulo 6 · TRO e TRU",
+      "title": "O trovão e o truque",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "De repente, um [[trovão]] fez:"
+        },
+        {
+          "kind": "dialogue",
+          "text": "— [[TRUUUM]]!"
+        },
+        {
+          "kind": "paragraph",
+          "text": "Ellie levou um susto, mas o esquilo mostrou um [[truque]] divertido."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Vou tocar meu [[trompete]] para espantar o medo!"
+        }
+      ],
+      "syllables": [
+        "TRO",
+        "TRU"
+      ]
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/ellie/tricycles.svg",
+      "sticker": "VAMOS PEDALAR?",
+      "chapter": "Capítulo 7 · TRI",
+      "title": "A corrida de triciclos",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "No final da [[trilha]], havia [[três]] [[triciclos]]."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Um [[triciclo]] vermelho, um amarelo e um azul."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Ellie escolheu o [[triciclo]] azul e começou a pedalar!"
+        }
+      ],
+      "syllables": [
+        "TRI",
+        "TRE"
+      ]
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/ellie/race.svg",
+      "sticker": "VOCÊ CONSEGUE, ELLIE!",
+      "chapter": "Capítulo 8 · TRA e TRO",
+      "title": "Três, dois, um!",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Ellie passou por [[três]] [[troncos]], atravessou uma ponte e chegou ao final!"
+        },
+        {
+          "kind": "dialogue",
+          "text": "— [[Três]], dois, um! Viva a Ellie!"
+        },
+        {
+          "kind": "paragraph",
+          "text": "Ela ganhou um lindo [[troféu]] dourado."
+        }
+      ],
+      "syllables": [
+        "TRA",
+        "TRE",
+        "TRO"
+      ]
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/ellie/trophy.svg",
+      "sticker": "FINAL FELIZ",
+      "chapter": "Capítulo 9 · TRU e TRO",
+      "title": "Um truque brilhante",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "O [[Trem]] [[Trapalhão]] fez seu melhor [[truque]]."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Transformou [[três]] [[trufas]] em [[três]] estrelas!"
+        },
+        {
+          "kind": "paragraph",
+          "text": "Ellie ergueu o [[troféu]] e deu uma gargalhada."
+        }
+      ],
+      "syllables": [
+        "TRA",
+        "TRE",
+        "TRO",
+        "TRU"
+      ]
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/ellie/recap.svg",
+      "sticker": "QUE AVENTURA!",
+      "chapter": "A história termina",
+      "title": "Ellie é uma estrela!",
+      "blocks": [
+        {
+          "kind": "dialogue",
+          "text": "— Andei de [[trem]], encontrei [[trevos]], pedalei um [[triciclo]], ouvi um [[trompete]] e ganhei um [[troféu]]!"
+        },
+        {
+          "kind": "paragraph",
+          "text": "E assim terminou a aventura de Ellie e o [[Trem]] [[Travesso]]."
+        }
+      ],
+      "syllables": [
+        "TRA",
+        "TRE",
+        "TRI",
+        "TRO",
+        "TRU"
+      ]
+    },
+    {
+      "type": "challenge",
+      "illustration": "assets/illustrations/ellie/practice.svg",
+      "sticker": "DESAFIO DA ELLIE",
+      "chapter": "Missão especial",
+      "title": "Cinco frases mágicas",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Leia cada frase com calma. Depois toque na estrela para marcar a missão!"
+        }
+      ],
+      "speech": "Cinco frases mágicas! Leia cada frase com calma. Você consegue!",
+      "tip": "Não precisa correr: cada tentativa é uma conquista."
+    },
+    {
+      "type": "finish",
+      "illustration": "assets/illustrations/ellie/finish.svg",
+      "sticker": "PARABÉNS!",
+      "chapter": "Você chegou ao fim!",
+      "title": "Bravo, Ellie! 🌟",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Você viajou de [[trem]], cruzou a [[trilha]] e chegou até aqui!"
+        },
+        {
+          "kind": "paragraph",
+          "text": "Continue treinando com carinho, um pouquinho de cada vez."
+        }
+      ],
+      "syllables": [
+        "TRA",
+        "TRE",
+        "TRI",
+        "TRO",
+        "TRU"
+      ],
+      "tip": "Quer outra aventura? Use “Ler de novo” para recomeçar.",
+      "medal": "🏅 Medalha de Leitura da Ellie"
+    }
+  ]
+}

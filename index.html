@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#faf3e8">
+  <meta name="description" content="Uma prateleira de livrinhos ilustrados e interativos para treinar a leitura brincando, até offline.">
+  <link rel="icon" href="./assets/icons/icon.svg" type="image/svg+xml">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="stylesheet" href="./assets/css/app.css">
+  <script src="./assets/js/library.js" defer></script>
+  <script src="./assets/js/pwa.js" defer></script>
+  <title>Prateleira de Livrinhos · Ler é uma aventura</title>
+</head>
+<body class="shelf-page">
+  <div class="shelf-shell">
+    <header class="shelf-header">
+      <a class="shelf-brand" href="./index.html" aria-label="Prateleira de Livrinhos, início">
+        <img src="./assets/icons/icon.svg" alt="" width="51" height="51">
+        <span><strong>Prateleira de Livrinhos</strong><small>Pequenas histórias, grandes descobertas</small></span>
+      </a>
+      <div class="shelf-actions">
+        <span class="connection-status" id="connectionStatus" aria-live="polite">● Pronto para ler</span>
+        <button class="install-action" id="installButton" type="button" hidden>↓ Instalar app</button>
+      </div>
+    </header>
+    <main>
+      <section class="shelf-hero" aria-labelledby="heroTitle">
+        <div class="shelf-hero-copy">
+          <div class="hero-kicker">✦ LEITURA COM CARINHO</div>
+          <h1 id="heroTitle">Cada página, uma nova aventura<span class="hero-period">.</span></h1>
+          <p>Histórias ilustradas, palavras para descobrir e desafios para ler no seu ritmo. Escolha um livrinho e vamos começar!</p>
+          <a class="hero-button" href="#livros">Escolher um livro <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="hero-visual" aria-hidden="true">
+          <div class="hero-star hero-star-a">✦</div><div class="hero-star hero-star-b">✴</div>
+          <div class="hero-book hero-book-back"></div>
+          <div class="hero-book hero-book-front"><img src="./assets/illustrations/ellie/cover.svg" alt=""></div>
+          <div class="hero-shelf"></div>
+          <div class="hero-sparkle">✳</div>
+        </div>
+      </section>
+      <section class="shelf-section" id="livros" aria-labelledby="shelfTitle">
+        <div class="section-topline">
+          <div><div class="section-kicker">A NOSSA COLEÇÃO</div><h2 id="shelfTitle">Escolha seu livrinho <span aria-hidden="true">📚</span></h2></div>
+          <p>Toque em uma capa para abrir.</p>
+        </div>
+        <div class="book-grid" id="bookShelf" aria-live="polite"><p class="shelf-loading">Preparando os livrinhos…</p></div>
+      </section>
+      <div class="shelf-footnote">🌟 Um pouquinho de leitura por dia já é uma grande conquista.</div>
+    </main>
+    <footer class="site-footer"><span>Feito para pequenas leitoras e pequenos leitores 💕</span><span>Os livros podem ficar disponíveis mesmo sem internet.</span></footer>
+  </div>
+</body>
+</html>
