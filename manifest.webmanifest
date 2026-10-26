@@ -1,7 +1,7 @@
 {
-  "name": "Prateleira de Livrinhos",
-  "short_name": "Livrinhos",
-  "description": "Histórias ilustradas e interativas para treinar a leitura.",
+  "name": "Prateleira Mágica",
+  "short_name": "Prateleira",
+  "description": "Uma biblioteca mágica de histórias ilustradas e interativas para treinar a leitura.",
   "lang": "pt-BR",
   "id": "./index.html",
   "start_url": "./index.html",

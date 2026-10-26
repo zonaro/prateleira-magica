@@ -273,7 +273,7 @@
       const data = await response.json();
       if (data.schemaVersion !== 1 || data.id !== entry.id || !Array.isArray(data.pages) || !data.pages.length) throw new Error('Livro inválido');
       book = data;
-      document.title = `${label(book.title)} · Prateleira de Livrinhos`;
+      document.title = `${label(book.title)} · Prateleira Mágica`;
       document.documentElement.lang = book.language || 'pt-BR';
       $('#bookBrand').textContent = label(book.title);
       $('#readerApp').hidden = false;
@@ -286,7 +286,7 @@
 
   document.addEventListener('livrinhos:protagonist-changed', () => {
     if (!book) return;
-    document.title = `${label(book.title)} · Prateleira de Livrinhos`;
+    document.title = `${label(book.title)} · Prateleira Mágica`;
     $('#bookBrand').textContent = label(book.title);
     render();
   });

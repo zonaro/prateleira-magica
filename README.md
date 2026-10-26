@@ -1,10 +1,10 @@
-# Prateleira de Livrinhos 📚
+# Prateleira Mágica ✨📚
 
 Um PWA estático, leve e extensível para leitura infantil com ilustrações, sílabas interativas, narração pelo navegador, desafios e uso offline. A prateleira tem três títulos: **Ellie e o Trem Travesso** (TRA–TRU), **Draco e o Drone Desaparecido** (DRA–DRU) e **Ellie e o Trem dos Dragões** (as dez sílabas combinadas). Os nomes mostrados se adaptam ao protagonista configurado.
 
 ## Usar
 
-Site: `https://zonaro.github.io/livrinho-infantil-treino/`
+Site: `https://zonaro.github.io/prateleira-magica/`
 
 Para desenvolver localmente, execute na raiz do repositório:
 
@@ -85,7 +85,7 @@ O botão **Personalizar** (na prateleira e no leitor) permite configurar:
 - Gênero/pronomes: masculino (`ele/dele`), feminino (`ela/dela`) ou neutro (`elu/delu`).
 - Cinco estilos de cabelo/boné e cores de pele naturais ou fantasia (incluindo verde, azul, lilás, rosa e qualquer cor escolhida no seletor).
 
-Essas preferências ficam apenas no `localStorage` do navegador, sem conta ou servidor. O avatar SVG é personalizado localmente nas ilustrações de cada página, inclusive quando o aplicativo está offline.
+Essas preferências ficam apenas no `localStorage` do navegador, sem conta ou servidor. O avatar SVG é personalizado localmente nas ilustrações de cada página, inclusive quando o aplicativo está offline. A chave de armazenamento do app anterior foi mantida de propósito para preservar o personagem após a renomeação do repositório.
 
 Nos textos e títulos dos livros, use `{{nome}}`, `{{pronome}}`, `{{Pronome}}`, `{{possessivo}}` ou `{{Possessivo}}` para mostrar o personagem configurado. O nome antigo “Ellie” também é substituído por compatibilidade com o primeiro livro. Evite frases que dependam de flexão de gênero fora desses marcadores; prefira construções neutras como “a criança” quando necessário.
 
@@ -110,7 +110,7 @@ Em navegadores compatíveis, use **Instalar app** ou a opção **Adicionar à te
 
 O workflow `.github/workflows/pages.yml` valida os arquivos e publica a raiz do repositório a cada push na branch `main`.
 
-Se o Pages ainda não estiver habilitado: **Settings → Pages → Build and deployment → Source: GitHub Actions**. Após a primeira execução bem-sucedida, o endereço ficará em `https://zonaro.github.io/livrinho-infantil-treino/`.
+Se o Pages ainda não estiver habilitado: **Settings → Pages → Build and deployment → Source: GitHub Actions**. Depois de renomear o repositório para `prateleira-magica` e publicar a branch `main`, o endereço será `https://zonaro.github.io/prateleira-magica/`. Os links entre páginas e os caminhos dos assets são relativos ao repositório, permitindo essa mudança sem quebrar os livros.
 
 ## Verificação
 

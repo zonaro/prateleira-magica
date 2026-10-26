@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 import vm from 'node:vm';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const scope = 'https://zonaro.github.io/livrinho-infantil-treino/';
+const scope = 'https://zonaro.github.io/prateleira-magica/';
 const listeners = {};
 const stores = new Map();
 let online = true;
@@ -63,7 +63,7 @@ vm.runInNewContext(source, { self, caches, fetch: localFetch, URL, Response, con
 let pending;
 listeners.install({ waitUntil(promise) { pending = promise; } });
 await pending;
-const cache = await caches.open('prateleira-de-livrinhos-v2');
+const cache = await caches.open('prateleira-magica-v1');
 const catalog = JSON.parse(fs.readFileSync(path.join(root, 'books/index.json'), 'utf8'));
 for (const entry of catalog.books) {
   const bookPath = `${scope}${entry.data}`;
@@ -87,7 +87,7 @@ async function offlineRequest(pathname, mode) {
 }
 
 const shelf = await offlineRequest('index.html', 'navigate');
-assert((await shelf.text()).includes('Prateleira de Livrinhos'));
+assert((await shelf.text()).includes('Prateleira Mágica'));
 const reader = await offlineRequest('livro.html?livro=ellie-e-o-trem-travesso', 'navigate');
 assert((await reader.text()).includes('readerApp'));
 for (const entry of catalog.books) {

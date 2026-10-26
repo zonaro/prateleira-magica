@@ -60,13 +60,13 @@ context.URL = {
   revokeObjectURL(url) { blobs.delete(url); }
 };
 context.fetch = async (url) => {
-  const filename = new URL(url).pathname.split('/livrinho-infantil-treino/')[1];
+  const filename = new URL(url).pathname.split('/prateleira-magica/')[1];
   const content = fs.readFileSync(path.join(root, filename), 'utf8');
   return { ok: true, async text() { return content; } };
 };
 const image = { dataset: {}, src: '' };
 await prefs.personalizeIllustration(image,
-  'https://zonaro.github.io/livrinho-infantil-treino/assets/illustrations/ellie/cover.svg');
+  'https://zonaro.github.io/prateleira-magica/assets/illustrations/ellie/cover.svg');
 assert(image.src.startsWith('blob:test-'));
 const customizedSvg = await blobs.get(image.src).text();
 assert(customizedSvg.includes('<symbol id="ellie"'));
