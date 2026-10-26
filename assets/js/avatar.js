@@ -6,6 +6,7 @@
 (() => {
   'use strict';
   const parts = window.LivrinhoAvatarParts;
+  const petParts = window.LivrinhoPetParts || {};
   if (!parts?.face || !parts.hair || !parts.outfit) {
     throw Error('O catálogo SVG original deve ser carregado antes do compositor de avatares.');
   }
@@ -31,6 +32,7 @@
     ['cardigan', 'Cardigã'], ['polo', 'Polo']
   ];
   const bottomStyles = [['pants', 'Calça'], ['shorts', 'Shorts'], ['skirt', 'Saia']];
+  const petStyles = Object.entries(petParts).map(([id, part]) => [id, part.name, part.source]);
   const hairColors = [
     ['#493a55', 'Castanho escuro'], ['#7b4c35', 'Castanho'],
     ['#c47b43', 'Ruivo'], ['#f5c35b', 'Loiro'],
@@ -112,13 +114,17 @@
     const hair = parts.hair[settings.avatarStyle] || parts.hair.puffs;
     const outfit = parts.outfit[settings.outfitStyle] || parts.outfit.hoodie;
     const source = (filename) => filename.replace(/\.svg$/, '');
+    const pet = settings.petId && petParts[settings.petId];
+    // O corpo do bichinho contém as primitivas vetoriais intactas do SVG Repo.
+    // Só o elemento SVG externo determina tamanho e posição junto à criança.
+    const companion = pet ? `<svg data-layer="pet-original" data-source="${pet.source}" x="117" y="225" width="90" height="104" viewBox="${pet.viewBox}" preserveAspectRatio="xMidYMid meet">${pet.body}</svg>` : '';
     return `${lowerBody(settings, colors.SKIN)}
       <g transform="translate(0 34) scale(0.452586)">
         <g data-layer="cabelo-atras" data-source="${source(hair.source)}">${tint(hair.back, colors)}</g>
         <g data-layer="rosto-original" data-source="${source(parts.face.source)}">${tint(parts.face.svg, colors)}</g>
         <g data-layer="roupa-original" data-source="${source(outfit.source)}">${tint(outfit.svg, colors)}</g>
         <g data-layer="cabelo-frente" data-source="${source(hair.source)}">${tint(hair.front, colors)}</g>
-      </g>`;
+      </g>${companion}`;
   }
 
   function avatarSymbol(id, settings) {
@@ -128,6 +134,6 @@
   function avatarSVG(settings) {
     return `<svg xmlns="http://www.w3.org/2000/svg" width="210" height="340" viewBox="0 0 210 340" role="img" aria-label="Avatar infantil personalizável">${avatarBody(settings)}</svg>`;
   }
-  window.LivrinhoAvatar = { hairStyles, outfitStyles, bottomStyles, hairColors, outfitColors,
+  window.LivrinhoAvatar = { hairStyles, outfitStyles, bottomStyles, petStyles, hairColors, outfitColors,
     bottomColors, shoeColors, avatarBody, avatarSymbol, avatarSVG };
 })();

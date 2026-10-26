@@ -26,18 +26,22 @@ jobs:
       - name: Validar dados e estrutura
         run: |
           python3 tools/extract-avatar-components.py --check
+          node tools/build-pet-parts.mjs --check
           node tests/verify.mjs
           node tests/preferences.test.mjs
           node tests/avatar.test.mjs
+          node tests/progression.test.mjs
+          node tests/page-turn.test.mjs
           node tests/offline.test.mjs
       - name: Configurar Pages
         uses: actions/configure-pages@v5
       - name: Separar arquivos públicos
         run: |
           mkdir -p _site/assets
-          cp index.html livro.html personagem.html manifest.webmanifest sw.js .nojekyll _site/
+          cp index.html livro.html personagem.html perfil.html manifest.webmanifest sw.js .nojekyll _site/
           cp -R books _site/books
           cp -R assets/css assets/js assets/icons assets/illustrations _site/assets/
+          cp -R assets/pets _site/assets/
       - name: Empacotar site estático
         uses: actions/upload-pages-artifact@v4
         with:

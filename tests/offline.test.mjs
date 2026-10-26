@@ -63,9 +63,14 @@ vm.runInNewContext(source, { self, caches, fetch: localFetch, URL, Response, con
 let pending;
 listeners.install({ waitUntil(promise) { pending = promise; } });
 await pending;
-const cache = await caches.open('prateleira-magica-v6');
+const cache = await caches.open('prateleira-magica-v7');
 assert(await cache.match(`${scope}assets/js/avatar-parts.js`), 'Peças originais dos avatares não foram salvas offline');
+assert(await cache.match(`${scope}assets/js/pet-parts.js`), 'Pets para ilustrações não foram salvos offline');
 assert(await cache.match(`${scope}assets/js/avatar.js`), 'Renderização dos avatares não foi salva offline');
+const petCatalog = JSON.parse(fs.readFileSync(path.join(root, 'assets/pets/catalog.json'), 'utf8'));
+for (const pet of petCatalog.pets) {
+  assert(await cache.match(`${scope}${pet.file}`), `Pet original não foi salvo offline: ${pet.id}`);
+}
 const catalog = JSON.parse(fs.readFileSync(path.join(root, 'books/index.json'), 'utf8'));
 for (const entry of catalog.books) {
   const bookPath = `${scope}${entry.data}`;
@@ -94,6 +99,8 @@ const reader = await offlineRequest('livro.html?livro=ellie-e-o-trem-travesso', 
 assert((await reader.text()).includes('readerApp'));
 const editor = await offlineRequest('personagem.html', 'navigate');
 assert((await editor.text()).includes('settingsApp'), 'Editor em página dedicada não funciona offline');
+const profile = await offlineRequest('perfil.html', 'navigate');
+assert((await profile.text()).includes('profileBooks'), 'Página de medalhas não funciona offline');
 for (const entry of catalog.books) {
   const data = await offlineRequest(entry.data, 'cors');
   const book = await data.json();
@@ -103,4 +110,5 @@ for (const entry of catalog.books) {
 }
 
 console.log(`✓ Pré-cache de ${catalog.books.length} livros e todas as ilustrações`);
-console.log('✓ Prateleira, leitor com query string, JSON e SVG acessíveis sem internet');
+console.log(`✓ Pré-cache dos ${petCatalog.pets.length} SVGs originais da coleção de pets`);
+console.log('✓ Prateleira, leitor, personagem, perfil, JSONs e SVGs acessíveis sem internet');

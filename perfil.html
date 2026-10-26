@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#faf3e8">
+  <meta name="description" content="Veja as histórias, medalhas e conquistas da criança na Prateleira Mágica.">
+  <link rel="icon" href="./assets/icons/icon.svg" type="image/svg+xml">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="stylesheet" href="./assets/css/app.css">
+  <script src="./assets/js/avatar-parts.js" defer></script>
+  <script src="./assets/js/pet-parts.js" defer></script>
+  <script src="./assets/js/avatar.js" defer></script>
+  <script src="./assets/js/preferences.js" defer></script>
+  <script src="./assets/js/profile.js" defer></script>
+  <script src="./assets/js/pwa.js" defer></script>
+  <title>Meu perfil e medalhas · Prateleira Mágica</title>
+</head>
+<body class="profile-screen">
+  <div class="settings-page-shell">
+    <header class="settings-site-header">
+      <a class="shelf-brand" href="./index.html" aria-label="Prateleira Mágica, início">
+        <img src="./assets/icons/icon.svg" alt="" width="51" height="51">
+        <span><strong>Prateleira Mágica ✨</strong><small>Histórias e conquistas</small></span>
+      </a>
+      <div class="settings-header-actions"><a class="customize-action" href="./personagem.html?voltar=perfil.html">⚙ Personalizar</a><a class="customize-action profile-action" href="./index.html">📚 Prateleira</a></div>
+    </header>
+    <main class="profile-main">
+      <section class="profile-identity" aria-labelledby="profileTitle">
+        <div class="profile-portrait" id="profileAvatar" aria-label="Avatar da criança com seu bichinho"></div>
+        <div class="profile-identity-copy">
+          <div class="section-kicker">NOSSA ESTRELA DA LEITURA</div>
+          <h1 id="profileTitle">Meu perfil</h1>
+          <p id="profilePersonalInfo" class="profile-info"></p>
+          <div class="profile-stats">
+            <div class="profile-stat"><strong id="profileBooksRead">0</strong><span>livros concluídos</span></div>
+            <div class="profile-stat"><strong id="profileMedals">0 🏅</strong><span>medalhas ganhas</span></div>
+            <div class="profile-stat"><strong id="profilePetStatus">🔒</strong><span>bichinho companheiro</span></div>
+          </div>
+          <p id="profileUnlockHint" class="profile-unlock-hint"></p>
+        </div>
+      </section>
+      <section class="profile-reading" aria-labelledby="readingTitle">
+        <div class="section-kicker">MINHAS AVENTURAS</div>
+        <h2 id="readingTitle">Livros que estou lendo ou já li 📚</h2>
+        <p class="profile-reading-intro">Cada página visitada conta no progresso. Complete todas as frases do desafio final para conquistar a medalha de cada livro!</p>
+        <div id="profileBooks" class="profile-books-grid" aria-live="polite"><p class="shelf-loading">Buscando suas aventuras…</p></div>
+      </section>
+      <p class="settings-privacy">🔒 Nome, data de nascimento, progresso e medalhas ficam armazenados neste dispositivo. Para transferi-los, baixe o SVG de backup em Personalizar.</p>
+    </main>
+  </div>
+</body>
+</html>

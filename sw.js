@@ -1,5 +1,5 @@
 /* Offline-first, same-origin service worker for the static GitHub Pages app. */
-const CACHE_NAME = 'prateleira-magica-v6';
+const CACHE_NAME = 'prateleira-magica-v7';
 const APP_ROOT = new URL(self.registration.scope);
 const url = (path) => new URL(path, APP_ROOT).href;
 const APP_SHELL = [
@@ -7,19 +7,44 @@ const APP_SHELL = [
   './index.html',
   './livro.html',
   './personagem.html',
+  './perfil.html',
   './manifest.webmanifest',
   './assets/css/app.css',
   './assets/js/avatar-parts.js',
+  './assets/js/pet-parts.js',
   './assets/js/avatar.js',
   './assets/js/library.js',
   './assets/js/reader.js',
+  './assets/js/page-turn.js',
   './assets/js/preferences.js',
   './assets/js/settings-ui.js',
+  './assets/js/profile.js',
   './assets/js/pwa.js',
   './assets/icons/icon.svg',
   './assets/icons/icon-192.png',
   './assets/icons/icon-512.png',
-  './books/index.json'
+  './books/index.json',
+  './assets/pets/catalog.json',
+  './assets/pets/530181-dinosaur.svg',
+  './assets/pets/530182-crab.svg',
+  './assets/pets/530183-elk.svg',
+  './assets/pets/530184-jellyfish.svg',
+  './assets/pets/530185-penguin.svg',
+  './assets/pets/530186-the-cow.svg',
+  './assets/pets/530187-turtle.svg',
+  './assets/pets/530188-bear.svg',
+  './assets/pets/530189-shrimp.svg',
+  './assets/pets/530190-rabbit.svg',
+  './assets/pets/530191-lion.svg',
+  './assets/pets/530192-squirrel.svg',
+  './assets/pets/530193-polar-bear.svg',
+  './assets/pets/530194-raccoon.svg',
+  './assets/pets/530195-wild-boar.svg',
+  './assets/pets/530196-crocodile.svg',
+  './assets/pets/530197-hedgehog.svg',
+  './assets/pets/530198-fox.svg',
+  './assets/pets/530199-cute-animals.svg',
+  './assets/pets/530200-whale.svg'
 ];
 
 async function preCacheBooks(cache) {

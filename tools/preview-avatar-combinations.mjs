@@ -8,7 +8,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const target = process.argv[2] || '/tmp/prateleira-avatar-revisao';
 fs.mkdirSync(target, { recursive: true });
 const context = { window: {} };
-for (const filename of ['assets/js/avatar-parts.js', 'assets/js/avatar.js']) {
+for (const filename of ['assets/js/avatar-parts.js', 'assets/js/pet-parts.js', 'assets/js/avatar.js']) {
   vm.runInNewContext(fs.readFileSync(path.join(root, filename), 'utf8'), context);
 }
 const renderer = context.window.LivrinhoAvatar;
@@ -27,6 +27,10 @@ for (const [outfit] of renderer.outfitStyles) {
 for (const [bottom] of renderer.bottomStyles) {
   fs.writeFileSync(path.join(target, `bottom-${bottom}.svg`),
     renderer.avatarSVG({ ...settings, avatarStyle: 'bob', outfitStyle: 'blouse', bottomStyle: bottom }));
+}
+for (const id of ['fox', 'turtle', 'rabbit', 'penguin']) {
+  fs.writeFileSync(path.join(target, `pet-${id}.svg`),
+    renderer.avatarSVG({ ...settings, avatarStyle: 'long', outfitStyle: 'dress', bottomStyle: 'skirt', petId: id }));
 }
 const cover = fs.readFileSync(path.join(root, 'assets/illustrations/ellie/cover.svg'), 'utf8');
 const newSymbol = renderer.avatarSymbol('ellie', {

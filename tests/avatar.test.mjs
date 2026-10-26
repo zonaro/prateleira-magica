@@ -17,6 +17,7 @@ const context = {
   }
 };
 vm.runInNewContext(fs.readFileSync(path.join(root, 'assets/js/avatar-parts.js'), 'utf8'), context);
+vm.runInNewContext(fs.readFileSync(path.join(root, 'assets/js/pet-parts.js'), 'utf8'), context);
 vm.runInNewContext(fs.readFileSync(path.join(root, 'assets/js/avatar.js'), 'utf8'), context);
 vm.runInNewContext(fs.readFileSync(path.join(root, 'assets/js/preferences.js'), 'utf8'), context);
 
@@ -28,6 +29,7 @@ assert.equal(hairStyles.length, 22);
 assert.equal(outfits.length, 18);
 assert.equal(new Set(hairStyles).size, 22);
 assert.equal(new Set(outfits).size, 18);
+assert.equal(renderer.petStyles.length, 20, 'Catálogo completo de pets original ausente');
 assert.deepEqual(renderer.bottomStyles.map(([key]) => key).join(','), 'pants,shorts,skirt');
 
 const pictures = new Set();
@@ -87,6 +89,10 @@ assert.equal(migrated.bottomColor, '#5879b9');
 assert.equal(migrated.shoeColor, '#625a89');
 assert.equal(prefs.clean({ gender: 'masculino' }).outfitColor, '#6e9beb');
 assert.equal(prefs.clean({ gender: 'neutro' }).outfitColor, '#9b8ae5');
+assert.equal(prefs.clean({ petId: 'fox' }).petId, null, 'Pet deve estar bloqueado antes da segunda medalha');
+assert.equal(prefs.clean({ birthDate: '2025-02-29' }).birthDate, '', 'Nascimento inválido deve ser recusado');
+assert.equal(prefs.ageOnDate('2020-02-29', new Date(2026, 9, 26)), 6);
+assert.equal(prefs.ageOnDate('', new Date(2026, 9, 26)), null);
 
 // O SVG precisa ser simultaneamente uma imagem e um backup completo do perfil.
 const backupName = 'Mia & Lua <3';
@@ -103,6 +109,7 @@ assert.equal(prefs.bookProgress(bookId).completedExercises.length, 2);
 assert.equal(prefs.bookProgress(bookId).challengeCompletedAt, null);
 prefs.recordBookProgress(bookId, { completedExercises: [0, 1, 2] }, 3);
 assert(prefs.bookProgress(bookId).challengeCompletedAt, 'A conclusão do desafio deve ser registrada');
+assert(prefs.bookProgress(bookId).medalEarnedAt, 'A medalha deve ser salva ao marcar todas as frases');
 prefs.recordBookProgress(bookId, { finished: true }, 3);
 assert(prefs.bookProgress(bookId).finishedAt, 'O término do livro deve ter data');
 prefs.recordBookProgress('ellie-e-o-trem-dos-dragoes', { completedExercises: [1] }, 4);
@@ -145,6 +152,19 @@ assert.equal(prefs.bookProgress(bookId).finished, false, 'Perfis diferentes não
 prefs.save(restored);
 assert.equal(prefs.load().name, backupName);
 assert.equal(prefs.bookProgress(bookId).finished, true, 'Importar o SVG recupera as conquistas');
+prefs.recordBookProgress('ellie-e-o-trem-dos-dragoes', { completedExercises: [0, 1, 2, 3], visitedPages: [0, 1, 3] }, 4);
+assert.equal(prefs.medalCount(prefs.load()), 2, 'Duas medalhas devem liberar os pets');
+const petProfile = prefs.save({ ...prefs.load(), birthDate: '2020-02-29', petId: 'fox' });
+assert.equal(petProfile.petId, 'fox');
+assert.equal(petProfile.birthDate, '2020-02-29');
+assert(prefs.avatarSVG().includes('data-layer="pet-original"'), 'O pet precisa aparecer junto ao avatar');
+assert(prefs.avatarSVG().includes('M541.970732 633.791063'), 'O pet deve reutilizar os vetores originais do SVG Repo');
+const svgPetBackup = prefs.exportProfileSVG(petProfile);
+const recoveredPet = prefs.parseProfileSVG(svgPetBackup);
+assert.equal(recoveredPet.petId, 'fox', 'O SVG deve guardar o pet escolhido');
+assert.equal(recoveredPet.birthDate, '2020-02-29', 'O SVG deve guardar o nascimento');
+assert.equal(prefs.medalCount(recoveredPet), 2, 'O SVG deve restaurar duas medalhas');
+assert.deepEqual([...recoveredPet.achievements.books['ellie-e-o-trem-dos-dragoes'].visitedPages], [0, 1, 3]);
 assert.throws(() => prefs.parseProfileSVG('<svg xmlns="http://www.w3.org/2000/svg"></svg>'), /backup/);
 assert.throws(() => prefs.parseProfileSVG(svgBackup.replace('&quot;schemaVersion&quot;:1', '&quot;schemaVersion&quot;:99')), /incompatível/);
 assert.throws(() => prefs.parseProfileSVG(svgBackup.replace('&quot;app&quot;:&quot;prateleira-magica&quot;', '&quot;app&quot;:&quot;outro&quot;')), /incompatível/);
@@ -172,6 +192,8 @@ for (const entry of downloaded) {
 
 console.log('✓ 22 cabelos × 18 roupas = 396 combinações com vetores originais do SVG Repo');
 console.log('✓ Tons de pele fantasia e cores independentes de cabelo, roupa, calça/shorts/saia e tênis espelhados');
+console.log('✓ 20 pets SVG originais desbloqueados após duas medalhas e renderizados junto ao avatar');
+console.log('✓ Data de nascimento, páginas visitadas e pets preservados no backup SVG');
 console.log('✓ Preferências e backups antigos migram sem perder avatar, nome, pronúncia ou conquistas');
 console.log('✓ SVG ilustrado contém backup JSON inline e restaura nome, voz, gênero e conquistas dos livros');
 console.log('✓ Backups inválidos são recusados sem alterar o perfil local');

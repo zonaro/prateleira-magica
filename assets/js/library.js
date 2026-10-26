@@ -43,9 +43,12 @@
     subtitle.textContent = label(book.subtitle || 'Uma aventura de leitura.');
     const progress = preferences?.bookProgress(book.id);
     const achievement = document.createElement('span');
-    if (progress?.finished) {
+    if (progress?.medalEarnedAt || progress?.challengeCompletedAt) {
       achievement.className = 'book-achievement';
-      achievement.textContent = '🏅 História concluída';
+      achievement.textContent = '🏅 Medalha conquistada';
+    } else if (progress?.finished) {
+      achievement.className = 'book-achievement';
+      achievement.textContent = '✅ História concluída';
     } else if (progress?.completedExercises.length) {
       achievement.className = 'book-achievement in-progress';
       achievement.textContent = `⭐ ${progress.completedExercises.length} frase(s) treinada(s)`;

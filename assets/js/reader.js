@@ -4,6 +4,7 @@
   const root = new URL('./', document.baseURI);
   const asset = (path) => new URL(path, root).href;
   const preferences = window.LivrinhoPreferences;
+  const pageTurn = window.LivrinhoPageTurn;
   const label = (value) => preferences ? preferences.personalize(value) : String(value || '');
   const params = new URLSearchParams(location.search);
   const bookId = params.get('livro');
@@ -13,6 +14,20 @@
   let toastTimer;
   let startX = null;
   let startY = null;
+
+  function challengeComplete() {
+    return !book?.exercises?.length || (completed.size === book.exercises.length
+      && book.exercises.every((_, index) => completed.has(index)));
+  }
+  function challengePageIndex() { return book.pages.findIndex((item) => item.type === 'challenge'); }
+  function canVisit(target) {
+    const challenge = challengePageIndex();
+    return challenge < 0 || target <= challenge || challengeComplete();
+  }
+  function rememberPage() {
+    const previous = preferences?.bookProgress(book.id).visitedPages || [];
+    if (!previous.includes(page)) preferences?.recordBookProgress(book.id, { visitedPages: [...previous, page] }, book.exercises?.length || 0);
+  }
 
   function notify(message) {
     const toast = $('#toast');
@@ -109,10 +124,10 @@
       row.append(check, phrase);
       container.append(row);
     }
-    if (book.exercises?.length && completed.size === book.exercises.length) {
+    if (challengeComplete()) {
       const message = document.createElement('div');
       message.className = 'medal';
-      message.textContent = '⭐ Todas as frases concluídas! ⭐';
+      message.textContent = '🏅 Medalha conquistada! Você já pode avançar!';
       container.append(message);
     }
   }
@@ -181,7 +196,10 @@
     $('#progressBar').style.width = `${(page + 1) / book.pages.length * 100}%`;
     $('#progressLabel').textContent = `Página ${page + 1} de ${book.pages.length}`;
     $('#prev').disabled = page === 0;
-    $('#next').textContent = page === 0 ? 'Começar →' : page === book.pages.length - 1 ? '↻ Ler de novo' : 'Próxima →';
+    const challengeLocked = current.type === 'challenge' && !challengeComplete();
+    $('#next').disabled = challengeLocked;
+    $('#next').textContent = challengeLocked ? 'Complete todas as frases 🔒'
+      : page === 0 ? 'Começar →' : page === book.pages.length - 1 ? '↻ Ler de novo' : 'Próxima →';
     const dots = $('#dots');
     dots.replaceChildren();
     book.pages.forEach((item, index) => {
@@ -191,19 +209,30 @@
       dot.dataset.page = String(index);
       dot.setAttribute('aria-label', `Ir para página ${index + 1}: ${label(item.title)}`);
       if (index === page) dot.setAttribute('aria-current', 'page');
+      if (!canVisit(index)) {
+        dot.disabled = true;
+        dot.title = 'Complete todas as frases do desafio primeiro';
+      }
       dots.append(dot);
     });
-    $('#book').classList.remove('flip-in');
-    void $('#book').offsetWidth;
-    $('#book').classList.add('flip-in');
   }
 
   function go(target) {
-    page = Math.min(book.pages.length - 1, Math.max(0, target));
+    if (pageTurn?.busy()) return;
+    const destination = Math.min(book.pages.length - 1, Math.max(0, target));
+    if (!canVisit(destination)) {
+      notify('🔒 Leia e marque todas as frases do desafio para receber a medalha!');
+      return;
+    }
+    const previousPage = page;
+    const previousSpread = previousPage !== destination ? pageTurn?.snapshot($('#book')) : null;
+    page = destination;
+    rememberPage();
     if (page === book.pages.length - 1 && book.pages[page].type === 'finish') {
       preferences?.recordBookProgress(book.id, { finished: true }, book.exercises?.length || 0);
     }
     render();
+    if (previousSpread) pageTurn.animate($('#book'), previousSpread, destination < previousPage ? 'backward' : 'forward');
     if (window.innerWidth < 821) window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
@@ -230,14 +259,13 @@
     if (check && book) {
       const index = Number(check.dataset.check);
       if (completed.has(index)) completed.delete(index);
-      else { completed.add(index); notify(completed.size === book.exercises.length ? 'Você completou o desafio! ⭐' : 'Muito bem! ⭐'); }
+      else { completed.add(index); notify(challengeComplete() ? '🏅 Você ganhou uma medalha!' : 'Muito bem! ⭐'); }
       preferences?.recordBookProgress(book.id, { completedExercises: [...completed] }, book.exercises.length);
       render();
     }
   });
   document.addEventListener('keydown', (event) => {
     if (!book || event.defaultPrevented || event.isComposing || event.altKey || event.ctrlKey || event.metaKey) return;
-    if (document.getElementById('protagonistDialog')?.open) return;
     if (event.target instanceof HTMLElement && event.target.closest('input,textarea,select,[contenteditable],[role="textbox"]')) return;
     const isSpace = event.code === 'Space' || event.key === ' ' || event.key === 'Spacebar';
     if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft' && !isSpace) return;
@@ -248,7 +276,6 @@
     else hearCurrentPage();
   });
   document.addEventListener('keyup', (event) => {
-    if (document.getElementById('protagonistDialog')?.open) return;
     if (book && (event.code === 'Space' || event.key === ' ')) event.preventDefault();
   });
   $('#book').addEventListener('touchstart', (event) => {
@@ -279,10 +306,15 @@
       book = data;
       completed = new Set((preferences?.bookProgress(book.id).completedExercises || [])
         .filter((index) => index < (book.exercises?.length || 0)));
+      const requested = Number(params.get('pagina'));
+      if (Number.isInteger(requested) && requested >= 0 && requested < book.pages.length && canVisit(requested)) {
+        page = requested;
+      }
       document.title = `${label(book.title)} · Prateleira Mágica`;
       document.documentElement.lang = book.language || 'pt-BR';
       $('#bookBrand').textContent = label(book.title);
       $('#readerApp').hidden = false;
+      rememberPage();
       render();
     } catch (error) {
       console.error('Erro ao abrir livro:', error);

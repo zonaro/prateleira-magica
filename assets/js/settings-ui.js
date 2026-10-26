@@ -15,7 +15,8 @@
     for (const button of document.querySelectorAll('[data-open-settings]')) {
       button.addEventListener('click', (event) => {
         event.preventDefault();
-        const back = location.pathname.endsWith('/livro.html') ? `livro.html${location.search}` : 'index.html';
+        const back = location.pathname.endsWith('/livro.html') ? `livro.html${location.search}`
+          : location.pathname.endsWith('/perfil.html') ? 'perfil.html' : 'index.html';
         const destination = new URL(`personagem.html?voltar=${encodeURIComponent(back)}`, root);
         location.assign(destination.href);
       });
@@ -25,7 +26,7 @@
   const backParam = new URLSearchParams(location.search).get('voltar');
   const candidate = backParam ? new URL(backParam, root) : new URL('index.html', root);
   const returnUrl = candidate.origin === root.origin && candidate.pathname.startsWith(root.pathname)
-    && /\/(?:index|livro)\.html$/.test(candidate.pathname) ? candidate.href : new URL('index.html', root).href;
+    && /\/(?:index|livro|perfil)\.html$/.test(candidate.pathname) ? candidate.href : new URL('index.html', root).href;
   const skinColors = [
     ['#f5d4b3', 'Pele clara'], ['#e9aa83', 'Pele média clara'],
     ['#c98760', 'Pele média'], ['#a66846', 'Pele bronzeada'],
@@ -36,6 +37,7 @@
   const hairStyles = avatarCatalog.hairStyles;
   const outfitStyles = avatarCatalog.outfitStyles;
   const bottomStyles = avatarCatalog.bottomStyles;
+  const petStyles = avatarCatalog.petStyles;
   let draft = preferences.load();
   let pronunciationTouched = false;
 
@@ -61,6 +63,9 @@
           <label class="field-label" for="childPronunciation">Como a voz deve pronunciar o nome?</label>
           <input id="childPronunciation" name="childPronunciation" type="text" maxlength="64" autocomplete="off" placeholder="Ex.: Éli">
           <p class="field-help">Escreva como se fala, com acentos se ajudar. Ex.: Ellie → Éli.</p>
+          <label class="field-label" for="birthDate">Data de nascimento</label>
+          <input id="birthDate" name="birthDate" type="date" aria-describedby="birthAgeHint">
+          <p id="birthAgeHint" class="field-help">Opcional. A idade pode personalizar os próximos livros.</p>
           <fieldset class="gender-fieldset"><legend>Gênero e pronomes</legend>
             <label><input type="radio" name="childGender" value="masculino"><span>Masculino<small>ele / dele</small></span></label>
             <label><input type="radio" name="childGender" value="feminino"><span>Feminino<small>ela / dela</small></span></label>
@@ -71,6 +76,10 @@
       <fieldset class="avatar-style-fieldset"><legend>Penteado</legend><div id="avatarStyles" class="avatar-style-grid"></div></fieldset>
       <fieldset class="avatar-style-fieldset"><legend>Roupa</legend><div id="outfitStyles" class="avatar-style-grid outfits-grid"></div></fieldset>
       <fieldset class="avatar-style-fieldset"><legend>Parte de baixo</legend><div id="bottomStyles" class="avatar-style-grid bottoms-grid"></div></fieldset>
+      <fieldset class="avatar-style-fieldset pet-fieldset"><legend>Meu pet companheiro 🐾</legend>
+        <p id="petUnlockStatus" class="pet-unlock-status" role="status"></p>
+        <div id="petStyles" class="pet-style-grid"></div>
+      </fieldset>
       <fieldset class="skin-fieldset"><legend>Cor da pele — natural ou fantasia</legend><div id="skinOptions" class="skin-options"></div>
         <label class="custom-color"><span>Ou escolha qualquer cor</span><input id="customSkinColor" type="color" aria-label="Selecionar outra cor de pele"></label>
       </fieldset>
@@ -92,7 +101,7 @@
       </div>
       <section class="profile-backup" aria-label="Backup do personagem">
         <h3>💾 Guarde seu personagem</h3>
-        <p>Baixe o personagem como uma imagem SVG. Ela também guarda o nome, a pronúncia, os pronomes e as conquistas dos livros para recuperar tudo depois.</p>
+        <p>Baixe o personagem como uma imagem SVG. Ela também guarda nome, pronúncia, nascimento, pronomes, pet e conquistas dos livros para recuperar tudo depois.</p>
         <div class="profile-backup-actions">
           <button id="downloadProfile" type="button">↓ Baixar personagem SVG</button>
           <button id="importProfile" type="button">↑ Importar personagem SVG</button>
@@ -108,6 +117,7 @@
   const $ = (selector) => dialog.querySelector(selector);
   const nameInput = $('#childName');
   const pronunciationInput = $('#childPronunciation');
+  const birthInput = $('#birthDate');
 
   function drawPreview() {
     $('#avatarStage').innerHTML = preferences.avatarSVG(draft);
@@ -149,6 +159,24 @@
     $('#customOutfitColor').value = draft.outfitColor;
     $('#customBottomColor').value = draft.bottomColor;
     $('#customShoeColor').value = draft.shoeColor;
+    const medals = preferences.medalCount(draft);
+    const unlocked = medals >= 2;
+    $('#petUnlockStatus').textContent = unlocked
+      ? `✨ Você conquistou ${medals} medalhas! Escolha um dos 20 pets para acompanhar suas aventuras.`
+      : `🔒 Pets desbloqueados com 2 medalhas. Você tem ${medals}/2 — faltam ${2 - medals}.`;
+    for (const option of $('#petStyles').querySelectorAll('button[data-pet]')) {
+      option.disabled = !unlocked;
+      option.classList.toggle('locked', !unlocked);
+      option.classList.toggle('selected', draft.petId === option.dataset.pet);
+      option.setAttribute('aria-pressed', String(draft.petId === option.dataset.pet));
+    }
+    const none = $('#noPet');
+    none.classList.toggle('selected', !draft.petId);
+    none.setAttribute('aria-pressed', String(!draft.petId));
+    const years = preferences.ageOnDate(birthInput.value);
+    $('#birthAgeHint').textContent = years === null
+      ? 'Opcional. A idade pode personalizar os próximos livros.'
+      : `🎂 ${years} ano${years === 1 ? '' : 's'} — pronta ou pronto para muitas aventuras!`;
   }
 
   function fillDialog() {
@@ -157,6 +185,7 @@
     $('#profileBackupStatus').textContent = '';
     nameInput.value = draft.name;
     pronunciationInput.value = draft.pronunciation;
+    birthInput.value = draft.birthDate;
     $(`input[name="childGender"][value="${draft.gender}"]`).checked = true;
     drawPreview();
   }
@@ -178,6 +207,38 @@
   addStyles('avatarStyles', hairStyles, 'avatarStyle');
   addStyles('outfitStyles', outfitStyles, 'outfitStyle');
   addStyles('bottomStyles', bottomStyles, 'bottomStyle');
+
+  function addPets() {
+    const container = $('#petStyles');
+    const none = document.createElement('button');
+    none.type = 'button';
+    none.id = 'noPet';
+    none.className = 'pet-choice';
+    none.innerHTML = '<span class="pet-image pet-none">💜</span><span>Sem pet</span>';
+    none.addEventListener('click', () => { draft.petId = null; drawPreview(); });
+    container.append(none);
+    for (const [id, name, source] of petStyles) {
+      const option = document.createElement('button');
+      option.type = 'button';
+      option.className = 'pet-choice';
+      option.dataset.pet = id;
+      const img = document.createElement('img');
+      img.src = new URL(source, root).href;
+      img.alt = '';
+      img.loading = 'lazy';
+      img.className = 'pet-image';
+      const caption = document.createElement('span');
+      caption.textContent = name;
+      option.append(img, caption);
+      option.addEventListener('click', () => {
+        if (preferences.medalCount(draft) < 2) return;
+        draft.petId = id;
+        drawPreview();
+      });
+      container.append(option);
+    }
+  }
+  addPets();
 
   function addColors(containerId, palette, field) {
     const container = $(`#${containerId}`);
@@ -212,6 +273,7 @@
     pronunciationTouched = true;
     draft.pronunciation = pronunciationInput.value;
   });
+  birthInput.addEventListener('change', () => { draft.birthDate = birthInput.value; drawPreview(); });
   for (const option of dialog.querySelectorAll('input[name="childGender"]')) {
     option.addEventListener('change', () => { draft.gender = option.value; drawPreview(); });
   }
@@ -225,11 +287,13 @@
     pronunciationTouched = false;
     nameInput.value = draft.name;
     pronunciationInput.value = draft.pronunciation;
+    birthInput.value = draft.birthDate;
     $(`input[name="childGender"][value="${draft.gender}"]`).checked = true;
     drawPreview();
   });
   function currentDraft() {
-    return preferences.clean({ ...draft, name: nameInput.value, pronunciation: pronunciationInput.value || nameInput.value });
+    return preferences.clean({ ...draft, name: nameInput.value, pronunciation: pronunciationInput.value || nameInput.value,
+      birthDate: birthInput.value });
   }
 
   $('#downloadProfile').addEventListener('click', () => {

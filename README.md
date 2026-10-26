@@ -19,28 +19,39 @@ Abra `http://localhost:8000/`. Por segurança do navegador, abrir o HTML diretam
 ```text
 index.html                         Prateleira / catálogo
 livro.html                         Leitor de livros
+personagem.html                    Editor de protagonista em tela dedicada
+perfil.html                        Histórico de leitura, porcentagens e medalhas
 books/index.json                   Manifesto dos livros disponíveis
 books/<slug>.json                  História completa e exercícios de cada livro
 assets/css/app.css                 Estilos da biblioteca e do leitor
 assets/js/library.js               Prateleira dinâmica
 assets/js/reader.js                Leitor e narração
+assets/js/page-turn.js             Virada de folha 3D, sem dependências
 assets/js/avatar-parts.js          Peças vetoriais extraídas dos SVGs originais (geradas)
+assets/js/pet-parts.js             Vetores dos 20 pets originais (gerados)
 assets/js/avatar.js                Compositor das peças originais + pernas customizáveis
-assets/js/preferences.js           Nome, pronomes, voz, avatar e conquistas do protagonista
-assets/js/settings-ui.js           Editor de personagem no app
+assets/js/preferences.js           Nome, nascimento, pronomes, pet, progresso e conquistas
+assets/js/settings-ui.js           Editor de personagem, pets e backup SVG
+assets/js/profile.js               Tela de perfil, livros lidos e medalhas
 assets/js/pwa.js                   Instalação PWA e status de conexão
 assets/illustrations/<slug>/*.svg  Ilustrações por página
 assets/avatar-reference/svgrepo-kids/ SVGs de referência da coleção Kids Avatars
 assets/avatar-reference/component-map.json Seleção de caminhos e cores dos SVGs originais
+assets/pets/*.svg                   20 pets da coleção Cute Animal Vectors sem alterações
+assets/pets/catalog.json           Catálogo e fontes dos pets
 assets/icons/                     Ícones PWA
 manifest.webmanifest               Manifesto instalável
 sw.js                              Cache offline
 tests/verify.mjs                   Testes de integridade
 tests/preferences.test.mjs         Testes da personalização
 tests/offline.test.mjs             Teste completo do cache offline
+tests/progression.test.mjs         Desafio final e trava de páginas
+tests/page-turn.test.mjs           Virada de página desktop e mobile
 tools/generate-story-art.mjs       Geração dos SVGs dos livros de Draco
 tools/download-kids-avatars.mjs    Atualização dos SVGs de referência
 tools/extract-avatar-components.py Geração das peças vetoriais utilizadas no app
+tools/download-cute-animal-pets.mjs Download original da coleção de pets
+tools/build-pet-parts.mjs          Empacota pet SVG original para uso offline
 tools/preview-avatar-combinations.mjs Prévia visual das combinações de avatar
 docs/avatar-components.md         Proveniência, extração e compatibilidade
 .github/workflows/pages.yml        Deploy no GitHub Pages
@@ -90,11 +101,21 @@ Nas páginas, coloque `[[palavra]]` para exibir uma palavra colorida que pode se
 O botão **Personalizar** (na prateleira e no leitor) abre a página independente [`personagem.html`](personagem.html). A prévia do personagem fica **fixa durante a rolagem**: em coluna lateral no computador e em uma faixa compacta no topo do celular. Nessa tela, é possível configurar:
 
 - Nome da criança e escrita fonética separada para a narração.
+- Data de nascimento opcional para calcular a idade e preencher `{{idade}}` em roteiros futuros.
 - Gênero/pronomes: masculino (`ele/dele`), feminino (`ela/dela`) ou neutro (`elu/delu`).
 - **22 penteados e 18 roupas extraídos dos SVGs reais da coleção Kids Avatars**, combináveis livremente: 396 combinações principais, antes de variar as cores. Penteados incluem afro, cacheado, maria-chiquinha, tranças, cabelo longo, cortes curtos, topetes, acessórios de flores/laços e boné.
 - Escolha independente da cor do cabelo e da roupa, com paletas e seleção livre.
 - **Calça, shorts ou saia**, com cor independente, e cor personalizada para os tênis, espelhados para permanecer alinhados.
 - Cores de pele naturais ou fantasia (incluindo verde, azul, lilás e rosa), mantendo o seletor livre existente.
+- Um dos **20 pets originais** da coleção [Cute Animal Vectors](https://www.svgrepo.com/collection/cute-animal-vectors/), desbloqueados somente depois de conquistar **duas medalhas**. O pet fica ao lado do avatar nas ilustrações, no editor e no perfil.
+
+### Progresso e medalhas
+
+Na página [`perfil.html`](perfil.html), a criança vê o nome, a idade (quando informada), o personagem, o pet e os livros já iniciados ou concluídos. Cada livro exibe **percentual de páginas visitadas** e o emoji **🏅** caso a medalha do desafio tenha sido conquistada. Os cards permitem retomar a leitura.
+
+Todos os três livros têm um desafio de frases antes da última página. **A página seguinte e a medalha final ficam bloqueadas** até a criança marcar todas as frases. O bloqueio vale para botão, bolinhas, setas do teclado e deslize. Ao completar o desafio, uma medalha fica registrada em `achievements.books[id].medalEarnedAt` e não se perde ao fechar o app. O campo `visitedPages` registra as páginas efetivamente visitadas; livros marcados como concluídos em versões antigas continuam com 100% para preservar o histórico.
+
+O desbloqueio dos pets conta **medalhas de livros diferentes**, nunca frases isoladas. Sem duas medalhas, o catálogo aparece bloqueado. A escolha fica salva localmente e é incluída no SVG de backup.
 
 Essas preferências ficam apenas no `localStorage` do navegador, sem conta ou servidor. O avatar SVG é personalizado localmente nas ilustrações de cada página, inclusive quando o aplicativo está offline. A chave de armazenamento do app anterior foi mantida de propósito para preservar o personagem após a renomeação do repositório.
 
@@ -102,15 +123,15 @@ Essas preferências ficam apenas no `localStorage` do navegador, sem conta ou se
 
 No editor, **Baixar personagem SVG** salva as escolhas atuais e oferece um arquivo `.svg` que funciona como uma ilustração vetorial comum. Ele inclui um elemento `<metadata id="prateleira-magica-profile" data-format="application/json">` contendo um JSON inline com:
 
-- `profile`: `name`, `pronunciation`, `gender`, `avatarStyle`, `outfitStyle`, `skinColor`, `hairColor`, `outfitColor`, `bottomStyle`, `bottomColor`, `shoeColor`;
-- `achievements.books`: cada ID de livro com índices das frases marcadas (`completedExercises`), conclusão da história (`finished`), `finishedAt` e `challengeCompletedAt`;
+- `profile`: `name`, `pronunciation`, `birthDate`, `gender`, `petId`, `avatarStyle`, `outfitStyle`, `skinColor`, `hairColor`, `outfitColor`, `bottomStyle`, `bottomColor`, `shoeColor`;
+- `achievements.books`: cada ID de livro com frases marcadas (`completedExercises`), páginas visitadas (`visitedPages`), conclusão da história (`finished`, `finishedAt`) e medalha (`medalEarnedAt`, `challengeCompletedAt` legado);
 - `app`, `schemaVersion` e `exportedAt` para identificar a origem, versão e data do backup.
 
 As frases marcadas ficam salvas automaticamente no navegador e reaparecem ao abrir o mesmo livro. A conclusão de um livro também fica registrada quando a criança alcança a página final. Ao tocar em **Importar personagem SVG**, escolha um backup baixado anteriormente; o aplicativo valida o JSON de perfil e pede confirmação para **substituir** as preferências e conquistas existentes. Por segurança, os elementos gráficos de SVGs importados **não** são inseridos no app: o personagem é redesenhado localmente usando apenas os dados validados do JSON.
 
 O backup não exige conta, servidor nem conexão. **Privacidade:** como o arquivo contém o nome da criança e seu histórico de leitura, guarde-o em um local seguro e evite compartilhá-lo publicamente. Um SVG sem os metadados de perfil da Prateleira Mágica não pode ser importado como backup.
 
-**Regra para todos os livros:** os campos `title` de `books/index.json`, do JSON do livro e da página de capa devem usar `{{nome}}` quando mencionarem a criança. Nos textos, selos, medalhas e narrações, use `{{nome}}`, `{{pronome}}`, `{{Pronome}}`, `{{possessivo}}` ou `{{Possessivo}}`, nunca um nome infantil fixo. Se o nome for uma palavra interativa, use `[[{{nome}}]]`. Evite frases que dependam de flexão de gênero fora desses marcadores; prefira construções neutras como “a criança” quando necessário.
+**Regra para todos os livros:** os campos `title` de `books/index.json`, do JSON do livro e da página de capa devem usar `{{nome}}` quando mencionarem a criança. Nos textos, selos, medalhas e narrações, use `{{nome}}`, `{{idade}}` (quando o nascimento estiver cadastrado), `{{pronome}}`, `{{Pronome}}`, `{{possessivo}}` ou `{{Possessivo}}`, nunca um nome infantil fixo. Se o nome for uma palavra interativa, use `[[{{nome}}]]`. Evite frases que dependam de flexão de gênero fora desses marcadores; prefira construções neutras como “a criança” quando necessário.
 
 Nas ilustrações, o símbolo SVG `<symbol id="ellie">` (legado), `<symbol id="kid">` ou `<symbol id="protagonist">` representa **a criança configurada**, e as instâncias `<use>` são trocadas automaticamente pelo avatar escolhido. Os textos dos SVGs também aceitam `{{nome}}`, inclusive `<title>`, `aria-label` e balões de fala. O processo escapa caracteres especiais para preservar o XML válido. As capas na prateleira, a ilustração de destaque e as páginas do leitor herdam o mesmo avatar.
 
@@ -124,6 +145,10 @@ Para tentar baixar ou atualizar a coleção novamente, execute `node tools/downl
 
 Para reconstruir as peças usadas pelo app após alterar as seleções, execute `python3 tools/extract-avatar-components.py` e rode os testes. A geração precisa manter o SVG final auto-contido para o backup funcionar offline.
 
+#### Pets sem redesenho
+
+Os arquivos `assets/pets/*.svg` são os **20 SVGs originais e sem alterações** da coleção [Cute Animal Vectors](https://www.svgrepo.com/collection/cute-animal-vectors/), todos conferidos com indicação de licença CC0 nas páginas individuais. O script `node tools/download-cute-animal-pets.mjs` baixa e valida a coleção completa. O script `node tools/build-pet-parts.mjs` empacota as formas originais sem modificar seus caminhos; apenas um contêiner posiciona o pet ao lado da criança no símbolo SVG (inclusive nas histórias e nos backups offline).
+
 ### Pronúncia
 
 O texto exibido é personalizado com o nome escolhido, mas a escrita fonética aparece somente na voz. `pronunciation.names` continua disponível para personagens secundários (por exemplo, Drica e Draco); a pronúncia definida pela criança tem prioridade. `pronunciation.syllables` envia sons fonéticos e palavras de apoio (TRO: “tró, como em troca”; TRU: “trú, como em truque”). A disponibilidade e a qualidade da voz dependem do sintetizador de fala instalado no navegador/dispositivo.
@@ -131,13 +156,14 @@ O texto exibido é personalizado com o nome escolhido, mas a escrita fonética a
 ## Controles
 
 - Clique ou toque em **Próxima** e **Voltar**, ou deslize na área do livro.
+- A transição usa uma **virada de folha 3D**, inspirada visualmente no [Turn.js](https://github.com/blasten/turn.js), mas implementada manualmente com CSS e JavaScript (sem jQuery ou código do plugin). No celular vira a folha inteira; no desktop vira uma metade do livro. Quem prefere movimento reduzido não recebe a animação.
 - `←` página anterior; `→` próxima; **Espaço** ou botão **Ouvir** narra a página atual.
 - Toque em palavras coloridas ou nas sílabas para ouvi-las individualmente.
-- No desafio, marque cada frase lida para ganhar a medalha.
+- No desafio, marque **todas** as frases lidas para liberar a página final e ganhar a medalha.
 
 ## Offline e instalação
 
-O Service Worker salva a prateleira, o leitor, todos os JSONs e todas as ilustrações listadas no catálogo, quando há rede no primeiro acesso. Depois, a navegação e a leitura ficam disponíveis offline, inclusive em URLs de livros com parâmetros. Para receber novos livros ou mudanças, o usuário precisa abrir o site com internet ao menos uma vez após a publicação da nova versão do Service Worker.
+O Service Worker salva a prateleira, o leitor, o editor, o perfil, todos os JSONs, as ilustrações e **os 20 SVGs de pets**, quando há rede no primeiro acesso. Depois, a navegação e a leitura ficam disponíveis offline, inclusive em URLs de livros com parâmetros. Para receber novos livros ou mudanças, o usuário precisa abrir o site com internet ao menos uma vez após a publicação da nova versão do Service Worker.
 
 Em navegadores compatíveis, use **Instalar app** ou a opção **Adicionar à tela inicial**. A narração por voz depende das vozes disponíveis localmente; alguns sintetizadores podem precisar de conectividade.
 
@@ -153,7 +179,10 @@ Se o Pages ainda não estiver habilitado: **Settings → Pages → Build and dep
 node tests/verify.mjs
 node tests/preferences.test.mjs
 node tests/avatar.test.mjs
+node tests/progression.test.mjs
+node tests/page-turn.test.mjs
 node tests/offline.test.mjs
+node tools/build-pet-parts.mjs --check
 ```
 
 Licença: consulte [LICENSE](LICENSE).

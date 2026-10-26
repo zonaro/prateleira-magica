@@ -65,3 +65,9 @@ As páginas individuais relacionadas abaixo foram consultadas e indicam **licen�
 - Os novos penteados e roupas são adicionados sem remover as opções históricas.
 - Os 74 SVGs completos são preservados para reconstrução auditável, mas somente o pacote pequeno `avatar-parts.js` precisa ser carregado no app ou no PWA offline.
 - Alterações no mapa requerem regenerar o JS, aumentar a versão de cache do Service Worker, rodar os testes e conferir as prévias produzidas por `node tools/preview-avatar-combinations.mjs`.
+
+## Pets da coleção Cute Animal Vectors
+
+Os pets são um catálogo separado de **20 SVGs originais CC0** da coleção [Cute Animal Vectors](https://www.svgrepo.com/collection/cute-animal-vectors/). Os arquivos completos, sem alteração de geometria ou cor, ficam em `assets/pets/`; `catalog.json` contém o link individual de cada animal.
+
+O script `tools/build-pet-parts.mjs` copia literalmente o interior de cada SVG para `assets/js/pet-parts.js`. O compositor adiciona a peça escolhida como um `<svg>` secundário com posição e tamanho ajustados ao lado da criança, sem modificar os caminhos do desenho. Isso mantém o pet dentro das ilustrações dos livros, da prévia do editor e dos SVGs de backup mesmo offline. A seleção é liberada após duas medalhas persistidas no perfil e registrada em `petId`.

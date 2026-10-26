@@ -1,0 +1,146 @@
+{
+  "schemaVersion": 1,
+  "sourceCollection": "https://www.svgrepo.com/collection/cute-animal-vectors/",
+  "pets": [
+    {
+      "id": "dinosaur",
+      "name": "Dinossauro",
+      "file": "assets/pets/530181-dinosaur.svg",
+      "source": "https://www.svgrepo.com/svg/530181/dinosaur",
+      "license": "CC0"
+    },
+    {
+      "id": "crab",
+      "name": "Caranguejo",
+      "file": "assets/pets/530182-crab.svg",
+      "source": "https://www.svgrepo.com/svg/530182/crab",
+      "license": "CC0"
+    },
+    {
+      "id": "elk",
+      "name": "Alce",
+      "file": "assets/pets/530183-elk.svg",
+      "source": "https://www.svgrepo.com/svg/530183/elk",
+      "license": "CC0"
+    },
+    {
+      "id": "jellyfish",
+      "name": "Água-viva",
+      "file": "assets/pets/530184-jellyfish.svg",
+      "source": "https://www.svgrepo.com/svg/530184/jellyfish",
+      "license": "CC0"
+    },
+    {
+      "id": "penguin",
+      "name": "Pinguim",
+      "file": "assets/pets/530185-penguin.svg",
+      "source": "https://www.svgrepo.com/svg/530185/penguin",
+      "license": "CC0"
+    },
+    {
+      "id": "the-cow",
+      "name": "Vaquinha",
+      "file": "assets/pets/530186-the-cow.svg",
+      "source": "https://www.svgrepo.com/svg/530186/the-cow",
+      "license": "CC0"
+    },
+    {
+      "id": "turtle",
+      "name": "Tartaruga",
+      "file": "assets/pets/530187-turtle.svg",
+      "source": "https://www.svgrepo.com/svg/530187/turtle",
+      "license": "CC0"
+    },
+    {
+      "id": "bear",
+      "name": "Urso",
+      "file": "assets/pets/530188-bear.svg",
+      "source": "https://www.svgrepo.com/svg/530188/bear",
+      "license": "CC0"
+    },
+    {
+      "id": "shrimp",
+      "name": "Camarão",
+      "file": "assets/pets/530189-shrimp.svg",
+      "source": "https://www.svgrepo.com/svg/530189/shrimp",
+      "license": "CC0"
+    },
+    {
+      "id": "rabbit",
+      "name": "Coelho",
+      "file": "assets/pets/530190-rabbit.svg",
+      "source": "https://www.svgrepo.com/svg/530190/rabbit",
+      "license": "CC0"
+    },
+    {
+      "id": "lion",
+      "name": "Leão",
+      "file": "assets/pets/530191-lion.svg",
+      "source": "https://www.svgrepo.com/svg/530191/lion",
+      "license": "CC0"
+    },
+    {
+      "id": "squirrel",
+      "name": "Esquilo",
+      "file": "assets/pets/530192-squirrel.svg",
+      "source": "https://www.svgrepo.com/svg/530192/squirrel",
+      "license": "CC0"
+    },
+    {
+      "id": "polar-bear",
+      "name": "Urso-polar",
+      "file": "assets/pets/530193-polar-bear.svg",
+      "source": "https://www.svgrepo.com/svg/530193/polar-bear",
+      "license": "CC0"
+    },
+    {
+      "id": "raccoon",
+      "name": "Guaxinim",
+      "file": "assets/pets/530194-raccoon.svg",
+      "source": "https://www.svgrepo.com/svg/530194/raccoon",
+      "license": "CC0"
+    },
+    {
+      "id": "wild-boar",
+      "name": "Javali",
+      "file": "assets/pets/530195-wild-boar.svg",
+      "source": "https://www.svgrepo.com/svg/530195/wild-boar",
+      "license": "CC0"
+    },
+    {
+      "id": "crocodile",
+      "name": "Crocodilo",
+      "file": "assets/pets/530196-crocodile.svg",
+      "source": "https://www.svgrepo.com/svg/530196/crocodile",
+      "license": "CC0"
+    },
+    {
+      "id": "hedgehog",
+      "name": "Ouriço",
+      "file": "assets/pets/530197-hedgehog.svg",
+      "source": "https://www.svgrepo.com/svg/530197/hedgehog",
+      "license": "CC0"
+    },
+    {
+      "id": "fox",
+      "name": "Raposa",
+      "file": "assets/pets/530198-fox.svg",
+      "source": "https://www.svgrepo.com/svg/530198/fox",
+      "license": "CC0"
+    },
+    {
+      "id": "cute-animals",
+      "name": "Bichinhos",
+      "file": "assets/pets/530199-cute-animals.svg",
+      "source": "https://www.svgrepo.com/svg/530199/cute-animals",
+      "license": "CC0"
+    },
+    {
+      "id": "whale",
+      "name": "Baleia",
+      "file": "assets/pets/530200-whale.svg",
+      "source": "https://www.svgrepo.com/svg/530200/whale",
+      "license": "CC0"
+    }
+  ]
+}

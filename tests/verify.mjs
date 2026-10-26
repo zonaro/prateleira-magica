@@ -15,14 +15,16 @@ const reference = (file) => {
 };
 
 const required = [
-  'index.html', 'livro.html', 'personagem.html', 'manifest.webmanifest', 'sw.js',
+  'index.html', 'livro.html', 'personagem.html', 'perfil.html', 'manifest.webmanifest', 'sw.js',
   'assets/css/app.css', 'assets/js/library.js', 'assets/js/reader.js', 'assets/js/avatar-parts.js', 'assets/js/avatar.js',
-  'assets/js/preferences.js', 'assets/js/settings-ui.js',
+  'assets/js/preferences.js', 'assets/js/settings-ui.js', 'assets/js/profile.js', 'assets/js/page-turn.js',
+  'assets/js/pet-parts.js', 'assets/pets/catalog.json',
   'assets/js/pwa.js', 'books/index.json', 'assets/icons/icon.svg'
 ];
 required.forEach(reference);
 
-for (const scriptFile of ['assets/js/avatar.js', 'assets/js/library.js', 'assets/js/reader.js', 'assets/js/preferences.js', 'assets/js/settings-ui.js', 'assets/js/pwa.js', 'sw.js']) {
+for (const scriptFile of ['assets/js/avatar.js', 'assets/js/library.js', 'assets/js/reader.js', 'assets/js/preferences.js',
+  'assets/js/settings-ui.js', 'assets/js/profile.js', 'assets/js/page-turn.js', 'assets/js/pet-parts.js', 'assets/js/pwa.js', 'sw.js']) {
   new Script(read(scriptFile), { filename: scriptFile });
 }
 
@@ -60,7 +62,7 @@ for (const entry of index.books) {
       assert.equal(typeof block.text, 'string');
       assert.equal((block.text.match(/\[\[/g) || []).length, (block.text.match(/\]\]/g) || []).length);
       for (const token of block.text.matchAll(/\{\{([^}]+)\}\}/g)) {
-        assert(['nome', 'pronome', 'Pronome', 'possessivo', 'Possessivo'].includes(token[1]), `Marcador desconhecido: ${token[1]}`);
+        assert(['nome', 'idade', 'pronome', 'Pronome', 'possessivo', 'Possessivo'].includes(token[1]), `Marcador desconhecido: ${token[1]}`);
       }
     }
     reference(page.illustration);
@@ -72,13 +74,24 @@ for (const entry of index.books) {
   }
   if (book.pages.some((page) => page.type === 'challenge')) {
     assert(Array.isArray(book.exercises) && book.exercises.length, `Exercícios ausentes: ${entry.id}`);
+    const indexChallenge = book.pages.findIndex((page) => page.type === 'challenge');
+    const indexFinish = book.pages.findIndex((page) => page.type === 'finish');
+    assert(indexFinish > indexChallenge, `O desafio de ${entry.id} precisa ocorrer antes da medalha final`);
   }
   console.log(`✓ ${book.title}: ${book.pages.length} páginas`);
 }
 
 // Every file referenced by the offline precache and HTML must exist.
-for (const file of ['index.html', 'livro.html', 'personagem.html']) {
+for (const file of ['index.html', 'livro.html', 'personagem.html', 'perfil.html']) {
   for (const match of read(file).matchAll(/(?:src|href)="(\.\/[^"?#]+)"/g)) reference(match[1].slice(2));
+}
+const petCatalog = json('assets/pets/catalog.json');
+assert.equal(petCatalog.pets.length, 20, 'Coleção completa de Cute Animal Vectors não foi incorporada');
+for (const pet of petCatalog.pets) {
+  assert.equal(pet.license, 'CC0');
+  assert(pet.source.startsWith('https://www.svgrepo.com/svg/'));
+  reference(pet.file);
+  assert(read(pet.file).includes('<svg') && read(pet.file).includes('</svg>'), `Pet SVG inválido: ${pet.file}`);
 }
 const offline = read('sw.js');
 for (const item of offline.matchAll(/'\.\/([^']+)'/g)) {
@@ -88,4 +101,5 @@ for (const item of offline.matchAll(/'\.\/([^']+)'/g)) {
 
 assert.equal(ids.size, index.books.length);
 console.log(`✓ ${ids.size} livro(s), ${pages} páginas, ${illustrations} referências de ilustrações`);
+console.log('✓ Desafios antes da medalha em todos os livros e catálogo completo de 20 pets originais CC0');
 console.log('✓ JSON, scripts, links internos e arquivos PWA válidos');

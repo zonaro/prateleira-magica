@@ -20,6 +20,8 @@ const context = {
 };
 vm.runInNewContext(fs.readFileSync(path.join(root, 'assets/js/avatar-parts.js'), 'utf8'), context,
   { filename: 'avatar-parts.js' });
+vm.runInNewContext(fs.readFileSync(path.join(root, 'assets/js/pet-parts.js'), 'utf8'), context,
+  { filename: 'pet-parts.js' });
 vm.runInNewContext(avatarSource, context, { filename: 'avatar.js' });
 vm.runInNewContext(source, context, { filename: 'preferences.js' });
 const prefs = window.LivrinhoPreferences;
@@ -41,6 +43,9 @@ for (const [gender, pronome, possessivo] of [
 
 assert.equal(prefs.clean({ name: '', gender: 'desconhecido', skinColor: '#jklmno' }).gender, 'feminino');
 assert.equal(prefs.clean({ name: '', skinColor: '#jklmno' }).skinColor, '#e9aa83');
+assert.equal(prefs.clean({ birthDate: '2020-02-29' }).birthDate, '2020-02-29');
+assert.equal(prefs.clean({ birthDate: '2023-02-29' }).birthDate, '');
+assert.equal(prefs.clean({ petId: 'rabbit' }).petId, null, 'Pets só depois de duas medalhas');
 assert(prefs.avatarSymbol('ellie').includes('<symbol id="ellie"'));
 assert.equal(prefs.clean({ outfitStyle: 'inexistente', hairColor: '#jklmno' }).outfitStyle, 'hoodie');
 assert.equal(prefs.clean({ outfitStyle: 'inexistente', hairColor: '#jklmno' }).hairColor, '#493a55');
@@ -65,12 +70,26 @@ assert(css.includes('.settings-preview-column{position:sticky;top:20px'), 'Prév
 assert(css.includes('.settings-preview-column{position:sticky;top:0'), 'Prévia do avatar precisa ficar fixa na rolagem do celular');
 const editor = fs.readFileSync(path.join(root, 'personagem.html'), 'utf8');
 assert(editor.includes('id="settingsApp"') && editor.includes('settings-ui.js'), 'Personalização não tem tela própria');
+assert(editor.includes('pet-parts.js'), 'Pet precisa ser renderizado no editor');
 const editorUi = fs.readFileSync(path.join(root, 'assets/js/settings-ui.js'), 'utf8');
 assert(editorUi.includes('settings-layout') && editorUi.includes('settings-preview-column'));
+for (const marker of ['birthDate', 'petStyles', 'petUnlockStatus', 'petId']) {
+  assert(editorUi.includes(marker), `Editor sem ${marker}`);
+}
 assert(!editorUi.includes('showModal('), 'O editor ainda abre um popup');
 for (const page of ['index.html', 'livro.html']) {
   assert(fs.readFileSync(path.join(root, page), 'utf8').includes('href="./personagem.html"'), `${page} sem link para editor dedicado`);
 }
+assert(fs.readFileSync(path.join(root, 'index.html'), 'utf8').includes('href="./perfil.html"'));
+const profileHtml = fs.readFileSync(path.join(root, 'perfil.html'), 'utf8');
+const profileJs = fs.readFileSync(path.join(root, 'assets/js/profile.js'), 'utf8');
+for (const marker of ['profileBooks', 'profileMedals', 'profileAvatar', 'profilePetStatus']) {
+  assert(profileHtml.includes(marker), `Perfil sem ${marker}`);
+}
+for (const marker of ['visitedPages', 'medalEarnedAt', 'Math.round', 'profile-book-card']) {
+  assert(profileJs.includes(marker), `Perfil sem ${marker}`);
+}
+assert(fs.readFileSync(path.join(root, 'livro.html'), 'utf8').includes('assets/js/page-turn.js'));
 
 // Prove that a real book illustration receives the selected skin/hair symbol.
 const blobs = new Map();
@@ -116,3 +135,5 @@ console.log('✓ Títulos, capas, balões e destaque da prateleira usam nome e a
 console.log('✓ Voz preserva TRO/DRU e personaliza protagonista + NPCs');
 console.log('✓ Prateleira com três colunas no desktop');
 console.log('✓ Editor de personagem dedicado, acessível da prateleira/leitor, com prévia fixa desktop/mobile');
+console.log('✓ Página de perfil com progresso, medalhas, idade e desbloqueio dos 20 pets');
+console.log('✓ Animação de virar página incluída no leitor sem remover áudio ou navegação');
