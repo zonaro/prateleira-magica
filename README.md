@@ -87,13 +87,13 @@ Nas páginas, coloque `[[palavra]]` para exibir uma palavra colorida que pode se
 
 ### Protagonista personalizável
 
-O botão **Personalizar** (na prateleira e no leitor) permite configurar:
+O botão **Personalizar** (na prateleira e no leitor) abre a página independente [`personagem.html`](personagem.html). A prévia do personagem fica **fixa durante a rolagem**: em coluna lateral no computador e em uma faixa compacta no topo do celular. Nessa tela, é possível configurar:
 
 - Nome da criança e escrita fonética separada para a narração.
 - Gênero/pronomes: masculino (`ele/dele`), feminino (`ela/dela`) ou neutro (`elu/delu`).
-- **12 penteados e 8 roupas extraídos dos SVGs reais da coleção Kids Avatars**, combináveis livremente: 96 combinações principais, antes de variar as cores. Penteados incluem afro, cacheado, maria-chiquinha, tranças, cabelo longo, cortes curtos e boné.
+- **22 penteados e 18 roupas extraídos dos SVGs reais da coleção Kids Avatars**, combináveis livremente: 396 combinações principais, antes de variar as cores. Penteados incluem afro, cacheado, maria-chiquinha, tranças, cabelo longo, cortes curtos, topetes, acessórios de flores/laços e boné.
 - Escolha independente da cor do cabelo e da roupa, com paletas e seleção livre.
-- **Calça ou shorts**, com cor independente, e cor personalizada para os sapatos.
+- **Calça, shorts ou saia**, com cor independente, e cor personalizada para os tênis, espelhados para permanecer alinhados.
 - Cores de pele naturais ou fantasia (incluindo verde, azul, lilás e rosa), mantendo o seletor livre existente.
 
 Essas preferências ficam apenas no `localStorage` do navegador, sem conta ou servidor. O avatar SVG é personalizado localmente nas ilustrações de cada página, inclusive quando o aplicativo está offline. A chave de armazenamento do app anterior foi mantida de propósito para preservar o personagem após a renomeação do repositório.
@@ -116,9 +116,9 @@ Nas ilustrações, o símbolo SVG `<symbol id="ellie">` (legado), `<symbol id="k
 
 #### Referências visuais SVG Repo
 
-O rosto, os penteados e as roupas **usam as formas vetoriais originais**, extraídas dos SVGs da coleção [Kids Avatars](https://www.svgrepo.com/collection/kids-avatars/). A geometria de cabelo e roupa não é redesenhada: `tools/extract-avatar-components.py` copia as formas declaradas em `component-map.json` e substitui somente as cores por marcadores de personalização. Apenas pernas, calça, shorts e sapatos têm formas próprias do aplicativo.
+O rosto, os penteados e as roupas **usam as formas vetoriais originais**, extraídas dos SVGs da coleção [Kids Avatars](https://www.svgrepo.com/collection/kids-avatars/). A geometria de cabelo e roupa não é redesenhada: `tools/extract-avatar-components.py` copia as formas declaradas em `component-map.json` e substitui somente as cores por marcadores de personalização. Apenas pernas, calça, shorts, saia e tênis têm formas próprias do aplicativo.
 
-O catálogo original (74 SVGs baixados dentre 75 identificados) fica em `assets/avatar-reference/svgrepo-kids/`, acompanhado de `sources.json` e das URLs de origem. Os **14 ícones reutilizados diretamente** têm licença CC0 verificada nas páginas individuais. O app carrega **somente** o pacote de componentes extraídos `assets/js/avatar-parts.js`, incluído no cache offline; não precisa carregar os SVGs originais separadamente, nem depender de rede para compor ou exportar um personagem. Veja as [fontes e decisões de composição](docs/avatar-components.md).
+O catálogo original (74 SVGs baixados dentre 75 identificados) fica em `assets/avatar-reference/svgrepo-kids/`, acompanhado de `sources.json` e das URLs de origem. **31 SVGs originais** são utilizados nos componentes de rosto, cabelo e roupa; as respectivas páginas do SVG Repo indicam licença CC0. O app carrega **somente** o pacote de componentes extraídos `assets/js/avatar-parts.js`, incluído no cache offline; não precisa carregar os SVGs originais separadamente, nem depender de rede para compor ou exportar um personagem. Veja as [fontes e decisões de composição](docs/avatar-components.md).
 
 Para tentar baixar ou atualizar a coleção novamente, execute `node tools/download-kids-avatars.mjs` com acesso à internet. O script reaproveita os arquivos válidos já existentes.
 

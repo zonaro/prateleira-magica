@@ -3,6 +3,29 @@
   const preferences = window.LivrinhoPreferences;
   const avatarCatalog = window.LivrinhoAvatar;
   if (!preferences || !avatarCatalog) return;
+  const root = new URL('./', document.baseURI);
+  const editor = document.getElementById('settingsApp');
+  if (!editor) {
+    const hero = document.getElementById('heroAvatar');
+    if (hero) {
+      const refreshHero = () => { hero.innerHTML = preferences.avatarSVG(preferences.load()); };
+      refreshHero();
+      document.addEventListener('livrinhos:protagonist-changed', refreshHero);
+    }
+    for (const button of document.querySelectorAll('[data-open-settings]')) {
+      button.addEventListener('click', (event) => {
+        event.preventDefault();
+        const back = location.pathname.endsWith('/livro.html') ? `livro.html${location.search}` : 'index.html';
+        const destination = new URL(`personagem.html?voltar=${encodeURIComponent(back)}`, root);
+        location.assign(destination.href);
+      });
+    }
+    return;
+  }
+  const backParam = new URLSearchParams(location.search).get('voltar');
+  const candidate = backParam ? new URL(backParam, root) : new URL('index.html', root);
+  const returnUrl = candidate.origin === root.origin && candidate.pathname.startsWith(root.pathname)
+    && /\/(?:index|livro)\.html$/.test(candidate.pathname) ? candidate.href : new URL('index.html', root).href;
   const skinColors = [
     ['#f5d4b3', 'Pele clara'], ['#e9aa83', 'Pele média clara'],
     ['#c98760', 'Pele média'], ['#a66846', 'Pele bronzeada'],
@@ -16,19 +39,22 @@
   let draft = preferences.load();
   let pronunciationTouched = false;
 
-  const dialog = document.createElement('dialog');
-  dialog.id = 'protagonistDialog';
-  dialog.className = 'protagonist-dialog';
-  dialog.setAttribute('aria-labelledby', 'settingsTitle');
+  const dialog = editor;
   dialog.innerHTML = `
-    <form class="preferences-form" method="dialog">
+    <div class="settings-layout">
+      <aside class="settings-preview-column" aria-label="Prévia do seu personagem">
+        <div class="avatar-editor"><div class="avatar-stage" id="avatarStage"></div>
+          <div class="settings-preview-label"><strong id="previewName">Meu personagem</strong><span>⭐ Sua estrela!</span></div>
+        </div>
+        <p class="settings-preview-help">O personagem acompanha suas escolhas enquanto você explora a página.</p>
+      </aside>
+    <form class="preferences-form" id="avatarSettingsForm">
       <div class="preferences-heading">
         <div><div class="section-kicker">NOSSA ESTRELA</div><h2 id="settingsTitle">Personalizar protagonista ✨</h2></div>
-        <button type="button" class="settings-close" id="closeSettings" aria-label="Fechar configurações">✕</button>
+        <a class="settings-close" id="closeSettings" aria-label="Voltar" href="${returnUrl}">← Voltar</a>
       </div>
       <p class="settings-intro">Monte seu personagem combinando cabelos, roupas e cores. Ele aparecerá nas ilustrações de todos os livros!</p>
       <div class="preferences-content">
-        <div class="avatar-editor"><div class="avatar-stage" id="avatarStage"></div><span>Meu personagem</span></div>
         <div class="preferences-fields">
           <label class="field-label" for="childName">Nome da criança</label>
           <input id="childName" name="childName" type="text" maxlength="32" autocomplete="off" placeholder="Ex.: Ellie" required>
@@ -57,8 +83,8 @@
         </fieldset>
       </div>
       <div class="avatar-color-fields">
-        <fieldset class="skin-fieldset"><legend>Cor da calça ou do shorts</legend><div id="bottomColorOptions" class="skin-options"></div>
-          <label class="custom-color"><span>Outra cor</span><input id="customBottomColor" type="color" aria-label="Selecionar outra cor de calça ou shorts"></label>
+        <fieldset class="skin-fieldset"><legend>Cor da calça, shorts ou saia</legend><div id="bottomColorOptions" class="skin-options"></div>
+          <label class="custom-color"><span>Outra cor</span><input id="customBottomColor" type="color" aria-label="Selecionar outra cor de calça, shorts ou saia"></label>
         </fieldset>
         <fieldset class="skin-fieldset"><legend>Cor dos sapatos</legend><div id="shoeColorOptions" class="skin-options"></div>
           <label class="custom-color"><span>Outra cor</span><input id="customShoeColor" type="color" aria-label="Selecionar outra cor dos sapatos"></label>
@@ -76,8 +102,8 @@
       </section>
       <p class="settings-privacy">🔒 Os dados são locais. Atenção: o arquivo SVG exportado contém o nome e o progresso da criança; compartilhe-o com cuidado.</p>
       <div class="settings-actions"><button id="resetSettings" type="button" class="settings-reset">Restaurar padrão</button><button type="submit" class="settings-save">Salvar personagem <span aria-hidden="true">✓</span></button></div>
-    </form>`;
-  document.body.append(dialog);
+    </form>
+    </div>`;
 
   const $ = (selector) => dialog.querySelector(selector);
   const nameInput = $('#childName');
@@ -85,6 +111,7 @@
 
   function drawPreview() {
     $('#avatarStage').innerHTML = preferences.avatarSVG(draft);
+    $('#previewName').textContent = nameInput.value.trim() || 'Meu personagem';
     const hero = document.getElementById('heroAvatar');
     if (hero) hero.innerHTML = preferences.avatarSVG(preferences.load());
     const button = dialog.querySelector('#avatarStyles');
@@ -172,13 +199,10 @@
   addColors('bottomColorOptions', avatarCatalog.bottomColors, 'bottomColor');
   addColors('shoeColorOptions', avatarCatalog.shoeColors, 'shoeColor');
 
-  for (const button of document.querySelectorAll('[data-open-settings]')) {
-    button.addEventListener('click', () => { fillDialog(); dialog.showModal(); });
-  }
-  $('#closeSettings').addEventListener('click', () => dialog.close());
-  dialog.addEventListener('click', (event) => { if (event.target === dialog) dialog.close(); });
+  fillDialog();
   nameInput.addEventListener('input', () => {
     draft.name = nameInput.value;
+    $('#previewName').textContent = nameInput.value.trim() || 'Meu personagem';
     if (!pronunciationTouched) {
       pronunciationInput.value = nameInput.value;
       draft.pronunciation = nameInput.value;
@@ -255,13 +279,7 @@
   $('.preferences-form').addEventListener('submit', (event) => {
     event.preventDefault();
     preferences.save(currentDraft());
-    dialog.close();
+    location.assign(returnUrl);
   });
 
-  // Also show the saved character immediately when the shelf opens.
-  const hero = document.getElementById('heroAvatar');
-  if (hero) hero.innerHTML = preferences.avatarSVG(preferences.load());
-  document.addEventListener('livrinhos:protagonist-changed', () => {
-    if (hero) hero.innerHTML = preferences.avatarSVG(preferences.load());
-  });
 })();

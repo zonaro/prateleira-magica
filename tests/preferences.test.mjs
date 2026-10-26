@@ -61,6 +61,16 @@ assert.equal(speechText('DRU'), 'drú! Como em druida.');
 
 const css = fs.readFileSync(path.join(root, 'assets/css/app.css'), 'utf8');
 assert(css.includes('.book-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))'), 'Prateleira sem três colunas no desktop');
+assert(css.includes('.settings-preview-column{position:sticky;top:20px'), 'Prévia do avatar precisa ficar fixa na rolagem do desktop');
+assert(css.includes('.settings-preview-column{position:sticky;top:0'), 'Prévia do avatar precisa ficar fixa na rolagem do celular');
+const editor = fs.readFileSync(path.join(root, 'personagem.html'), 'utf8');
+assert(editor.includes('id="settingsApp"') && editor.includes('settings-ui.js'), 'Personalização não tem tela própria');
+const editorUi = fs.readFileSync(path.join(root, 'assets/js/settings-ui.js'), 'utf8');
+assert(editorUi.includes('settings-layout') && editorUi.includes('settings-preview-column'));
+assert(!editorUi.includes('showModal('), 'O editor ainda abre um popup');
+for (const page of ['index.html', 'livro.html']) {
+  assert(fs.readFileSync(path.join(root, page), 'utf8').includes('href="./personagem.html"'), `${page} sem link para editor dedicado`);
+}
 
 // Prove that a real book illustration receives the selected skin/hair symbol.
 const blobs = new Map();
@@ -105,3 +115,4 @@ console.log('✓ SVG real da história recebe as opções do protagonista');
 console.log('✓ Títulos, capas, balões e destaque da prateleira usam nome e avatar personalizados');
 console.log('✓ Voz preserva TRO/DRU e personaliza protagonista + NPCs');
 console.log('✓ Prateleira com três colunas no desktop');
+console.log('✓ Editor de personagem dedicado, acessível da prateleira/leitor, com prévia fixa desktop/mobile');

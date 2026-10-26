@@ -1,6 +1,6 @@
 /* Avatar composto de peças extraídas de SVGs CC0 da coleção Kids Avatars.
  * Rosto, cabelos e roupas: arquivos originais, compilados em avatar-parts.js.
- * Apenas pernas, shorts, calças e sapatos: geometria local deste módulo.
+ * Apenas pernas, shorts, calças, saias e sapatos: geometria local deste módulo.
  * Mantém viewBox 210x340 para compatibilidade com as 47 ilustrações.
  */
 (() => {
@@ -14,14 +14,23 @@
     ['puffs', 'Maria-chiquinha'], ['short', 'Curtinho'], ['side', 'De lado'],
     ['long', 'Longo ondulado'], ['curly', 'Cacheado'], ['afro', 'Afro'],
     ['braids', 'Trancinhas'], ['ponytail', 'Rabos de cavalo'], ['cap', 'Boné'],
-    ['bob', 'Chanel'], ['straight', 'Chanel loiro'], ['waves', 'Ondulado']
+    ['bob', 'Chanel'], ['straight', 'Chanel loiro'], ['waves', 'Ondulado'],
+    ['flower_braids', 'Flor lateral'], ['mohawk', 'Moicano'], ['undercut', 'Topete lateral'],
+    ['bow', 'Laços laterais'], ['quiff', 'Topete alto'], ['flower_bob', 'Chanel com flor'],
+    ['flower_long', 'Longo com flor'], ['medium_waves', 'Ondas médias'],
+    ['side_sweep', 'Franja longa'], ['ringlets', 'Cachos curtinhos']
   ];
   const outfitStyles = [
     ['hoodie', 'Moletom'], ['tee', 'Camiseta'], ['dress', 'Regata estampada'],
     ['overalls', 'Regata'], ['jacket', 'Jaqueta'], ['jersey', 'Esportivo'],
-    ['blouse', 'Blusa'], ['coat', 'Casaco']
+    ['blouse', 'Blusa'], ['coat', 'Casaco'],
+    ['tank', 'Regata básica'], ['sports_tee', 'Camiseta de treino'],
+    ['collared', 'Camisa social'], ['bib', 'Jardineira divertida'],
+    ['sleeveless', 'Blusa sem mangas'], ['patterned', 'Estampada de bolinhas'],
+    ['necklace', 'Blusa com colar'], ['team_tee', 'Camiseta de time'],
+    ['cardigan', 'Cardigã'], ['polo', 'Polo']
   ];
-  const bottomStyles = [['pants', 'Calça'], ['shorts', 'Shorts']];
+  const bottomStyles = [['pants', 'Calça'], ['shorts', 'Shorts'], ['skirt', 'Saia']];
   const hairColors = [
     ['#493a55', 'Castanho escuro'], ['#7b4c35', 'Castanho'],
     ['#c47b43', 'Ruivo'], ['#f5c35b', 'Loiro'],
@@ -75,18 +84,26 @@
     const bottoms = safeColor(settings.bottomColor, '#5879b9');
     const shoes = safeColor(settings.shoeColor, '#625a89');
     const shorts = settings.bottomStyle === 'shorts';
-    const legs = shorts
-      ? `<path d="M74 260h29l-7 53H72Zm35 0h29l7 53h-25Z" fill="${skin}"/>`
+    const skirt = settings.bottomStyle === 'skirt';
+    const legs = shorts || skirt
+      ? `<path d="M71 256h31l-6 57H72Zm39 0h31l-4 57h-25Z" fill="${skin}"/>`
       : '';
-    const clothing = shorts
-      ? `<path d="M63 230h84l6 47h-42l-7-18-7 18H57Z" fill="${bottoms}" stroke="${shade(bottoms, -.14)}" stroke-width="2"/><path d="M65 267h29m24 0h30" stroke="${shade(bottoms, .24)}" stroke-width="4"/>`
-      : `<path d="M64 229h82l7 83h-38l-10-52-9 52H58Z" fill="${bottoms}" stroke="${shade(bottoms, -.14)}" stroke-width="2"/><path d="M105 261v-17" stroke="${shade(bottoms, -.17)}" stroke-width="3"/>`;
+    const clothing = skirt
+      ? `<path d="M68 228h74l16 53q-53 15-106 0Z" fill="${bottoms}" stroke="${shade(bottoms, -.14)}" stroke-width="2"/><path d="M61 276q44 15 88 0" fill="none" stroke="${shade(bottoms, .23)}" stroke-width="3" stroke-linecap="round"/><path d="M72 236h66" stroke="${shade(bottoms, -.12)}" stroke-width="3"/>`
+      : shorts
+        ? `<path d="M63 230h84l6 47h-42l-7-18-7 18H57Z" fill="${bottoms}" stroke="${shade(bottoms, -.14)}" stroke-width="2"/><path d="M65 267h29m24 0h30" stroke="${shade(bottoms, .24)}" stroke-width="4"/>`
+        : `<path d="M64 229h82l7 83h-38l-10-52-9 52H58Z" fill="${bottoms}" stroke="${shade(bottoms, -.14)}" stroke-width="2"/><path d="M105 261v-17" stroke="${shade(bottoms, -.17)}" stroke-width="3"/>`;
+    // O MESMO tênis, espelhado em torno do eixo central x=105. Assim ambos
+    // tocam a mesma linha de chão (y=331) e não ficam com pés desalinhados.
+    const sneaker = `<path d="M22 4h17l4 9 5 8v6H0v-6C0 11 8 4 22 4Z" fill="${shoes}" stroke="${shade(shoes, -.17)}" stroke-width="2"/>
+      <path d="M1 24h46" stroke="${shade(shoes, .55)}" stroke-width="4" stroke-linecap="round"/>
+      <path d="M17 15h18m-16 5h16" stroke="${shade(shoes, .32)}" stroke-width="2" stroke-linecap="round"/>`;
     return `<g data-layer="pernas-originais-do-app">
       <ellipse cx="105" cy="327" rx="74" ry="9" fill="#243f59" opacity=".13"/>
       ${legs}${clothing}
-      <path d="M70 303h28v12H67Zm53 0h28l3 12h-31Z" fill="${shorts ? skin : shade(bottoms, -.08)}"/>
-      <path d="M65 309h36l2 20H53q-4-15 12-20Zm58 0h36q16 3 14 20h-51Z" fill="${shoes}" stroke="${shade(shoes, -.14)}" stroke-width="2"/>
-      <path d="M60 323h43m20 0h49" stroke="${shade(shoes, .38)}" stroke-width="3" stroke-linecap="round"/>
+      <path d="M72 303h24v12H72Zm41 0h24v12h-24Z" fill="${shorts || skirt ? skin : shade(bottoms, -.08)}"/>
+      <g data-layer="tenis-esquerdo" transform="translate(60 304)">${sneaker}</g>
+      <g data-layer="tenis-direito" transform="translate(150 304) scale(-1 1)">${sneaker}</g>
     </g>`;
   }
 

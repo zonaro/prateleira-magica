@@ -1,11 +1,12 @@
 /* Offline-first, same-origin service worker for the static GitHub Pages app. */
-const CACHE_NAME = 'prateleira-magica-v5';
+const CACHE_NAME = 'prateleira-magica-v6';
 const APP_ROOT = new URL(self.registration.scope);
 const url = (path) => new URL(path, APP_ROOT).href;
 const APP_SHELL = [
   './',
   './index.html',
   './livro.html',
+  './personagem.html',
   './manifest.webmanifest',
   './assets/css/app.css',
   './assets/js/avatar-parts.js',

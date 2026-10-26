@@ -23,6 +23,16 @@ As páginas individuais relacionadas abaixo foram consultadas e indicam **licen�
 | Chanel | [Girl #38251](https://www.svgrepo.com/svg/38251/girl) | `38251-girl.svg` |
 | Chanel loiro | [Girl #3914](https://www.svgrepo.com/svg/3914/girl) | `3914-girl.svg` |
 | Ondulado | [Girl #65066](https://www.svgrepo.com/svg/65066/girl) | `65066-girl.svg` |
+| Flor lateral | [Girl #31122](https://www.svgrepo.com/svg/31122/girl) | `31122-girl.svg` |
+| Moicano | [Boy #38239](https://www.svgrepo.com/svg/38239/boy) | `38239-boy.svg` |
+| Topete lateral | [Boy #38252](https://www.svgrepo.com/svg/38252/boy) | `38252-boy.svg` |
+| Laços laterais | [Girl #38256](https://www.svgrepo.com/svg/38256/girl) | `38256-girl.svg` |
+| Topete alto | [Boy #38261](https://www.svgrepo.com/svg/38261/boy) | `38261-boy.svg` |
+| Chanel com flor | [Girl #42225](https://www.svgrepo.com/svg/42225/girl) | `42225-girl.svg` |
+| Longo com flor | [Girl #66793](https://www.svgrepo.com/svg/66793/girl) | `66793-girl.svg` |
+| Ondas médias | [Girl #66815](https://www.svgrepo.com/svg/66815/girl) | `66815-girl.svg` |
+| Franja longa | [Girl #41010](https://www.svgrepo.com/svg/41010/girl) | `41010-girl.svg` |
+| Cachos curtinhos | [Boy #3869](https://www.svgrepo.com/svg/3869/boy) | `3869-boy.svg` |
 | Moletom | [Boy #3852](https://www.svgrepo.com/svg/3852/boy) | `3852-boy.svg` |
 | Camiseta | [Boy #12676](https://www.svgrepo.com/svg/12676/boy) | `12676-boy.svg` |
 | Regata estampada | [Girl #3896](https://www.svgrepo.com/svg/3896/girl) | `3896-girl.svg` |
@@ -31,13 +41,23 @@ As páginas individuais relacionadas abaixo foram consultadas e indicam **licen�
 | Esportivo | [Boy #66804](https://www.svgrepo.com/svg/66804/boy) | `66804-boy.svg` |
 | Blusa | [Girl #38251](https://www.svgrepo.com/svg/38251/girl) | `38251-girl.svg` |
 | Casaco | [Boy #38284](https://www.svgrepo.com/svg/38284/boy) | `38284-boy.svg` |
+| Regata básica | [Boy #132866](https://www.svgrepo.com/svg/132866/boy) | `132866-boy.svg` |
+| Camiseta de treino | [Boy #132848](https://www.svgrepo.com/svg/132848/boy) | `132848-boy.svg` |
+| Camisa social | [Boy #31130](https://www.svgrepo.com/svg/31130/boy) | `31130-boy.svg` |
+| Jardineira divertida | [Boy #38239](https://www.svgrepo.com/svg/38239/boy) | `38239-boy.svg` |
+| Blusa sem mangas | [Girl #38256](https://www.svgrepo.com/svg/38256/girl) | `38256-girl.svg` |
+| Estampada de bolinhas | [Boy #38261](https://www.svgrepo.com/svg/38261/boy) | `38261-boy.svg` |
+| Blusa com colar | [Girl #45972](https://www.svgrepo.com/svg/45972/girl) | `45972-girl.svg` |
+| Camiseta de time | [Boy #66797](https://www.svgrepo.com/svg/66797/boy) | `66797-boy.svg` |
+| Cardigã | [Girl #66829](https://www.svgrepo.com/svg/66829/girl) | `66829-girl.svg` |
+| Polo | [Boy #83069](https://www.svgrepo.com/svg/83069/boy) | `83069-boy.svg` |
 
 ## Como a extração funciona
 
 1. `assets/avatar-reference/component-map.json` associa os nomes usados na interface a cada arquivo SVG original, aos índices das formas e às cores que devem ser personalizáveis. Os índices referenciam a ordem de `ElementTree.iter()` no arquivo original **congelado no repositório**.
 2. `python3 tools/extract-avatar-components.py` lê esses SVGs e copia as primitivas (curvas, polígonos etc.) para `assets/js/avatar-parts.js`. O arquivo gerado contém o caminho e o identificador de origem de cada componente. Não interpola nem recalcula nenhuma geometria dos cabelos ou das roupas.
-3. `assets/js/avatar.js` compõe as peças numa proporção compatível com os símbolos das 47 ilustrações do projeto (`viewBox="0 0 210 340"`), substituindo apenas os tokens de cor. Só a parte das pernas para baixo é desenho próprio.
-4. `assets/js/preferences.js` salva/restaura todos os campos, incluindo `bottomStyle`, `bottomColor` e `shoeColor` no JSON incorporado ao SVG de backup.
+3. `assets/js/avatar.js` compõe **22 cabelos e 18 roupas** numa proporção compatível com os símbolos das 47 ilustrações do projeto (`viewBox="0 0 210 340"`), substituindo apenas os tokens de cor. Só a parte das pernas para baixo é desenho próprio, oferecendo calça, shorts ou saia e dois tênis perfeitamente espelhados.
+4. `assets/js/preferences.js` salva/restaura todos os campos, incluindo `bottomStyle`, `bottomColor` e `shoeColor` no JSON incorporado ao SVG de backup. O editor fica em página dedicada (`personagem.html`), com prévia fixa durante a rolagem também em telas pequenas.
 
 ## Compatibilidade
 

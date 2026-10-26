@@ -15,8 +15,8 @@ const reference = (file) => {
 };
 
 const required = [
-  'index.html', 'livro.html', 'manifest.webmanifest', 'sw.js',
-  'assets/css/app.css', 'assets/js/library.js', 'assets/js/reader.js', 'assets/js/avatar.js',
+  'index.html', 'livro.html', 'personagem.html', 'manifest.webmanifest', 'sw.js',
+  'assets/css/app.css', 'assets/js/library.js', 'assets/js/reader.js', 'assets/js/avatar-parts.js', 'assets/js/avatar.js',
   'assets/js/preferences.js', 'assets/js/settings-ui.js',
   'assets/js/pwa.js', 'books/index.json', 'assets/icons/icon.svg'
 ];
@@ -77,7 +77,7 @@ for (const entry of index.books) {
 }
 
 // Every file referenced by the offline precache and HTML must exist.
-for (const file of ['index.html', 'livro.html']) {
+for (const file of ['index.html', 'livro.html', 'personagem.html']) {
   for (const match of read(file).matchAll(/(?:src|href)="(\.\/[^"?#]+)"/g)) reference(match[1].slice(2));
 }
 const offline = read('sw.js');

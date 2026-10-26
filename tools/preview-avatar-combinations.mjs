@@ -24,6 +24,10 @@ for (const [outfit] of renderer.outfitStyles) {
   fs.writeFileSync(path.join(target, `outfit-${outfit}.svg`),
     renderer.avatarSVG({ ...settings, avatarStyle: 'short', outfitStyle: outfit, bottomStyle: 'shorts' }));
 }
+for (const [bottom] of renderer.bottomStyles) {
+  fs.writeFileSync(path.join(target, `bottom-${bottom}.svg`),
+    renderer.avatarSVG({ ...settings, avatarStyle: 'bob', outfitStyle: 'blouse', bottomStyle: bottom }));
+}
 const cover = fs.readFileSync(path.join(root, 'assets/illustrations/ellie/cover.svg'), 'utf8');
 const newSymbol = renderer.avatarSymbol('ellie', {
   skinColor: '#8bcfff', hairColor: '#493a55', outfitColor: '#fa7195',

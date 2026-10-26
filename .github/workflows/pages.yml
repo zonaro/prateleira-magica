@@ -35,7 +35,7 @@ jobs:
       - name: Separar arquivos públicos
         run: |
           mkdir -p _site/assets
-          cp index.html livro.html manifest.webmanifest sw.js .nojekyll _site/
+          cp index.html livro.html personagem.html manifest.webmanifest sw.js .nojekyll _site/
           cp -R books _site/books
           cp -R assets/css assets/js assets/icons assets/illustrations _site/assets/
       - name: Empacotar site estático

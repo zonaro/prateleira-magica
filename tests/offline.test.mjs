@@ -63,7 +63,7 @@ vm.runInNewContext(source, { self, caches, fetch: localFetch, URL, Response, con
 let pending;
 listeners.install({ waitUntil(promise) { pending = promise; } });
 await pending;
-const cache = await caches.open('prateleira-magica-v5');
+const cache = await caches.open('prateleira-magica-v6');
 assert(await cache.match(`${scope}assets/js/avatar-parts.js`), 'Peças originais dos avatares não foram salvas offline');
 assert(await cache.match(`${scope}assets/js/avatar.js`), 'Renderização dos avatares não foi salva offline');
 const catalog = JSON.parse(fs.readFileSync(path.join(root, 'books/index.json'), 'utf8'));
@@ -92,6 +92,8 @@ const shelf = await offlineRequest('index.html', 'navigate');
 assert((await shelf.text()).includes('Prateleira Mágica'));
 const reader = await offlineRequest('livro.html?livro=ellie-e-o-trem-travesso', 'navigate');
 assert((await reader.text()).includes('readerApp'));
+const editor = await offlineRequest('personagem.html', 'navigate');
+assert((await editor.text()).includes('settingsApp'), 'Editor em página dedicada não funciona offline');
 for (const entry of catalog.books) {
   const data = await offlineRequest(entry.data, 'cors');
   const book = await data.json();

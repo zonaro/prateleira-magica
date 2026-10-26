@@ -24,10 +24,11 @@ const renderer = window.LivrinhoAvatar;
 const prefs = window.LivrinhoPreferences;
 const hairStyles = renderer.hairStyles.map(([key]) => key);
 const outfits = renderer.outfitStyles.map(([key]) => key);
-assert.equal(hairStyles.length, 12);
-assert.equal(outfits.length, 8);
-assert.equal(new Set(hairStyles).size, 12);
-assert.equal(new Set(outfits).size, 8);
+assert.equal(hairStyles.length, 22);
+assert.equal(outfits.length, 18);
+assert.equal(new Set(hairStyles).size, 22);
+assert.equal(new Set(outfits).size, 18);
+assert.deepEqual(renderer.bottomStyles.map(([key]) => key).join(','), 'pants,shorts,skirt');
 
 const pictures = new Set();
 for (const avatarStyle of hairStyles) {
@@ -51,14 +52,26 @@ for (const avatarStyle of hairStyles) {
     pictures.add(svg);
   }
 }
-assert.equal(pictures.size, 96, 'Cada combinação cabelo + roupa deve criar uma ilustração única');
+assert.equal(pictures.size, 396, 'Cada combinação cabelo + roupa deve criar uma ilustração única');
 assert.notEqual(prefs.avatarSVG({ bottomStyle: 'pants' }), prefs.avatarSVG({ bottomStyle: 'shorts' }));
+assert.notEqual(prefs.avatarSVG({ bottomStyle: 'skirt' }), prefs.avatarSVG({ bottomStyle: 'shorts' }));
+assert(prefs.avatarSVG({ bottomStyle: 'skirt' }).includes('data-layer="tenis-esquerdo"'));
+assert(prefs.avatarSVG({ bottomStyle: 'skirt' }).includes('data-layer="tenis-direito"'));
+assert(prefs.avatarSVG({ bottomStyle: 'skirt' }).includes('translate(150 304) scale(-1 1)'), 'Os tênis devem ser espelhados com o mesmo alinhamento vertical');
+assert.equal(prefs.clean({ bottomStyle: 'skirt' }).bottomStyle, 'skirt');
 const sourceAfro = fs.readFileSync(path.join(root, 'assets/avatar-reference/svgrepo-kids/38246-girl.svg'), 'utf8');
 const sourceHoodie = fs.readFileSync(path.join(root, 'assets/avatar-reference/svgrepo-kids/3852-boy.svg'), 'utf8');
 assert(sourceAfro.includes('M405.237,172') && prefs.avatarSVG({ avatarStyle: 'afro' }).includes('M405.237,172'),
   'O cabelo afro precisa reutilizar a geometria vetorial do SVG baixado');
 assert(sourceHoodie.includes('M389.078,436.226') && prefs.avatarSVG({ outfitStyle: 'hoodie' }).includes('M389.078,436.226'),
   'O moletom precisa reutilizar a geometria vetorial do SVG baixado');
+const newSources = JSON.parse(fs.readFileSync(path.join(root, 'assets/avatar-reference/component-map.json'), 'utf8'));
+for (const hair of hairStyles) {
+  assert(newSources.hair[hair], `Penteado ${hair} sem mapeamento do SVG original`);
+}
+for (const outfit of outfits) {
+  assert(newSources.outfit[outfit], `Roupa ${outfit} sem mapeamento do SVG original`);
+}
 
 const oldStorageKey = 'prateleira-de-livrinhos:protagonista:v1';
 settings.set(oldStorageKey, JSON.stringify({ name: 'Ellie', pronunciation: 'Éli', gender: 'feminino', avatarStyle: 'short', skinColor: '#8bcfff' }));
@@ -119,6 +132,8 @@ const restoredOldBackup = prefs.parseProfileSVG(oldBackup);
 assert.equal(restoredOldBackup.bottomStyle, 'pants', 'Backups anteriores recebem calça padrão');
 assert.equal(restoredOldBackup.bottomColor, '#5879b9');
 assert.equal(restoredOldBackup.shoeColor, '#625a89');
+const backupWithSkirt = prefs.exportProfileSVG({ ...saved, bottomStyle: 'skirt' });
+assert.equal(prefs.parseProfileSVG(backupWithSkirt).bottomStyle, 'skirt', 'Saia deve sobreviver à exportação e importação SVG');
 assert.deepEqual([...restored.achievements.books[bookId].completedExercises], [0, 1, 2]);
 assert.equal(restored.achievements.books[bookId].finished, true);
 assert.equal(restored.achievements.books[bookId].finishedAt, saved.achievements.books[bookId].finishedAt);
@@ -155,8 +170,8 @@ for (const entry of downloaded) {
   assert(entry.source.startsWith('https://www.svgrepo.com/svg/'));
 }
 
-console.log('✓ 12 cabelos × 8 roupas = 96 combinações com vetores originais do SVG Repo');
-console.log('✓ Tons de pele fantasia e cores independentes de cabelo, roupa, shorts/calça e sapatos');
+console.log('✓ 22 cabelos × 18 roupas = 396 combinações com vetores originais do SVG Repo');
+console.log('✓ Tons de pele fantasia e cores independentes de cabelo, roupa, calça/shorts/saia e tênis espelhados');
 console.log('✓ Preferências e backups antigos migram sem perder avatar, nome, pronúncia ou conquistas');
 console.log('✓ SVG ilustrado contém backup JSON inline e restaura nome, voz, gênero e conquistas dos livros');
 console.log('✓ Backups inválidos são recusados sem alterar o perfil local');
