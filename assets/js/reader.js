@@ -7,7 +7,7 @@
   const label = (value) => preferences ? preferences.personalize(value) : String(value || '');
   const params = new URLSearchParams(location.search);
   const bookId = params.get('livro');
-  const completed = new Set();
+  let completed = new Set();
   let book = null;
   let page = 0;
   let toastTimer;
@@ -200,6 +200,9 @@
 
   function go(target) {
     page = Math.min(book.pages.length - 1, Math.max(0, target));
+    if (page === book.pages.length - 1 && book.pages[page].type === 'finish') {
+      preferences?.recordBookProgress(book.id, { finished: true }, book.exercises?.length || 0);
+    }
     render();
     if (window.innerWidth < 821) window.scrollTo({ top: 0, behavior: 'smooth' });
   }
@@ -228,6 +231,7 @@
       const index = Number(check.dataset.check);
       if (completed.has(index)) completed.delete(index);
       else { completed.add(index); notify(completed.size === book.exercises.length ? 'Você completou o desafio! ⭐' : 'Muito bem! ⭐'); }
+      preferences?.recordBookProgress(book.id, { completedExercises: [...completed] }, book.exercises.length);
       render();
     }
   });
@@ -273,6 +277,8 @@
       const data = await response.json();
       if (data.schemaVersion !== 1 || data.id !== entry.id || !Array.isArray(data.pages) || !data.pages.length) throw new Error('Livro inválido');
       book = data;
+      completed = new Set((preferences?.bookProgress(book.id).completedExercises || [])
+        .filter((index) => index < (book.exercises?.length || 0)));
       document.title = `${label(book.title)} · Prateleira Mágica`;
       document.documentElement.lang = book.language || 'pt-BR';
       $('#bookBrand').textContent = label(book.title);
@@ -286,6 +292,8 @@
 
   document.addEventListener('livrinhos:protagonist-changed', () => {
     if (!book) return;
+    completed = new Set((preferences?.bookProgress(book.id).completedExercises || [])
+      .filter((index) => index < (book.exercises?.length || 0)));
     document.title = `${label(book.title)} · Prateleira Mágica`;
     $('#bookBrand').textContent = label(book.title);
     render();

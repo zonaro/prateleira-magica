@@ -54,7 +54,17 @@
           <label class="custom-color"><span>Outra cor</span><input id="customOutfitColor" type="color" aria-label="Selecionar outra cor de roupa"></label>
         </fieldset>
       </div>
-      <p class="settings-privacy">🔒 Essas escolhas ficam salvas somente neste navegador.</p>
+      <section class="profile-backup" aria-label="Backup do personagem">
+        <h3>💾 Guarde seu personagem</h3>
+        <p>Baixe o personagem como uma imagem SVG. Ela também guarda o nome, a pronúncia, os pronomes e as conquistas dos livros para recuperar tudo depois.</p>
+        <div class="profile-backup-actions">
+          <button id="downloadProfile" type="button">↓ Baixar personagem SVG</button>
+          <button id="importProfile" type="button">↑ Importar personagem SVG</button>
+        </div>
+        <input id="profileFile" type="file" accept=".svg,image/svg+xml" hidden aria-label="Selecionar backup SVG da criança">
+        <p id="profileBackupStatus" class="profile-backup-status" role="status" aria-live="polite"></p>
+      </section>
+      <p class="settings-privacy">🔒 Os dados são locais. Atenção: o arquivo SVG exportado contém o nome e o progresso da criança; compartilhe-o com cuidado.</p>
       <div class="settings-actions"><button id="resetSettings" type="button" class="settings-reset">Restaurar padrão</button><button type="submit" class="settings-save">Salvar personagem <span aria-hidden="true">✓</span></button></div>
     </form>`;
   document.body.append(dialog);
@@ -97,6 +107,7 @@
   function fillDialog() {
     draft = preferences.load();
     pronunciationTouched = false;
+    $('#profileBackupStatus').textContent = '';
     nameInput.value = draft.name;
     pronunciationInput.value = draft.pronunciation;
     $(`input[name="childGender"][value="${draft.gender}"]`).checked = true;
@@ -161,18 +172,64 @@
   $('#customHairColor').addEventListener('input', (event) => { draft.hairColor = event.target.value; drawPreview(); });
   $('#customOutfitColor').addEventListener('input', (event) => { draft.outfitColor = event.target.value; drawPreview(); });
   $('#resetSettings').addEventListener('click', () => {
-    draft = { ...preferences.DEFAULTS };
+    draft = { ...preferences.DEFAULTS, achievements: draft.achievements };
     pronunciationTouched = false;
     nameInput.value = draft.name;
     pronunciationInput.value = draft.pronunciation;
     $(`input[name="childGender"][value="${draft.gender}"]`).checked = true;
     drawPreview();
   });
+  function currentDraft() {
+    return preferences.clean({ ...draft, name: nameInput.value, pronunciation: pronunciationInput.value || nameInput.value });
+  }
+
+  $('#downloadProfile').addEventListener('click', () => {
+    try {
+      const saved = preferences.save(currentDraft());
+      const svg = preferences.exportProfileSVG(saved);
+      const url = URL.createObjectURL(new Blob([svg], { type: 'image/svg+xml;charset=utf-8' }));
+      const link = document.createElement('a');
+      const slug = saved.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/^-|-$/g, '') || 'crianca';
+      link.download = `prateleira-magica-${slug}.svg`;
+      link.href = url;
+      document.body.append(link);
+      link.click();
+      link.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+      draft = saved;
+      $('#profileBackupStatus').textContent = 'Prontinho! Seu SVG inclui o personagem e as conquistas atuais.';
+    } catch (error) {
+      $('#profileBackupStatus').textContent = `Não foi possível baixar o perfil: ${error.message}`;
+    }
+  });
+
+  $('#importProfile').addEventListener('click', () => $('#profileFile').click());
+  $('#profileFile').addEventListener('change', async (event) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    try {
+      if (!file.name.toLowerCase().endsWith('.svg') || file.size > 1_000_000) {
+        throw Error('Escolha um SVG de perfil com até 1 MB.');
+      }
+      const imported = preferences.parseProfileSVG(await file.text());
+      const message = `Importar o perfil de ${imported.name}? Isso substituirá o personagem e as conquistas guardadas neste navegador.`;
+      if (!window.confirm(message)) {
+        $('#profileBackupStatus').textContent = 'Importação cancelada. Seu personagem não foi alterado.';
+        return;
+      }
+      preferences.save(imported);
+      fillDialog();
+      $('#profileBackupStatus').textContent = `Perfil de ${imported.name} restaurado! Nome, voz, avatar e conquistas recuperados.`;
+    } catch (error) {
+      $('#profileBackupStatus').textContent = `Não foi possível importar: ${error.message}`;
+    } finally {
+      event.target.value = '';
+    }
+  });
   $('.preferences-form').addEventListener('submit', (event) => {
     event.preventDefault();
-    draft.name = nameInput.value;
-    draft.pronunciation = pronunciationInput.value || nameInput.value;
-    preferences.save(draft);
+    preferences.save(currentDraft());
     dialog.close();
   });
 

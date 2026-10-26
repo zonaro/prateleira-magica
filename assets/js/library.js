@@ -41,6 +41,15 @@
     title.textContent = label(book.title);
     const subtitle = document.createElement('p');
     subtitle.textContent = label(book.subtitle || 'Uma aventura de leitura.');
+    const progress = preferences?.bookProgress(book.id);
+    const achievement = document.createElement('span');
+    if (progress?.finished) {
+      achievement.className = 'book-achievement';
+      achievement.textContent = '🏅 História concluída';
+    } else if (progress?.completedExercises.length) {
+      achievement.className = 'book-achievement in-progress';
+      achievement.textContent = `⭐ ${progress.completedExercises.length} frase(s) treinada(s)`;
+    }
     const foot = document.createElement('div');
     foot.className = 'card-foot';
     const sounds = document.createElement('div');
@@ -54,7 +63,9 @@
     open.className = 'card-open';
     open.textContent = 'Ler agora →';
     foot.append(sounds, open);
-    copy.append(title, subtitle, foot);
+    copy.append(title, subtitle);
+    if (achievement.className) copy.append(achievement);
+    copy.append(foot);
     card.append(cover, copy);
     return card;
   }

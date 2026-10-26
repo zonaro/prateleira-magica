@@ -25,7 +25,7 @@ assets/css/app.css                 Estilos da biblioteca e do leitor
 assets/js/library.js               Prateleira dinâmica
 assets/js/reader.js                Leitor e narração
 assets/js/avatar.js                Ilustrações modulares dos protagonistas
-assets/js/preferences.js           Nome, pronomes, voz e avatar do protagonista
+assets/js/preferences.js           Nome, pronomes, voz, avatar e conquistas do protagonista
 assets/js/settings-ui.js           Editor de personagem no app
 assets/js/pwa.js                   Instalação PWA e status de conexão
 assets/illustrations/<slug>/*.svg  Ilustrações por página
@@ -92,6 +92,18 @@ O botão **Personalizar** (na prateleira e no leitor) permite configurar:
 
 Essas preferências ficam apenas no `localStorage` do navegador, sem conta ou servidor. O avatar SVG é personalizado localmente nas ilustrações de cada página, inclusive quando o aplicativo está offline. A chave de armazenamento do app anterior foi mantida de propósito para preservar o personagem após a renomeação do repositório.
 
+#### SVG de personagem como backup
+
+No editor, **Baixar personagem SVG** salva as escolhas atuais e oferece um arquivo `.svg` que funciona como uma ilustração vetorial comum. Ele inclui um elemento `<metadata id="prateleira-magica-profile" data-format="application/json">` contendo um JSON inline com:
+
+- `profile`: `name`, `pronunciation`, `gender`, `avatarStyle`, `outfitStyle`, `skinColor`, `hairColor`, `outfitColor`;
+- `achievements.books`: cada ID de livro com índices das frases marcadas (`completedExercises`), conclusão da história (`finished`), `finishedAt` e `challengeCompletedAt`;
+- `app`, `schemaVersion` e `exportedAt` para identificar a origem, versão e data do backup.
+
+As frases marcadas ficam salvas automaticamente no navegador e reaparecem ao abrir o mesmo livro. A conclusão de um livro também fica registrada quando a criança alcança a página final. Ao tocar em **Importar personagem SVG**, escolha um backup baixado anteriormente; o aplicativo valida o JSON de perfil e pede confirmação para **substituir** as preferências e conquistas existentes. Por segurança, os elementos gráficos de SVGs importados **não** são inseridos no app: o personagem é redesenhado localmente usando apenas os dados validados do JSON.
+
+O backup não exige conta, servidor nem conexão. **Privacidade:** como o arquivo contém o nome da criança e seu histórico de leitura, guarde-o em um local seguro e evite compartilhá-lo publicamente. Um SVG sem os metadados de perfil da Prateleira Mágica não pode ser importado como backup.
+
 **Regra para todos os livros:** os campos `title` de `books/index.json`, do JSON do livro e da página de capa devem usar `{{nome}}` quando mencionarem a criança. Nos textos, selos, medalhas e narrações, use `{{nome}}`, `{{pronome}}`, `{{Pronome}}`, `{{possessivo}}` ou `{{Possessivo}}`, nunca um nome infantil fixo. Se o nome for uma palavra interativa, use `[[{{nome}}]]`. Evite frases que dependam de flexão de gênero fora desses marcadores; prefira construções neutras como “a criança” quando necessário.
 
 Nas ilustrações, o símbolo SVG `<symbol id="ellie">` (legado), `<symbol id="kid">` ou `<symbol id="protagonist">` representa **a criança configurada**, e as instâncias `<use>` são trocadas automaticamente pelo avatar escolhido. Os textos dos SVGs também aceitam `{{nome}}`, inclusive `<title>`, `aria-label` e balões de fala. O processo escapa caracteres especiais para preservar o XML válido. As capas na prateleira, a ilustração de destaque e as páginas do leitor herdam o mesmo avatar.
@@ -130,6 +142,7 @@ Se o Pages ainda não estiver habilitado: **Settings → Pages → Build and dep
 ```bash
 node tests/verify.mjs
 node tests/preferences.test.mjs
+node tests/avatar.test.mjs
 node tests/offline.test.mjs
 ```
 
