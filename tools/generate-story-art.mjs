@@ -3,7 +3,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 // Regenerate the hand-composed SVG scenes for the two Draco adventures.
-// Existing symbols keep the visual style of the first Ellie book.
+// Existing symbols keep the visual style of the first train adventure.
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const original = fs.readFileSync(path.join(root, 'assets/illustrations/ellie/cover.svg'), 'utf8');
 const commonDefs = original.match(/<defs>[\s\S]*?<\/defs>/)?.[0];

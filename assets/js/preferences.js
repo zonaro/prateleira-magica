@@ -46,11 +46,17 @@
     return { ...memory };
   }
 
-  function personalize(value, settings = load()) {
+  function xmlEscape(value) {
+    return String(value).replace(/&/g, '&amp;').replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;');
+  }
+
+  function personalize(value, settings = load(), asXml = false) {
     if (value == null) return '';
     const grammar = genders[settings.gender] || genders.feminino;
+    const name = asXml ? xmlEscape(settings.name) : settings.name;
     const tokens = {
-      nome: settings.name,
+      nome: name,
       pronome: grammar.pronome,
       Pronome: grammar.pronome[0].toUpperCase() + grammar.pronome.slice(1),
       possessivo: grammar.possessivo,
@@ -58,8 +64,8 @@
     };
     return String(value)
       .replace(/\{\{(nome|pronome|Pronome|possessivo|Possessivo)\}\}/g, (_, key) => tokens[key])
-      .replace(/\bEllie\b/g, settings.name)
-      .replace(/\bELLIE\b/g, settings.name.toLocaleUpperCase('pt-BR'));
+      .replace(/\bEllie\b/g, () => name)
+      .replace(/\bELLIE\b/g, () => asXml ? xmlEscape(settings.name.toLocaleUpperCase('pt-BR')) : settings.name.toLocaleUpperCase('pt-BR'));
   }
 
   function color(hex, fallback) { return /^#[0-9a-f]{6}$/i.test(hex) ? hex : fallback; }
@@ -112,7 +118,7 @@
       }
       const source = await svgSources.get(sourceUrl);
       if (img.dataset.avatarRequest !== requestId) return;
-      const customized = source.replace(/<symbol id="(ellie|kid)"[^>]*>[\s\S]*?<\/symbol>/g,
+      const customized = personalize(source, settings, true).replace(/<symbol id="(ellie|kid|protagonist)"[^>]*>[\s\S]*?<\/symbol>/g,
         (_, id) => avatarSymbol(id, settings));
       const blobUrl = URL.createObjectURL(new Blob([customized], { type: 'image/svg+xml' }));
       const oldUrl = img.dataset.avatarBlob;

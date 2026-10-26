@@ -38,6 +38,10 @@ for (const [gender, pronome, possessivo] of [
 assert.equal(prefs.clean({ name: '', gender: 'desconhecido', skinColor: '#jklmno' }).gender, 'feminino');
 assert.equal(prefs.clean({ name: '', skinColor: '#jklmno' }).skinColor, '#e9aa83');
 assert(prefs.avatarSymbol('ellie').includes('<symbol id="ellie"'));
+const catalog = JSON.parse(fs.readFileSync(path.join(root, 'books/index.json'), 'utf8'));
+for (const entry of catalog.books) {
+  assert.equal(prefs.personalize(entry.title).includes('Dani'), true, `Título não personalizado: ${entry.id}`);
+}
 
 prefs.save({ name: 'Meggie', pronunciation: 'Mégui', gender: 'feminino', avatarStyle: 'short', skinColor: '#8bcfff' });
 const readerSource = fs.readFileSync(path.join(root, 'assets/js/reader.js'), 'utf8');
@@ -72,9 +76,25 @@ const customizedSvg = await blobs.get(image.src).text();
 assert(customizedSvg.includes('<symbol id="ellie"'));
 assert(customizedSvg.includes('#8bcfff'), 'A pele azul não entrou no SVG da história');
 assert(customizedSvg.includes('fill="#493a55"'), 'O cabelo do avatar não entrou no SVG');
+assert(customizedSvg.includes('<title>Meggie e o Trem Travesso</title>'), 'Título da capa não usou o nome configurado');
+
+await prefs.personalizeIllustration(image,
+  'https://zonaro.github.io/prateleira-magica/assets/illustrations/ellie/trainhello.svg');
+const greeting = await blobs.get(image.src).text();
+assert(greeting.includes('Olá, Meggie!'), 'Texto dentro da ilustração não foi personalizado');
+
+prefs.save({ name: 'Mia & Lua <3', pronunciation: 'Mia e Lua', gender: 'neutro', avatarStyle: 'long', skinColor: '#83dca5' });
+await prefs.personalizeIllustration(image,
+  'https://zonaro.github.io/prateleira-magica/assets/illustrations/ellie/cover.svg');
+const safeSvg = await blobs.get(image.src).text();
+assert(safeSvg.includes('<title>Mia &amp; Lua &lt;3 e o Trem Travesso</title>'), 'Nome com caracteres especiais corrompe o SVG');
+assert(safeSvg.includes('#83dca5'), 'Avatar fantasia deveria acompanhar a troca de nome');
+assert(fs.readFileSync(path.join(root, 'index.html'), 'utf8').includes('id="heroCover"'));
+assert(fs.readFileSync(path.join(root, 'assets/js/library.js'), 'utf8').includes('personalizeIllustration(heroCover'));
 
 console.log('✓ Nome, pronúncia personalizada e os três conjuntos de pronomes');
 console.log('✓ Avatar com estilo, pele fantasia e validação das preferências');
 console.log('✓ SVG real da história recebe as opções do protagonista');
+console.log('✓ Títulos, capas, balões e destaque da prateleira usam nome e avatar personalizados');
 console.log('✓ Voz preserva TRO/DRU e personaliza protagonista + NPCs');
 console.log('✓ Prateleira com três colunas no desktop');

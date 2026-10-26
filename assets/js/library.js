@@ -4,8 +4,15 @@
   const root = new URL('./', document.baseURI);
   const asset = (path) => new URL(path, root).href;
   const preferences = window.LivrinhoPreferences;
+  const heroCover = document.getElementById('heroCover');
   let books = [];
   const label = (text) => preferences ? preferences.personalize(text) : String(text || '');
+
+  function renderHeroCover() {
+    if (!heroCover || !preferences) return;
+    const coverUrl = asset('assets/illustrations/ellie/cover.svg');
+    preferences.personalizeIllustration(heroCover, coverUrl);
+  }
 
   function bookCard(book) {
     const card = document.createElement('a');
@@ -84,6 +91,10 @@
     }
   }
 
-  document.addEventListener('livrinhos:protagonist-changed', renderShelf);
+  document.addEventListener('livrinhos:protagonist-changed', () => {
+    renderShelf();
+    renderHeroCover();
+  });
+  renderHeroCover();
   loadLibrary();
 })();

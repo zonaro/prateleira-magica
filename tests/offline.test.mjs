@@ -63,7 +63,7 @@ vm.runInNewContext(source, { self, caches, fetch: localFetch, URL, Response, con
 let pending;
 listeners.install({ waitUntil(promise) { pending = promise; } });
 await pending;
-const cache = await caches.open('prateleira-magica-v1');
+const cache = await caches.open('prateleira-magica-v2');
 const catalog = JSON.parse(fs.readFileSync(path.join(root, 'books/index.json'), 'utf8'));
 for (const entry of catalog.books) {
   const bookPath = `${scope}${entry.data}`;

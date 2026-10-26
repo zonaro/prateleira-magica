@@ -1,6 +1,6 @@
 # Prateleira Mágica ✨📚
 
-Um PWA estático, leve e extensível para leitura infantil com ilustrações, sílabas interativas, narração pelo navegador, desafios e uso offline. A prateleira tem três títulos: **Ellie e o Trem Travesso** (TRA–TRU), **Draco e o Drone Desaparecido** (DRA–DRU) e **Ellie e o Trem dos Dragões** (as dez sílabas combinadas). Os nomes mostrados se adaptam ao protagonista configurado.
+Um PWA estático, leve e extensível para leitura infantil com ilustrações, sílabas interativas, narração pelo navegador, desafios e uso offline. A prateleira tem três aventuras: **{{nome}} e o Trem Travesso** (TRA–TRU), **{{nome}} e o Drone Desaparecido** (DRA–DRU) e **{{nome}} e o Trem dos Dragões** (as dez sílabas combinadas). Os títulos, os textos e os protagonistas ilustrados se adaptam à criança configurada.
 
 ## Usar
 
@@ -87,7 +87,9 @@ O botão **Personalizar** (na prateleira e no leitor) permite configurar:
 
 Essas preferências ficam apenas no `localStorage` do navegador, sem conta ou servidor. O avatar SVG é personalizado localmente nas ilustrações de cada página, inclusive quando o aplicativo está offline. A chave de armazenamento do app anterior foi mantida de propósito para preservar o personagem após a renomeação do repositório.
 
-Nos textos e títulos dos livros, use `{{nome}}`, `{{pronome}}`, `{{Pronome}}`, `{{possessivo}}` ou `{{Possessivo}}` para mostrar o personagem configurado. O nome antigo “Ellie” também é substituído por compatibilidade com o primeiro livro. Evite frases que dependam de flexão de gênero fora desses marcadores; prefira construções neutras como “a criança” quando necessário.
+**Regra para todos os livros:** os campos `title` de `books/index.json`, do JSON do livro e da página de capa devem usar `{{nome}}` quando mencionarem a criança. Nos textos, selos, medalhas e narrações, use `{{nome}}`, `{{pronome}}`, `{{Pronome}}`, `{{possessivo}}` ou `{{Possessivo}}`, nunca um nome infantil fixo. Se o nome for uma palavra interativa, use `[[{{nome}}]]`. Evite frases que dependam de flexão de gênero fora desses marcadores; prefira construções neutras como “a criança” quando necessário.
+
+Nas ilustrações, o símbolo SVG `<symbol id="ellie">` (legado), `<symbol id="kid">` ou `<symbol id="protagonist">` representa **a criança configurada**, e as instâncias `<use>` são trocadas automaticamente pelo avatar escolhido. Os textos dos SVGs também aceitam `{{nome}}`, inclusive `<title>`, `aria-label` e balões de fala. O processo escapa caracteres especiais para preservar o XML válido. As capas na prateleira, a ilustração de destaque e as páginas do leitor herdam o mesmo avatar.
 
 ### Pronúncia
 

@@ -1,14 +1,14 @@
 {
   "schemaVersion": 1,
   "id": "ellie-e-o-trem-dos-dragoes",
-  "title": "Ellie e o Trem dos Dragões",
+  "title": "{{nome}} e o Trem dos Dragões",
   "subtitle": "Dez sílabas em uma aventura com TRA, TRE, TRI, TRO, TRU e DRA, DRE, DRI, DRO, DRU",
   "language": "pt-BR",
   "cover": "assets/illustrations/ellie-draco/01-cover.svg",
   "color": "#4c9fbe",
   "syllables": ["TRA", "TRE", "TRI", "TRO", "TRU", "DRA", "DRE", "DRI", "DRO", "DRU"],
   "pronunciation": {
-    "names": { "Ellie": "Éli", "Draco": "Dráco", "Drica": "Dríca", "Dru": "Drú", "Dromi": "Drômi" },
+    "names": { "Draco": "Dráco", "Drica": "Dríca", "Dru": "Drú", "Dromi": "Drômi" },
     "syllables": {
       "TRA": { "sound": "trá", "example": "trator" },
       "TRE": { "sound": "trê", "example": "trevo" },
@@ -40,9 +40,9 @@
       "illustration": "assets/illustrations/ellie-draco/01-cover.svg",
       "sticker": "UMA AVENTURA EM DOBRO",
       "chapter": "Duas famílias de sílabas ✨",
-      "title": "Ellie e o Trem dos Dragões",
+      "title": "{{nome}} e o Trem dos Dragões",
       "blocks": [
-        { "kind": "paragraph", "text": "[[Ellie]] voltou ao [[trem]] [[travesso]]. {{Pronome}} encontrou um [[dragão]] muito especial!" },
+        { "kind": "paragraph", "text": "[[{{nome}}]] voltou ao [[trem]] [[travesso]]. {{Pronome}} encontrou um [[dragão]] muito especial!" },
         { "kind": "paragraph", "text": "Agora são dez sílabas para descobrir em uma aventura só!" }
       ],
       "callout": "🚂 TRA · TRE · TRI · TRO · TRU + DRA · DRE · DRI · DRO · DRU",
@@ -69,8 +69,8 @@
       "chapter": "Capítulo 1 · TRA e TRE",
       "title": "O trem traz uma surpresa",
       "blocks": [
-        { "kind": "paragraph", "text": "[[Ellie]] ouviu o apito do [[Trem]] [[Trapalhão]] perto da velha [[trilha]]." },
-        { "kind": "dialogue", "text": "— Entre, [[Ellie]]! Tenho um amigo para apresentar!" },
+        { "kind": "paragraph", "text": "[[{{nome}}]] ouviu o apito do [[Trem]] [[Trapalhão]] perto da velha [[trilha]]." },
+        { "kind": "dialogue", "text": "— Entre, [[{{nome}}]]! Tenho um amigo para apresentar!" },
         { "kind": "paragraph", "text": "Dentro do [[trem]] havia um pequeno [[dragão]] de asas azuis." }
       ],
       "syllables": ["TRA", "TRE", "DRA"]
@@ -84,7 +84,7 @@
       "blocks": [
         { "kind": "paragraph", "text": "O [[dragão]] se chamava [[Draco]]. Ele segurava [[três]] [[trevos]] verdes." },
         { "kind": "dialogue", "text": "— Cada [[trevo]] mostra uma parte do caminho! — explicou [[Draco]]." },
-        { "kind": "paragraph", "text": "[[Ellie]] guardou os [[trevos]]. {{Pronome}} sorriu para o [[dragão]]." }
+        { "kind": "paragraph", "text": "[[{{nome}}]] guardou os [[trevos]]. {{Pronome}} sorriu para o [[dragão]]." }
       ],
       "syllables": ["DRA", "TRE"]
     },
@@ -97,7 +97,7 @@
       "blocks": [
         { "kind": "paragraph", "text": "Um [[drone]] dourado voou sobre a [[trilha]] para procurar a ponte escondida." },
         { "kind": "paragraph", "text": "O [[drone]] passou por cima de [[três]] árvores e mostrou um caminho no mapa." },
-        { "kind": "dialogue", "text": "— O [[drone]] viu a [[trilha]] certa! — gritou [[Ellie]]." }
+        { "kind": "dialogue", "text": "— O [[drone]] viu a [[trilha]] certa! — gritou [[{{nome}}]]." }
       ],
       "syllables": ["DRO", "TRI", "TRE"]
     },
@@ -135,7 +135,7 @@
       "title": "A druida entra no trem",
       "blocks": [
         { "kind": "paragraph", "text": "A [[druida]] [[Dru]] subiu no [[trem]] com uma bolsa de [[trufas]]." },
-        { "kind": "paragraph", "text": "Ela mostrou um [[truque]]: fez brilhar o mapa que [[Ellie]] segurava." },
+        { "kind": "paragraph", "text": "Ela mostrou um [[truque]]: fez brilhar o mapa que [[{{nome}}]] segurava." },
         { "kind": "dialogue", "text": "— Que [[truque]] incrível, [[Dru]]! — disse o [[dragão]]." }
       ],
       "syllables": ["DRU", "TRE", "TRU", "DRA"]
@@ -149,7 +149,7 @@
       "blocks": [
         { "kind": "paragraph", "text": "Um [[trovão]] fez um barulho forte, mas logo o céu ficou claro." },
         { "kind": "paragraph", "text": "O esquilo da floresta tocou seu [[trompete]], e o [[drone]] voltou a voar." },
-        { "kind": "dialogue", "text": "— O [[trompete]] venceu o susto! — riu [[Ellie]]." }
+        { "kind": "dialogue", "text": "— O [[trompete]] venceu o susto! — riu [[{{nome}}]]." }
       ],
       "syllables": ["TRO", "DRO"]
     },
@@ -162,7 +162,7 @@
       "blocks": [
         { "kind": "paragraph", "text": "Um [[trator]] vermelho apareceu [[transportando]] mudas de [[dracenas]]." },
         { "kind": "paragraph", "text": "O [[dragão]] [[Draco]] ajudou a colocar as plantas ao lado da [[trilha]]." },
-        { "kind": "dialogue", "text": "— Que [[trator]] [[trabalhador]]! — disse [[Ellie]]." }
+        { "kind": "dialogue", "text": "— Que [[trator]] [[trabalhador]]! — disse [[{{nome}}]]." }
       ],
       "syllables": ["TRA", "DRA", "TRI"]
     },
@@ -213,8 +213,8 @@
       "title": "O trem atravessa a ponte",
       "blocks": [
         { "kind": "paragraph", "text": "O [[Trem]] [[Trapalhão]] [[atravessou]] a ponte bem devagar." },
-        { "kind": "paragraph", "text": "[[Ellie]], [[Drica]], a [[druida]] e o [[dragão]] chegaram ao jardim das estrelas." },
-        { "kind": "dialogue", "text": "— Nossa aventura foi um sucesso! — disse [[Ellie]]." }
+        { "kind": "paragraph", "text": "[[{{nome}}]], [[Drica]], a [[druida]] e o [[dragão]] chegaram ao jardim das estrelas." },
+        { "kind": "dialogue", "text": "— Nossa aventura foi um sucesso! — disse [[{{nome}}]]." }
       ],
       "syllables": ["TRA", "TRE", "DRA", "DRI", "DRU"]
     },
@@ -226,7 +226,7 @@
       "title": "O troféu das dez sílabas",
       "blocks": [
         { "kind": "paragraph", "text": "O [[dragão]] segurou o [[troféu]], enquanto o [[drone]] brilhava sobre o [[trem]]." },
-        { "kind": "paragraph", "text": "[[Ellie]] lembrou de tudo: [[trator]], [[trevo]], [[triciclo]], [[trompete]], [[truque]], [[dragão]], [[dreno]], [[drible]], [[drone]] e [[druida]]!" },
+        { "kind": "paragraph", "text": "[[{{nome}}]] lembrou de tudo: [[trator]], [[trevo]], [[triciclo]], [[trompete]], [[truque]], [[dragão]], [[dreno]], [[drible]], [[drone]] e [[druida]]!" },
         { "kind": "dialogue", "text": "— Dez sons, uma grande aventura!" }
       ],
       "syllables": ["TRA", "TRE", "TRI", "TRO", "TRU", "DRA", "DRE", "DRI", "DRO", "DRU"]
@@ -243,7 +243,7 @@
     {
       "type": "finish",
       "illustration": "assets/illustrations/ellie-draco/17-medalha.svg",
-      "sticker": "PARABÉNS, ELLIE!",
+      "sticker": "PARABÉNS, {{nome}}!",
       "chapter": "Você chegou ao fim!",
       "title": "{{nome}} é uma estrela da leitura!",
       "blocks": [

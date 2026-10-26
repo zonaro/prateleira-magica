@@ -39,12 +39,18 @@ let illustrations = 0;
 for (const entry of index.books) {
   assert(!ids.has(entry.id), `ID duplicado: ${entry.id}`);
   ids.add(entry.id);
+  assert(entry.title.includes('{{nome}}'), `Título no catálogo não herda o protagonista: ${entry.id}`);
   reference(entry.data);
   reference(entry.cover);
   const book = json(entry.data);
   assert.equal(book.schemaVersion, 1);
   assert.equal(book.id, entry.id);
   assert(book.language && book.title && Array.isArray(book.pages) && book.pages.length, `Livro inválido: ${entry.id}`);
+  assert(book.title.includes('{{nome}}'), `Livro não herda o nome da criança: ${entry.id}`);
+  assert(!/\b(?:Ellie|ELLIE)\b/.test(JSON.stringify(book)), `Nome fixo da protagonista encontrado em ${entry.id}`);
+  const coverSvg = read(entry.cover);
+  assert(/<use href="#(ellie|kid|protagonist)"/.test(coverSvg), `A capa de ${entry.id} não exibe um avatar personalizável`);
+  assert(coverSvg.includes('{{nome}}'), `A capa de ${entry.id} não recebe o nome personalizado`);
   for (const page of book.pages) {
     assert(page.title && typeof page.title === 'string');
     assert(['cover', 'story', 'challenge', 'finish'].includes(page.type), `Tipo desconhecido: ${page.type}`);
@@ -60,6 +66,7 @@ for (const entry of index.books) {
     reference(page.illustration);
     const svg = read(page.illustration);
     assert(svg.includes('<svg') && svg.includes('</svg>'), `SVG inválido: ${page.illustration}`);
+    assert(!/\b(?:Ellie|ELLIE)\b/.test(svg), `Ilustração com nome fixo: ${page.illustration}`);
     pages++;
     illustrations++;
   }

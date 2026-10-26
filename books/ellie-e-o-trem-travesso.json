@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "ellie-e-o-trem-travesso",
-  "title": "Ellie e o Trem Travesso",
+  "title": "{{nome}} e o Trem Travesso",
   "subtitle": "Uma aventura com TRA, TRE, TRI, TRO e TRU",
   "language": "pt-BR",
   "cover": "assets/illustrations/ellie/cover.svg",
@@ -14,9 +14,7 @@
     "TRU"
   ],
   "pronunciation": {
-    "names": {
-      "Ellie": "Éli"
-    },
+    "names": {},
     "syllables": {
       "TRA": {
         "sound": "trá",
@@ -66,16 +64,16 @@
     {
       "type": "cover",
       "illustration": "assets/illustrations/ellie/cover.svg",
-      "sticker": "O LIVRO DA ELLIE",
+      "sticker": "O LIVRO DE {{nome}}",
       "chapter": "Um livrinho só seu ✨",
-      "title": "Ellie e o Trem Travesso",
+      "title": "{{nome}} e o Trem Travesso",
       "blocks": [
         {
           "kind": "paragraph",
           "text": "Uma aventura divertida para ler, brincar e treinar os sons TRA, TRE, TRI, TRO e TRU!"
         }
       ],
-      "speech": "Ellie e o Trem Travesso. Uma aventura divertida para ler, brincar e treinar os sons tra, tre, tri, tro e tru.",
+      "speech": "{{nome}} e o Trem Travesso. Uma aventura divertida para ler, brincar e treinar os sons tra, tre, tri, tro e tru.",
       "tip": "Aperte “Começar” para abrir seu livrinho.",
       "callout": "🌈 Você é a estrela desta história!"
     },
@@ -114,7 +112,7 @@
       "blocks": [
         {
           "kind": "paragraph",
-          "text": "Era uma vez uma criança chamada Ellie, que adorava passear de [[trem]]."
+          "text": "Era uma vez uma criança chamada {{nome}}, que adorava passear de [[trem]]."
         },
         {
           "kind": "paragraph",
@@ -134,7 +132,7 @@
     {
       "type": "story",
       "illustration": "assets/illustrations/ellie/trainhello.svg",
-      "sticker": "OLÁ, ELLIE!",
+      "sticker": "OLÁ, {{nome}}!",
       "chapter": "Capítulo 2 · TRA e TRU",
       "title": "O Trem Trapalhão",
       "blocks": [
@@ -148,7 +146,7 @@
         },
         {
           "kind": "paragraph",
-          "text": "Ellie entrou no [[trem]] e sorriu."
+          "text": "{{nome}} entrou no [[trem]] e sorriu."
         }
       ],
       "syllables": [
@@ -169,7 +167,7 @@
         },
         {
           "kind": "paragraph",
-          "text": "Perto de um [[tronco]], Ellie encontrou [[três]] [[trevos]]."
+          "text": "Perto de um [[tronco]], {{nome}} encontrou [[três]] [[trevos]]."
         },
         {
           "kind": "dialogue",
@@ -199,7 +197,7 @@
         },
         {
           "kind": "dialogue",
-          "text": "— Que [[trator]] [[trabalhador]]! — disse Ellie."
+          "text": "— Que [[trator]] [[trabalhador]]! — disse {{nome}}."
         }
       ],
       "syllables": [
@@ -250,7 +248,7 @@
         },
         {
           "kind": "paragraph",
-          "text": "Ellie levou um susto, mas o esquilo mostrou um [[truque]] divertido."
+          "text": "{{nome}} levou um susto, mas o esquilo mostrou um [[truque]] divertido."
         },
         {
           "kind": "dialogue",
@@ -279,7 +277,7 @@
         },
         {
           "kind": "paragraph",
-          "text": "Ellie escolheu o [[triciclo]] azul e começou a pedalar!"
+          "text": "{{nome}} escolheu o [[triciclo]] azul e começou a pedalar!"
         }
       ],
       "syllables": [
@@ -290,17 +288,17 @@
     {
       "type": "story",
       "illustration": "assets/illustrations/ellie/race.svg",
-      "sticker": "VOCÊ CONSEGUE, ELLIE!",
+      "sticker": "VOCÊ CONSEGUE, {{nome}}!",
       "chapter": "Capítulo 8 · TRA e TRO",
       "title": "Três, dois, um!",
       "blocks": [
         {
           "kind": "paragraph",
-          "text": "Ellie passou por [[três]] [[troncos]], atravessou uma ponte e chegou ao final!"
+          "text": "{{nome}} passou por [[três]] [[troncos]], atravessou uma ponte e chegou ao final!"
         },
         {
           "kind": "dialogue",
-          "text": "— [[Três]], dois, um! Viva a Ellie!"
+          "text": "— [[Três]], dois, um! Viva {{nome}}!"
         },
         {
           "kind": "paragraph",
@@ -330,7 +328,7 @@
         },
         {
           "kind": "paragraph",
-          "text": "Ellie ergueu o [[troféu]] e deu uma gargalhada."
+          "text": "{{nome}} ergueu o [[troféu]] e deu uma gargalhada."
         }
       ],
       "syllables": [
@@ -345,7 +343,7 @@
       "illustration": "assets/illustrations/ellie/recap.svg",
       "sticker": "QUE AVENTURA!",
       "chapter": "A história termina",
-      "title": "Ellie é uma estrela!",
+      "title": "{{nome}} é uma estrela!",
       "blocks": [
         {
           "kind": "dialogue",
@@ -353,7 +351,7 @@
         },
         {
           "kind": "paragraph",
-          "text": "E assim terminou a aventura de Ellie e o [[Trem]] [[Travesso]]."
+          "text": "E assim terminou a aventura de {{nome}} e o [[Trem]] [[Travesso]]."
         }
       ],
       "syllables": [
@@ -367,7 +365,7 @@
     {
       "type": "challenge",
       "illustration": "assets/illustrations/ellie/practice.svg",
-      "sticker": "DESAFIO DA ELLIE",
+      "sticker": "DESAFIO DE {{nome}}",
       "chapter": "Missão especial",
       "title": "Cinco frases mágicas",
       "blocks": [
@@ -384,7 +382,7 @@
       "illustration": "assets/illustrations/ellie/finish.svg",
       "sticker": "PARABÉNS!",
       "chapter": "Você chegou ao fim!",
-      "title": "Bravo, Ellie! 🌟",
+      "title": "Parabéns, {{nome}}! 🌟",
       "blocks": [
         {
           "kind": "paragraph",
@@ -403,7 +401,7 @@
         "TRU"
       ],
       "tip": "Quer outra aventura? Use “Ler de novo” para recomeçar.",
-      "medal": "🏅 Medalha de Leitura da Ellie"
+      "medal": "🏅 Medalha de Leitura de {{nome}}"
     }
   ]
 }
