@@ -114,11 +114,11 @@
       "blocks": [
         {
           "kind": "paragraph",
-          "text": "Era uma vez uma menina chamada Ellie, que adorava passear de [[trem]]."
+          "text": "Era uma vez uma criança chamada Ellie, que adorava passear de [[trem]]."
         },
         {
           "kind": "paragraph",
-          "text": "Um dia, ela encontrou um [[trem]] muito [[travesso]] perto de uma [[trilha]]."
+          "text": "Um dia, {{pronome}} encontrou um [[trem]] muito [[travesso]] perto de uma [[trilha]]."
         },
         {
           "kind": "paragraph",
@@ -304,7 +304,7 @@
         },
         {
           "kind": "paragraph",
-          "text": "Ela ganhou um lindo [[troféu]] dourado."
+          "text": "{{Pronome}} ganhou um lindo [[troféu]] dourado."
         }
       ],
       "syllables": [

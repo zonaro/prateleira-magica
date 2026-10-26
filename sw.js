@@ -1,5 +1,5 @@
 /* Offline-first, same-origin service worker for the static GitHub Pages app. */
-const CACHE_NAME = 'prateleira-de-livrinhos-v1';
+const CACHE_NAME = 'prateleira-de-livrinhos-v2';
 const APP_ROOT = new URL(self.registration.scope);
 const url = (path) => new URL(path, APP_ROOT).href;
 const APP_SHELL = [
@@ -10,6 +10,8 @@ const APP_SHELL = [
   './assets/css/app.css',
   './assets/js/library.js',
   './assets/js/reader.js',
+  './assets/js/preferences.js',
+  './assets/js/settings-ui.js',
   './assets/js/pwa.js',
   './assets/icons/icon.svg',
   './assets/icons/icon-192.png',

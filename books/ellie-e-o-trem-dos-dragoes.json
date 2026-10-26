@@ -1,0 +1,258 @@
+{
+  "schemaVersion": 1,
+  "id": "ellie-e-o-trem-dos-dragoes",
+  "title": "Ellie e o Trem dos Dragões",
+  "subtitle": "Dez sílabas em uma aventura com TRA, TRE, TRI, TRO, TRU e DRA, DRE, DRI, DRO, DRU",
+  "language": "pt-BR",
+  "cover": "assets/illustrations/ellie-draco/01-cover.svg",
+  "color": "#4c9fbe",
+  "syllables": ["TRA", "TRE", "TRI", "TRO", "TRU", "DRA", "DRE", "DRI", "DRO", "DRU"],
+  "pronunciation": {
+    "names": { "Ellie": "Éli", "Draco": "Dráco", "Drica": "Dríca", "Dru": "Drú", "Dromi": "Drômi" },
+    "syllables": {
+      "TRA": { "sound": "trá", "example": "trator" },
+      "TRE": { "sound": "trê", "example": "trevo" },
+      "TRI": { "sound": "trí", "example": "triciclo" },
+      "TRO": { "sound": "tró", "example": "troca" },
+      "TRU": { "sound": "trú", "example": "truque" },
+      "DRA": { "sound": "drá", "example": "dragão" },
+      "DRE": { "sound": "drê", "example": "dreno" },
+      "DRI": { "sound": "drí", "example": "drible" },
+      "DRO": { "sound": "dró", "example": "dromedário" },
+      "DRU": { "sound": "drú", "example": "druida" }
+    }
+  },
+  "exercises": [
+    { "syllable": "TRA", "text": "O trator transportou o dragão até a trilha." },
+    { "syllable": "TRE", "text": "Três trevos cresceram perto do dreno." },
+    { "syllable": "TRI", "text": "O triciclo de Drica cruzou a trilha." },
+    { "syllable": "TRO", "text": "O trompete tocou quando o drone chegou ao troféu." },
+    { "syllable": "TRU", "text": "Três trufas ajudaram a druida no truque." },
+    { "syllable": "DRA", "text": "O dragão Draco entrou no trem travesso." },
+    { "syllable": "DRE", "text": "André drenou a água perto de três trevos." },
+    { "syllable": "DRI", "text": "Drica deu um drible ao lado de três troncos." },
+    { "syllable": "DRO", "text": "O drone sobrevoou a trilha do dromedário." },
+    { "syllable": "DRU", "text": "A druida Dru fez um truque dentro do trem." }
+  ],
+  "pages": [
+    {
+      "type": "cover",
+      "illustration": "assets/illustrations/ellie-draco/01-cover.svg",
+      "sticker": "UMA AVENTURA EM DOBRO",
+      "chapter": "Duas famílias de sílabas ✨",
+      "title": "Ellie e o Trem dos Dragões",
+      "blocks": [
+        { "kind": "paragraph", "text": "[[Ellie]] voltou ao [[trem]] [[travesso]]. {{Pronome}} encontrou um [[dragão]] muito especial!" },
+        { "kind": "paragraph", "text": "Agora são dez sílabas para descobrir em uma aventura só!" }
+      ],
+      "callout": "🚂 TRA · TRE · TRI · TRO · TRU + DRA · DRE · DRI · DRO · DRU",
+      "tip": "Pode ler um pouquinho por vez. Vamos começar?"
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/ellie-draco/02-dez-sons.svg",
+      "sticker": "AQUECIMENTO DUPLO",
+      "chapter": "Vamos treinar juntos",
+      "title": "As dez sílabas mágicas",
+      "blocks": [
+        { "kind": "paragraph", "text": "Primeiro, pratique os sons do [[trem]]: TRA, TRE, TRI, TRO, TRU." },
+        { "kind": "paragraph", "text": "Depois, pratique os sons do [[dragão]]: DRA, DRE, DRI, DRO, DRU." }
+      ],
+      "syllables": ["TRA", "TRE", "TRI", "TRO", "TRU", "DRA", "DRE", "DRI", "DRO", "DRU"],
+      "speech": "Vamos praticar dez sílabas. Trá. Trê. Trí. Tró. Trú. Agora, drá. Drê. Drí. Dró. Drú. Muito bem!",
+      "tip": "Toque em cada sílaba para ouvir uma palavra de exemplo."
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/ellie-draco/03-trem.svg",
+      "sticker": "O TREM VOLTOU",
+      "chapter": "Capítulo 1 · TRA e TRE",
+      "title": "O trem traz uma surpresa",
+      "blocks": [
+        { "kind": "paragraph", "text": "[[Ellie]] ouviu o apito do [[Trem]] [[Trapalhão]] perto da velha [[trilha]]." },
+        { "kind": "dialogue", "text": "— Entre, [[Ellie]]! Tenho um amigo para apresentar!" },
+        { "kind": "paragraph", "text": "Dentro do [[trem]] havia um pequeno [[dragão]] de asas azuis." }
+      ],
+      "syllables": ["TRA", "TRE", "DRA"]
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/ellie-draco/04-draco-trevos.svg",
+      "sticker": "OLÁ, DRACO!",
+      "chapter": "Capítulo 2 · DRA e TRE",
+      "title": "O dragão e os três trevos",
+      "blocks": [
+        { "kind": "paragraph", "text": "O [[dragão]] se chamava [[Draco]]. Ele segurava [[três]] [[trevos]] verdes." },
+        { "kind": "dialogue", "text": "— Cada [[trevo]] mostra uma parte do caminho! — explicou [[Draco]]." },
+        { "kind": "paragraph", "text": "[[Ellie]] guardou os [[trevos]]. {{Pronome}} sorriu para o [[dragão]]." }
+      ],
+      "syllables": ["DRA", "TRE"]
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/ellie-draco/05-drone-trilha.svg",
+      "sticker": "OLHOS NO CÉU",
+      "chapter": "Capítulo 3 · DRO e TRI",
+      "title": "O drone sobre a trilha",
+      "blocks": [
+        { "kind": "paragraph", "text": "Um [[drone]] dourado voou sobre a [[trilha]] para procurar a ponte escondida." },
+        { "kind": "paragraph", "text": "O [[drone]] passou por cima de [[três]] árvores e mostrou um caminho no mapa." },
+        { "kind": "dialogue", "text": "— O [[drone]] viu a [[trilha]] certa! — gritou [[Ellie]]." }
+      ],
+      "syllables": ["DRO", "TRI", "TRE"]
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/ellie-draco/06-drica-triciclo.svg",
+      "sticker": "VAMOS PEDALAR",
+      "chapter": "Capítulo 4 · DRI e TRI",
+      "title": "Drica e o triciclo",
+      "blocks": [
+        { "kind": "paragraph", "text": "Na curva da [[trilha]], a menina [[Drica]] apareceu em seu [[triciclo]] azul." },
+        { "kind": "paragraph", "text": "Ela deu um [[drible]] na bola e estacionou o [[triciclo]] perto do [[trem]]." },
+        { "kind": "dialogue", "text": "— Posso entrar nessa aventura? — perguntou [[Drica]]." }
+      ],
+      "syllables": ["DRI", "TRI", "TRE"]
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/ellie-draco/07-andre-dreno.svg",
+      "sticker": "CUIDADO NA PONTE",
+      "chapter": "Capítulo 5 · DRE e TRO",
+      "title": "André e o dreno",
+      "blocks": [
+        { "kind": "paragraph", "text": "Perto de um [[tronco]], An[[dré]] limpava o [[dreno]] que levava a água da chuva." },
+        { "kind": "paragraph", "text": "Ele terminou de [[drenar]] a poça para que a ponte ficasse livre." },
+        { "kind": "dialogue", "text": "— Agora o [[trem]] pode passar com cuidado! — disse An[[dré]]." }
+      ],
+      "syllables": ["DRE", "TRO", "TRE"]
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/ellie-draco/08-dru-trem.svg",
+      "sticker": "UMA PASSAGEIRA MÁGICA",
+      "chapter": "Capítulo 6 · DRU e TRE",
+      "title": "A druida entra no trem",
+      "blocks": [
+        { "kind": "paragraph", "text": "A [[druida]] [[Dru]] subiu no [[trem]] com uma bolsa de [[trufas]]." },
+        { "kind": "paragraph", "text": "Ela mostrou um [[truque]]: fez brilhar o mapa que [[Ellie]] segurava." },
+        { "kind": "dialogue", "text": "— Que [[truque]] incrível, [[Dru]]! — disse o [[dragão]]." }
+      ],
+      "syllables": ["DRU", "TRE", "TRU", "DRA"]
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/ellie-draco/09-trovao.svg",
+      "sticker": "BARULHO NO CÉU",
+      "chapter": "Capítulo 7 · TRO e DRO",
+      "title": "O trovão e o drone",
+      "blocks": [
+        { "kind": "paragraph", "text": "Um [[trovão]] fez um barulho forte, mas logo o céu ficou claro." },
+        { "kind": "paragraph", "text": "O esquilo da floresta tocou seu [[trompete]], e o [[drone]] voltou a voar." },
+        { "kind": "dialogue", "text": "— O [[trompete]] venceu o susto! — riu [[Ellie]]." }
+      ],
+      "syllables": ["TRO", "DRO"]
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/ellie-draco/10-trator.svg",
+      "sticker": "CARGA ESPECIAL",
+      "chapter": "Capítulo 8 · TRA e DRA",
+      "title": "O trator do dragão",
+      "blocks": [
+        { "kind": "paragraph", "text": "Um [[trator]] vermelho apareceu [[transportando]] mudas de [[dracenas]]." },
+        { "kind": "paragraph", "text": "O [[dragão]] [[Draco]] ajudou a colocar as plantas ao lado da [[trilha]]." },
+        { "kind": "dialogue", "text": "— Que [[trator]] [[trabalhador]]! — disse [[Ellie]]." }
+      ],
+      "syllables": ["TRA", "DRA", "TRI"]
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/ellie-draco/11-trufas.svg",
+      "sticker": "MAGIA GOSTOSA",
+      "chapter": "Capítulo 9 · TRU e DRU",
+      "title": "Três trufas e um truque",
+      "blocks": [
+        { "kind": "paragraph", "text": "A [[druida]] tirou [[três]] [[trufas]] de sua bolsa colorida." },
+        { "kind": "paragraph", "text": "Com um pequeno [[truque]], [[Dru]] transformou cada [[trufa]] numa estrela brilhante!" },
+        { "kind": "dialogue", "text": "— Uma estrela para cada amigo! — disse [[Dru]]." }
+      ],
+      "syllables": ["TRU", "DRU", "TRE"]
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/ellie-draco/12-drible.svg",
+      "sticker": "PASSANDO PELOS TRONCOS",
+      "chapter": "Capítulo 10 · DRI e TRI",
+      "title": "Um drible na trilha",
+      "blocks": [
+        { "kind": "paragraph", "text": "[[Drica]] encontrou [[três]] [[troncos]] caídos ao lado da [[trilha]]." },
+        { "kind": "paragraph", "text": "Ela fez um [[drible]] com a bola entre os [[troncos]], sem sair do caminho." },
+        { "kind": "dialogue", "text": "— Belo [[drible]]! — comemorou o [[dragão]]." }
+      ],
+      "syllables": ["DRI", "TRI", "TRO", "TRE"]
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/ellie-draco/13-dromi.svg",
+      "sticker": "UMA ÚLTIMA PISTA",
+      "chapter": "Capítulo 11 · DRO e TRO",
+      "title": "O dromedário e o troféu",
+      "blocks": [
+        { "kind": "paragraph", "text": "O [[dromedário]] [[Dromi]] esperava ao lado de um grande [[tronco]]." },
+        { "kind": "paragraph", "text": "O [[drone]] mostrou que havia um [[troféu]] do outro lado da ponte!" },
+        { "kind": "dialogue", "text": "— Vamos buscar esse [[troféu]] juntos! — convidou [[Dromi]]." }
+      ],
+      "syllables": ["DRO", "TRO"]
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/ellie-draco/14-ponte.svg",
+      "sticker": "CHEGAMOS!",
+      "chapter": "Capítulo 12 · TRA, TRE e DRA",
+      "title": "O trem atravessa a ponte",
+      "blocks": [
+        { "kind": "paragraph", "text": "O [[Trem]] [[Trapalhão]] [[atravessou]] a ponte bem devagar." },
+        { "kind": "paragraph", "text": "[[Ellie]], [[Drica]], a [[druida]] e o [[dragão]] chegaram ao jardim das estrelas." },
+        { "kind": "dialogue", "text": "— Nossa aventura foi um sucesso! — disse [[Ellie]]." }
+      ],
+      "syllables": ["TRA", "TRE", "DRA", "DRI", "DRU"]
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/ellie-draco/15-trofeu.svg",
+      "sticker": "VITÓRIA DE TODOS",
+      "chapter": "Capítulo 13 · As dez sílabas",
+      "title": "O troféu das dez sílabas",
+      "blocks": [
+        { "kind": "paragraph", "text": "O [[dragão]] segurou o [[troféu]], enquanto o [[drone]] brilhava sobre o [[trem]]." },
+        { "kind": "paragraph", "text": "[[Ellie]] lembrou de tudo: [[trator]], [[trevo]], [[triciclo]], [[trompete]], [[truque]], [[dragão]], [[dreno]], [[drible]], [[drone]] e [[druida]]!" },
+        { "kind": "dialogue", "text": "— Dez sons, uma grande aventura!" }
+      ],
+      "syllables": ["TRA", "TRE", "TRI", "TRO", "TRU", "DRA", "DRE", "DRI", "DRO", "DRU"]
+    },
+    {
+      "type": "challenge",
+      "illustration": "assets/illustrations/ellie-draco/16-desafio.svg",
+      "sticker": "GRANDE DESAFIO",
+      "chapter": "Missão das dez sílabas",
+      "title": "Dez frases mágicas",
+      "blocks": [{ "kind": "paragraph", "text": "Leia com calma uma frase para cada sílaba. Marque sua conquista e avance!" }],
+      "tip": "Você pode praticar em dois dias: cinco frases hoje e cinco depois."
+    },
+    {
+      "type": "finish",
+      "illustration": "assets/illustrations/ellie-draco/17-medalha.svg",
+      "sticker": "PARABÉNS, ELLIE!",
+      "chapter": "Você chegou ao fim!",
+      "title": "{{nome}} é uma estrela da leitura!",
+      "blocks": [
+        { "kind": "paragraph", "text": "Você acompanhou o [[trem]] e o [[dragão]] por uma aventura com dez sílabas!" },
+        { "kind": "paragraph", "text": "Continue lendo, brincando e descobrindo novos sons com seus amigos." }
+      ],
+      "syllables": ["TRA", "TRE", "TRI", "TRO", "TRU", "DRA", "DRE", "DRI", "DRO", "DRU"],
+      "medal": "🏅 Medalha das Dez Sílabas",
+      "tip": "Volte à prateleira para escolher outra história."
+    }
+  ]
+}

@@ -1,0 +1,236 @@
+{
+  "schemaVersion": 1,
+  "id": "draco-e-o-drone-desaparecido",
+  "title": "{{nome}} e o Drone Desaparecido",
+  "subtitle": "Uma aventura para treinar DRA, DRE, DRI, DRO e DRU",
+  "language": "pt-BR",
+  "cover": "assets/illustrations/draco-drone/01-cover.svg",
+  "color": "#8b79dd",
+  "syllables": ["DRA", "DRE", "DRI", "DRO", "DRU"],
+  "pronunciation": {
+    "names": { "Draco": "Dráco", "Drica": "Dríca", "Dru": "Drú", "Dromi": "Drômi" },
+    "syllables": {
+      "DRA": { "sound": "drá", "example": "dragão" },
+      "DRE": { "sound": "drê", "example": "dreno" },
+      "DRI": { "sound": "drí", "example": "drible" },
+      "DRO": { "sound": "dró", "example": "dromedário" },
+      "DRU": { "sound": "drú", "example": "druida" }
+    }
+  },
+  "exercises": [
+    { "syllable": "DRA", "text": "O dragão Draco dança entre as dracenas." },
+    { "syllable": "DRE", "text": "André olhou o dreno e ajudou a drenar a água." },
+    { "syllable": "DRI", "text": "Drica dribla a bola e faz um drible divertido." },
+    { "syllable": "DRO", "text": "O drone dourado voou sobre o dromedário Dromi." },
+    { "syllable": "DRU", "text": "A druida Dru desenhou uma estrela para o dragão." }
+  ],
+  "pages": [
+    {
+      "type": "cover",
+      "illustration": "assets/illustrations/draco-drone/01-cover.svg",
+      "sticker": "UMA AVENTURA MÁGICA",
+      "chapter": "O livrinho das cinco sílabas ✨",
+      "title": "{{nome}} e o Drone Desaparecido",
+      "blocks": [
+        { "kind": "paragraph", "text": "{{nome}} vai ajudar um [[dragão]], uma [[druida]] e seus amigos a encontrar um [[drone]]!" },
+        { "kind": "paragraph", "text": "{{Pronome}} será a estrela dessa aventura!" }
+      ],
+      "callout": "🐉 DRA · DRE · DRI · DRO · DRU",
+      "tip": "Toque em Começar para entrar nessa aventura."
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/draco-drone/02-sons.svg",
+      "sticker": "AQUECIMENTO",
+      "chapter": "Vamos preparar a voz",
+      "title": "Cinco sons de dragão!",
+      "blocks": [
+        { "kind": "paragraph", "text": "Leia as sílabas com calma. Primeiro devagar, depois do seu jeitinho." },
+        { "kind": "paragraph", "text": "O [[dragão]] Draco vai praticar com você!" }
+      ],
+      "syllables": ["DRA", "DRE", "DRI", "DRO", "DRU"],
+      "speech": "Vamos preparar a voz? Drá, como em dragão. Drê, como em dreno. Drí, como em drible. Dró, como em dromedário. Drú, como em druida.",
+      "tip": "Toque em cada sílaba para ouvir um exemplo."
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/draco-drone/03-dragao.svg",
+      "sticker": "OLÁ, DRACO!",
+      "chapter": "Capítulo 1 · DRA",
+      "title": "O dragão das dracenas",
+      "blocks": [
+        { "kind": "paragraph", "text": "{{nome}} visitou o [[dragão]] [[Draco]] num jardim cheio de [[dracenas]], plantas de folhas compridas." },
+        { "kind": "paragraph", "text": "Toda manhã, [[Draco]] regava as [[dracenas]] e dava uma volta pelo jardim." },
+        { "kind": "dialogue", "text": "— Eu sou o [[dragão]] [[Draco]]! Que dia bonito!" }
+      ],
+      "syllables": ["DRA"]
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/draco-drone/04-drone.svg",
+      "sticker": "ONDE FOI PARAR?",
+      "chapter": "Capítulo 2 · DRO",
+      "title": "O drone dourado",
+      "blocks": [
+        { "kind": "paragraph", "text": "[[Draco]] tinha um pequeno [[drone]] dourado que voava sobre as flores." },
+        { "kind": "paragraph", "text": "{{nome}} viu o [[drone]] fazer uma curva, outra curva e... desaparecer atrás das árvores!" },
+        { "kind": "dialogue", "text": "— Meu [[drone]]! Cadê meu [[drone]]? — perguntou o [[dragão]]." }
+      ],
+      "syllables": ["DRA", "DRO"]
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/draco-drone/05-drica.svg",
+      "sticker": "UMA NOVA AMIGA",
+      "chapter": "Capítulo 3 · DRI",
+      "title": "Drica e seu drible",
+      "blocks": [
+        { "kind": "paragraph", "text": "{{nome}} e a menina [[Drica]] ouviram o pedido de ajuda do [[dragão]]." },
+        { "kind": "paragraph", "text": "Ela pegou uma bola, deu um [[drible]] entre os vasos e correu para procurar o [[drone]]." },
+        { "kind": "dialogue", "text": "— Eu faço um [[drible]] e você olha lá do alto, [[Draco]]!" }
+      ],
+      "syllables": ["DRI", "DRA", "DRO"]
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/draco-drone/06-dreno.svg",
+      "sticker": "PISTA NO JARDIM",
+      "chapter": "Capítulo 4 · DRE",
+      "title": "André e o dreno",
+      "blocks": [
+        { "kind": "paragraph", "text": "{{nome}} encontrou o jardineiro An[[dré]] perto do [[dreno]], um caninho que leva a água da chuva." },
+        { "kind": "paragraph", "text": "An[[dré]] ajudava a [[drenar]] a poça quando ouviu um barulhinho." },
+        { "kind": "dialogue", "text": "— Será o [[drone]] perto do [[dreno]]? Vamos investigar!" }
+      ],
+      "syllables": ["DRE", "DRO"]
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/draco-drone/07-druida.svg",
+      "sticker": "MAGIA DO BEM",
+      "chapter": "Capítulo 5 · DRU",
+      "title": "A druida Dru",
+      "blocks": [
+        { "kind": "paragraph", "text": "{{nome}} viu a [[druida]] [[Dru]] aparecer com um chapéu roxo e um mapa de folhas." },
+        { "kind": "paragraph", "text": "{{Pronome}} segurou o mapa: a pequena bolsa era {{possessivo}}." },
+        { "kind": "paragraph", "text": "A [[druida]] mostrou ao [[dragão]] um pontinho brilhante no mapa." },
+        { "kind": "dialogue", "text": "— Vamos juntos, [[Draco]]! — disse [[Dru]]." }
+      ],
+      "syllables": ["DRU", "DRA"]
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/draco-drone/08-dromi.svg",
+      "sticker": "UM AMIGO GIGANTE",
+      "chapter": "Capítulo 6 · DRO",
+      "title": "O dromedário Dromi",
+      "blocks": [
+        { "kind": "paragraph", "text": "No caminho, {{nome}} encontrou [[Dromi]], um [[dromedário]] gentil de uma cor dourada." },
+        { "kind": "paragraph", "text": "O [[dromedário]] tinha visto uma luz perto das [[dracenas]]." },
+        { "kind": "dialogue", "text": "— O [[drone]] passou por aqui! — contou [[Dromi]]." }
+      ],
+      "syllables": ["DRO", "DRA"]
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/draco-drone/09-dracenas.svg",
+      "sticker": "ENTRE AS FOLHAS",
+      "chapter": "Capítulo 7 · DRA",
+      "title": "O segredo das dracenas",
+      "blocks": [
+        { "kind": "paragraph", "text": "{{nome}}, [[Draco]], [[Drica]] e a [[druida]] caminharam entre as [[dracenas]]." },
+        { "kind": "paragraph", "text": "Uma folha balançou. Outra folha brilhou. O [[dragão]] ouviu um zumbido!" },
+        { "kind": "dialogue", "text": "— Acho que o [[drone]] está bem perto!" }
+      ],
+      "syllables": ["DRA", "DRI", "DRU"]
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/draco-drone/10-drible.svg",
+      "sticker": "UM PLANO ESPERTO",
+      "chapter": "Capítulo 8 · DRI",
+      "title": "O drible de Drica",
+      "blocks": [
+        { "kind": "paragraph", "text": "{{nome}} incentivou [[Drica]], que deu um [[drible]] com a bola sem machucar as plantas." },
+        { "kind": "paragraph", "text": "A bola rolou, o [[drone]] apitou, e [[Draco]] viu uma luz dourada." },
+        { "kind": "dialogue", "text": "— Belo [[drible]], [[Drica]]! — sorriu o [[dragão]]." }
+      ],
+      "syllables": ["DRI", "DRA", "DRO"]
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/draco-drone/11-drenagem.svg",
+      "sticker": "CUIDADO COM A ÁGUA",
+      "chapter": "Capítulo 9 · DRE",
+      "title": "A pista no dreno",
+      "blocks": [
+        { "kind": "paragraph", "text": "Perto do [[dreno]], {{nome}} e An[[dré]] viram uma luz refletida na água." },
+        { "kind": "paragraph", "text": "Ele terminou de [[drenar]] a pequena poça. Agora todos podiam ver melhor!" },
+        { "kind": "dialogue", "text": "— O [[drone]] não caiu no [[dreno]]. Olhem o galho acima dele!" }
+      ],
+      "syllables": ["DRE", "DRO"]
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/draco-drone/12-descoberta.svg",
+      "sticker": "ACHAMOS!",
+      "chapter": "Capítulo 10 · DRA, DRO, DRU",
+      "title": "A grande descoberta",
+      "blocks": [
+        { "kind": "paragraph", "text": "{{nome}} apontou para o [[drone]] dourado, preso num galho bem acima do [[dreno]]." },
+        { "kind": "paragraph", "text": "A [[druida]] [[Dru]] apontou o lugar, e o [[dragão]] abriu as asas." },
+        { "kind": "dialogue", "text": "— Vou buscar meu [[drone]] com todo cuidado! — disse [[Draco]]." }
+      ],
+      "syllables": ["DRA", "DRO", "DRU"]
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/draco-drone/13-resgate.svg",
+      "sticker": "MISSÃO CUMPRIDA",
+      "chapter": "Capítulo 11 · As cinco sílabas",
+      "title": "O drone voltou!",
+      "blocks": [
+        { "kind": "paragraph", "text": "{{nome}} guiou [[Draco]], que pegou o [[drone]] com delicadeza e voltou ao jardim." },
+        { "kind": "paragraph", "text": "[[Drica]] comemorou com um [[drible]]. An[[dré]] sorriu perto do [[dreno]]." },
+        { "kind": "paragraph", "text": "A [[druida]] [[Dru]] e o [[dromedário]] [[Dromi]] fizeram uma dança feliz!" }
+      ],
+      "syllables": ["DRA", "DRE", "DRI", "DRO", "DRU"]
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/draco-drone/14-festa.svg",
+      "sticker": "FINAL FELIZ",
+      "chapter": "Capítulo 12 · Todo mundo junto",
+      "title": "A festa do dragão",
+      "blocks": [
+        { "kind": "paragraph", "text": "{{nome}} e o [[dragão]] prepararam uma festa entre as [[dracenas]]." },
+        { "kind": "paragraph", "text": "O [[drone]] voou sobre a [[druida]], o [[dromedário]] e a menina [[Drica]]." },
+        { "kind": "dialogue", "text": "— Conseguimos! — gritou [[Draco]]." }
+      ],
+      "syllables": ["DRA", "DRE", "DRI", "DRO", "DRU"]
+    },
+    {
+      "type": "challenge",
+      "illustration": "assets/illustrations/draco-drone/15-desafio.svg",
+      "sticker": "MISSÃO DAS SÍLABAS",
+      "chapter": "Desafio especial",
+      "title": "Cinco frases de dragão",
+      "blocks": [{ "kind": "paragraph", "text": "Leia cada frase devagar. Depois, marque a missão com uma estrela!" }],
+      "tip": "Vale repetir quantas vezes quiser. Cada tentativa conta!"
+    },
+    {
+      "type": "finish",
+      "illustration": "assets/illustrations/draco-drone/16-medalha.svg",
+      "sticker": "PARABÉNS!",
+      "chapter": "Você chegou ao final!",
+      "title": "{{nome}}, você é uma estrela!",
+      "blocks": [
+        { "kind": "paragraph", "text": "Você ajudou o [[dragão]], encontrou o [[drone]] e conheceu a [[druida]]!" },
+        { "kind": "paragraph", "text": "Continue praticando [[DRA]], [[DRE]], [[DRI]], [[DRO]] e [[DRU]] com muita alegria!" }
+      ],
+      "medal": "🏅 Medalha de Amigo do Dragão",
+      "syllables": ["DRA", "DRE", "DRI", "DRO", "DRU"],
+      "tip": "Quando quiser, volte à prateleira para outra aventura."
+    }
+  ]
+}

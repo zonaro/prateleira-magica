@@ -17,11 +17,12 @@ const reference = (file) => {
 const required = [
   'index.html', 'livro.html', 'manifest.webmanifest', 'sw.js',
   'assets/css/app.css', 'assets/js/library.js', 'assets/js/reader.js',
+  'assets/js/preferences.js', 'assets/js/settings-ui.js',
   'assets/js/pwa.js', 'books/index.json', 'assets/icons/icon.svg'
 ];
 required.forEach(reference);
 
-for (const scriptFile of ['assets/js/library.js', 'assets/js/reader.js', 'assets/js/pwa.js', 'sw.js']) {
+for (const scriptFile of ['assets/js/library.js', 'assets/js/reader.js', 'assets/js/preferences.js', 'assets/js/settings-ui.js', 'assets/js/pwa.js', 'sw.js']) {
   new Script(read(scriptFile), { filename: scriptFile });
 }
 
@@ -52,6 +53,9 @@ for (const entry of index.books) {
       assert(['paragraph', 'dialogue'].includes(block.kind));
       assert.equal(typeof block.text, 'string');
       assert.equal((block.text.match(/\[\[/g) || []).length, (block.text.match(/\]\]/g) || []).length);
+      for (const token of block.text.matchAll(/\{\{([^}]+)\}\}/g)) {
+        assert(['nome', 'pronome', 'Pronome', 'possessivo', 'Possessivo'].includes(token[1]), `Marcador desconhecido: ${token[1]}`);
+      }
     }
     reference(page.illustration);
     const svg = read(page.illustration);

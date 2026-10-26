@@ -26,6 +26,7 @@ jobs:
       - name: Validar dados e estrutura
         run: |
           node tests/verify.mjs
+          node tests/preferences.test.mjs
           node tests/offline.test.mjs
       - name: Configurar Pages
         uses: actions/configure-pages@v5

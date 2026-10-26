@@ -3,20 +3,24 @@
   const shelf = document.getElementById('bookShelf');
   const root = new URL('./', document.baseURI);
   const asset = (path) => new URL(path, root).href;
+  const preferences = window.LivrinhoPreferences;
+  let books = [];
+  const label = (text) => preferences ? preferences.personalize(text) : String(text || '');
 
   function bookCard(book) {
     const card = document.createElement('a');
     card.className = 'book-card';
     card.href = `./livro.html?livro=${encodeURIComponent(book.id)}`;
-    card.setAttribute('aria-label', `Abrir ${book.title}`);
+    card.setAttribute('aria-label', `Abrir ${label(book.title)}`);
 
     const cover = document.createElement('div');
     cover.className = 'book-card-cover';
     const img = document.createElement('img');
     img.src = asset(book.cover);
-    img.alt = `Capa de ${book.title}`;
+    img.alt = `Capa de ${label(book.title)}`;
     img.loading = 'lazy';
     cover.append(img);
+    preferences?.personalizeIllustration(img, asset(book.cover));
     if (book.label) {
       const label = document.createElement('span');
       label.className = 'cover-label';
@@ -27,9 +31,9 @@
     const copy = document.createElement('div');
     copy.className = 'book-card-copy';
     const title = document.createElement('h3');
-    title.textContent = book.title;
+    title.textContent = label(book.title);
     const subtitle = document.createElement('p');
-    subtitle.textContent = book.subtitle || 'Uma aventura de leitura.';
+    subtitle.textContent = label(book.subtitle || 'Uma aventura de leitura.');
     const foot = document.createElement('div');
     foot.className = 'card-foot';
     const sounds = document.createElement('div');
@@ -48,12 +52,19 @@
     return card;
   }
 
+  function renderShelf() {
+    for (const old of shelf.querySelectorAll('img[data-avatar-blob]')) URL.revokeObjectURL(old.dataset.avatarBlob);
+    shelf.replaceChildren();
+    books.forEach((book) => shelf.append(bookCard(book)));
+  }
+
   async function loadLibrary() {
     try {
       const response = await fetch(asset('books/index.json'));
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       const manifest = await response.json();
       if (manifest.schemaVersion !== 1 || !Array.isArray(manifest.books)) throw new Error('Catálogo inválido');
+      books = manifest.books;
       shelf.replaceChildren();
       if (!manifest.books.length) {
         const empty = document.createElement('p');
@@ -62,7 +73,7 @@
         shelf.append(empty);
         return;
       }
-      manifest.books.forEach((book) => shelf.append(bookCard(book)));
+      renderShelf();
     } catch (error) {
       console.error('Não foi possível carregar a prateleira:', error);
       shelf.replaceChildren();
@@ -73,5 +84,6 @@
     }
   }
 
+  document.addEventListener('livrinhos:protagonist-changed', renderShelf);
   loadLibrary();
 })();

@@ -1,6 +1,6 @@
 # Prateleira de Livrinhos 📚
 
-Um PWA estático, leve e extensível para leitura infantil com ilustrações, sílabas interativas, narração pelo navegador, desafios e uso offline. O primeiro título é **Ellie e o Trem Travesso**, com 14 páginas e treinos de TRA, TRE, TRI, TRO e TRU.
+Um PWA estático, leve e extensível para leitura infantil com ilustrações, sílabas interativas, narração pelo navegador, desafios e uso offline. A prateleira tem três títulos: **Ellie e o Trem Travesso** (TRA–TRU), **Draco e o Drone Desaparecido** (DRA–DRU) e **Ellie e o Trem dos Dragões** (as dez sílabas combinadas). Os nomes mostrados se adaptam ao protagonista configurado.
 
 ## Usar
 
@@ -24,12 +24,17 @@ books/<slug>.json                  História completa e exercícios de cada livr
 assets/css/app.css                 Estilos da biblioteca e do leitor
 assets/js/library.js               Prateleira dinâmica
 assets/js/reader.js                Leitor e narração
+assets/js/preferences.js           Nome, pronomes, voz e avatar do protagonista
+assets/js/settings-ui.js           Editor de personagem no app
 assets/js/pwa.js                   Instalação PWA e status de conexão
 assets/illustrations/<slug>/*.svg  Ilustrações por página
 assets/icons/                     Ícones PWA
 manifest.webmanifest               Manifesto instalável
 sw.js                              Cache offline
 tests/verify.mjs                   Testes de integridade
+tests/preferences.test.mjs         Testes da personalização
+tests/offline.test.mjs             Teste completo do cache offline
+tools/generate-story-art.mjs       Geração dos SVGs dos livros de Draco
 .github/workflows/pages.yml        Deploy no GitHub Pages
 ```
 
@@ -43,7 +48,7 @@ Nenhum framework, empacotador, servidor PHP ou banco de dados é necessário.
 4. Aumente a versão `CACHE_NAME` em `sw.js` para que o cache offline seja reconstruído.
 5. Execute `node tests/verify.mjs` e faça commit na `main`.
 
-O catálogo gera automaticamente um card na prateleira; o leitor não precisa de alterações para abrir o novo livro.
+O catálogo gera automaticamente um card na prateleira (até três colunas no desktop); o leitor não precisa de alterações para abrir o novo livro.
 
 ### Estrutura mínima de um livro
 
@@ -72,9 +77,21 @@ O catálogo gera automaticamente um card na prateleira; o leitor não precisa de
 
 Nas páginas, coloque `[[palavra]]` para exibir uma palavra colorida que pode ser tocada para ouvi-la. `kind: "dialogue"` destaca o parágrafo como fala. Propriedades opcionais de página: `syllables`, `speech`, `tip`, `callout`, `medal`. `type: "challenge"` exibe os exercícios do livro; `type: "finish"` conclui a aventura.
 
+### Protagonista personalizável
+
+O botão **Personalizar** (na prateleira e no leitor) permite configurar:
+
+- Nome da criança e escrita fonética separada para a narração.
+- Gênero/pronomes: masculino (`ele/dele`), feminino (`ela/dela`) ou neutro (`elu/delu`).
+- Cinco estilos de cabelo/boné e cores de pele naturais ou fantasia (incluindo verde, azul, lilás, rosa e qualquer cor escolhida no seletor).
+
+Essas preferências ficam apenas no `localStorage` do navegador, sem conta ou servidor. O avatar SVG é personalizado localmente nas ilustrações de cada página, inclusive quando o aplicativo está offline.
+
+Nos textos e títulos dos livros, use `{{nome}}`, `{{pronome}}`, `{{Pronome}}`, `{{possessivo}}` ou `{{Possessivo}}` para mostrar o personagem configurado. O nome antigo “Ellie” também é substituído por compatibilidade com o primeiro livro. Evite frases que dependam de flexão de gênero fora desses marcadores; prefira construções neutras como “a criança” quando necessário.
+
 ### Pronúncia
 
-O texto exibido nunca é alterado pela narração. `pronunciation.names` permite, por exemplo, ler **Ellie** como **Éli**; `pronunciation.syllables` envia sons fonéticos e palavras de apoio (TRO: “tró, como em troca”; TRU: “trú, como em truque”). A disponibilidade e a qualidade da voz dependem do sintetizador de fala instalado no navegador/dispositivo.
+O texto exibido é personalizado com o nome escolhido, mas a escrita fonética aparece somente na voz. `pronunciation.names` continua disponível para personagens secundários (por exemplo, Drica e Draco); a pronúncia definida pela criança tem prioridade. `pronunciation.syllables` envia sons fonéticos e palavras de apoio (TRO: “tró, como em troca”; TRU: “trú, como em truque”). A disponibilidade e a qualidade da voz dependem do sintetizador de fala instalado no navegador/dispositivo.
 
 ## Controles
 
@@ -99,6 +116,7 @@ Se o Pages ainda não estiver habilitado: **Settings → Pages → Build and dep
 
 ```bash
 node tests/verify.mjs
+node tests/preferences.test.mjs
 node tests/offline.test.mjs
 ```
 

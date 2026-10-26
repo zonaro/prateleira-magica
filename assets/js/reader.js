@@ -3,6 +3,8 @@
   const $ = (selector) => document.querySelector(selector);
   const root = new URL('./', document.baseURI);
   const asset = (path) => new URL(path, root).href;
+  const preferences = window.LivrinhoPreferences;
+  const label = (value) => preferences ? preferences.personalize(value) : String(value || '');
   const params = new URLSearchParams(location.search);
   const bookId = params.get('livro');
   const completed = new Set();
@@ -22,16 +24,23 @@
 
   function escapeRegExp(value) { return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
   function speechText(message) {
-    let result = String(message);
+    let result = label(message);
     const pronunciation = book?.pronunciation || {};
-    for (const [name, spoken] of Object.entries(pronunciation.names || {})) {
-      result = result.replace(new RegExp(`\\b${escapeRegExp(name)}\\b`, 'gi'), spoken);
-    }
     const syllables = pronunciation.syllables || {};
-    const isolated = result.trim().toUpperCase();
-    if (syllables[isolated]) {
+    // A syllable button must win over names like "Dru" (which can otherwise
+    // cause DRU to be treated as a character's name, losing its example).
+    const isolated = result.trim();
+    if (Object.hasOwn(syllables, isolated)) {
       const { sound, example } = syllables[isolated];
       return `${sound}!${example ? ` Como em ${example}.` : ''}`;
+    }
+    const child = preferences?.load();
+    if (child?.name && child.pronunciation) {
+      result = result.replace(new RegExp(`(?<!\\p{L})${escapeRegExp(child.name)}(?!\\p{L})`, 'giu'), child.pronunciation);
+    }
+    for (const [name, spoken] of Object.entries(pronunciation.names || {})) {
+      if (name.toLocaleLowerCase('pt-BR') === child?.name.toLocaleLowerCase('pt-BR')) continue;
+      result = result.replace(new RegExp(`\\b${escapeRegExp(name)}\\b`, 'gi'), spoken);
     }
     for (const [syllable, value] of Object.entries(syllables)) {
       result = result.replace(new RegExp(`\\b${escapeRegExp(syllable)}\\b`, 'gi'), value.sound);
@@ -59,8 +68,8 @@
   function plainText(text) { return String(text).replace(/\[\[([^\]]+)\]\]/g, '$1'); }
   function hearCurrentPage() {
     const current = book.pages[page];
-    const words = current.blocks.map((block) => plainText(block.text)).join(' ');
-    speak(current.speech || `${current.title}. ${words}`);
+    const words = current.blocks.map((block) => plainText(label(block.text))).join(' ');
+    speak(label(current.speech || `${current.title}. ${words}`));
   }
 
   function renderText(container, text) {
@@ -94,9 +103,9 @@
       const phrase = document.createElement('button');
       phrase.type = 'button';
       phrase.className = 'challenge-say';
-      phrase.dataset.say = exercise.text;
-      phrase.textContent = exercise.text;
-      phrase.setAttribute('aria-label', `Ouvir frase: ${exercise.text}`);
+      phrase.dataset.say = label(exercise.text);
+      phrase.textContent = label(exercise.text);
+      phrase.setAttribute('aria-label', `Ouvir frase: ${label(exercise.text)}`);
       row.append(check, phrase);
       container.append(row);
     }
@@ -111,37 +120,39 @@
   function render() {
     window.speechSynthesis?.cancel();
     const current = book.pages[page];
-    $('#scene').src = asset(current.illustration);
-    $('#scene').alt = `Ilustração: ${current.title}`;
-    $('#artSticker').textContent = current.sticker || '';
+    const art = $('#scene');
+    art.src = asset(current.illustration);
+    preferences?.personalizeIllustration(art, asset(current.illustration));
+    art.alt = `Ilustração: ${label(current.title)}`;
+    $('#artSticker').textContent = label(current.sticker || '');
     const panel = $('#readPanel');
     panel.className = `read-panel${current.type === 'cover' ? ' cover' : ''}`;
     panel.replaceChildren();
     const chapter = document.createElement('div');
     chapter.className = 'chapter';
-    chapter.textContent = current.chapter || '';
+    chapter.textContent = label(current.chapter || '');
     const title = document.createElement('h1');
     title.className = 'page-title';
-    title.textContent = current.title;
+    title.textContent = label(current.title);
     const story = document.createElement('div');
     story.className = 'story';
     for (const block of current.blocks || []) {
       const paragraph = document.createElement('p');
       if (block.kind === 'dialogue') paragraph.className = 'dialogue';
-      renderText(paragraph, block.text);
+      renderText(paragraph, label(block.text));
       story.append(paragraph);
     }
     if (current.callout) {
       const callout = document.createElement('span');
       callout.className = 'cover-sub';
-      callout.textContent = current.callout;
+      callout.textContent = label(current.callout);
       story.append(callout);
     }
     if (current.type === 'challenge') renderChallenge(story);
     if (current.medal) {
       const medal = document.createElement('div');
       medal.className = 'medal';
-      medal.textContent = current.medal;
+      medal.textContent = label(current.medal);
       story.append(medal);
     }
     panel.append(chapter, title, story);
@@ -161,7 +172,7 @@
     }
     const hint = document.createElement('div');
     hint.className = 'hint';
-    hint.textContent = current.tip || 'Toque nas palavras coloridas e leia no seu ritmo.';
+    hint.textContent = label(current.tip || 'Toque nas palavras coloridas e leia no seu ritmo.');
     const pageNumber = document.createElement('span');
     pageNumber.className = 'page-number';
     pageNumber.textContent = `${String(page + 1).padStart(2, '0')} / ${String(book.pages.length).padStart(2, '0')}`;
@@ -178,7 +189,7 @@
       dot.type = 'button';
       dot.className = 'dot';
       dot.dataset.page = String(index);
-      dot.setAttribute('aria-label', `Ir para página ${index + 1}: ${item.title}`);
+      dot.setAttribute('aria-label', `Ir para página ${index + 1}: ${label(item.title)}`);
       if (index === page) dot.setAttribute('aria-current', 'page');
       dots.append(dot);
     });
@@ -222,6 +233,7 @@
   });
   document.addEventListener('keydown', (event) => {
     if (!book || event.defaultPrevented || event.isComposing || event.altKey || event.ctrlKey || event.metaKey) return;
+    if (document.getElementById('protagonistDialog')?.open) return;
     if (event.target instanceof HTMLElement && event.target.closest('input,textarea,select,[contenteditable],[role="textbox"]')) return;
     const isSpace = event.code === 'Space' || event.key === ' ' || event.key === 'Spacebar';
     if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft' && !isSpace) return;
@@ -232,6 +244,7 @@
     else hearCurrentPage();
   });
   document.addEventListener('keyup', (event) => {
+    if (document.getElementById('protagonistDialog')?.open) return;
     if (book && (event.code === 'Space' || event.key === ' ')) event.preventDefault();
   });
   $('#book').addEventListener('touchstart', (event) => {
@@ -260,9 +273,9 @@
       const data = await response.json();
       if (data.schemaVersion !== 1 || data.id !== entry.id || !Array.isArray(data.pages) || !data.pages.length) throw new Error('Livro inválido');
       book = data;
-      document.title = `${book.title} · Prateleira de Livrinhos`;
+      document.title = `${label(book.title)} · Prateleira de Livrinhos`;
       document.documentElement.lang = book.language || 'pt-BR';
-      $('#bookBrand').textContent = book.title;
+      $('#bookBrand').textContent = label(book.title);
       $('#readerApp').hidden = false;
       render();
     } catch (error) {
@@ -271,5 +284,11 @@
     }
   }
 
+  document.addEventListener('livrinhos:protagonist-changed', () => {
+    if (!book) return;
+    document.title = `${label(book.title)} · Prateleira de Livrinhos`;
+    $('#bookBrand').textContent = label(book.title);
+    render();
+  });
   loadBook();
 })();

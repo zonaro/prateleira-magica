@@ -8,7 +8,9 @@
   <link rel="icon" href="./assets/icons/icon.svg" type="image/svg+xml">
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="stylesheet" href="./assets/css/app.css">
+  <script src="./assets/js/preferences.js" defer></script>
   <script src="./assets/js/library.js" defer></script>
+  <script src="./assets/js/settings-ui.js" defer></script>
   <script src="./assets/js/pwa.js" defer></script>
   <title>Prateleira de Livrinhos · Ler é uma aventura</title>
 </head>
@@ -20,6 +22,7 @@
         <span><strong>Prateleira de Livrinhos</strong><small>Pequenas histórias, grandes descobertas</small></span>
       </a>
       <div class="shelf-actions">
+        <button class="customize-action" type="button" data-open-settings>⚙ Personalizar</button>
         <span class="connection-status" id="connectionStatus" aria-live="polite">● Pronto para ler</span>
         <button class="install-action" id="installButton" type="button" hidden>↓ Instalar app</button>
       </div>
@@ -36,6 +39,7 @@
           <div class="hero-star hero-star-a">✦</div><div class="hero-star hero-star-b">✴</div>
           <div class="hero-book hero-book-back"></div>
           <div class="hero-book hero-book-front"><img src="./assets/illustrations/ellie/cover.svg" alt=""></div>
+          <div class="hero-avatar" id="heroAvatar"></div>
           <div class="hero-shelf"></div>
           <div class="hero-sparkle">✳</div>
         </div>

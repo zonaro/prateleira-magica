@@ -8,7 +8,9 @@
   <link rel="icon" href="./assets/icons/icon.svg" type="image/svg+xml">
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="stylesheet" href="./assets/css/app.css">
+  <script src="./assets/js/preferences.js" defer></script>
   <script src="./assets/js/reader.js" defer></script>
+  <script src="./assets/js/settings-ui.js" defer></script>
   <script src="./assets/js/pwa.js" defer></script>
   <title>Lendo um livrinho · Prateleira de Livrinhos</title>
 </head>
@@ -18,6 +20,7 @@
       <a class="back-to-shelf" href="./index.html" aria-label="Voltar para a prateleira">← <span>Prateleira</span></a>
       <img class="reader-logo" src="./assets/icons/icon.svg" alt="" width="45" height="45">
       <div class="brand-copy"><strong id="bookBrand">Meu livrinho</strong><span>Uma aventura de leitura e descobertas</span></div>
+      <button class="customize-action" type="button" data-open-settings>⚙ <span>Personalizar</span></button>
       <div class="top-pill">✦ Feito para ler com carinho</div>
     </header>
     <div id="readerError" class="reader-error" hidden role="alert"></div>

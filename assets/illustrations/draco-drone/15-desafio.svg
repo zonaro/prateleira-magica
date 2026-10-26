@@ -1,0 +1,159 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="700" viewBox="0 0 1000 700" role="img">
+<title>Cinco frases de dragão</title>
+<defs>
+        <pattern id="paper" width="28" height="28" patternUnits="userSpaceOnUse"><circle cx="5" cy="7" r="1.2" fill="#ffffff" opacity=".45"/></pattern>
+        <symbol id="cloud" viewBox="0 0 200 100"><path d="M35 80h125c30 0 35-46 4-51-10-40-58-39-76-12-24-15-48 0-49 22C3 39-2 80 35 80" fill="#fff"/></symbol>
+        <symbol id="tree" viewBox="0 0 200 315"><path d="M89 175h25v130H89z" fill="#a76c56"/><path d="M34 193C-3 164 15 115 47 105 31 47 85 13 126 44c49-3 71 53 46 84 25 46-2 89-50 85-30 17-67 5-88-20" fill="#4aaf83"/><circle cx="71" cy="100" r="11" fill="#88dcb0"/><circle cx="133" cy="147" r="13" fill="#88dcb0"/></symbol>
+        <symbol id="ellie" viewBox="0 0 210 340">
+          <ellipse cx="103" cy="319" rx="79" ry="13" fill="#22446a" opacity=".13"/>
+          <path d="M67 238h29l-6 78H64zm49 0h28l10 78h-27z" fill="#4c67ba"/>
+          <path d="M61 305h35l1 17H54q-8-11 7-17m68 0h35q13 8 7 17h-45z" fill="#7453a6"/>
+          <path d="M51 147q51-29 111 0l9 111H42z" fill="#fa7195"/><path d="M51 147q-18 16-24 76m135-76q17 12 25 78" fill="none" stroke="#d88c72" stroke-width="21" stroke-linecap="round"/>
+          <path d="M67 47q-27-24-41 3-12 28 18 46m105-49q25-23 40 3 12 28-19 47" fill="#604158"/>
+          <path d="M45 90q-5-65 60-70 61 0 64 70l-14 54H58z" fill="#62465a"/>
+          <ellipse cx="106" cy="99" rx="60" ry="65" fill="#e9aa83"/><path d="M48 79Q65 11 131 38q28 9 30 45-27-9-37-32-30 35-76 28" fill="#62465a"/>
+          <circle cx="84" cy="105" r="5" fill="#342f42"/><circle cx="129" cy="105" r="5" fill="#342f42"/><path d="M92 132q15 14 28-1" fill="none" stroke="#8f4b5d" stroke-width="5" stroke-linecap="round"/>
+          <circle cx="61" cy="119" r="12" fill="#f59f9c" opacity=".52"/><circle cx="151" cy="119" r="12" fill="#f59f9c" opacity=".52"/>
+          <path d="M91 161l15 16 15-16" fill="none" stroke="#fff4fa" stroke-width="7" stroke-linecap="round"/>
+        </symbol>
+        <symbol id="train" viewBox="0 0 630 330">
+          <ellipse cx="313" cy="294" rx="299" ry="24" fill="#294c6b" opacity=".18"/>
+          <g fill="#403f68"><rect x="21" y="259" width="587" height="17" rx="8"/></g>
+          <rect x="32" y="104" width="319" height="164" rx="38" fill="#f47c78"/>
+          <rect x="227" y="40" width="109" height="105" rx="18" fill="#eb556d"/><rect x="246" y="60" width="73" height="59" rx="9" fill="#9bdeec" stroke="#fff" stroke-width="8"/>
+          <path d="M37 148h199v89H37z" fill="#fb9d74"/><rect x="100" y="63" width="52" height="49" rx="8" fill="#4a5885"/><rect x="86" y="48" width="81" height="22" rx="9" fill="#394a78"/>
+          <path d="M20 227h330q18 0 18 19v20H20z" fill="#5d5d8c"/><path d="M30 168h71" stroke="#ffd06f" stroke-width="18" stroke-linecap="round"/>
+          <circle cx="102" cy="267" r="47" fill="#3f4f80" stroke="#ffe1a8" stroke-width="13"/><circle cx="102" cy="267" r="13" fill="#f9ab8c"/>
+          <circle cx="279" cy="267" r="47" fill="#3f4f80" stroke="#ffe1a8" stroke-width="13"/><circle cx="279" cy="267" r="13" fill="#f9ab8c"/>
+          <rect x="368" y="119" width="230" height="148" rx="29" fill="#f6bf68"/><path d="M369 151h229" stroke="#f39073" stroke-width="18"/>
+          <rect x="397" y="151" width="72" height="61" rx="10" fill="#8ee0e9" stroke="#fff7cf" stroke-width="8"/>
+          <rect x="492" y="151" width="72" height="61" rx="10" fill="#8ee0e9" stroke="#fff7cf" stroke-width="8"/>
+          <circle cx="422" cy="271" r="32" fill="#4b5184" stroke="#ffe1a8" stroke-width="11"/><circle cx="539" cy="271" r="32" fill="#4b5184" stroke="#ffe1a8" stroke-width="11"/>
+          <path d="M350 220h20" stroke="#4f5575" stroke-width="15"/><circle cx="48" cy="170" r="25" fill="#ffe3a0"/><circle cx="47" cy="171" r="11" fill="#fff"/>
+        </symbol>
+        <symbol id="tractor" viewBox="0 0 500 330">
+          <ellipse cx="248" cy="300" rx="230" ry="21" fill="#4d755e" opacity=".17"/>
+          <path d="M254 89h183l35 105H252z" fill="#f3b867"/><path d="M278 102h142l24 68H278z" fill="#fbe29c"/>
+          <path d="M44 196h165l38-83h92v139H35z" fill="#e66d66"/><rect x="245" y="55" width="102" height="145" rx="12" fill="#e7746e"/><rect x="263" y="75" width="68" height="83" rx="5" fill="#bcebf0"/>
+          <path d="M98 142V74h18" stroke="#4a627c" stroke-width="17" fill="none" stroke-linecap="round"/>
+          <circle cx="130" cy="256" r="65" fill="#465071" stroke="#f9c87d" stroke-width="13"/><circle cx="130" cy="256" r="22" fill="#b9d5de"/>
+          <circle cx="365" cy="263" r="43" fill="#465071" stroke="#f9c87d" stroke-width="10"/><circle cx="365" cy="263" r="14" fill="#b9d5de"/>
+          <rect x="45" y="192" width="20" height="37" rx="8" fill="#ffe4a1"/>
+        </symbol>
+        <symbol id="tricycle" viewBox="0 0 360 260">
+          <circle cx="69" cy="199" r="54" fill="#e9f8fb" stroke="#506187" stroke-width="12"/><circle cx="270" cy="199" r="54" fill="#e9f8fb" stroke="#506187" stroke-width="12"/>
+          <path d="M70 198l85-91 83 91H70l57-70" fill="none" stroke="currentColor" stroke-width="17" stroke-linejoin="round" stroke-linecap="round"/>
+          <path d="M230 70l40 128m-40-128h-30m27 0h55" fill="none" stroke="#506187" stroke-width="13" stroke-linecap="round"/>
+          <path d="M120 94h59" stroke="#59678d" stroke-width="16" stroke-linecap="round"/><circle cx="155" cy="198" r="15" fill="#fce7b6"/><path d="M155 198l45 28" stroke="#59678d" stroke-width="11" stroke-linecap="round"/>
+        </symbol>
+        <symbol id="squirrel" viewBox="0 0 280 340">
+          <path d="M161 196C275 210 277 85 208 69c66 86-53 66-63 138" fill="#d98a54" stroke="#c7774f" stroke-width="9"/>
+          <path d="M76 142Q65 83 103 57l32 33 37-32q38 40 20 89" fill="#d98a54"/>
+          <ellipse cx="132" cy="218" rx="80" ry="98" fill="#d98a54"/><ellipse cx="120" cy="225" rx="49" ry="65" fill="#ffe1b3"/>
+          <circle cx="107" cy="130" r="8" fill="#503f49"/><circle cx="163" cy="130" r="8" fill="#503f49"/><circle cx="135" cy="155" r="8" fill="#9d5d5a"/>
+          <path d="M133 164q13 15 28 0" fill="none" stroke="#9d5d5a" stroke-width="5"/><path d="M80 302l-10 24m103-23 17 22" stroke="#c7774f" stroke-width="19" stroke-linecap="round"/>
+          <path d="M86 210l-37-15m125 15 33-23" stroke="#c7774f" stroke-width="18" stroke-linecap="round"/>
+        </symbol>
+        <symbol id="trophy" viewBox="0 0 300 360">
+          <path d="M79 54h142v85c0 78-38 110-71 110s-71-32-71-110z" fill="#f5c453" stroke="#de9a33" stroke-width="8"/>
+          <path d="M81 78H39q-4 102 71 112m109-112h42q4 102-71 112" fill="none" stroke="#e8ab3f" stroke-width="18"/>
+          <path d="M150 245v52m-74 22h148v22H76z" stroke="#dc9e3b" stroke-width="20" fill="#f6c958" stroke-linejoin="round"/>
+          <path d="m150 98 13 26 29 4-21 21 5 30-26-14-26 14 5-30-21-21 29-4z" fill="#fff6c0"/>
+        </symbol>
+        <symbol id="star" viewBox="0 0 100 100"><path d="m50 6 13 29 31 4-23 21 7 31-28-16-28 16 7-31L6 39l31-4z" fill="#ffda70" stroke="#fff2b6" stroke-width="5"/></symbol>
+        <symbol id="clover" viewBox="0 0 130 160"><path d="M64 73c-17-48-61-35-52-3 4 13 18 21 40 18C14 111 42 145 67 110c15 37 56 22 52-8-3-20-23-25-41-23 37-10 30-53 4-56-24-3-27 24-18 50" fill="#46b97d" stroke="#218c61" stroke-width="5"/><path d="M66 92q19 44 13 66" stroke="#218c61" stroke-width="7" fill="none"/></symbol>
+        <symbol id="trumpet" viewBox="0 0 280 160"><path d="M40 51h123l82-41v139l-82-42H40z" fill="#f9cc58" stroke="#d79b39" stroke-width="8"/><path d="M61 108v20q0 20 20 20h53q20 0 20-20v-20" fill="none" stroke="#c98c3a" stroke-width="10"/><path d="M97 51V23m28 28V23m27 28V23" stroke="#ffe69c" stroke-width="13" stroke-linecap="round"/><path d="M18 49h27v65H18z" fill="#b16d52"/></symbol>
+      </defs>
+<defs>
+  <symbol id="drica" viewBox="0 0 210 340">
+          <ellipse cx="103" cy="319" rx="79" ry="13" fill="#22446a" opacity=".13"/>
+          <path d="M67 238h29l-6 78H64zm49 0h28l10 78h-27z" fill="#4c67ba"/>
+          <path d="M61 305h35l1 17H54q-8-11 7-17m68 0h35q13 8 7 17h-45z" fill="#7453a6"/>
+          <path d="M51 147q51-29 111 0l9 111H42z" fill="#9682dc"/><path d="M51 147q-18 16-24 76m135-76q17 12 25 78" fill="none" stroke="#d88c72" stroke-width="21" stroke-linecap="round"/>
+          <path d="M67 47q-27-24-41 3-12 28 18 46m105-49q25-23 40 3 12 28-19 47" fill="#6b4750"/>
+          <path d="M45 90q-5-65 60-70 61 0 64 70l-14 54H58z" fill="#6b4750"/>
+          <ellipse cx="106" cy="99" rx="60" ry="65" fill="#e9aa83"/><path d="M48 79Q65 11 131 38q28 9 30 45-27-9-37-32-30 35-76 28" fill="#6b4750"/>
+          <circle cx="84" cy="105" r="5" fill="#342f42"/><circle cx="129" cy="105" r="5" fill="#342f42"/><path d="M92 132q15 14 28-1" fill="none" stroke="#8f4b5d" stroke-width="5" stroke-linecap="round"/>
+          <circle cx="61" cy="119" r="12" fill="#f59f9c" opacity=".52"/><circle cx="151" cy="119" r="12" fill="#f59f9c" opacity=".52"/>
+          <path d="M91 161l15 16 15-16" fill="none" stroke="#fff4fa" stroke-width="7" stroke-linecap="round"/>
+        </symbol>
+  <symbol id="dragon" viewBox="0 0 420 375">
+    <ellipse cx="200" cy="346" rx="153" ry="15" fill="#2b6c86" opacity=".15"/>
+    <path d="M315 226q110-23 79-109-5 86-110 61" fill="#58aeaa" stroke="#358e96" stroke-width="8"/>
+    <path d="M136 231Q38 57 39 167q28 81 112 102m114-47Q367 53 381 170q-4 60-92 96" fill="#91c5e5" stroke="#57a5c5" stroke-width="10"/>
+    <ellipse cx="212" cy="222" rx="116" ry="122" fill="#5cc3a2"/>
+    <ellipse cx="210" cy="241" rx="67" ry="88" fill="#ffe2a7"/>
+    <path d="M114 171q-77-48-65-5 20 39 70 46m189-41q75-48 61-6-16 34-70 45" fill="#5cc3a2"/>
+    <path d="M126 105q-31-86 19-54l29 42m77 0 28-42q52-27 20 53" fill="#ffe19b" stroke="#eab982" stroke-width="7"/>
+    <ellipse cx="211" cy="127" rx="112" ry="90" fill="#5cc3a2"/>
+    <ellipse cx="124" cy="142" rx="52" ry="34" fill="#79d3b4"/>
+    <ellipse cx="292" cy="142" rx="52" ry="34" fill="#79d3b4"/>
+    <circle cx="173" cy="111" r="9" fill="#36515b"/><circle cx="251" cy="111" r="9" fill="#36515b"/>
+    <path d="M182 154q30 23 58 0" fill="none" stroke="#3c827a" stroke-width="7" stroke-linecap="round"/>
+    <circle cx="127" cy="149" r="9" fill="#e78e9b" opacity=".7"/><circle cx="289" cy="149" r="9" fill="#e78e9b" opacity=".7"/>
+    <path d="M125 298q-34 37 0 43h48q20-11-1-40m83-3q-29 36 0 43h48q20-11-3-41" fill="#49a899"/>
+  </symbol>
+  <symbol id="drone" viewBox="0 0 300 175">
+    <ellipse cx="150" cy="144" rx="98" ry="13" fill="#2b567c" opacity=".16"/>
+    <path d="M85 64 32 38m183 26 53-26M85 87l-56 20m186-20 55 20" fill="none" stroke="#7886b0" stroke-width="17" stroke-linecap="round"/>
+    <ellipse cx="34" cy="31" rx="28" ry="9" fill="#7e9ce0"/><ellipse cx="267" cy="31" rx="28" ry="9" fill="#7e9ce0"/>
+    <ellipse cx="30" cy="110" rx="28" ry="9" fill="#7e9ce0"/><ellipse cx="268" cy="110" rx="28" ry="9" fill="#7e9ce0"/>
+    <rect x="69" y="55" width="163" height="83" rx="35" fill="#f2bb54" stroke="#d9943d" stroke-width="7"/>
+    <circle cx="112" cy="96" r="8" fill="#3f526c"/><circle cx="184" cy="96" r="8" fill="#3f526c"/><path d="M131 115q18 15 35 0" fill="none" stroke="#a86d52" stroke-width="6" stroke-linecap="round"/>
+    <rect x="115" y="41" width="68" height="18" rx="8" fill="#fce5a0"/>
+  </symbol>
+  <symbol id="druida" viewBox="0 0 250 360">
+    <ellipse cx="123" cy="338" rx="97" ry="15" fill="#275d87" opacity=".13"/>
+    <path d="M49 157q75-27 151 0l24 167H24z" fill="#9068c6"/><path d="M93 158q29 20 61 0v166H93z" fill="#b9a1eb"/>
+    <path d="M36 70q90-115 170 0z" fill="#6858a7"/><ellipse cx="124" cy="84" rx="112" ry="18" fill="#7c68bd"/>
+    <ellipse cx="124" cy="123" rx="56" ry="60" fill="#d6a17d"/><path d="M74 106q21-56 101 0" fill="#69556c"/>
+    <circle cx="106" cy="125" r="5" fill="#2e3248"/><circle cx="144" cy="125" r="5" fill="#2e3248"/>
+    <path d="M114 148q14 10 25-1" stroke="#a45b60" stroke-width="5" stroke-linecap="round" fill="none"/>
+    <path d="M43 193 17 254m185-64 29 65" fill="none" stroke="#d6a17d" stroke-width="18" stroke-linecap="round"/>
+    <path d="M196 231 220 71" stroke="#8b6d5e" stroke-width="11" stroke-linecap="round"/>
+    <path d="m222 36 11 22 24 4-17 16 4 25-22-12-22 12 4-25-17-16 24-4z" fill="#ffe28a"/>
+    <path d="m124 35 8 15 17 2-13 12 3 18-15-9-15 9 3-18-13-12 17-2z" fill="#ffe6a5"/>
+  </symbol>
+  <symbol id="dromedary" viewBox="0 0 520 330">
+    <ellipse cx="254" cy="304" rx="245" ry="20" fill="#5a6c4f" opacity=".15"/>
+    <path d="M104 201q-5-110 77-124 16-77 89-7 55-65 88 13 63-4 60 128z" fill="#dcaa6c"/>
+    <path d="M401 192q18-99 34-121 24-30 62-5 25 20 13 61-8 27-50 26l-9 69" fill="#dcaa6c"/>
+    <path d="M103 201h41l-7 92h-38zm226 0h43l9 92h-40z" fill="#dcaa6c"/><path d="M96 288h57v24H95zm240 0h57v24h-57z" fill="#885c56"/>
+    <circle cx="480" cy="99" r="6" fill="#4f4551"/><path d="M485 119q15 12 27-1" stroke="#94674f" stroke-width="5" fill="none" stroke-linecap="round"/>
+    <path d="M404 154h59" stroke="#8c80d1" stroke-width="18"/><circle cx="430" cy="163" r="12" fill="#ffe28f"/>
+    <path d="M97 199q-60 24-66 69" stroke="#bb8b59" stroke-width="12" fill="none" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="andre" viewBox="0 0 210 340">
+    <ellipse cx="103" cy="320" rx="74" ry="12" fill="#276f84" opacity=".13"/>
+    <path d="M64 229h33l-5 88H58zm51 0h35l8 88h-36z" fill="#556a99"/>
+    <path d="M58 304h42v19H48zm68 0h43v19h-43z" fill="#7b5b5b"/>
+    <path d="M50 149q58-24 112 0l10 110H39z" fill="#88b98a"/>
+    <path d="M44 166q-23 22-21 65m146-65q17 24 16 62" fill="none" stroke="#bb8b67" stroke-width="20" stroke-linecap="round"/>
+    <ellipse cx="108" cy="103" rx="58" ry="62" fill="#bb8b67"/>
+    <path d="M50 73q10-55 55-55 58 0 59 55z" fill="#538d7f"/><path d="M49 72h128q-15 24-53 20H50z" fill="#3e786e"/>
+    <circle cx="88" cy="106" r="5" fill="#342c3b"/><circle cx="127" cy="106" r="5" fill="#342c3b"/><path d="M97 132q11 10 25 0" stroke="#7f4e50" stroke-width="5" fill="none" stroke-linecap="round"/>
+    <path d="M77 160v86m62-86v86" stroke="#5e8679" stroke-width="18"/><path d="M90 186h35v49H90z" fill="#5e8679"/>
+  </symbol>
+  <symbol id="dracena" viewBox="0 0 180 270">
+    <path d="M45 190h90l-12 70H57z" fill="#eaa579"/><path d="M35 189h110" stroke="#b97c65" stroke-width="11" stroke-linecap="round"/>
+    <path d="M90 197V63" stroke="#4b9c75" stroke-width="12" stroke-linecap="round"/>
+    <path d="M90 133Q15 15 38 30q90 16 52 117m0-39Q160-5 150 37q-71 25-60 115m0 4Q1 93 23 124q66 61 67 61m0-33q65-92 74-37-42 47-74 70" fill="#6bbd86" stroke="#3d9b70" stroke-width="6"/>
+  </symbol>
+  <symbol id="drain" viewBox="0 0 300 160">
+    <ellipse cx="150" cy="123" rx="144" ry="33" fill="#a1cdd7"/>
+    <ellipse cx="150" cy="103" rx="127" ry="46" fill="#7398aa"/>
+    <ellipse cx="150" cy="103" rx="104" ry="27" fill="#435b77"/>
+    <g stroke="#b5d3dd" stroke-width="12"><path d="M75 99h148m-113-21v48m40-50v51m40-47v45"/></g>
+  </symbol>
+  <symbol id="ball" viewBox="0 0 130 130"><circle cx="65" cy="65" r="57" fill="#fff2db" stroke="#6d7fc2" stroke-width="9"/><path d="m65 31 25 15-8 29H47l-8-29z" fill="#8b82d3"/><path d="M39 46 20 31m70 15 21-14M47 75l-13 26m48-26 14 28" fill="none" stroke="#8b82d3" stroke-width="9"/></symbol>
+  <symbol id="truffle" viewBox="0 0 180 130"><ellipse cx="90" cy="114" rx="85" ry="15" fill="#5b566e" opacity=".15"/><circle cx="49" cy="70" r="39" fill="#a66a54"/><circle cx="105" cy="60" r="47" fill="#b7775c"/><circle cx="145" cy="85" r="28" fill="#955f54"/><path d="M20 72q28-42 54 2m5-18q26-40 50 2" stroke="#f2c59c" stroke-width="6" fill="none"/></symbol>
+  <symbol id="map" viewBox="0 0 260 170"><path d="M28 36 88 17l88 25 58-22v112l-61 20-86-24-59 24z" fill="#fff1be" stroke="#c9a270" stroke-width="9"/><path d="M88 17v111m88-86v111" stroke="#dbb581" stroke-width="6" stroke-dasharray="12 8"/><path d="M64 103q47-76 99-42" fill="none" stroke="#77ac9a" stroke-width="10" stroke-dasharray="8 9"/><path d="m176 84 22 23m0-23-22 23" stroke="#df7490" stroke-width="11" stroke-linecap="round"/></symbol>
+</defs>
+<rect width="1000" height="700" fill="#c9bcf0"/><rect width="1000" height="700" fill="url(#paper)"/>
+    <circle cx="823" cy="105" r="68" fill="#ffe095"/>
+    <use href="#cloud" x="60" y="72" width="165" height="83" /><use href="#cloud" x="560" y="86" width="157" height="76" />
+    <path d="M0 420Q175 334 351 412T710 396T1000 393V700H0Z" fill="#a8dfcd"/>
+    <path d="M0 535Q210 423 482 507T1000 470V700H0Z" fill="#9bbdcf"/>
+    <path d="M0 633Q235 551 487 620T1000 559V700H0Z" fill="#4eac91"/>
+    <g fill="#fce9aa"><circle cx="120" cy="557" r="5"/><circle cx="840" cy="576" r="7"/></g><use href="#star" x="110" y="145" width="81" height="81" /><use href="#star" x="720" y="189" width="72" height="72" /><use href="#star" x="879" y="303" width="53" height="53" /><use href="#ellie" x="374" y="316" width="246" height="348" /><use href="#dragon" x="95" y="349" width="326" height="298" /><use href="#drone" x="692" y="239" width="251" height="142" /><text x="74" y="247" font-family="Trebuchet MS,Arial,sans-serif" font-weight="900" font-size="48" fill="#7353b5">DRA</text><text x="757" y="393" font-family="Trebuchet MS,Arial,sans-serif" font-weight="900" font-size="48" fill="#7353b5">DRE</text><text x="442" y="237" font-family="Trebuchet MS,Arial,sans-serif" font-weight="900" font-size="48" fill="#7353b5">DRI</text><text x="54" y="460" font-family="Trebuchet MS,Arial,sans-serif" font-weight="900" font-size="48" fill="#7353b5">DRO</text><text x="785" y="526" font-family="Trebuchet MS,Arial,sans-serif" font-weight="900" font-size="48" fill="#7353b5">DRU</text>
+</svg>

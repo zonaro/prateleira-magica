@@ -63,11 +63,16 @@ vm.runInNewContext(source, { self, caches, fetch: localFetch, URL, Response, con
 let pending;
 listeners.install({ waitUntil(promise) { pending = promise; } });
 await pending;
-const cache = await caches.open('prateleira-de-livrinhos-v1');
-const bookPath = `${scope}books/ellie-e-o-trem-travesso.json`;
-const artPath = `${scope}assets/illustrations/ellie/cover.svg`;
-assert(await cache.match(bookPath), 'Livro não foi salvo offline');
-assert(await cache.match(artPath), 'Ilustração não foi salva offline');
+const cache = await caches.open('prateleira-de-livrinhos-v2');
+const catalog = JSON.parse(fs.readFileSync(path.join(root, 'books/index.json'), 'utf8'));
+for (const entry of catalog.books) {
+  const bookPath = `${scope}${entry.data}`;
+  assert(await cache.match(bookPath), `Livro não foi salvo offline: ${entry.id}`);
+  const book = JSON.parse(fs.readFileSync(path.join(root, entry.data), 'utf8'));
+  for (const page of book.pages) {
+    assert(await cache.match(`${scope}${page.illustration}`), `Ilustração não foi salva offline: ${page.illustration}`);
+  }
+}
 
 listeners.activate({ waitUntil(promise) { pending = promise; } });
 await pending;
@@ -85,10 +90,13 @@ const shelf = await offlineRequest('index.html', 'navigate');
 assert((await shelf.text()).includes('Prateleira de Livrinhos'));
 const reader = await offlineRequest('livro.html?livro=ellie-e-o-trem-travesso', 'navigate');
 assert((await reader.text()).includes('readerApp'));
-const data = await offlineRequest('books/ellie-e-o-trem-travesso.json', 'cors');
-assert.equal((await data.json()).pages.length, 14);
-const illustration = await offlineRequest('assets/illustrations/ellie/cover.svg', 'cors');
-assert((await illustration.text()).includes('<svg'));
+for (const entry of catalog.books) {
+  const data = await offlineRequest(entry.data, 'cors');
+  const book = await data.json();
+  assert.equal(book.id, entry.id);
+  const illustration = await offlineRequest(book.cover, 'cors');
+  assert((await illustration.text()).includes('<svg'));
+}
 
-console.log('✓ Pré-cache de todos os livros e ilustrações');
+console.log(`✓ Pré-cache de ${catalog.books.length} livros e todas as ilustrações`);
 console.log('✓ Prateleira, leitor com query string, JSON e SVG acessíveis sem internet');

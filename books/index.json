@@ -17,6 +17,28 @@
         "TRO",
         "TRU"
       ]
+    },
+    {
+      "id": "draco-e-o-drone-desaparecido",
+      "data": "books/draco-e-o-drone-desaparecido.json",
+      "title": "{{nome}} e o Drone Desaparecido",
+      "subtitle": "Uma aventura com DRA, DRE, DRI, DRO e DRU",
+      "cover": "assets/illustrations/draco-drone/01-cover.svg",
+      "color": "#8b79dd",
+      "language": "pt-BR",
+      "label": "5 sílabas novas",
+      "syllables": ["DRA", "DRE", "DRI", "DRO", "DRU"]
+    },
+    {
+      "id": "ellie-e-o-trem-dos-dragoes",
+      "data": "books/ellie-e-o-trem-dos-dragoes.json",
+      "title": "{{nome}} e o Trem dos Dragões",
+      "subtitle": "Uma aventura misturando os dez sons de TR e DR",
+      "cover": "assets/illustrations/ellie-draco/01-cover.svg",
+      "color": "#4c9fbe",
+      "language": "pt-BR",
+      "label": "10 sílabas juntas",
+      "syllables": ["TRA", "TRE", "TRI", "TRO", "TRU", "DRA", "DRE", "DRI", "DRO", "DRU"]
     }
   ]
 }
