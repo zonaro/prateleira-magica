@@ -12,6 +12,7 @@
   ];
   const hairStyles = avatarCatalog.hairStyles;
   const outfitStyles = avatarCatalog.outfitStyles;
+  const bottomStyles = avatarCatalog.bottomStyles;
   let draft = preferences.load();
   let pronunciationTouched = false;
 
@@ -43,6 +44,7 @@
       </div>
       <fieldset class="avatar-style-fieldset"><legend>Penteado</legend><div id="avatarStyles" class="avatar-style-grid"></div></fieldset>
       <fieldset class="avatar-style-fieldset"><legend>Roupa</legend><div id="outfitStyles" class="avatar-style-grid outfits-grid"></div></fieldset>
+      <fieldset class="avatar-style-fieldset"><legend>Parte de baixo</legend><div id="bottomStyles" class="avatar-style-grid bottoms-grid"></div></fieldset>
       <fieldset class="skin-fieldset"><legend>Cor da pele — natural ou fantasia</legend><div id="skinOptions" class="skin-options"></div>
         <label class="custom-color"><span>Ou escolha qualquer cor</span><input id="customSkinColor" type="color" aria-label="Selecionar outra cor de pele"></label>
       </fieldset>
@@ -52,6 +54,14 @@
         </fieldset>
         <fieldset class="skin-fieldset"><legend>Cor da roupa</legend><div id="outfitColorOptions" class="skin-options"></div>
           <label class="custom-color"><span>Outra cor</span><input id="customOutfitColor" type="color" aria-label="Selecionar outra cor de roupa"></label>
+        </fieldset>
+      </div>
+      <div class="avatar-color-fields">
+        <fieldset class="skin-fieldset"><legend>Cor da calça ou do shorts</legend><div id="bottomColorOptions" class="skin-options"></div>
+          <label class="custom-color"><span>Outra cor</span><input id="customBottomColor" type="color" aria-label="Selecionar outra cor de calça ou shorts"></label>
+        </fieldset>
+        <fieldset class="skin-fieldset"><legend>Cor dos sapatos</legend><div id="shoeColorOptions" class="skin-options"></div>
+          <label class="custom-color"><span>Outra cor</span><input id="customShoeColor" type="color" aria-label="Selecionar outra cor dos sapatos"></label>
         </fieldset>
       </div>
       <section class="profile-backup" aria-label="Backup do personagem">
@@ -92,7 +102,15 @@
       const thumb = item.querySelector('.style-preview');
       if (thumb) thumb.innerHTML = preferences.avatarSVG({ ...draft, outfitStyle: item.dataset.style });
     }
-    for (const [containerId, key] of [['skinOptions', 'skinColor'], ['hairColorOptions', 'hairColor'], ['outfitColorOptions', 'outfitColor']]) {
+    for (const item of $('#bottomStyles').querySelectorAll('button')) {
+      const selected = item.dataset.style === draft.bottomStyle;
+      item.classList.toggle('selected', selected);
+      item.setAttribute('aria-pressed', String(selected));
+      const thumb = item.querySelector('.style-preview');
+      if (thumb) thumb.innerHTML = preferences.avatarSVG({ ...draft, bottomStyle: item.dataset.style });
+    }
+    for (const [containerId, key] of [['skinOptions', 'skinColor'], ['hairColorOptions', 'hairColor'],
+      ['outfitColorOptions', 'outfitColor'], ['bottomColorOptions', 'bottomColor'], ['shoeColorOptions', 'shoeColor']]) {
       for (const swatch of $(`#${containerId}`).querySelectorAll('button')) {
         const selected = swatch.dataset.color === draft[key];
         swatch.classList.toggle('selected', selected);
@@ -102,6 +120,8 @@
     $('#customSkinColor').value = draft.skinColor;
     $('#customHairColor').value = draft.hairColor;
     $('#customOutfitColor').value = draft.outfitColor;
+    $('#customBottomColor').value = draft.bottomColor;
+    $('#customShoeColor').value = draft.shoeColor;
   }
 
   function fillDialog() {
@@ -130,6 +150,7 @@
   }
   addStyles('avatarStyles', hairStyles, 'avatarStyle');
   addStyles('outfitStyles', outfitStyles, 'outfitStyle');
+  addStyles('bottomStyles', bottomStyles, 'bottomStyle');
 
   function addColors(containerId, palette, field) {
     const container = $(`#${containerId}`);
@@ -148,6 +169,8 @@
   addColors('skinOptions', skinColors, 'skinColor');
   addColors('hairColorOptions', avatarCatalog.hairColors, 'hairColor');
   addColors('outfitColorOptions', avatarCatalog.outfitColors, 'outfitColor');
+  addColors('bottomColorOptions', avatarCatalog.bottomColors, 'bottomColor');
+  addColors('shoeColorOptions', avatarCatalog.shoeColors, 'shoeColor');
 
   for (const button of document.querySelectorAll('[data-open-settings]')) {
     button.addEventListener('click', () => { fillDialog(); dialog.showModal(); });
@@ -171,6 +194,8 @@
   $('#customSkinColor').addEventListener('input', (event) => { draft.skinColor = event.target.value; drawPreview(); });
   $('#customHairColor').addEventListener('input', (event) => { draft.hairColor = event.target.value; drawPreview(); });
   $('#customOutfitColor').addEventListener('input', (event) => { draft.outfitColor = event.target.value; drawPreview(); });
+  $('#customBottomColor').addEventListener('input', (event) => { draft.bottomColor = event.target.value; drawPreview(); });
+  $('#customShoeColor').addEventListener('input', (event) => { draft.shoeColor = event.target.value; drawPreview(); });
   $('#resetSettings').addEventListener('click', () => {
     draft = { ...preferences.DEFAULTS, achievements: draft.achievements };
     pronunciationTouched = false;

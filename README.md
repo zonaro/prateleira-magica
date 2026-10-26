@@ -24,12 +24,14 @@ books/<slug>.json                  História completa e exercícios de cada livr
 assets/css/app.css                 Estilos da biblioteca e do leitor
 assets/js/library.js               Prateleira dinâmica
 assets/js/reader.js                Leitor e narração
-assets/js/avatar.js                Ilustrações modulares dos protagonistas
+assets/js/avatar-parts.js          Peças vetoriais extraídas dos SVGs originais (geradas)
+assets/js/avatar.js                Compositor das peças originais + pernas customizáveis
 assets/js/preferences.js           Nome, pronomes, voz, avatar e conquistas do protagonista
 assets/js/settings-ui.js           Editor de personagem no app
 assets/js/pwa.js                   Instalação PWA e status de conexão
 assets/illustrations/<slug>/*.svg  Ilustrações por página
 assets/avatar-reference/svgrepo-kids/ SVGs de referência da coleção Kids Avatars
+assets/avatar-reference/component-map.json Seleção de caminhos e cores dos SVGs originais
 assets/icons/                     Ícones PWA
 manifest.webmanifest               Manifesto instalável
 sw.js                              Cache offline
@@ -38,6 +40,9 @@ tests/preferences.test.mjs         Testes da personalização
 tests/offline.test.mjs             Teste completo do cache offline
 tools/generate-story-art.mjs       Geração dos SVGs dos livros de Draco
 tools/download-kids-avatars.mjs    Atualização dos SVGs de referência
+tools/extract-avatar-components.py Geração das peças vetoriais utilizadas no app
+tools/preview-avatar-combinations.mjs Prévia visual das combinações de avatar
+docs/avatar-components.md         Proveniência, extração e compatibilidade
 .github/workflows/pages.yml        Deploy no GitHub Pages
 ```
 
@@ -86,8 +91,9 @@ O botão **Personalizar** (na prateleira e no leitor) permite configurar:
 
 - Nome da criança e escrita fonética separada para a narração.
 - Gênero/pronomes: masculino (`ele/dele`), feminino (`ela/dela`) ou neutro (`elu/delu`).
-- **Nove penteados** (incluindo cacheado, afro, tranças, rabo de cavalo e boné) combináveis com **seis roupas** (moletom, camiseta, vestido, jardineira, jaqueta e uniforme esportivo): são 54 combinações antes de variar as cores.
+- **12 penteados e 8 roupas extraídos dos SVGs reais da coleção Kids Avatars**, combináveis livremente: 96 combinações principais, antes de variar as cores. Penteados incluem afro, cacheado, maria-chiquinha, tranças, cabelo longo, cortes curtos e boné.
 - Escolha independente da cor do cabelo e da roupa, com paletas e seleção livre.
+- **Calça ou shorts**, com cor independente, e cor personalizada para os sapatos.
 - Cores de pele naturais ou fantasia (incluindo verde, azul, lilás e rosa), mantendo o seletor livre existente.
 
 Essas preferências ficam apenas no `localStorage` do navegador, sem conta ou servidor. O avatar SVG é personalizado localmente nas ilustrações de cada página, inclusive quando o aplicativo está offline. A chave de armazenamento do app anterior foi mantida de propósito para preservar o personagem após a renomeação do repositório.
@@ -96,7 +102,7 @@ Essas preferências ficam apenas no `localStorage` do navegador, sem conta ou se
 
 No editor, **Baixar personagem SVG** salva as escolhas atuais e oferece um arquivo `.svg` que funciona como uma ilustração vetorial comum. Ele inclui um elemento `<metadata id="prateleira-magica-profile" data-format="application/json">` contendo um JSON inline com:
 
-- `profile`: `name`, `pronunciation`, `gender`, `avatarStyle`, `outfitStyle`, `skinColor`, `hairColor`, `outfitColor`;
+- `profile`: `name`, `pronunciation`, `gender`, `avatarStyle`, `outfitStyle`, `skinColor`, `hairColor`, `outfitColor`, `bottomStyle`, `bottomColor`, `shoeColor`;
 - `achievements.books`: cada ID de livro com índices das frases marcadas (`completedExercises`), conclusão da história (`finished`), `finishedAt` e `challengeCompletedAt`;
 - `app`, `schemaVersion` e `exportedAt` para identificar a origem, versão e data do backup.
 
@@ -110,9 +116,13 @@ Nas ilustrações, o símbolo SVG `<symbol id="ellie">` (legado), `<symbol id="k
 
 #### Referências visuais SVG Repo
 
-Os avatares foram refeitos com peças SVG originais inspiradas na coleção pública [Kids Avatars](https://www.svgrepo.com/collection/kids-avatars/). Os arquivos da coleção baixados ficam em `assets/avatar-reference/svgrepo-kids/`, acompanhados de `sources.json` com seus endereços de origem e eventuais falhas de download. Esses arquivos são **referências de design**, não são executados nem incluídos no cache offline do PWA. Consulte a licença de cada ícone na sua página de origem antes de reutilizá-lo fora deste material de referência.
+O rosto, os penteados e as roupas **usam as formas vetoriais originais**, extraídas dos SVGs da coleção [Kids Avatars](https://www.svgrepo.com/collection/kids-avatars/). A geometria de cabelo e roupa não é redesenhada: `tools/extract-avatar-components.py` copia as formas declaradas em `component-map.json` e substitui somente as cores por marcadores de personalização. Apenas pernas, calça, shorts e sapatos têm formas próprias do aplicativo.
+
+O catálogo original (74 SVGs baixados dentre 75 identificados) fica em `assets/avatar-reference/svgrepo-kids/`, acompanhado de `sources.json` e das URLs de origem. Os **14 ícones reutilizados diretamente** têm licença CC0 verificada nas páginas individuais. O app carrega **somente** o pacote de componentes extraídos `assets/js/avatar-parts.js`, incluído no cache offline; não precisa carregar os SVGs originais separadamente, nem depender de rede para compor ou exportar um personagem. Veja as [fontes e decisões de composição](docs/avatar-components.md).
 
 Para tentar baixar ou atualizar a coleção novamente, execute `node tools/download-kids-avatars.mjs` com acesso à internet. O script reaproveita os arquivos válidos já existentes.
+
+Para reconstruir as peças usadas pelo app após alterar as seleções, execute `python3 tools/extract-avatar-components.py` e rode os testes. A geração precisa manter o SVG final auto-contido para o backup funcionar offline.
 
 ### Pronúncia
 

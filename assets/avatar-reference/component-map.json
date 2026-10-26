@@ -1,0 +1,37 @@
+{
+  "description": "Componentes vetoriais retirados dos SVGs originais da coleção Kids Avatars (SVG Repo). Os índices referem-se a root.iter() do XML original; nenhuma peça de cabelo ou roupa é redesenhada.",
+  "base": {
+    "source": "3914-girl.svg",
+    "nodes": [2, 4, 5, 6, 7, 9, 10],
+    "colors": {
+      "#FFD7A3": "SKIN",
+      "#FDC88E": "SKIN_DARK",
+      "#FFE1B2": "SKIN_LIGHT",
+      "#E4B07B": "SKIN_DEEP"
+    }
+  },
+  "hair": {
+    "puffs": { "source": "31423-girl.svg", "back": [15, 17, 21, 23], "front": [35, 37], "colors": { "#9D6E48": "HAIR", "#8D5F3D": "HAIR_DARK" } },
+    "short": { "source": "12676-boy.svg", "back": [6], "front": [], "colors": { "#734A3E": "HAIR" } },
+    "side": { "source": "31150-boy.svg", "back": [4, 7], "front": [26, 28], "colors": { "#FF9656": "HAIR", "#EF8C56": "HAIR_DARK" } },
+    "long": { "source": "31132-girl.svg", "back": [4, 9], "front": [29, 30, 32], "colors": { "#9D6E48": "HAIR", "#8D5F3D": "HAIR_DARK" } },
+    "curly": { "source": "38284-boy.svg", "back": [4, 5], "front": [], "colors": { "#9D6E48": "HAIR", "#8D5F3D": "HAIR_DARK" } },
+    "afro": { "source": "38246-girl.svg", "back": [4], "front": [], "colors": { "#623F33": "HAIR" } },
+    "braids": { "source": "166241-girl.svg", "back": [3, 4, 35, 39], "front": [29, 31, 6, 8, 10, 12, 33, 37], "colors": { "#6E4439": "HAIR", "#5E342E": "HAIR_DARK" } },
+    "ponytail": { "source": "3896-girl.svg", "back": [4, 6, 10, 12], "front": [26, 28, 8, 14], "colors": { "#6E4439": "HAIR", "#5E342E": "HAIR_DARK", "#653C34": "HAIR_DARK" } },
+    "cap": { "source": "66804-boy.svg", "back": [], "front": [15, 17, 19, 21, 23, 25, 27], "colors": { "#57B9DD": "HAIR", "#43A0C5": "HAIR_DARK", "#1179A2": "HAIR_DEEP", "#E09156": "HAIR_LIGHT" } },
+    "bob": { "source": "38251-girl.svg", "back": [], "front": [9, 10], "colors": { "#6E4439": "HAIR", "#5E342E": "HAIR_DARK" } },
+    "straight": { "source": "3914-girl.svg", "back": [], "front": [12, 13], "colors": { "#FFC85C": "HAIR", "#F6B45E": "HAIR_DARK" } },
+    "waves": { "source": "65066-girl.svg", "back": [3, 4], "front": [21, 22], "colors": { "#734A3E": "HAIR", "#5E342E": "HAIR_DARK" } }
+  },
+  "outfit": {
+    "hoodie": { "source": "3852-boy.svg", "nodes": [2, 17, 19, 21, 23, 25], "colors": { "#FF4F4F": "OUTFIT", "#F23F44": "OUTFIT_DARK", "#A63F44": "OUTFIT_DEEP" } },
+    "tee": { "source": "12676-boy.svg", "nodes": [18, 20, 22], "colors": { "#00BEA4": "OUTFIT", "#00AB9A": "OUTFIT_DARK" } },
+    "dress": { "source": "3896-girl.svg", "nodes": [31, 34, 36, 37, 38], "colors": { "#F05467": "OUTFIT", "#BD445A": "OUTFIT_DARK" } },
+    "overalls": { "source": "65066-girl.svg", "nodes": [18, 20], "colors": { "#FF8C51": "OUTFIT", "#FF7941": "OUTFIT_DARK" } },
+    "jacket": { "source": "82178-boy.svg", "nodes": [3, 12, 13, 14, 15, 16, 18], "colors": { "#43A0C5": "OUTFIT", "#2C8CB3": "OUTFIT_DARK", "#9BCE7A": "OUTFIT_LIGHT", "#8ABE69": "OUTFIT_LIGHT" } },
+    "jersey": { "source": "66804-boy.svg", "nodes": [29, 31, 33, 35, 37, 39], "colors": { "#FF9B4F": "OUTFIT", "#43A0C5": "OUTFIT_DARK", "#1179A2": "OUTFIT_DEEP" } },
+    "blouse": { "source": "38251-girl.svg", "nodes": [11, 12, 13, 14, 15, 16, 17, 18], "colors": { "#FF6473": "OUTFIT", "#CA64B3": "OUTFIT_DARK" } },
+    "coat": { "source": "38284-boy.svg", "nodes": [13, 14, 15, 16, 17, 18], "colors": { "#FFA64E": "OUTFIT", "#FFDD8B": "OUTFIT_LIGHT", "#F4873F": "OUTFIT_DARK" } }
+  }
+}

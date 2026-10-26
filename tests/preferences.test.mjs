@@ -18,6 +18,8 @@ const context = {
   document: { dispatchEvent() {} },
   CustomEvent: class { constructor(type, options) { this.type = type; this.detail = options.detail; } }
 };
+vm.runInNewContext(fs.readFileSync(path.join(root, 'assets/js/avatar-parts.js'), 'utf8'), context,
+  { filename: 'avatar-parts.js' });
 vm.runInNewContext(avatarSource, context, { filename: 'avatar.js' });
 vm.runInNewContext(source, context, { filename: 'preferences.js' });
 const prefs = window.LivrinhoPreferences;
@@ -80,7 +82,7 @@ assert(image.src.startsWith('blob:test-'));
 const customizedSvg = await blobs.get(image.src).text();
 assert(customizedSvg.includes('<symbol id="ellie"'));
 assert(customizedSvg.includes('#8bcfff'), 'A pele azul não entrou no SVG da história');
-assert(customizedSvg.includes('fill="#493a55"'), 'O cabelo do avatar não entrou no SVG');
+assert(customizedSvg.includes('fill:#493a55') || customizedSvg.includes('fill="#493a55"'), 'O cabelo do avatar não entrou no SVG');
 assert(customizedSvg.includes('<title>Meggie e o Trem Travesso</title>'), 'Título da capa não usou o nome configurado');
 
 await prefs.personalizeIllustration(image,

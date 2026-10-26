@@ -25,6 +25,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Validar dados e estrutura
         run: |
+          python3 tools/extract-avatar-components.py --check
           node tests/verify.mjs
           node tests/preferences.test.mjs
           node tests/avatar.test.mjs

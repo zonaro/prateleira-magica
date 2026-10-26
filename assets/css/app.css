@@ -174,6 +174,7 @@
     .gender-fieldset small{display:block;font-size:10px;font-weight:800;color:#877c91;margin-top:3px}
     .avatar-style-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
     .avatar-style-grid.outfits-grid{grid-template-columns:repeat(6,minmax(0,1fr))}
+    .avatar-style-grid.bottoms-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
     .avatar-style{display:flex;flex-direction:column;align-items:center;justify-content:center;border:2px solid #eadfe7;background:white;border-radius:15px;min-height:122px;padding:8px 5px;gap:4px;color:#716b85;font-weight:1000;font-size:12px}
     .avatar-style.selected{border-color:#a081df;background:#f2ecff;color:#694cab}
     .style-preview{display:flex;height:88px;align-items:flex-end;justify-content:center;overflow:hidden;width:100%}
@@ -217,6 +218,6 @@
       .hero-avatar{width:106px;height:144px;right:4%;bottom:22px}.hero-avatar svg{height:122px}
       .preferences-content{grid-template-columns:1fr;gap:15px}.avatar-editor{min-height:220px}.avatar-stage{height:188px}.avatar-stage svg{height:190px}
       .gender-fieldset{grid-template-columns:1fr}.gender-fieldset label{padding:9px 12px}.gender-fieldset label span{display:flex;justify-content:space-between;align-items:center;gap:8px;width:100%}
-      .gender-fieldset small{margin:0}.avatar-style-grid,.avatar-style-grid.outfits-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.avatar-color-fields{grid-template-columns:1fr;gap:0}.settings-actions{flex-direction:column-reverse}.settings-actions button{width:100%}
+      .gender-fieldset small{margin:0}.avatar-style-grid,.avatar-style-grid.outfits-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.avatar-style-grid.bottoms-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.avatar-color-fields{grid-template-columns:1fr;gap:0}.settings-actions{flex-direction:column-reverse}.settings-actions button{width:100%}
       .profile-backup{padding:17px}.profile-backup-actions{flex-direction:column}.profile-backup-actions button{width:100%}
     }

@@ -13,10 +13,14 @@
     hairColor: '#493a55',
     outfitStyle: 'hoodie',
     outfitColor: '#fa7195',
+    bottomStyle: 'pants',
+    bottomColor: '#5879b9',
+    shoeColor: '#625a89',
     achievements: { books: {} }
   });
   const styles = avatar.hairStyles.map(([key]) => key);
   const outfits = avatar.outfitStyles.map(([key]) => key);
+  const bottoms = avatar.bottomStyles.map(([key]) => key);
   const genders = {
     masculino: { pronome: 'ele', possessivo: 'dele' },
     feminino: { pronome: 'ela', possessivo: 'dela' },
@@ -55,9 +59,12 @@
       gender: Object.hasOwn(genders, input.gender) ? input.gender : DEFAULTS.gender,
       avatarStyle: styles.includes(input.avatarStyle) ? input.avatarStyle : DEFAULTS.avatarStyle,
       outfitStyle: outfits.includes(input.outfitStyle) ? input.outfitStyle : DEFAULTS.outfitStyle,
+      bottomStyle: bottoms.includes(input.bottomStyle) ? input.bottomStyle : DEFAULTS.bottomStyle,
       skinColor: /^#[0-9a-f]{6}$/i.test(input.skinColor || '') ? input.skinColor.toLowerCase() : DEFAULTS.skinColor,
       hairColor: /^#[0-9a-f]{6}$/i.test(input.hairColor || '') ? input.hairColor.toLowerCase() : DEFAULTS.hairColor,
       outfitColor: /^#[0-9a-f]{6}$/i.test(input.outfitColor || '') ? input.outfitColor.toLowerCase() : legacyShirtColor,
+      bottomColor: /^#[0-9a-f]{6}$/i.test(input.bottomColor || '') ? input.bottomColor.toLowerCase() : DEFAULTS.bottomColor,
+      shoeColor: /^#[0-9a-f]{6}$/i.test(input.shoeColor || '') ? input.shoeColor.toLowerCase() : DEFAULTS.shoeColor,
       achievements: cleanAchievements(input.achievements)
     };
   }
@@ -177,7 +184,7 @@
     }
   }
 
-  window.LivrinhoPreferences = { DEFAULTS, styles, outfits, genders, load, save, clean,
+  window.LivrinhoPreferences = { DEFAULTS, styles, outfits, bottoms, genders, load, save, clean,
     bookProgress, recordBookProgress, exportProfileSVG, parseProfileSVG,
     personalize, avatarSymbol, avatarSVG, personalizeIllustration };
 })();
