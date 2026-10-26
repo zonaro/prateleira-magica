@@ -1,7 +1,8 @@
 (() => {
   'use strict';
   const preferences = window.LivrinhoPreferences;
-  if (!preferences) return;
+  const avatarCatalog = window.LivrinhoAvatar;
+  if (!preferences || !avatarCatalog) return;
   const skinColors = [
     ['#f5d4b3', 'Pele clara'], ['#e9aa83', 'Pele média clara'],
     ['#c98760', 'Pele média'], ['#a66846', 'Pele bronzeada'],
@@ -9,10 +10,8 @@
     ['#83dca5', 'Verde fantasia'], ['#8bcfff', 'Azul fantasia'],
     ['#c1a4ff', 'Lilás fantasia'], ['#ffb7d4', 'Rosa fantasia']
   ];
-  const hairStyles = [
-    ['puffs', 'Coquinhos'], ['short', 'Curto'], ['long', 'Longo'],
-    ['curly', 'Cacheado'], ['cap', 'Boné']
-  ];
+  const hairStyles = avatarCatalog.hairStyles;
+  const outfitStyles = avatarCatalog.outfitStyles;
   let draft = preferences.load();
   let pronunciationTouched = false;
 
@@ -26,7 +25,7 @@
         <div><div class="section-kicker">NOSSA ESTRELA</div><h2 id="settingsTitle">Personalizar protagonista ✨</h2></div>
         <button type="button" class="settings-close" id="closeSettings" aria-label="Fechar configurações">✕</button>
       </div>
-      <p class="settings-intro">Monte seu personagem e veja seu nome aparecer dentro das histórias.</p>
+      <p class="settings-intro">Monte seu personagem combinando cabelos, roupas e cores. Ele aparecerá nas ilustrações de todos os livros!</p>
       <div class="preferences-content">
         <div class="avatar-editor"><div class="avatar-stage" id="avatarStage"></div><span>Meu personagem</span></div>
         <div class="preferences-fields">
@@ -42,10 +41,19 @@
           </fieldset>
         </div>
       </div>
-      <fieldset class="avatar-style-fieldset"><legend>Estilo do avatar</legend><div id="avatarStyles" class="avatar-style-grid"></div></fieldset>
+      <fieldset class="avatar-style-fieldset"><legend>Penteado</legend><div id="avatarStyles" class="avatar-style-grid"></div></fieldset>
+      <fieldset class="avatar-style-fieldset"><legend>Roupa</legend><div id="outfitStyles" class="avatar-style-grid outfits-grid"></div></fieldset>
       <fieldset class="skin-fieldset"><legend>Cor da pele — natural ou fantasia</legend><div id="skinOptions" class="skin-options"></div>
         <label class="custom-color"><span>Ou escolha qualquer cor</span><input id="customSkinColor" type="color" aria-label="Selecionar outra cor de pele"></label>
       </fieldset>
+      <div class="avatar-color-fields">
+        <fieldset class="skin-fieldset"><legend>Cor do cabelo</legend><div id="hairColorOptions" class="skin-options"></div>
+          <label class="custom-color"><span>Outra cor</span><input id="customHairColor" type="color" aria-label="Selecionar outra cor de cabelo"></label>
+        </fieldset>
+        <fieldset class="skin-fieldset"><legend>Cor da roupa</legend><div id="outfitColorOptions" class="skin-options"></div>
+          <label class="custom-color"><span>Outra cor</span><input id="customOutfitColor" type="color" aria-label="Selecionar outra cor de roupa"></label>
+        </fieldset>
+      </div>
       <p class="settings-privacy">🔒 Essas escolhas ficam salvas somente neste navegador.</p>
       <div class="settings-actions"><button id="resetSettings" type="button" class="settings-reset">Restaurar padrão</button><button type="submit" class="settings-save">Salvar personagem <span aria-hidden="true">✓</span></button></div>
     </form>`;
@@ -67,11 +75,23 @@
       const thumb = item.querySelector('.style-preview');
       if (thumb) thumb.innerHTML = preferences.avatarSVG({ ...draft, avatarStyle: item.dataset.style });
     }
-    for (const swatch of $('#skinOptions').querySelectorAll('button')) {
-      swatch.classList.toggle('selected', swatch.dataset.color === draft.skinColor);
-      swatch.setAttribute('aria-pressed', String(swatch.dataset.color === draft.skinColor));
+    for (const item of $('#outfitStyles').querySelectorAll('button')) {
+      const selected = item.dataset.style === draft.outfitStyle;
+      item.classList.toggle('selected', selected);
+      item.setAttribute('aria-pressed', String(selected));
+      const thumb = item.querySelector('.style-preview');
+      if (thumb) thumb.innerHTML = preferences.avatarSVG({ ...draft, outfitStyle: item.dataset.style });
+    }
+    for (const [containerId, key] of [['skinOptions', 'skinColor'], ['hairColorOptions', 'hairColor'], ['outfitColorOptions', 'outfitColor']]) {
+      for (const swatch of $(`#${containerId}`).querySelectorAll('button')) {
+        const selected = swatch.dataset.color === draft[key];
+        swatch.classList.toggle('selected', selected);
+        swatch.setAttribute('aria-pressed', String(selected));
+      }
     }
     $('#customSkinColor').value = draft.skinColor;
+    $('#customHairColor').value = draft.hairColor;
+    $('#customOutfitColor').value = draft.outfitColor;
   }
 
   function fillDialog() {
@@ -83,29 +103,40 @@
     drawPreview();
   }
 
-  const stylesContainer = $('#avatarStyles');
-  for (const [style, label] of hairStyles) {
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.className = 'avatar-style';
-    button.dataset.style = style;
-    button.innerHTML = '<span class="style-preview"></span><span class="style-label"></span>';
-    button.querySelector('.style-label').textContent = label;
-    button.addEventListener('click', () => { draft.avatarStyle = style; drawPreview(); });
-    stylesContainer.append(button);
+  function addStyles(containerId, entries, field) {
+    const container = $(`#${containerId}`);
+    for (const [style, label] of entries) {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'avatar-style';
+      button.dataset.style = style;
+      button.setAttribute('aria-label', label);
+      button.innerHTML = '<span class="style-preview"></span><span class="style-label"></span>';
+      button.querySelector('.style-label').textContent = label;
+      button.addEventListener('click', () => { draft[field] = style; drawPreview(); });
+      container.append(button);
+    }
   }
-  const skinContainer = $('#skinOptions');
-  for (const [color, label] of skinColors) {
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.className = 'skin-swatch';
-    button.dataset.color = color;
-    button.title = label;
-    button.setAttribute('aria-label', label);
-    button.style.backgroundColor = color;
-    button.addEventListener('click', () => { draft.skinColor = color; drawPreview(); });
-    skinContainer.append(button);
+  addStyles('avatarStyles', hairStyles, 'avatarStyle');
+  addStyles('outfitStyles', outfitStyles, 'outfitStyle');
+
+  function addColors(containerId, palette, field) {
+    const container = $(`#${containerId}`);
+    for (const [color, label] of palette) {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'skin-swatch';
+      button.dataset.color = color;
+      button.title = label;
+      button.setAttribute('aria-label', label);
+      button.style.backgroundColor = color;
+      button.addEventListener('click', () => { draft[field] = color; drawPreview(); });
+      container.append(button);
+    }
   }
+  addColors('skinOptions', skinColors, 'skinColor');
+  addColors('hairColorOptions', avatarCatalog.hairColors, 'hairColor');
+  addColors('outfitColorOptions', avatarCatalog.outfitColors, 'outfitColor');
 
   for (const button of document.querySelectorAll('[data-open-settings]')) {
     button.addEventListener('click', () => { fillDialog(); dialog.showModal(); });
@@ -127,6 +158,8 @@
     option.addEventListener('change', () => { draft.gender = option.value; drawPreview(); });
   }
   $('#customSkinColor').addEventListener('input', (event) => { draft.skinColor = event.target.value; drawPreview(); });
+  $('#customHairColor').addEventListener('input', (event) => { draft.hairColor = event.target.value; drawPreview(); });
+  $('#customOutfitColor').addEventListener('input', (event) => { draft.outfitColor = event.target.value; drawPreview(); });
   $('#resetSettings').addEventListener('click', () => {
     draft = { ...preferences.DEFAULTS };
     pronunciationTouched = false;

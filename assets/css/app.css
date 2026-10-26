@@ -171,11 +171,13 @@
     .gender-fieldset input{accent-color:#8659bf;flex:none}
     .gender-fieldset small{display:block;font-size:10px;font-weight:800;color:#877c91;margin-top:3px}
     .avatar-style-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+    .avatar-style-grid.outfits-grid{grid-template-columns:repeat(6,minmax(0,1fr))}
     .avatar-style{display:flex;flex-direction:column;align-items:center;justify-content:center;border:2px solid #eadfe7;background:white;border-radius:15px;min-height:122px;padding:8px 5px;gap:4px;color:#716b85;font-weight:1000;font-size:12px}
     .avatar-style.selected{border-color:#a081df;background:#f2ecff;color:#694cab}
     .style-preview{display:flex;height:88px;align-items:flex-end;justify-content:center;overflow:hidden;width:100%}
     .style-preview svg{height:108px;width:80px;transform:translateY(8px)}
     .skin-options{display:flex;align-items:center;flex-wrap:wrap;gap:11px;margin:6px 0 12px}
+    .avatar-color-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
     .skin-swatch{width:37px;height:37px;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 2px #dfd6e0;position:relative}
     .skin-swatch.selected{box-shadow:0 0 0 4px #8c70cb}
     .skin-swatch.selected:after{content:"✓";position:absolute;inset:0;display:grid;place-items:center;color:#253346;text-shadow:0 1px 2px #fff;font-weight:1000}
@@ -205,5 +207,5 @@
       .hero-avatar{width:106px;height:144px;right:4%;bottom:22px}.hero-avatar svg{height:122px}
       .preferences-content{grid-template-columns:1fr;gap:15px}.avatar-editor{min-height:220px}.avatar-stage{height:188px}.avatar-stage svg{height:190px}
       .gender-fieldset{grid-template-columns:1fr}.gender-fieldset label{padding:9px 12px}.gender-fieldset label span{display:flex;justify-content:space-between;align-items:center;gap:8px;width:100%}
-      .gender-fieldset small{margin:0}.avatar-style-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.settings-actions{flex-direction:column-reverse}.settings-actions button{width:100%}
+      .gender-fieldset small{margin:0}.avatar-style-grid,.avatar-style-grid.outfits-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.avatar-color-fields{grid-template-columns:1fr;gap:0}.settings-actions{flex-direction:column-reverse}.settings-actions button{width:100%}
     }

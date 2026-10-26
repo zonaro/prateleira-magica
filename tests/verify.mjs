@@ -16,13 +16,13 @@ const reference = (file) => {
 
 const required = [
   'index.html', 'livro.html', 'manifest.webmanifest', 'sw.js',
-  'assets/css/app.css', 'assets/js/library.js', 'assets/js/reader.js',
+  'assets/css/app.css', 'assets/js/library.js', 'assets/js/reader.js', 'assets/js/avatar.js',
   'assets/js/preferences.js', 'assets/js/settings-ui.js',
   'assets/js/pwa.js', 'books/index.json', 'assets/icons/icon.svg'
 ];
 required.forEach(reference);
 
-for (const scriptFile of ['assets/js/library.js', 'assets/js/reader.js', 'assets/js/preferences.js', 'assets/js/settings-ui.js', 'assets/js/pwa.js', 'sw.js']) {
+for (const scriptFile of ['assets/js/avatar.js', 'assets/js/library.js', 'assets/js/reader.js', 'assets/js/preferences.js', 'assets/js/settings-ui.js', 'assets/js/pwa.js', 'sw.js']) {
   new Script(read(scriptFile), { filename: scriptFile });
 }
 

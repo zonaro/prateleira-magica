@@ -5,6 +5,7 @@ import vm from 'node:vm';
 import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const avatarSource = fs.readFileSync(path.join(root, 'assets/js/avatar.js'), 'utf8');
 const source = fs.readFileSync(path.join(root, 'assets/js/preferences.js'), 'utf8');
 const storage = new Map();
 const window = {};
@@ -17,6 +18,7 @@ const context = {
   document: { dispatchEvent() {} },
   CustomEvent: class { constructor(type, options) { this.type = type; this.detail = options.detail; } }
 };
+vm.runInNewContext(avatarSource, context, { filename: 'avatar.js' });
 vm.runInNewContext(source, context, { filename: 'preferences.js' });
 const prefs = window.LivrinhoPreferences;
 assert(prefs);
@@ -38,6 +40,9 @@ for (const [gender, pronome, possessivo] of [
 assert.equal(prefs.clean({ name: '', gender: 'desconhecido', skinColor: '#jklmno' }).gender, 'feminino');
 assert.equal(prefs.clean({ name: '', skinColor: '#jklmno' }).skinColor, '#e9aa83');
 assert(prefs.avatarSymbol('ellie').includes('<symbol id="ellie"'));
+assert.equal(prefs.clean({ outfitStyle: 'inexistente', hairColor: '#jklmno' }).outfitStyle, 'hoodie');
+assert.equal(prefs.clean({ outfitStyle: 'inexistente', hairColor: '#jklmno' }).hairColor, '#493a55');
+assert.equal(prefs.load().outfitStyle, 'hoodie');
 const catalog = JSON.parse(fs.readFileSync(path.join(root, 'books/index.json'), 'utf8'));
 for (const entry of catalog.books) {
   assert.equal(prefs.personalize(entry.title).includes('Dani'), true, `Título não personalizado: ${entry.id}`);

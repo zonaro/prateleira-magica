@@ -24,10 +24,12 @@ books/<slug>.json                  História completa e exercícios de cada livr
 assets/css/app.css                 Estilos da biblioteca e do leitor
 assets/js/library.js               Prateleira dinâmica
 assets/js/reader.js                Leitor e narração
+assets/js/avatar.js                Ilustrações modulares dos protagonistas
 assets/js/preferences.js           Nome, pronomes, voz e avatar do protagonista
 assets/js/settings-ui.js           Editor de personagem no app
 assets/js/pwa.js                   Instalação PWA e status de conexão
 assets/illustrations/<slug>/*.svg  Ilustrações por página
+assets/avatar-reference/svgrepo-kids/ SVGs de referência da coleção Kids Avatars
 assets/icons/                     Ícones PWA
 manifest.webmanifest               Manifesto instalável
 sw.js                              Cache offline
@@ -35,6 +37,7 @@ tests/verify.mjs                   Testes de integridade
 tests/preferences.test.mjs         Testes da personalização
 tests/offline.test.mjs             Teste completo do cache offline
 tools/generate-story-art.mjs       Geração dos SVGs dos livros de Draco
+tools/download-kids-avatars.mjs    Atualização dos SVGs de referência
 .github/workflows/pages.yml        Deploy no GitHub Pages
 ```
 
@@ -83,13 +86,21 @@ O botão **Personalizar** (na prateleira e no leitor) permite configurar:
 
 - Nome da criança e escrita fonética separada para a narração.
 - Gênero/pronomes: masculino (`ele/dele`), feminino (`ela/dela`) ou neutro (`elu/delu`).
-- Cinco estilos de cabelo/boné e cores de pele naturais ou fantasia (incluindo verde, azul, lilás, rosa e qualquer cor escolhida no seletor).
+- **Nove penteados** (incluindo cacheado, afro, tranças, rabo de cavalo e boné) combináveis com **seis roupas** (moletom, camiseta, vestido, jardineira, jaqueta e uniforme esportivo): são 54 combinações antes de variar as cores.
+- Escolha independente da cor do cabelo e da roupa, com paletas e seleção livre.
+- Cores de pele naturais ou fantasia (incluindo verde, azul, lilás e rosa), mantendo o seletor livre existente.
 
 Essas preferências ficam apenas no `localStorage` do navegador, sem conta ou servidor. O avatar SVG é personalizado localmente nas ilustrações de cada página, inclusive quando o aplicativo está offline. A chave de armazenamento do app anterior foi mantida de propósito para preservar o personagem após a renomeação do repositório.
 
 **Regra para todos os livros:** os campos `title` de `books/index.json`, do JSON do livro e da página de capa devem usar `{{nome}}` quando mencionarem a criança. Nos textos, selos, medalhas e narrações, use `{{nome}}`, `{{pronome}}`, `{{Pronome}}`, `{{possessivo}}` ou `{{Possessivo}}`, nunca um nome infantil fixo. Se o nome for uma palavra interativa, use `[[{{nome}}]]`. Evite frases que dependam de flexão de gênero fora desses marcadores; prefira construções neutras como “a criança” quando necessário.
 
 Nas ilustrações, o símbolo SVG `<symbol id="ellie">` (legado), `<symbol id="kid">` ou `<symbol id="protagonist">` representa **a criança configurada**, e as instâncias `<use>` são trocadas automaticamente pelo avatar escolhido. Os textos dos SVGs também aceitam `{{nome}}`, inclusive `<title>`, `aria-label` e balões de fala. O processo escapa caracteres especiais para preservar o XML válido. As capas na prateleira, a ilustração de destaque e as páginas do leitor herdam o mesmo avatar.
+
+#### Referências visuais SVG Repo
+
+Os avatares foram refeitos com peças SVG originais inspiradas na coleção pública [Kids Avatars](https://www.svgrepo.com/collection/kids-avatars/). Os arquivos da coleção baixados ficam em `assets/avatar-reference/svgrepo-kids/`, acompanhados de `sources.json` com seus endereços de origem e eventuais falhas de download. Esses arquivos são **referências de design**, não são executados nem incluídos no cache offline do PWA. Consulte a licença de cada ícone na sua página de origem antes de reutilizá-lo fora deste material de referência.
+
+Para tentar baixar ou atualizar a coleção novamente, execute `node tools/download-kids-avatars.mjs` com acesso à internet. O script reaproveita os arquivos válidos já existentes.
 
 ### Pronúncia
 
