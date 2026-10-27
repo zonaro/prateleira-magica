@@ -142,3 +142,11 @@ Modificar `tools/mediapipe-dependencies.json` conscientemente, repetir
 versão dos WASM, algoritmo das categorias e hashes do modelo. Aumentar
 `CACHE_NAME` em `sw.js` e validar no mobile. Não usar modelos com URL
 mutável sem checagem de integridade.
+
+## Verificação automática do deploy
+
+A publicação do GitHub Pages deve usar **Settings → Pages → Build and deployment → Source: GitHub Actions**. A opção *Deploy from a branch* pode executar um segundo workflow automático, publicar o repositório cru e omitir os sete binários MediaPipe gerados pelo CI (ignorados no Git).
+
+O workflow `.github/workflows/pages.yml` prepara e testa os sete arquivos em `assets/vendor/mediapipe` antes de empacotar. **Após** `actions/deploy-pages`, executa `node tools/check-photo-deployment.mjs --public` para checar por HTTP no domínio final os sete arquivos (JS, WASM, modelos) e o HTML que contém `tabFoto`. Um 404/HTML de erro causa falha do deploy, mesmo que a etapa `actions/deploy-pages` tenha terminado com sucesso. O teste faz requisições `HEAD` e não transfere modelos grandes; a inferência e qualidade de fotos reais ainda exigem testes com dispositivo.
+
+O SW `v28` força nova instalação do cache após a correção da publicação; sem espaço para todos os arquivos, a função por foto continua indisponível offline, sem quebrar os livros.
