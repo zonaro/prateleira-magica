@@ -50,10 +50,19 @@
       quickContainer.append(button);
     }
     $('[data-color-random]').addEventListener('click', () => {
-      const list = colors.swatches || [];
-      if (!list.length) return;
-      const [hex, name] = list[Math.floor(Math.random() * list.length)];
-      updateColor(hex, '', `Surpresa! Sorteamos a cor ${name.toLowerCase()}!`);
+      let random;
+      if (typeof colors.randomNamedColor === 'function') {
+        random = colors.randomNamedColor();
+      } else {
+        const list = colors.swatches || [];
+        if (!list.length) return;
+        const [hex] = list[Math.floor(Math.random() * list.length)];
+        random = { hex };
+      }
+      const hex = random?.hex;
+      if (!colors.validHex(hex)) return;
+      const colorName = colors.name(hex);
+      updateColor(hex, random.key ? colorName.toLowerCase() : '', `Surpresa! Sorteamos a cor ${colorName.toLowerCase()}!`);
     });
     function temperatureLabel(temp) {
       const value = String(temp || '').toLowerCase();

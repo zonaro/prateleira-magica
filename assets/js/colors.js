@@ -157,5 +157,25 @@
     applyTheme(preferences.load().themeMood);
     document.addEventListener('livrinhos:protagonist-changed', () => applyTheme(preferences.load().themeMood));
   }
-  window.LivrinhoColors = { moods, swatches, ids, hex, validHex, mix, name, palette, harmonies, temperature, applyTheme };
+  function randomNamedColor() {
+    try {
+      const database = window.colorDatabase;
+      if (database && typeof database === 'object') {
+        const keys = Object.keys(database);
+        if (keys.length) {
+          const key = keys[Math.floor(Math.random() * keys.length)];
+          const hexValue = '#' + key;
+          if (validHex(hexValue)) {
+            return { hex: hexValue.toLowerCase(), key };
+          }
+        }
+      }
+    } catch {}
+    if (swatches.length) {
+      const [hexValue] = swatches[Math.floor(Math.random() * swatches.length)];
+      return { hex: hexValue.toLowerCase() };
+    }
+    return { hex: '#f44e9a' };
+  }
+  window.LivrinhoColors = { moods, swatches, ids, hex, validHex, mix, name, palette, harmonies, temperature, randomNamedColor, applyTheme };
 })();
