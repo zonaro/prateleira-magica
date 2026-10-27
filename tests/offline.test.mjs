@@ -63,7 +63,7 @@ vm.runInNewContext(source, { self, caches, fetch: localFetch, URL, Response, con
 let pending;
 listeners.install({ waitUntil(promise) { pending = promise; } });
 await pending;
-const cache = await caches.open('prateleira-magica-v9');
+const cache = await caches.open('prateleira-magica-v10');
 assert(await cache.match(`${scope}assets/js/avatar-parts.js`), 'Peças originais dos avatares não foram salvas offline');
 assert(await cache.match(`${scope}assets/js/pet-parts.js`), 'Pets para ilustrações não foram salvos offline');
 assert(await cache.match(`${scope}assets/js/avatar.js`), 'Renderização dos avatares não foi salva offline');

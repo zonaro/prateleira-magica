@@ -1,5 +1,5 @@
 /* Offline-first, same-origin service worker for the static GitHub Pages app. */
-const CACHE_NAME = 'prateleira-magica-v9';
+const CACHE_NAME = 'prateleira-magica-v10';
 const APP_ROOT = new URL(self.registration.scope);
 const url = (path) => new URL(path, APP_ROOT).href;
 const APP_SHELL = [
@@ -125,5 +125,10 @@ self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
   const requestUrl = new URL(event.request.url);
   if (requestUrl.origin !== APP_ROOT.origin || !requestUrl.pathname.startsWith(APP_ROOT.pathname)) return;
-  event.respondWith(event.request.mode === 'navigate' ? networkFirst(event.request) : cacheFirst(event.request));
+  // Priorize código atualizado com rede e recupere do cache offline.
+  // Cache-first em CSS/JS pode deixar instalada uma interface antiga mesmo após novos deploys.
+  const relativePath = requestUrl.pathname.slice(APP_ROOT.pathname.length);
+  const appCode = /\.(?:css|js|json)$/.test(relativePath);
+  event.respondWith(event.request.mode === 'navigate' || appCode
+    ? networkFirst(event.request) : cacheFirst(event.request));
 });

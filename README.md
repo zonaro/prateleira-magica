@@ -167,7 +167,7 @@ O texto exibido é personalizado com o nome escolhido, mas a escrita fonética a
 
 ## Offline e instalação
 
-O Service Worker salva a prateleira, o leitor, o editor, o perfil, todos os JSONs, as ilustrações e **os 20 SVGs de pets**, quando há rede no primeiro acesso. Depois, a navegação e a leitura ficam disponíveis offline, inclusive em URLs de livros com parâmetros. Para receber novos livros ou mudanças, o usuário precisa abrir o site com internet ao menos uma vez após a publicação da nova versão do Service Worker.
+O Service Worker salva a prateleira, o leitor, o editor, o perfil, todos os JSONs, as ilustrações e **os 20 SVGs de pets**, quando há rede no primeiro acesso. Depois, a navegação e a leitura ficam disponíveis offline, inclusive em URLs de livros com parâmetros. Com conexão, HTML, CSS, JavaScript e JSONs usam **network-first**, atualizando o cache após novos deploys; ilustrações usam cache-first. Quando offline, tudo recorre às versões locais disponíveis.
 
 Em navegadores compatíveis, use **Instalar app** ou a opção **Adicionar à tela inicial**. A narração por voz depende das vozes disponíveis localmente; alguns sintetizadores podem precisar de conectividade.
 
