@@ -94,7 +94,7 @@
   function destroy() {
     removeSimpleListeners();
     leaveEngine();
-    bookRoot?.classList?.remove?.('reader-simple');
+    bookRoot?.classList?.toggle?.('reader-simple', false);
     bookRoot = null;
     pageNodes = [];
     onFlip = null;
@@ -140,7 +140,7 @@
   function installSimple(index, reason = 'simple') {
     leaveEngine();
     if (!bookRoot) return;
-    bookRoot.classList.add('reader-simple');
+    bookRoot.classList.toggle('reader-simple', true);
     bookRoot.replaceChildren(...pageNodes);
     mode = 'light';
     bookRoot.addEventListener('touchstart', onTouchStart, { passive: true });
@@ -155,6 +155,7 @@
     // O primeiro engasgo de fato desliga a engine pesada pelo restante da sessão
     // (e por até 24h); usar "Tentar animação" permite repetir o teste.
     save(SLOW_KEY, String(Date.now()));
+    save(PREFERENCE_KEY, 'auto'); // volta a automático mesmo após tentativa manual
     const parent = bookRoot.parentNode, nextSibling = bookRoot.nextSibling;
     removeSimpleListeners();
     leaveEngine();
@@ -223,7 +224,7 @@
       installSimple(index, reason);
     } else {
       mode = 'animated';
-      book.classList.remove('reader-simple');
+      book.classList.toggle('reader-simple', false);
       engine = new window.St.PageFlip(book, {
         width: pageWidth,
         height,
