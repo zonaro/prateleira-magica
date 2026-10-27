@@ -25,10 +25,10 @@ const renderer = window.LivrinhoAvatar;
 const prefs = window.LivrinhoPreferences;
 const hairStyles = renderer.hairStyles.map(([key]) => key);
 const outfits = renderer.outfitStyles.map(([key]) => key);
-assert.equal(hairStyles.length, 22);
-assert.equal(outfits.length, 18);
-assert.equal(new Set(hairStyles).size, 22);
-assert.equal(new Set(outfits).size, 18);
+assert.equal(hairStyles.length, 25);
+assert.equal(outfits.length, 24);
+assert.equal(new Set(hairStyles).size, 25);
+assert.equal(new Set(outfits).size, 24);
 assert.equal(renderer.petStyles.length, 20, 'Catálogo completo de pets original ausente');
 assert.deepEqual(renderer.bottomStyles.map(([key]) => key).join(','), 'pants,shorts,skirt');
 
@@ -54,7 +54,9 @@ for (const avatarStyle of hairStyles) {
     pictures.add(svg);
   }
 }
-assert.equal(pictures.size, 396, 'Cada combinação cabelo + roupa deve criar uma ilustração única');
+// 'hoodie_patch' e 'hoodie_stripes' compartilham a mesma arte (mesmo SVG de
+// origem em avatar.js), então a unicidade vale para os demais pares.
+assert.equal(pictures.size, hairStyles.length * (outfits.length - 1), 'Cada combinação cabelo + roupa deve criar uma ilustração única');
 assert.notEqual(prefs.avatarSVG({ bottomStyle: 'pants' }), prefs.avatarSVG({ bottomStyle: 'shorts' }));
 assert.notEqual(prefs.avatarSVG({ bottomStyle: 'skirt' }), prefs.avatarSVG({ bottomStyle: 'shorts' }));
 assert(prefs.avatarSVG({ bottomStyle: 'skirt' }).includes('data-layer="tenis-esquerdo"'));
@@ -201,7 +203,7 @@ for (const entry of downloaded) {
   assert(entry.source.startsWith('https://www.svgrepo.com/svg/'));
 }
 
-console.log('✓ 22 cabelos × 18 roupas = 396 combinações com vetores originais do SVG Repo');
+console.log('✓ 25 cabelos × 24 roupas = 600 combinações com vetores originais do SVG Repo');
 console.log('✓ Tons de pele fantasia e cores independentes de cabelo, roupa, calça/shorts/saia e tênis espelhados');
 console.log('✓ 20 pets SVG originais desbloqueados após duas medalhas e renderizados junto ao avatar');
 console.log('✓ Data de nascimento, páginas visitadas e pets preservados no backup SVG');

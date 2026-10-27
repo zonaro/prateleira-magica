@@ -129,8 +129,10 @@ await prefs.personalizeIllustration(image,
 const safeSvg = await blobs.get(image.src).text();
 assert(safeSvg.includes('<title>Mia &amp; Lua &lt;3 e o Trem Travesso</title>'), 'Nome com caracteres especiais corrompe o SVG');
 assert(safeSvg.includes('#83dca5'), 'Avatar fantasia deveria acompanhar a troca de nome');
-assert(fs.readFileSync(path.join(root, 'index.html'), 'utf8').includes('id="heroCover"'));
-assert(fs.readFileSync(path.join(root, 'assets/js/library.js'), 'utf8').includes('personalizeIllustration(heroCover'));
+const landingHtml = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+assert(landingHtml.includes('assets/js/landing.js'), 'A landing precisa renderizar as histórias a partir do catálogo');
+assert(!/\{\{\w+\}\}/.test(landingHtml), 'A landing não pode exibir marcadores {{...}} crus no HTML');
+assert(fs.readFileSync(path.join(root, 'assets/js/library.js'), 'utf8').includes('personalizeIllustration(img'), 'As capas da prateleira precisam herdar o avatar escolhido');
 
 console.log('✓ Nome, pronúncia personalizada e os três conjuntos de pronomes');
 console.log('✓ Avatar com estilo, pele fantasia e validação das preferências');

@@ -9,10 +9,13 @@ const read = (filename) => fs.readFileSync(path.join(root, filename), 'utf8');
 const styles = new Map();
 const attrs = new Set();
 const context = {
-  document: { documentElement: {
-    style: { setProperty(key, value) { styles.set(key, value); }, removeProperty(key) { styles.delete(key); } },
-    toggleAttribute(key, enabled) { if (enabled) attrs.add(key); else attrs.delete(key); }
-  } }
+  document: {
+    body: { classList: { add() {}, remove() {} } },
+    documentElement: {
+      style: { setProperty(key, value) { styles.set(key, value); }, removeProperty(key) { styles.delete(key); } },
+      toggleAttribute(key, enabled) { if (enabled) attrs.add(key); else attrs.delete(key); }
+    }
+  }
 };
 context.window = context;
 vm.createContext(context);

@@ -25,35 +25,41 @@
     card.href = `./livro.html?livro=${encodeURIComponent(book.id)}`;
     card.setAttribute('aria-label', `Abrir ${label(book.title)}`);
 
-    const spine = document.createElement('div');
-    spine.className = 'book-spine-cover';
-    spine.style.setProperty('--book-color', book.color || '#f96b91');
-    
+    const stand = document.createElement('div');
+    stand.className = 'book-stand';
+    stand.style.setProperty('--book-color', book.color || '#f96b91');
+
     const img = document.createElement('img');
     img.src = asset(book.cover);
     img.alt = `Capa de ${label(book.title)}`;
     img.loading = 'lazy';
-    spine.append(img);
+    img.className = 'book-cover-img';
+    stand.append(img);
     preferences?.personalizeIllustration(img, asset(book.cover));
-    
+
     if (book.label) {
       const labelBadge = document.createElement('span');
       labelBadge.className = 'book-spine-label';
       labelBadge.textContent = book.label;
-      spine.append(labelBadge);
+      stand.append(labelBadge);
     }
 
-    const info = document.createElement('div');
-    info.className = 'book-spine-info';
-    const title = document.createElement('div');
-    title.className = 'book-spine-title';
+    const bubble = document.createElement('div');
+    bubble.className = 'book-bubble';
+    const tail = document.createElement('div');
+    tail.className = 'book-bubble-tail';
+    const copy = document.createElement('div');
+    copy.className = 'book-bubble-copy';
+    const title = document.createElement('strong');
+    title.className = 'book-bubble-title';
     title.textContent = label(book.title);
-    const subtitle = document.createElement('div');
-    subtitle.className = 'book-spine-subtitle';
+    const subtitle = document.createElement('span');
+    subtitle.className = 'book-bubble-subtitle';
     subtitle.textContent = label(book.subtitle || '');
-    info.append(title, subtitle);
+    copy.append(title, subtitle);
+    bubble.append(tail, copy);
 
-    card.append(spine, info);
+    card.append(stand, bubble);
     return card;
   }
 
