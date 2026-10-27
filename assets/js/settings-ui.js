@@ -269,7 +269,7 @@
       for (const item of document.getElementById('accessoryStyles').querySelectorAll('button')) {
         // find which accessory this button is
         const label = item.querySelector('.style-label')?.textContent;
-        const map = {'Óculos redondos':'glasses_round','Óculos quadrados':'glasses_square','Óculos escuros':'glasses_sunglasses','Brincos':'earrings_stud','Fones de ouvido':'headphones','Touca':'beanie','Tiara':'headband','Laço':'bow_hair','Flor de cabelo':'flower_clip','Estrela':'star_clip'};
+        const map = {'Óculos redondos':'glasses_round','Óculos quadrados':'glasses_square','Óculos escuros':'glasses_sunglasses','Brincos':'earrings_stud','Fones de ouvido':'headphones','Boné':'cap','Touca':'beanie','Tiara':'headband','Laço':'bow_hair','Flor de cabelo':'flower_clip','Estrela':'star_clip'};
         const aid = map[label];
         const selected = aid && accs.includes(aid);
         item.classList.toggle('selected', selected);
@@ -400,7 +400,7 @@
           draft.accessories.splice(idx, 1);
         } else {
           // remove conflicting types
-          const conflicts = {hat:['headphones','beanie','headband'], hair:['bow_hair','flower_clip','star_clip'], face:['glasses_round','glasses_square','glasses_sunglasses'], ears:['earrings_stud']};
+          const conflicts = {hat:['headphones','cap','beanie','headband'], hair:['bow_hair','flower_clip','star_clip'], face:['glasses_round','glasses_square','glasses_sunglasses'], ears:['earrings_stud']};
           for (const [k,v] of Object.entries(conflicts)) {
             if ((k===accType) || v.includes(accId)) {
               draft.accessories = draft.accessories.filter(a => !(conflicts[k]||[]).includes(a));

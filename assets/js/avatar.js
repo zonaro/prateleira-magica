@@ -15,12 +15,11 @@
     ['puffs', 'Maria-chiquinha'], ['short', 'Curtinho'], ['side', 'De lado'],
     ['long', 'Longo ondulado'], ['curly', 'Cacheado'], ['afro', 'Afro'],
     ['braids', 'Trancinhas'], ['ponytail', 'Rabos de cavalo'], ['ponytail_bow', 'Rabos com laços'],
-    ['cap', 'Boné'],
     ['bob', 'Chanel'], ['straight', 'Chanel loiro'], ['waves', 'Ondulado'],
     ['flower_braids', 'Flor lateral'], ['mohawk', 'Moicano'], ['undercut', 'Topete lateral'],
     ['bow', 'Laços laterais'], ['quiff', 'Topete alto'], ['flower_bob', 'Chanel com flor'],
     ['flower_heart', 'Coração floral'], ['flower_long', 'Longo com flor'], ['medium_waves', 'Ondas médias'],
-    ['side_sweep', 'Franja longa'], ['ringlets', 'Cachos curtinhos'], ['mullet', 'Mullets']
+    ['side_sweep', 'Franja longa'], ['ringlets', 'Cachos curtinhos'], ['mullet', 'Mullets'], ['bald', 'Careca']
   ];
   const outfitStyles = [
     ['hoodie', 'Moletom'], ['hoodie_zip', 'Moletom zíper'], ['hoodie_patch', 'Moletom com patch'], ['hoodie_stripes', 'Moletom listrado'],
@@ -41,6 +40,7 @@
     ['glasses_sunglasses', 'Óculos escuros', 'face'],
     ['earrings_stud', 'Brincos', 'ears'],
     ['headphones', 'Fones de ouvido', 'hat'],
+    ['cap', 'Boné', 'hat'],
     ['beanie', 'Touca', 'hat'],
     ['headband', 'Tiara', 'hat'],
     ['bow_hair', 'Laço', 'hair'],
