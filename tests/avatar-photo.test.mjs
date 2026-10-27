@@ -44,6 +44,11 @@ assert(editor.includes('draft.accessoryColor = result.accessoryColor'), 'Óculos
 assert(photo.includes('color.dominantHairColor(hairSamples)'), 'Cabelo tingido deve usar cor dominante');
 assert(photo.includes('catalog.hairColors)') && !photo.includes('catalog.hairColors.slice(0, 5)'), 'Todas as tinturas devem ser admitidas');
 assert(photo.includes('navigator.mediaDevices.getUserMedia('));
+assert(photo.includes("input = find('input.avatar-photo-input[type=\"file\"]')"),
+  'O campo de arquivo não pode usar seletor genérico que encontra o zoom');
+assert(!photo.includes("find('input');"), 'Não vincular upload ao slider');
+assert(photo.includes('class="avatar-photo-file-control"') && photo.includes('aria-label="Escolher uma foto na galeria"'),
+  'O upload precisa de acionamento nativo acessível');
 assert(photo.includes('getImageData('));
 assert(photo.includes('result.close()'), 'Segmentador deve liberar máscaras');
 assert(photo.includes('canvas.width = canvas.height = 0'), 'Canvas temporário deve ser limpo');
@@ -68,7 +73,7 @@ assert.equal(manifest.models.length, 2);
 assert(read('assets/js/profile-tabs.js').includes('setPhotoAvailability(false)'), 'A aba deve desaparecer quando o modelo falhar');
 assert(read('assets/css/app.css').includes('.profile-tab[hidden]'), 'CSS não deve sobrescrever o atributo hidden');
 assert(!read('assets/js/avatar-photo.js').includes('avatar-photo-modal'), 'Modal anterior deve ser removido');
-assert(read('sw.js').includes("const CACHE_NAME = 'prateleira-magica-v29'"));
+assert(read('sw.js').includes("const CACHE_NAME = 'prateleira-magica-v30'"));
 
 
 console.log('✓ Paletas, média aparada e conexão do criador por foto ao editor existente');
