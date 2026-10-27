@@ -92,8 +92,8 @@ assert(css.includes('object-fit:contain'), 'SVGs devem ser encaixados sem recort
 assert(reader.includes('pageTurn.mount(') && reader.includes('pageTurn.go('));
 assert(reader.includes('canDragPage: (index) => !book.pages[index]?.interactive'));
 assert(reader.includes('const exploring = Boolean(book.pages[page].interactive)')
-  && reader.includes('Para virar a página, use os botões Voltar ou Próxima'),
-  'A oficina precisa orientar a criança a usar os botões enquanto o arraste está desligado');
+  && reader.includes('Para virar, use Voltar ou Próxima'),
+  'As páginas interativas precisam orientar a criança a usar os botões enquanto o arraste está desligado');
 assert(reader.includes('if (!canVisit(destination))'), 'Desafio deve bloquear avanço pelo teclado e botões');
 assert(reader.includes('const say = event.target.closest?.(\'[data-say]\')'));
 assert(reader.includes('narrator.pause()') && reader.includes('narrator.resume()'), 'Ouvir deve pausar e continuar sem reiniciar');
