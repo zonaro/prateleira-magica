@@ -60,7 +60,7 @@ assert.equal(manifest.models.length, 2);
 assert(read('assets/js/profile-tabs.js').includes('setPhotoAvailability(false)'), 'A aba deve desaparecer quando o modelo falhar');
 assert(read('assets/css/app.css').includes('.profile-tab[hidden]'), 'CSS não deve sobrescrever o atributo hidden');
 assert(!read('assets/js/avatar-photo.js').includes('avatar-photo-modal'), 'Modal anterior deve ser removido');
-assert(read('sw.js').includes("const CACHE_NAME = 'prateleira-magica-v26'"));
+assert(read('sw.js').includes("const CACHE_NAME = 'prateleira-magica-v27'"));
 
 
 console.log('✓ Paletas, média aparada e conexão do criador por foto ao editor existente');
