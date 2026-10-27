@@ -13,7 +13,8 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const base = process.env.PAGES_URL || 'https://zonaro.github.io/prateleira-magica/';
+const pageUrl = process.env.PAGES_URL || 'https://zonaro.github.io/prateleira-magica/';
+const base = pageUrl.endsWith('/') ? pageUrl : pageUrl + '/';
 const assets = [
   ['vision_bundle.mjs', 100_000],
   ['wasm/vision_wasm_internal.js', 100_000],
