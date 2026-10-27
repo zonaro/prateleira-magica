@@ -23,7 +23,7 @@
         const wasm = await mediapipe.FilesetResolver.forVisionTasks(MP_ROOT + '/wasm');
         const face = await mediapipe.FaceLandmarker.createFromOptions(wasm, {
           baseOptions: { modelAssetPath: FACE_MODEL, delegate: 'CPU' },
-          runningMode: 'IMAGE', numFaces: 1,
+          runningMode: 'IMAGE', numFaces: 2,
           minFaceDetectionConfidence: 0.6, minFacePresenceConfidence: 0.6
         });
         try {
@@ -142,12 +142,15 @@
   }
 
   /** Input: canvas local efêmero. Output: apenas opções de personalização. */
-  async function analyze(frame) {
+  async function analyze(frame, cancelled = () => false) {
     const models = await getModels();
+    if (cancelled()) return null;
     const width = frame.width, height = frame.height;
     const faceResult = models.face.detect(frame);
     if (faceResult.faceLandmarks.length !== 1) {
-      throw new Error('Não encontramos um rosto nítido. Tente uma foto de frente e bem iluminada.');
+      throw new Error(faceResult.faceLandmarks.length > 1
+        ? 'Há mais de uma pessoa na foto. Escolha uma imagem com um único rosto.'
+        : 'Não encontramos um rosto nítido. Tente uma foto de frente e bem iluminada.');
     }
     const landmarks = faceResult.faceLandmarks[0];
     const bounds = getBounds(landmarks, width, height);
@@ -247,7 +250,15 @@
     const cameraButton = find('[data-action="camera"]');
     const captureButton = find('[data-action="capture"]');
     const chooseButton = find('[data-action="file"]');
-    let stream = null, busy = false, runId = 0;
+    let stream = null, busy = false, runId = 0, activeFrame = null;
+
+    function scrubFrame() {
+      if (!activeFrame) return;
+      const canvas = activeFrame;
+      activeFrame = null;
+      canvas.getContext('2d')?.clearRect(0, 0, canvas.width, canvas.height);
+      canvas.width = canvas.height = 0;
+    }
 
     function stopCamera() {
       if (stream) {
@@ -274,6 +285,7 @@
     function close() {
       runId++;
       stopCamera();
+      scrubFrame();
       input.value = '';
       if (modal.open) modal.close();
     }
@@ -287,18 +299,20 @@
       // Limitar dimensões ajuda a não esgotar a RAM de celulares modestos.
       const scale = Math.min(1, 768 / Math.max(width, height));
       const frame = document.createElement('canvas');
+      activeFrame = frame;
       frame.width = Math.max(1, Math.round(width * scale));
       frame.height = Math.max(1, Math.round(height * scale));
       const ctx = frame.getContext('2d', { willReadFrequently: true });
-      if (!ctx) { status.textContent = 'Seu navegador não oferece Canvas 2D.'; return; }
+      if (!ctx) { status.textContent = 'Seu navegador não oferece Canvas 2D.'; stopCamera(); scrubFrame(); return; }
       try {
         ctx.drawImage(source, 0, 0, frame.width, frame.height);
         stopCamera();
         setBusy(true);
         status.textContent = 'Analisando apenas neste aparelho…';
         await new Promise((resolve) => requestAnimationFrame(resolve));
-        const extracted = await analyze(frame);
         if (token !== runId || !modal.open) return;
+        const extracted = await analyze(frame, () => token !== runId || !modal.open);
+        if (token !== runId || !modal.open || !extracted) return;
         onApply(extracted);
         close();
       } catch (error) {
@@ -306,6 +320,7 @@
       } finally {
         ctx.clearRect(0, 0, frame.width, frame.height);
         frame.width = frame.height = 0; // libera pixels do Canvas
+        if (activeFrame === frame) activeFrame = null;
         setBusy(false);
       }
     }
@@ -351,7 +366,7 @@
       let bitmap;
       try {
         bitmap = await createImageBitmap(file);
-        await takeFrom(bitmap);
+        if (modal.open) await takeFrom(bitmap);
       } catch (error) {
         status.textContent = describeError(error);
       } finally {
@@ -360,7 +375,7 @@
       }
     });
     find('[data-action="close"]').addEventListener('click', close);
-    modal.addEventListener('close', () => { runId++; stopCamera(); input.value = ''; });
+    modal.addEventListener('close', () => { runId++; stopCamera(); scrubFrame(); input.value = ''; });
     document.addEventListener('visibilitychange', () => {
       if (document.hidden && modal.open) {
         stopCamera();
