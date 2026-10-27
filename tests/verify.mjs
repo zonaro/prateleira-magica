@@ -16,7 +16,8 @@ const reference = (file) => {
 
 const required = [
   'index.html', 'livro.html', 'personagem.html', 'perfil.html', 'manifest.webmanifest', 'sw.js',
-  'assets/css/app.css', 'assets/js/library.js', 'assets/js/reader.js', 'assets/js/avatar-parts.js', 'assets/js/avatar.js',
+  'assets/css/app.css', 'assets/js/library.js', 'assets/js/reader.js', 'assets/js/avatar-parts.js', 'assets/js/avatar-presets.js', 'assets/js/avatar.js',
+  'assets/data/avatar-presets.json',
   'assets/js/preferences.js', 'assets/js/settings-ui.js', 'assets/js/profile.js', 'assets/js/page-turn.js',
   'assets/js/colors.js', 'assets/js/color-explorer.js', 'assets/vendor/NameToColor.js', 'assets/vendor/NameToColor.ptBR.js',
   'assets/js/pet-parts.js', 'assets/pets/catalog.json',
@@ -26,7 +27,7 @@ required.forEach(reference);
 
 for (const scriptFile of ['assets/js/avatar.js', 'assets/js/library.js', 'assets/js/reader.js', 'assets/js/preferences.js',
   'assets/js/settings-ui.js', 'assets/js/profile.js', 'assets/js/page-turn.js', 'assets/js/colors.js',
-  'assets/js/color-explorer.js', 'assets/js/pet-parts.js', 'assets/js/pwa.js', 'sw.js']) {
+  'assets/js/color-explorer.js', 'assets/js/avatar-presets.js', 'assets/js/pet-parts.js', 'assets/js/pwa.js', 'sw.js']) {
   new Script(read(scriptFile), { filename: scriptFile });
 }
 
@@ -96,6 +97,9 @@ for (const pet of petCatalog.pets) {
   assert(read(pet.file).includes('<svg') && read(pet.file).includes('</svg>'), `Pet SVG inválido: ${pet.file}`);
 }
 const offline = read('sw.js');
+const pagesWorkflow = read('.github/workflows/pages.yml');
+assert(pagesWorkflow.includes('cp -R assets/css assets/js assets/data'),
+  'O deploy deve publicar assets/data para mostrar personagens prontos');
 for (const item of offline.matchAll(/'\.\/([^']+)'/g)) {
   const pathname = item[1];
   if (pathname && !pathname.includes('${')) reference(pathname);

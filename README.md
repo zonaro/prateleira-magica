@@ -34,6 +34,7 @@ assets/vendor/NameToColor.ptBR.js  Dados originais de tradução brasileira
 assets/vendor/page-flip.browser.js Motor StPageFlip 2.0.7, MIT, disponível offline
 assets/vendor/LICENSE              Licença MIT da biblioteca StPageFlip
 assets/js/avatar-parts.js          Peças vetoriais extraídas dos SVGs originais (geradas)
+assets/js/avatar-presets.js        Arte integral dos 73 personagens prontos (gerada)
 assets/js/pet-parts.js             Vetores das 20 pelúcias originais (gerados)
 assets/js/avatar.js                Compositor das peças originais + pernas customizáveis
 assets/js/preferences.js           Nome, nascimento, pronomes, pelúcia, progresso e conquistas
@@ -58,6 +59,7 @@ tests/page-turn.test.mjs           Virada de página desktop e mobile
 tools/generate-story-art.mjs       Geração dos SVGs dos livros de Draco
 tools/download-kids-avatars.mjs    Atualização dos SVGs de referência
 tools/extract-avatar-components.py Geração das peças vetoriais utilizadas no app
+tools/build-avatar-presets.mjs     Empacota personagens prontos para livros, perfil e backup offline
 tools/download-cute-animal-pets.mjs Download original da coleção de pelúcias
 tools/build-pet-parts.mjs          Empacota SVGs originais das pelúcias para uso offline
 tools/preview-avatar-combinations.mjs Prévia visual das combinações de avatar
@@ -153,11 +155,11 @@ Nas ilustrações, o símbolo SVG `<symbol id="ellie">` (legado), `<symbol id="k
 
 O rosto, os penteados e as roupas **usam as formas vetoriais originais**, extraídas dos SVGs da coleção [Kids Avatars](https://www.svgrepo.com/collection/kids-avatars/). A geometria de cabelo e roupa não é redesenhada: `tools/extract-avatar-components.py` copia as formas declaradas em `component-map.json` e substitui somente as cores por marcadores de personalização. Apenas pernas, calça, shorts, saia e tênis têm formas próprias do aplicativo.
 
-O catálogo original (74 SVGs baixados dentre 75 identificados) fica em `assets/avatar-reference/svgrepo-kids/`, acompanhado de `sources.json` e das URLs de origem. **31 SVGs originais** são utilizados nos componentes de rosto, cabelo e roupa; as respectivas páginas do SVG Repo indicam licença CC0. O app carrega **somente** o pacote de componentes extraídos `assets/js/avatar-parts.js`, incluído no cache offline; não precisa carregar os SVGs originais separadamente, nem depender de rede para compor ou exportar um personagem. Veja as [fontes e decisões de composição](docs/avatar-components.md).
+O catálogo de SVGs fica em `assets/avatar-reference/svgrepo-kids/`. Os componentes editáveis são carregados de `assets/js/avatar-parts.js`; os **73 personagens prontos** são carregados de `assets/js/avatar-presets.js`. Ambos funcionam offline, e os desenhos originais são incorporados aos SVGs de ilustrações e backups sem links externos. A opção **Careca** não desenha cabelo, e **Boné** é um acessório separado com migração de perfis antigos. Veja as [fontes e decisões de composição](docs/avatar-components.md).
 
 Para tentar baixar ou atualizar a coleção novamente, execute `node tools/download-kids-avatars.mjs` com acesso à internet. O script reaproveita os arquivos válidos já existentes.
 
-Para reconstruir as peças usadas pelo app após alterar as seleções, execute `python3 tools/extract-avatar-components.py` e rode os testes. A geração precisa manter o SVG final auto-contido para o backup funcionar offline.
+Para reconstruir as peças editáveis, execute `python3 tools/extract-avatar-components.py`; para reconstruir os personagens prontos, execute `node tools/build-avatar-presets.mjs`. Depois rode os testes e atualize o cache offline do Service Worker.
 
 #### Pelúcias sem redesenho
 

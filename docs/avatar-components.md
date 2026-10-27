@@ -19,7 +19,7 @@ As páginas individuais relacionadas abaixo foram consultadas e indicam **licen�
 | Afro | [Girl #38246](https://www.svgrepo.com/svg/38246/girl) | `38246-girl.svg` |
 | Trancinhas | [Girl #166241](https://www.svgrepo.com/svg/166241/girl) | `166241-girl.svg` |
 | Rabos de cavalo | [Girl #3896](https://www.svgrepo.com/svg/3896/girl) | `3896-girl.svg` |
-| Boné | [Boy #66804](https://www.svgrepo.com/svg/66804/boy) | `66804-boy.svg` |
+| Boné (acessório sobre o penteado) | [Boy #66804](https://www.svgrepo.com/svg/66804/boy) | `66804-boy.svg` |
 | Chanel | [Girl #38251](https://www.svgrepo.com/svg/38251/girl) | `38251-girl.svg` |
 | Chanel loiro | [Girl #3914](https://www.svgrepo.com/svg/3914/girl) | `3914-girl.svg` |
 | Ondulado | [Girl #65066](https://www.svgrepo.com/svg/65066/girl) | `65066-girl.svg` |
@@ -56,15 +56,18 @@ As páginas individuais relacionadas abaixo foram consultadas e indicam **licen�
 
 1. `assets/avatar-reference/component-map.json` associa os nomes usados na interface a cada arquivo SVG original, aos índices das formas e às cores que devem ser personalizáveis. Os índices referenciam a ordem de `ElementTree.iter()` no arquivo original **congelado no repositório**.
 2. `python3 tools/extract-avatar-components.py` lê esses SVGs e copia as primitivas (curvas, polígonos etc.) para `assets/js/avatar-parts.js`. O arquivo gerado contém o caminho e o identificador de origem de cada componente. Não interpola nem recalcula nenhuma geometria dos cabelos ou das roupas.
-3. `assets/js/avatar.js` compõe **22 cabelos e 18 roupas** numa proporção compatível com os símbolos das 47 ilustrações do projeto (`viewBox="0 0 210 340"`), substituindo apenas os tokens de cor. Só a parte das pernas para baixo é desenho próprio, oferecendo calça, shorts ou saia e dois tênis perfeitamente espelhados.
+3. `assets/js/avatar.js` compõe **25 opções de cabelo (incluindo Careca), 24 roupas e 11 acessórios** numa proporção compatível com os símbolos dos livros (`viewBox="0 0 210 340"`), substituindo apenas os tokens de cor. O boné não é mais um penteado: pode ser colocado sobre o cabelo. Só a parte das pernas para baixo e os acessórios adicionais têm desenho próprio, oferecendo calça, shorts ou saia e dois tênis espelhados.
 4. `assets/js/preferences.js` salva/restaura todos os campos, incluindo `bottomStyle`, `bottomColor` e `shoeColor` no JSON incorporado ao SVG de backup. O editor fica em página dedicada (`personagem.html`), com prévia fixa durante a rolagem também em telas pequenas.
 
 ## Compatibilidade
 
 - As IDs antigas de `avatarStyle` e `outfitStyle` continuam válidas, mas agora representam as peças originais. Um backup antigo importa normalmente e ganha cor das calças e dos sapatos padrão.
 - Os novos penteados e roupas são adicionados sem remover as opções históricas.
+- Perfis antigos que tinham `avatarStyle: "cap"` são migrados automaticamente para cabelo curto com o acessório `cap`, preservando o boné. A opção `bald` não produz nenhum caminho de cabelo.
+- Os **73 personagens prontos** continuam usando a arte integral original, com pernas e sapatos compostos abaixo do tronco. `node tools/build-avatar-presets.mjs` extrai o conteúdo dos arquivos de referência para `assets/js/avatar-presets.js`, que é carregado antes do compositor, inclusive offline. O SVG completo pode ser exportado, importado e incorporado nas ilustrações dos livros sem depender de URLs de imagens externas.
+- Ao mudar cabelo, roupa ou as cores da parte superior de um personagem pronto, o editor passa para a versão montável; ajustes na parte inferior e acessórios preservam sua arte original.
 - Os 74 SVGs completos são preservados para reconstrução auditável, mas somente o pacote pequeno `avatar-parts.js` precisa ser carregado no app ou no PWA offline.
-- Alterações no mapa requerem regenerar o JS, aumentar a versão de cache do Service Worker, rodar os testes e conferir as prévias produzidas por `node tools/preview-avatar-combinations.mjs`.
+- Alterações no mapa requerem regenerar o JS; alterações nas fontes dos personagens prontos exigem reconstruir `avatar-presets.js`. Em ambos os casos, aumentar a versão de cache do Service Worker, rodar os testes e conferir as prévias produzidas por `node tools/preview-avatar-combinations.mjs`.
 
 ## Pelúcias da coleção Cute Animal Vectors
 

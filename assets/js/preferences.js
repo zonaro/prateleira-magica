@@ -26,6 +26,7 @@
   const outfits = avatar.outfitStyles.map(([key]) => key);
   const bottoms = avatar.bottomStyles.map(([key]) => key);
   const pets = avatar.petStyles.map(([key]) => key);
+  const accessoryGroups = Object.fromEntries(avatar.accessoryStyles.map(([id, , group]) => [id, group]));
   const genders = {
     masculino: { pronome: 'ele', possessivo: 'dele' },
     feminino: { pronome: 'ela', possessivo: 'dela' },
@@ -86,14 +87,24 @@
     const pronunciation = String(input.pronunciation ?? DEFAULTS.pronunciation).trim().slice(0, 64) || name;
     const legacyShirtColor = input.gender === 'masculino' ? '#6e9beb' : input.gender === 'neutro' ? '#9b8ae5' : DEFAULTS.outfitColor;
     const achievements = cleanAchievements(input.achievements);
-    const accessories = Array.isArray(input.accessories) ? input.accessories.filter(a => typeof a === 'string' && a.length < 32).slice(0, 10) : [];
+    const accessories = [];
+    for (const id of Array.isArray(input.accessories) ? input.accessories : []) {
+      const group = accessoryGroups[id];
+      if (group && !accessories.some((chosen) => accessoryGroups[chosen] === group)) accessories.push(id);
+    }
+    // Perfis antigos podiam guardar o boné como penteado. Agora ele é um
+    // acessório combinável com cabelos, inclusive depois de importar backups.
+    if (input.avatarStyle === 'cap') {
+      accessories.splice(0, accessories.length, ...accessories.filter((id) => accessoryGroups[id] !== 'hat'));
+      accessories.push('cap');
+    }
     const result = {
       name,
       pronunciation,
       birthDate: validBirthDate(input.birthDate),
       gender: Object.hasOwn(genders, input.gender) ? input.gender : DEFAULTS.gender,
       petId: medalCount({ achievements }) >= 2 && pets.includes(input.petId) ? input.petId : null,
-      avatarStyle: styles.includes(input.avatarStyle) ? input.avatarStyle : DEFAULTS.avatarStyle,
+      avatarStyle: input.avatarStyle === 'cap' ? 'short' : styles.includes(input.avatarStyle) ? input.avatarStyle : DEFAULTS.avatarStyle,
       outfitStyle: outfits.includes(input.outfitStyle) ? input.outfitStyle : DEFAULTS.outfitStyle,
       bottomStyle: bottoms.includes(input.bottomStyle) ? input.bottomStyle : DEFAULTS.bottomStyle,
       skinColor: /^#[0-9a-f]{6}$/i.test(input.skinColor || '') ? input.skinColor.toLowerCase() : DEFAULTS.skinColor,
@@ -106,7 +117,7 @@
       accessories,
       achievements
     };
-    if (typeof input.sourceSvg === 'string' && input.sourceSvg.endsWith('.svg')) {
+    if (typeof input.sourceSvg === 'string' && Object.hasOwn(window.LivrinhoAvatarPresetParts || {}, input.sourceSvg)) {
       result.sourceSvg = input.sourceSvg;
     }
     return result;

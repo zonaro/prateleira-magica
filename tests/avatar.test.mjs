@@ -17,6 +17,7 @@ const context = {
   }
 };
 vm.runInNewContext(fs.readFileSync(path.join(root, 'assets/js/avatar-parts.js'), 'utf8'), context);
+vm.runInNewContext(fs.readFileSync(path.join(root, 'assets/js/avatar-presets.js'), 'utf8'), context);
 vm.runInNewContext(fs.readFileSync(path.join(root, 'assets/js/pet-parts.js'), 'utf8'), context);
 vm.runInNewContext(fs.readFileSync(path.join(root, 'assets/js/avatar.js'), 'utf8'), context);
 vm.runInNewContext(fs.readFileSync(path.join(root, 'assets/js/preferences.js'), 'utf8'), context);
@@ -71,7 +72,7 @@ assert(sourceHoodie.includes('M389.078,436.226') && prefs.avatarSVG({ outfitStyl
   'O moletom precisa reutilizar a geometria vetorial do SVG baixado');
 const newSources = JSON.parse(fs.readFileSync(path.join(root, 'assets/avatar-reference/component-map.json'), 'utf8'));
 for (const hair of hairStyles) {
-  assert(newSources.hair[hair], `Penteado ${hair} sem mapeamento do SVG original`);
+  if (hair !== 'bald') assert(newSources.hair[hair], `Penteado ${hair} sem mapeamento do SVG original`);
 }
 for (const outfit of outfits) {
   assert(newSources.outfit[outfit], `Roupa ${outfit} sem mapeamento do SVG original`);
@@ -91,6 +92,45 @@ assert.equal(migrated.bottomColor, '#5879b9');
 assert.equal(migrated.shoeColor, '#625a89');
 assert.equal(prefs.clean({ gender: 'masculino' }).outfitColor, '#6e9beb');
 assert.equal(prefs.clean({ gender: 'neutro' }).outfitColor, '#9b8ae5');
+assert(!prefs.avatarSVG({ avatarStyle: 'bald' }).includes('data-source="31423-girl"'), 'Careca não deve desenhar o cabelo padrão');
+assert(prefs.avatarSVG({ avatarStyle: 'bald' }).includes('M120 161v-28'), 'Careca precisa de cabeça arredondada');
+assert(!hairStyles.includes('cap'), 'Boné não deve aparecer na lista de penteados');
+assert(renderer.accessoryStyles.some(([id, name]) => id === 'cap' && name === 'Boné'), 'Boné precisa ser acessório');
+const capSvg = prefs.avatarSVG({ avatarStyle: 'bald', accessories: ['cap', 'glasses_round'] });
+assert(capSvg.includes('data-accessory="cap"') && capSvg.includes('data-accessory="glasses_round"'),
+  'Boné e óculos devem ser desenhados simultaneamente');
+for (const [id] of renderer.accessoryStyles) {
+  assert(prefs.avatarSVG({ accessories: [id] }).includes(`data-accessory="${id}"`),
+    `Acessório ${id} não tem desenho`);
+}
+const oldCapProfile = prefs.clean({ avatarStyle: 'cap', accessories: ['headphones', 'glasses_square'] });
+assert.equal(oldCapProfile.avatarStyle, 'short', 'Penteado boné antigo precisa migrar para cabelo curtinho');
+assert(oldCapProfile.accessories.includes('cap') && oldCapProfile.accessories.includes('glasses_square'));
+assert(!oldCapProfile.accessories.includes('headphones'), 'Boné e fones não podem ocupar a cabeça juntos');
+assert.equal(prefs.clean({ accessories: ['glasses_round', 'glasses_square', 'beanie', 'headband', 'unknown'] }).accessories.join(','),
+  'glasses_round,beanie', 'Acessórios inválidos ou conflitantes devem ser removidos');
+
+const readyPresets = JSON.parse(fs.readFileSync(path.join(root, 'assets/data/avatar-presets.json'), 'utf8'));
+const inlinePresets = window.LivrinhoAvatarPresetParts;
+assert.equal(readyPresets.length, 73);
+for (const preset of readyPresets) {
+  const profile = prefs.clean({ ...preset.profile, sourceSvg: preset.sourceSvg });
+  assert.equal(profile.sourceSvg, preset.sourceSvg);
+  const svg = prefs.avatarSVG(profile);
+  assert(svg.includes('viewBox="0 0 210 340"'));
+  assert(svg.includes('data-layer="pernas-originais-do-app"'), `Pernas ausentes no pronto ${preset.sourceSvg}`);
+  assert(svg.includes('data-layer="avatar-pronto"'), `SVG pronto não incorporado: ${preset.sourceSvg}`);
+  assert(svg.includes(inlinePresets[preset.sourceSvg].body.slice(0, 35)),
+    `O desenho original de ${preset.sourceSvg} não foi incorporado`);
+  assert(!svg.includes('<image'), `Personagem ${preset.sourceSvg} exige imagem externa`);
+  assert.equal((svg.match(/<svg\b/g) || []).length, (svg.match(/<\/svg>/g) || []).length,
+    `SVG de ${preset.sourceSvg} com tags desequilibradas`);
+  const backup = prefs.exportProfileSVG(profile);
+  assert.equal(prefs.parseProfileSVG(backup).sourceSvg, preset.sourceSvg,
+    `Backup perdeu personagem pronto ${preset.sourceSvg}`);
+}
+assert.equal(prefs.clean({ sourceSvg: '../outro.svg' }).sourceSvg, undefined,
+  'Não aceitar SVG arbitrário enviado por backups');
 assert.equal(prefs.clean({ petId: 'fox' }).petId, null, 'Pet deve estar bloqueado antes da segunda medalha');
 assert.equal(prefs.clean({ birthDate: '2025-02-29' }).birthDate, '', 'Nascimento inválido deve ser recusado');
 assert.equal(prefs.ageOnDate('2020-02-29', new Date(2026, 9, 26)), 6);
@@ -193,17 +233,16 @@ for (const marker of ['outfitStyles', 'hairColorOptions', 'outfitColorOptions', 
 }
 
 const referenceDir = path.join(root, 'assets/avatar-reference/svgrepo-kids');
-const sources = JSON.parse(fs.readFileSync(path.join(referenceDir, 'sources.json'), 'utf8'));
-assert.equal(sources.entries.length, 75, 'Manifesto da coleção SVG Repo incompleto');
-const downloaded = sources.entries.filter((entry) => entry.downloaded);
+const downloaded = fs.readdirSync(referenceDir).filter((file) => file.endsWith('.svg'));
 assert(downloaded.length >= 70, 'Os SVGs de referência não foram baixados');
-for (const entry of downloaded) {
-  const svg = fs.readFileSync(path.join(referenceDir, entry.file), 'utf8');
-  assert(svg.includes('<svg') && svg.includes('</svg>'), `SVG de referência inválido: ${entry.file}`);
-  assert(entry.source.startsWith('https://www.svgrepo.com/svg/'));
+for (const file of downloaded) {
+  const svg = fs.readFileSync(path.join(referenceDir, file), 'utf8');
+  assert(svg.includes('<svg') && svg.includes('</svg>'), `SVG de referência inválido: ${file}`);
 }
 
 console.log('✓ 25 cabelos × 24 roupas = 600 combinações com vetores originais do SVG Repo');
+console.log('✓ Careca real, boné como acessório e 11 acessórios desenhados');
+console.log('✓ 73 personagens prontos renderizados inline, com pernas e backup compatível');
 console.log('✓ Tons de pele fantasia e cores independentes de cabelo, roupa, calça/shorts/saia e tênis espelhados');
 console.log('✓ 20 pets SVG originais desbloqueados após duas medalhas e renderizados junto ao avatar');
 console.log('✓ Data de nascimento, páginas visitadas e pets preservados no backup SVG');

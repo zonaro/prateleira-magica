@@ -36,6 +36,7 @@
   const bottomStyles = avatarCatalog.bottomStyles;
   const petStyles = avatarCatalog.petStyles;
   const accessoryStyles = avatarCatalog.accessoryStyles || [];
+  const accessoryGroups = Object.fromEntries(accessoryStyles.map(([id, , group]) => [id, group]));
   let draft = preferences.load();
   let lastSaved = preferences.clean(draft);
   const undoHistory = [];
@@ -202,13 +203,15 @@
         btn.className = 'avatar-style';
         btn.innerHTML = '<span class="style-preview"></span><span class="style-label"></span>';
         btn.querySelector('.style-label').textContent = preset.name;
-        try {
-          btn.querySelector('.style-preview').innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 464 464"><image href="./assets/avatar-reference/svgrepo-kids/${preset.sourceSvg}" width="464" height="464"/></svg>`;
-        } catch(e) {}
+        btn.querySelector('.style-preview').innerHTML = preferences.avatarSVG({ ...preset.profile, sourceSvg: preset.sourceSvg });
         btn.addEventListener('click', () => {
-          const next = preferences.clean({ ...preset.profile, sourceSvg: preset.sourceSvg, gender: preset.gender, achievements: draft.achievements });
-          preferences.save(next);
+          const matchingHair = hairStyles.find(([style]) => window.LivrinhoAvatarParts.hair[style]?.source === preset.sourceSvg)?.[0];
+          const matchingOutfit = outfitStyles.find(([style]) => window.LivrinhoAvatarParts.outfit[style]?.source === preset.sourceSvg)?.[0];
+          const next = preferences.clean({ ...preset.profile, sourceSvg: preset.sourceSvg,
+            avatarStyle: matchingHair || 'short', outfitStyle: matchingOutfit || 'tee',
+            gender: preset.gender, achievements: draft.achievements });
           fillDialog(next);
+          saveChange();
           location.hash = '#personalizar';
           const status = document.getElementById('profileBackupStatus');
           if (status) status.textContent = `✨ Personagem "${preset.name}" aplicado!`;
@@ -248,14 +251,14 @@
       item.classList.toggle('selected', selected);
       item.setAttribute('aria-pressed', String(selected));
       const thumb = item.querySelector('.style-preview');
-      if (thumb) thumb.innerHTML = preferences.avatarSVG({ ...draft, avatarStyle: item.dataset.style });
+      if (thumb) thumb.innerHTML = preferences.avatarSVG({ ...draft, sourceSvg: undefined, avatarStyle: item.dataset.style });
     }
     for (const item of $('#outfitStyles').querySelectorAll('button')) {
       const selected = item.dataset.style === draft.outfitStyle;
       item.classList.toggle('selected', selected);
       item.setAttribute('aria-pressed', String(selected));
       const thumb = item.querySelector('.style-preview');
-      if (thumb) thumb.innerHTML = preferences.avatarSVG({ ...draft, outfitStyle: item.dataset.style });
+      if (thumb) thumb.innerHTML = preferences.avatarSVG({ ...draft, sourceSvg: undefined, outfitStyle: item.dataset.style });
     }
     for (const item of $('#bottomStyles').querySelectorAll('button')) {
       const selected = item.dataset.style === draft.bottomStyle;
@@ -267,13 +270,13 @@
     if (document.getElementById('accessoryStyles')) {
       const accs = Array.isArray(draft.accessories) ? draft.accessories : [];
       for (const item of document.getElementById('accessoryStyles').querySelectorAll('button')) {
-        // find which accessory this button is
-        const label = item.querySelector('.style-label')?.textContent;
-        const map = {'Óculos redondos':'glasses_round','Óculos quadrados':'glasses_square','Óculos escuros':'glasses_sunglasses','Brincos':'earrings_stud','Fones de ouvido':'headphones','Boné':'cap','Touca':'beanie','Tiara':'headband','Laço':'bow_hair','Flor de cabelo':'flower_clip','Estrela':'star_clip'};
-        const aid = map[label];
-        const selected = aid && accs.includes(aid);
+        const aid = item.dataset.accessory;
+        const selected = accs.includes(aid);
         item.classList.toggle('selected', selected);
         item.setAttribute('aria-pressed', String(selected));
+        const thumb = item.querySelector('.style-preview');
+        if (thumb) thumb.innerHTML = preferences.avatarSVG({ ...draft, accessories: selected
+          ? accs : [...accs.filter((id) => accessoryGroups[id] !== accessoryGroups[aid]), aid] });
       }
     }
     for (const [containerId, key] of [['skinOptions', 'skinColor'], ['hairColorOptions', 'hairColor'],
@@ -376,7 +379,10 @@
       button.setAttribute('aria-label', label);
       button.innerHTML = '<span class="style-preview"></span><span class="style-label"></span>';
       button.querySelector('.style-label').textContent = label;
-      button.addEventListener('click', () => edit('', () => { draft[field] = style; }));
+      button.addEventListener('click', () => edit('', () => {
+        if (field !== 'bottomStyle') delete draft.sourceSvg;
+        draft[field] = style;
+      }));
       container.append(button);
     }
   }
@@ -391,6 +397,8 @@
       const button = document.createElement('button');
       button.type = 'button';
       button.className = 'avatar-style';
+      button.dataset.accessory = accId;
+      button.setAttribute('aria-label', accLabel);
       button.innerHTML = '<span class="style-preview"></span><span class="style-label"></span>';
       button.querySelector('.style-label').textContent = accLabel;
       button.addEventListener('click', () => {
@@ -399,13 +407,7 @@
         if (idx >= 0) {
           draft.accessories.splice(idx, 1);
         } else {
-          // remove conflicting types
-          const conflicts = {hat:['headphones','cap','beanie','headband'], hair:['bow_hair','flower_clip','star_clip'], face:['glasses_round','glasses_square','glasses_sunglasses'], ears:['earrings_stud']};
-          for (const [k,v] of Object.entries(conflicts)) {
-            if ((k===accType) || v.includes(accId)) {
-              draft.accessories = draft.accessories.filter(a => !(conflicts[k]||[]).includes(a));
-            }
-          }
+          draft.accessories = draft.accessories.filter((id) => accessoryGroups[id] !== accType);
           draft.accessories.push(accId);
         }
         saveChange('accessories');
@@ -455,7 +457,10 @@
       button.title = label;
       button.setAttribute('aria-label', label);
       button.style.backgroundColor = color;
-      button.addEventListener('click', () => edit('', () => { draft[field] = color; }));
+      button.addEventListener('click', () => edit('', () => {
+        if (['skinColor', 'hairColor', 'outfitColor'].includes(field)) delete draft.sourceSvg;
+        draft[field] = color;
+      }));
       container.append(button);
     }
   }
@@ -473,7 +478,10 @@
     if (!generatedColor) return;
     const target = $('#magicColorTarget').value;
     if (!['skinColor', 'hairColor', 'outfitColor', 'bottomColor', 'shoeColor'].includes(target)) return;
-    edit('', () => { draft[target] = generatedColor; });
+    edit('', () => {
+      if (['skinColor', 'hairColor', 'outfitColor'].includes(target)) delete draft.sourceSvg;
+      draft[target] = generatedColor;
+    });
   });
   moodSelect.addEventListener('change', () => {
     edit('', () => { draft.themeMood = moodSelect.value; });
@@ -481,6 +489,7 @@
   $('#applyThemeAvatar').addEventListener('click', () => {
     const palette = colors?.palette(draft.themeMood) || defaultThemeColors;
     edit('', () => {
+      delete draft.sourceSvg;
       [draft.hairColor, draft.outfitColor, draft.bottomColor, draft.shoeColor] = palette.slice(0, 4);
     });
   });
@@ -509,7 +518,10 @@
   }
   for (const [inputId, field] of [['customSkinColor', 'skinColor'], ['customHairColor', 'hairColor'],
     ['customOutfitColor', 'outfitColor'], ['customBottomColor', 'bottomColor'], ['customShoeColor', 'shoeColor']]) {
-    $(`#${inputId}`).addEventListener('input', (event) => edit(field, () => { draft[field] = event.target.value; }));
+    $(`#${inputId}`).addEventListener('input', (event) => edit(field, () => {
+      if (['skinColor', 'hairColor', 'outfitColor'].includes(field)) delete draft.sourceSvg;
+      draft[field] = event.target.value;
+    }));
   }
   $('#clearProfile').addEventListener('click', () => {
     const warning = 'Tem certeza de que quer começar de novo? Seu personagem, seus livros lidos e todas as medalhas serão apagados deste aparelho. Se quiser guardar uma cópia, use “Exportar perfil” primeiro.\n\nVocê ainda poderá tocar em “Desfazer” antes de sair desta página.';

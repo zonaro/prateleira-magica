@@ -8,7 +8,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const target = process.argv[2] || '/tmp/prateleira-avatar-revisao';
 fs.mkdirSync(target, { recursive: true });
 const context = { window: {} };
-for (const filename of ['assets/js/avatar-parts.js', 'assets/js/pet-parts.js', 'assets/js/avatar.js']) {
+for (const filename of ['assets/js/avatar-parts.js', 'assets/js/avatar-presets.js', 'assets/js/pet-parts.js', 'assets/js/avatar.js']) {
   vm.runInNewContext(fs.readFileSync(path.join(root, filename), 'utf8'), context);
 }
 const renderer = context.window.LivrinhoAvatar;

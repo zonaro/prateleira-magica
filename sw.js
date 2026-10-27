@@ -1,5 +1,5 @@
 /* Offline-first, same-origin service worker for the static GitHub Pages app. */
-const CACHE_NAME = 'prateleira-magica-v17';
+const CACHE_NAME = 'prateleira-magica-v18';
 const APP_ROOT = new URL(self.registration.scope);
 const url = (path) => new URL(path, APP_ROOT).href;
 const APP_SHELL = [
@@ -12,6 +12,8 @@ const APP_SHELL = [
   './manifest.webmanifest',
   './assets/css/app.css',
   './assets/js/avatar-parts.js',
+  './assets/js/avatar-presets.js',
+  './assets/data/avatar-presets.json',
   './assets/js/pet-parts.js',
   './assets/js/avatar.js',
   './assets/js/library.js',

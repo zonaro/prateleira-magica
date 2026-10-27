@@ -6,6 +6,7 @@
 (() => {
   'use strict';
   const parts = window.LivrinhoAvatarParts;
+  const presetParts = window.LivrinhoAvatarPresetParts || {};
   const petParts = window.LivrinhoPetParts || {};
   if (!parts?.face || !parts.hair || !parts.outfit) {
     throw Error('O catálogo SVG original deve ser carregado antes do compositor de avatares.');
@@ -94,6 +95,30 @@
     return original.replace(/\{\{([A-Z_]+)\}\}/g, (_, key) => colors[key] || '#000000');
   }
 
+  // Acessórios independentes do penteado, no mesmo plano de coordenadas
+  // 464x464 dos componentes originais (olhos em x=176/288, y=184).
+  function accessoriesSVG(settings, colors) {
+    const selected = Array.isArray(settings.accessories) ? settings.accessories : [];
+    const ink = '#40445d';
+    const decoration = colors.OUTFIT;
+    const drawings = {
+      glasses_round: `<g fill="none" stroke="${ink}" stroke-width="9"><circle cx="176" cy="183" r="31"/><circle cx="288" cy="183" r="31"/><path d="M207 179q25-15 50 0M145 178h-25m199 0h25"/></g>`,
+      glasses_square: `<g fill="none" stroke="${ink}" stroke-width="9" stroke-linejoin="round"><rect x="143" y="150" width="67" height="65" rx="10"/><rect x="254" y="150" width="67" height="65" rx="10"/><path d="M210 178q22-12 44 0M143 178h-23m201 0h23"/></g>`,
+      glasses_sunglasses: `<g fill="#303448" fill-opacity=".86" stroke="${ink}" stroke-width="8"><rect x="142" y="152" width="68" height="62" rx="15"/><rect x="254" y="152" width="68" height="62" rx="15"/><path d="M210 178q22-12 44 0M142 178h-22m202 0h22" fill="none"/></g>`,
+      earrings_stud: `<g fill="${decoration}" stroke="${ink}" stroke-width="4"><circle cx="119" cy="226" r="11"/><circle cx="345" cy="226" r="11"/></g>`,
+      headphones: `<path d="M78 184V145C78 45 137 6 232 6s154 39 154 139v39" fill="none" stroke="${ink}" stroke-width="19"/><rect x="61" y="149" width="49" height="91" rx="22" fill="${decoration}" stroke="${ink}" stroke-width="7"/><rect x="354" y="149" width="49" height="91" rx="22" fill="${decoration}" stroke="${ink}" stroke-width="7"/>`,
+      // Boné da coleção SVG Repo (66804-boy.svg), agora sobre qualquer cabelo.
+      cap: tint(parts.hair.cap?.front || '', { ...colors, HAIR: decoration, HAIR_DARK: colors.OUTFIT_DARK, HAIR_DEEP: colors.OUTFIT_DEEP }),
+      beanie: `<path d="M93 151V123C93 41 145 6 232 6S371 41 371 123v28Z" fill="${decoration}" stroke="${colors.OUTFIT_DARK}" stroke-width="7"/><rect x="87" y="130" width="290" height="39" rx="15" fill="${colors.OUTFIT_LIGHT}" stroke="${colors.OUTFIT_DARK}" stroke-width="6"/><circle cx="232" cy="7" r="16" fill="${colors.OUTFIT_LIGHT}"/>`,
+      headband: `<path d="M109 122Q125 25 232 25T355 122" fill="none" stroke="${decoration}" stroke-width="22" stroke-linecap="round"/>`,
+      bow_hair: `<g transform="translate(342 85)" stroke="${colors.OUTFIT_DARK}" stroke-width="5"><path d="M0 0Q-85-59-62 23L0 10Q75 66 73-25Z" fill="${decoration}"/><circle cx="0" cy="6" r="17" fill="${colors.OUTFIT_LIGHT}"/></g>`,
+      flower_clip: `<g transform="translate(349 105)" fill="${decoration}" stroke="${colors.OUTFIT_DARK}" stroke-width="3"><circle cy="-20" r="16"/><circle cx="19" cy="-7" r="16"/><circle cx="12" cy="16" r="16"/><circle cx="-12" cy="16" r="16"/><circle cx="-19" cy="-7" r="16"/><circle r="12" fill="#f8d16d" stroke="none"/></g>`,
+      star_clip: `<path d="M350 68l13 27 30 4-22 21 5 30-26-14-27 14 5-30-22-21 31-4Z" fill="#ffe08a" stroke="${colors.OUTFIT_DARK}" stroke-width="5" stroke-linejoin="round"/>`
+    };
+    return selected.filter((key) => Object.hasOwn(drawings, key))
+      .map((key) => `<g data-accessory="${key}">${drawings[key]}</g>`).join('');
+  }
+
   function plushViewBox(part) {
     // Os dados gerados têm 22px de margem em todos os lados (base 512px).
     // Remova somente 19px da margem inferior do contêiner, deixando 3px de
@@ -135,20 +160,27 @@
 
   function avatarBody(settings = {}) {
     const colors = palette(settings);
-    const hair = parts.hair[settings.avatarStyle] || parts.hair.puffs;
+    const hair = settings.avatarStyle === 'bald'
+      ? { source: '', back: '<path d="M120 161v-28c0-57 46-89 112-89s112 32 112 89v28Z" fill="{{SKIN_LIGHT}}"/>', front: '' }
+      : parts.hair[settings.avatarStyle] || parts.hair.puffs;
     const outfit = parts.outfit[settings.outfitStyle] || parts.outfit.hoodie;
-    const source = (filename) => filename.replace(/\.svg$/, '');
+    const source = (filename) => (filename || '').replace(/\.svg$/, '');
     const pet = settings.petId && petParts[settings.petId];
     // Fundo e pés compartilham a linha de chão y=331. xMidYMax evita que
     // pelúcias de proporções diferentes flutuem dentro da caixa SVG.
     const plushShadow = pet ? '<ellipse data-layer="pelucia-sombra" cx="166" cy="328" rx="34" ry="5" fill="#243f59" opacity=".12"/>' : '';
     const companion = pet ? `<svg data-layer="pet-original" data-source="${pet.source}" x="117" y="227" width="90" height="104" viewBox="${plushViewBox(pet)}" preserveAspectRatio="xMidYMax meet">${pet.body}</svg>` : '';
-    return `${plushShadow}${lowerBody(settings, colors.SKIN)}
-      <g transform="translate(0 34) scale(0.452586)">
-        <g data-layer="cabelo-atras" data-source="${source(hair.source)}">${tint(hair.back, colors)}</g>
+    const preset = Object.hasOwn(presetParts, settings.sourceSvg) ? presetParts[settings.sourceSvg] : null;
+    const upperBody = preset
+      ? `<svg data-layer="avatar-pronto" data-source="${source(settings.sourceSvg)}" width="464" height="464" viewBox="${preset.viewBox}" preserveAspectRatio="xMidYMax meet">${preset.body}</svg>`
+      : `<g data-layer="cabelo-atras" data-source="${source(hair.source)}">${tint(hair.back, colors)}</g>
         <g data-layer="rosto-original" data-source="${source(parts.face.source)}">${tint(parts.face.svg, colors)}</g>
         <g data-layer="roupa-original" data-source="${source(outfit.source)}">${tint(outfit.svg, colors)}</g>
-        <g data-layer="cabelo-frente" data-source="${source(hair.source)}">${tint(hair.front, colors)}</g>
+        <g data-layer="cabelo-frente" data-source="${source(hair.source)}">${tint(hair.front, colors)}</g>`;
+    return `${plushShadow}${lowerBody(settings, colors.SKIN)}
+      <g data-layer="tronco" transform="translate(0 34) scale(0.452586)">
+        ${upperBody}
+        ${accessoriesSVG(settings, colors)}
       </g>${companion}`;
   }
 
@@ -157,9 +189,6 @@
     return `<symbol id="${id}" viewBox="0 0 210 340">${avatarBody(settings)}</symbol>`;
   }
   function avatarSVG(settings = {}) {
-    if (settings.sourceSvg) {
-      return `<svg xmlns="http://www.w3.org/2000/svg" width="210" height="340" viewBox="0 0 464 464" role="img" aria-label="Avatar infantil">${avatarBody({ ...settings, avatarStyle: 'puffs', outfitStyle: 'tee', bottomStyle: 'pants', petId: null, accessories: [] }).replace(/<g[^>]*data-layer="pernas-originais-do-app"[\s\S]*?<\/g>/, '')}</svg>`.replace('viewBox="0 0 210 340"', 'viewBox="0 0 464 464"');
-    }
     return `<svg xmlns="http://www.w3.org/2000/svg" width="210" height="340" viewBox="0 0 210 340" role="img" aria-label="Avatar infantil personalizável">${avatarBody(settings)}</svg>`;
   }
   window.LivrinhoAvatar = { hairStyles, outfitStyles, bottomStyles, petStyles, accessoryStyles, hairColors, outfitColors,
