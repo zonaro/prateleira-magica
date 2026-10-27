@@ -372,7 +372,9 @@
     .reader-shell .flip-page .challenge-row{margin:10px 0;align-items:center;min-width:0}
     .reader-shell .flip-page .challenge-check{width:45px;height:45px}
     .reader-shell .flip-page .challenge-say{font-size:clamp(15px,1.6vw,19px);min-width:0;overflow-wrap:anywhere}
-    .reader-shell .book .stf__wrapper{filter:drop-shadow(0 15px 23px #584d5940)}
+    /* StPageFlip com autoSize:false exige altura explícita no wrapper interno.
+       Sem ela, a biblioteca calcula top:-height/2 e corta a metade superior. */
+    .reader-shell .book .stf__wrapper{position:relative;width:100%;height:100%;filter:drop-shadow(0 15px 23px #584d5940)}
     .reader-shell .dots{max-width:95%;margin-top:22px}
     .reader-shell .bottom-note{max-width:740px;margin:12px auto 0;line-height:1.5;padding:0 10px}
     .reader-shell .controls{position:fixed;z-index:60;left:50%;bottom:0;transform:translateX(-50%);

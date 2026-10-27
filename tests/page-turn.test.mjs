@@ -73,6 +73,7 @@ assert(bundle.includes('St=') && bundle.includes('PageFlip'), 'Bundle real do mo
 assert(html.includes('assets/vendor/page-flip.browser.js'));
 assert(html.includes('class="controls"') && !html.includes('reader-topbar'));
 assert(css.includes('.reader-shell .controls{position:fixed'));
+assert(css.includes('.reader-shell .book .stf__wrapper{position:relative;width:100%;height:100%'), 'Sem altura o motor corta a metade superior do livro');
 assert(css.includes('object-fit:contain'), 'SVGs devem ser encaixados sem recorte');
 assert(reader.includes('pageTurn.mount(') && reader.includes('pageTurn.go('));
 assert(reader.includes('if (!canVisit(destination))'), 'Desafio deve bloquear avanço pelo teclado e botões');
