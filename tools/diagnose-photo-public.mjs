@@ -20,3 +20,11 @@ for (const asset of assets) {
     } catch (error) { console.log(JSON.stringify({ method, asset, error: error.message, cause: error.cause?.code })); }
   }
 }
+
+for (const target of ['perfil.html','index.html']) {
+  const res=await fetch(root + target + '?inspect=' + Date.now(), {cache:'no-store'});
+  const html=await res.text();
+  console.log('PUBLIC CONTENT '+target+' length='+html.length+' headers='+JSON.stringify(Object.fromEntries(res.headers)));
+  console.log('CONTENT-HEAD '+target+' '+html.slice(0,1100).replace(/\s+/g,' '));
+  console.log('HAS NEW TAB '+target+' '+html.includes('id="tabFoto"'));
+}
