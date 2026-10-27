@@ -1,0 +1,202 @@
+{
+  "schemaVersion": 1,
+  "language": "pt-BR",
+  "id": "a-trilha-do-nha-nhe-nhi-nho-nhu",
+  "title": "{{nome}} e a Trilha do NH",
+  "subtitle": "Aranha, conhecer, companhia, ninho e nenhuma!",
+  "subject": "Alfabetização · dígrafo NH e pronúncia",
+  "ageRange": [
+    5,
+    8
+  ],
+  "cover": "assets/illustrations/capitulos/a-trilha-do-nha-nhe-nhi-nho-nhu/01.svg",
+  "color": "#9b83dc",
+  "medal": "🐣 Medalha do NH",
+  "exercises": [
+    {
+      "syllable": "NHA",
+      "text": "A araNHA teceu sua teia perto da montanha."
+    },
+    {
+      "syllable": "NHE",
+      "text": "Quero coNHEcer novas histórias."
+    },
+    {
+      "syllable": "NHI",
+      "text": "Sua compaNHIa me faz bem."
+    },
+    {
+      "syllable": "NHO",
+      "text": "O passarinho canta no niNHO."
+    },
+    {
+      "syllable": "NHU",
+      "text": "NeNHUma pessoa precisa ficar de fora."
+    }
+  ],
+  "pages": [
+    {
+      "type": "cover",
+      "sticker": "NH FAZ MÁGICA!",
+      "chapter": "A trilha do NH 🐣",
+      "title": "{{nome}} e a Trilha do NH",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Duas letrinhas, N e H, resolveram andar juntinhas: NH! Quando se unem, fazem um som especial, como em ni[[nho]]."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Vamos experimentar NHA, NHE, NHI, NHO e NHU, cada uma com sua brincadeira?"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/a-trilha-do-nha-nhe-nhi-nho-nhu/01.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "NHA · ARANHA",
+      "chapter": "Primeira parada · NHA",
+      "title": "A aranha na montanha",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Uma [[aranha]] teceu uma rede ao lado da [[montanha]]. A [[galinha]] veio passear por perto."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Ara-NHA! Gali-NHA! Monta-NHA! O NH deixa as duas letras com um som só."
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/a-trilha-do-nha-nhe-nhi-nho-nhu/02.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "NHE · CONHECER",
+      "chapter": "Segunda parada · NHE",
+      "title": "Você já me conhece?",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "— Quero [[conhecer]] seus desenhos! — disse a amiga. Depois pegou um barquinho na [[banheira]] de brinquedo."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Co-NHE-cer e ba-NHEI-ra têm NH seguido de E. Em \"banheira\", o E encontra também o I!"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/a-trilha-do-nha-nhe-nhi-nho-nhu/03.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "NHI · COMPANHIA",
+      "chapter": "Terceira parada · NHI",
+      "title": "Boa companhia!",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "{{nome}} chamou uma amiga para fazer [[companhia]] na brincadeira. Com-pa-NHI-a: olhe o pedacinho NHI escrito na palavra!"
+        },
+        {
+          "kind": "dialogue",
+          "text": "— É uma combinação menos comum em palavras do dia a dia. Mas existe e merece seu lugar na nossa trilha!"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/a-trilha-do-nha-nhe-nhi-nho-nhu/04.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "NHO · NINHO",
+      "chapter": "Quarta parada · NHO",
+      "title": "O ninho e a minhoca",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "No [[ninho]], um passarinho piava contente. Perto dali, a [[minhoca]] cavava um caminho."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Ni-NHO! Mi-NHO-ca! Até o ba-NHO pode ter NHO!"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/a-trilha-do-nha-nhe-nhi-nho-nhu/05.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "NHU · NENHUMA",
+      "chapter": "Quinta parada · NHU",
+      "title": "Nenhuma amizade fica de fora",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "— [[Nenhuma]] amiga vai ficar sozinha! — disse {{nome}}. \"Ne-NHU-ma\" guarda o som NHU."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Também ouvimos NHU em \"nenhum\". Agora o time inteiro está reunido!"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/a-trilha-do-nha-nhe-nhi-nho-nhu/06.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "ESCUTE UMA SÍLABA",
+      "chapter": "Hora de escutar 👂",
+      "title": "Ouça o NH passear",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Vamos tentar juntos, devagarinho: [[NHA]], [[NHE]], [[NHI]], [[NHO]], [[NHU]]."
+        },
+        {
+          "kind": "paragraph",
+          "text": "N e H aparecem juntinhos na escrita, mas fazemos um único som consonantal. Podemos pedir ajuda e repetir quantas vezes quisermos!"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/a-trilha-do-nha-nhe-nhi-nho-nhu/07.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "PALAVRAS AMIGAS",
+      "chapter": "Jogo de descobertas 🔍",
+      "title": "Onde o NH se escondeu?",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Procure o pedacinho NH em aranha, conhecer, companhia, ninho e nenhuma. Ele pode morar no meio da palavra!"
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Ler não é correr. Ler é descobrir pedacinho por pedacinho!"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/a-trilha-do-nha-nhe-nhi-nho-nhu/08.svg"
+    },
+    {
+      "type": "challenge",
+      "sticker": "DESAFIO DO NH",
+      "chapter": "Missão das cinco combinações 🎯",
+      "title": "NHA, NHE, NHI, NHO, NHU!",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Escute ou leia cada frase. Marque quando encontrar o som ou o grupo de letras NH. Você conseguiu!"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/a-trilha-do-nha-nhe-nhi-nho-nhu/09.svg"
+    },
+    {
+      "type": "finish",
+      "sticker": "MEDALHA DO NH",
+      "chapter": "Grande descoberta, {{nome}}!",
+      "title": "Dois amigos, cinco vogais!",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Você aprendeu a reconhecer e brincar com NHA, NHE, NHI, NHO e NHU. Continue procurando NH em histórias e músicas!"
+        }
+      ],
+      "medal": "🐣 Medalha do NH conquistada!",
+      "illustration": "assets/illustrations/capitulos/a-trilha-do-nha-nhe-nhi-nho-nhu/10.svg"
+    }
+  ]
+}

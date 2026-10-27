@@ -1,46 +1,363 @@
 {
   "schemaVersion": 1,
-  "id": "o-calendario-das-festas", "title": "{{nome}} e o Calendário das Festas",
+  "id": "o-calendario-das-festas",
+  "title": "{{nome}} e o Calendário das Festas",
   "subtitle": "Um passeio pelas histórias e celebrações do Brasil",
-  "subject": "Cultura · datas e tradições brasileiras", "ageRange": [5, 9], "language": "pt-BR",
-  "cover": "assets/illustrations/aprender/festas-brasileiras.svg", "color": "#e88a9e", "medal": "🎉 Medalha das Festas",
+  "subject": "Cultura · datas e tradições brasileiras",
+  "ageRange": [
+    5,
+    9
+  ],
+  "language": "pt-BR",
+  "cover": "assets/illustrations/aprender/festas-brasileiras.svg",
+  "color": "#e88a9e",
+  "medal": "🎉 Medalha das Festas",
   "rewards": [
-    {"id":"new_year_crown","label":"Ano-Novo: coroa de festa"},
-    {"id":"carnival_mask","label":"Carnaval: máscara colorida"},
-    {"id":"carnival_tank","label":"Carnaval: regata de glitter"},
-    {"id":"bunny_headband","label":"Páscoa: tiara de orelhas de coelho"},
-    {"id":"easter_eggs","label":"Páscoa: ovinhos de brinquedo"},
-    {"id":"june_hat","label":"Festa Junina: chapéu de palha"},
-    {"id":"brazil_flag","label":"Independência: bandeirinha do Brasil"},
-    {"id":"wooden_top","label":"Dia das Crianças: pião de madeira"},
-    {"id":"saci_costume","label":"Dia do Saci: fantasia de uma perna e gorro vermelho"},
-    {"id":"witch_hat","label":"Halloween: chapéu de bruxa"},
-    {"id":"halloween_pumpkin","label":"Halloween: abóbora com vela animada"},
-    {"id":"santa_hat","label":"Natal: gorro do Papai Noel"}
+    {
+      "id": "new_year_crown",
+      "label": "Ano-Novo: coroa de festa"
+    },
+    {
+      "id": "carnival_mask",
+      "label": "Carnaval: máscara colorida"
+    },
+    {
+      "id": "carnival_tank",
+      "label": "Carnaval: regata de glitter"
+    },
+    {
+      "id": "bunny_headband",
+      "label": "Páscoa: tiara de orelhas de coelho"
+    },
+    {
+      "id": "easter_eggs",
+      "label": "Páscoa: ovinhos de brinquedo"
+    },
+    {
+      "id": "june_hat",
+      "label": "Festa Junina: chapéu de palha"
+    },
+    {
+      "id": "brazil_flag",
+      "label": "Independência: bandeirinha do Brasil"
+    },
+    {
+      "id": "wooden_top",
+      "label": "Dia das Crianças: pião de madeira"
+    },
+    {
+      "id": "saci_costume",
+      "label": "Dia do Saci: fantasia de uma perna e gorro vermelho"
+    },
+    {
+      "id": "witch_hat",
+      "label": "Halloween: chapéu de bruxa"
+    },
+    {
+      "id": "halloween_pumpkin",
+      "label": "Halloween: abóbora com vela animada"
+    },
+    {
+      "id": "santa_hat",
+      "label": "Natal: gorro do Papai Noel"
+    }
   ],
   "exercises": [
-    {"syllable":"🎆","text":"O Ano-Novo começa em 1º de janeiro."},
-    {"syllable":"🎭","text":"O Carnaval muda de data a cada ano; é tempo de música e brincadeiras."},
-    {"syllable":"🐰","text":"Na Páscoa, há tradições religiosas e também o costume de presentear com ovos."},
-    {"syllable":"🌽","text":"Nas Festas Juninas, quadrilhas, comidas e músicas celebram tradições populares."},
-    {"syllable":"🇧🇷","text":"Em 7 de setembro, lembramos a Independência do Brasil e sua história."},
-    {"syllable":"🪀","text":"O Dia das Crianças é celebrado em 12 de outubro."},
-    {"syllable":"🍃","text":"O Dia do Saci e o Halloween acontecem em 31 de outubro, com histórias diferentes."},
-    {"syllable":"🎄","text":"No Natal, muitas famílias celebram o nascimento de Jesus ou se reúnem com carinho."}
+    {
+      "syllable": "🎆",
+      "text": "O Ano-Novo começa em 1º de janeiro."
+    },
+    {
+      "syllable": "🎭",
+      "text": "O Carnaval muda de data a cada ano; é tempo de música e brincadeiras."
+    },
+    {
+      "syllable": "🐰",
+      "text": "Na Páscoa, há tradições religiosas e também o costume de presentear com ovos."
+    },
+    {
+      "syllable": "🌽",
+      "text": "Nas Festas Juninas, quadrilhas, comidas e músicas celebram tradições populares."
+    },
+    {
+      "syllable": "🇧🇷",
+      "text": "Em 7 de setembro, lembramos a Independência do Brasil e sua história."
+    },
+    {
+      "syllable": "🪀",
+      "text": "O Dia das Crianças é celebrado em 12 de outubro."
+    },
+    {
+      "syllable": "🍃",
+      "text": "O Dia do Saci e o Halloween acontecem em 31 de outubro, com histórias diferentes."
+    },
+    {
+      "syllable": "🎄",
+      "text": "No Natal, muitas famílias celebram o nascimento de Jesus ou se reúnem com carinho."
+    }
   ],
   "pages": [
-    {"type":"cover","illustration":"assets/illustrations/aprender/festas-brasileiras.svg","sticker":"CALENDÁRIO MÁGICO","chapter":"Um ano de histórias 🎈","title":"{{nome}} e o Calendário das Festas","blocks":[{"kind":"paragraph","text":"Ao abrir um calendário gigante, {{nome}} viu doze casinhas de meses brilharem. Cada uma guardava músicas, cheiros, lembranças e jeitos diferentes de comemorar."},{"kind":"dialogue","text":"— Festas contam histórias! Algumas são feriados, outras são tradições culturais. Vamos conhecê-las com respeito?"}]},
-    {"type":"story","illustration":"assets/illustrations/aprender/festas-brasileiras.svg","sticker":"1º DE JANEIRO","chapter":"Ano-Novo 🎆","title":"A primeira folhinha do ano","blocks":[{"kind":"paragraph","text":"A contagem começou: dez, nove, oito... FELIZ ANO-NOVO! Em 1º de janeiro começa outro ano do calendário que usamos."},{"kind":"paragraph","text":"Há famílias que se abraçam, preparam comidas especiais ou fazem desejos. Não é preciso ter fogos para celebrar: uma estrela desenhada já ilumina a festa!"},{"kind":"dialogue","text":"— Minha coroa brilhante de Ano-Novo vai ficar linda no avatar!"}],"callout":"🎁 Presente da data: coroa de Ano-Novo."},
-    {"type":"story","illustration":"assets/illustrations/aprender/festas-brasileiras.svg","sticker":"FOLIA COM RESPEITO","chapter":"Carnaval 🎭","title":"A rua virou música!","blocks":[{"kind":"paragraph","text":"No Carnaval, a rua pode virar palco para marchinhas, samba, frevo, maracatu, blocos e fantasias. Cada região tem seu ritmo e sua história."},{"kind":"paragraph","text":"É uma festa popular que muda de data todos os anos. Nem toda cidade ou família festeja do mesmo jeito. O importante é brincar com segurança e respeitar o espaço dos outros."},{"kind":"dialogue","text":"— Eu inventei uma máscara e uma regata com glitter de faz de conta!"}],"callout":"🎁 Presentes da data: máscara de Carnaval e regata de glitter colorido."},
-    {"type":"story","illustration":"assets/illustrations/aprender/festas-brasileiras.svg","sticker":"OVINHOS E RENOVAÇÃO","chapter":"Páscoa 🐰","title":"O coelho das muitas histórias","blocks":[{"kind":"paragraph","text":"Na Páscoa cristã, as pessoas lembram a ressurreição de Jesus. Em muitas casas, ovos coloridos e coelhinhos também simbolizam a vida nova e a esperança."},{"kind":"paragraph","text":"Algumas famílias participam de celebrações religiosas; outras brincam de procurar ovos. Há quem não comemore, e tudo bem!"},{"kind":"dialogue","text":"— Minhas orelhas de coelho conseguem até escutar o chocolate chegando?"}],"callout":"🎁 Presentes da data: tiara de coelho e ovos de brinquedo."},
-    {"type":"story","illustration":"assets/illustrations/aprender/festas-brasileiras.svg","sticker":"ARRAIÁ!","chapter":"Festas Juninas 🌽","title":"O milho dançou quadrilha","blocks":[{"kind":"paragraph","text":"Em junho, muitas cidades têm bandeirinhas, quadrilha, milho, música e brincadeiras. Essas festas nasceram do encontro de muitas tradições, inclusive homenagens populares a santos católicos."},{"kind":"paragraph","text":"Há sotaques, comidas e danças diferentes pelo Brasil inteiro. {{nome}} aprendeu dois passinhos e quase fez o milho rodopiar!"}],"callout":"🎁 Presente da data: chapéu junino de palha."},
-    {"type":"story","illustration":"assets/illustrations/aprender/festas-brasileiras.svg","sticker":"7 DE SETEMBRO","chapter":"Independência do Brasil 🇧🇷","title":"Uma bandeira e muitas vozes","blocks":[{"kind":"paragraph","text":"Em 7 de setembro, lembramos a declaração de Independência do Brasil, feita em 1822. Mas nossa história não coube em um dia: muitos povos, incluindo indígenas, pessoas negras e outros brasileiros, participaram e seguem construindo o país."},{"kind":"dialogue","text":"— Conhecer a história é fazer perguntas e ouvir muitas vozes! — descobriu {{nome}}."}],"callout":"🎁 Presente da data: bandeirinha do Brasil."},
-    {"type":"story","illustration":"assets/illustrations/aprender/festas-brasileiras.svg","sticker":"12 DE OUTUBRO","chapter":"Dia das Crianças 🪀","title":"Brincar é coisa séria!","blocks":[{"kind":"paragraph","text":"Em 12 de outubro se celebra o Dia das Crianças no Brasil. A data divide o calendário com o feriado de Nossa Senhora Aparecida, importante para muitos católicos."},{"kind":"paragraph","text":"Nenhuma criança precisa ganhar presentes caros para viver um dia especial. Brincar, aprender, descansar e ser cuidada são direitos que merecem atenção o ano todo."},{"kind":"dialogue","text":"— Vou fazer um pião dançar! Girou, girou, girou!"}],"callout":"🎁 Presente da data: pião de madeira."},
-    {"type":"story","illustration":"assets/illustrations/aprender/festas-brasileiras.svg","sticker":"31 DE OUTUBRO · SACI","chapter":"Dia do Saci 🍃","title":"Um redemoinho de histórias","blocks":[{"kind":"paragraph","text":"Quem está pulando no redemoinho? É o Saci, personagem brincalhão das histórias do folclore brasileiro! Ele costuma usar um gorro vermelho e aparece com uma perna só nas versões mais conhecidas."},{"kind":"paragraph","text":"O Dia do Saci acontece em 31 de outubro e foi reconhecido em lugares como o estado de São Paulo. Ele convida a conhecer nossas lendas, contadas de muitas formas."},{"kind":"dialogue","text":"— Uhu! Posso usar uma fantasia que esconde uma perna, mas deixa a brincadeira segura!"}],"callout":"🎁 Presente da data: fantasia de Saci, com gorro vermelho e uma perna oculta."},
-    {"type":"story","illustration":"assets/illustrations/aprender/festas-brasileiras.svg","sticker":"31 DE OUTUBRO · HALLOWEEN","chapter":"Halloween 🎃","title":"A abóbora que piscava","blocks":[{"kind":"paragraph","text":"Também em 31 de outubro, algumas pessoas celebram o Halloween, ou Dia das Bruxas. Ele tem raízes em tradições antigas de outros lugares e ganhou fantasias, histórias arrepiantes e abóboras iluminadas."},{"kind":"paragraph","text":"Halloween e Dia do Saci não são a mesma comemoração. Podemos conhecer ambos, sem confundir nem apagar as nossas histórias!"},{"kind":"dialogue","text":"— Buuu! Minha abóbora tem uma velinha de desenho que dança sem fogo de verdade!"}],"callout":"🎁 Presentes da data: chapéu de bruxa e abóbora com vela animada (só de faz de conta)."},
-    {"type":"story","illustration":"assets/illustrations/aprender/festas-brasileiras.svg","sticker":"25 DE DEZEMBRO","chapter":"Natal 🎄","title":"Uma estrela, muitos abraços","blocks":[{"kind":"paragraph","text":"Para os cristãos, o Natal, em 25 de dezembro, comemora o nascimento de Jesus. Muitas famílias também montam árvores, trocam cartões e se reúnem para compartilhar carinho."},{"kind":"paragraph","text":"Em outras famílias a celebração é diferente, ou nem acontece. Respeitar as escolhas de cada pessoa é uma forma linda de espalhar gentileza."},{"kind":"dialogue","text":"— Meu gorro vermelho vai guardar um abraço bem quentinho!"}],"callout":"🎁 Presente da data: gorro de Papai Noel."},
-    {"type":"story","interactive":"bibliography","illustration":"assets/illustrations/aprender/festas-brasileiras.svg","sticker":"PÁGINA DOS ADULTOS","chapter":"Fontes e contexto 📚","title":"De onde vêm essas datas?","blocks":[{"kind":"paragraph","text":"Responsáveis: feriados nacionais e celebrações culturais não são a mesma coisa. Carnaval pode ser ponto facultativo conforme o lugar; Dia do Saci não é um feriado nacional. Os endereços são apenas texto, sem links para a criança abrir por engano."}],"bibliography":[{"title":"Legislação do Estado de SP — Lei nº 11.669/2004, Dia do Saci","url":"www.al.sp.gov.br/repositorio/legislacao/lei/2004/lei-11669-13.01.2004.html"},{"title":"Planalto — Lei nº 662/1949, feriados nacionais","url":"www.planalto.gov.br/ccivil_03/leis/l0662.htm"},{"title":"Prefeitura de São Paulo — calendário de feriados e pontos facultativos 2026","url":"prefeitura.sp.gov.br/web/prefeitura-de-sao-paulo/w/prefeitura-de-s%C3%A3o-paulo-divulga-calend%C3%A1rio-de-feriados-e-pontos-facultativos-para-2026"}]},
-    {"type":"challenge","illustration":"assets/illustrations/aprender/festas-brasileiras.svg","sticker":"DESAFIO DAS FESTAS","chapter":"Missão do calendário 🎯","title":"Você conhece as datas?","blocks":[{"kind":"paragraph","text":"Marque cada frase depois de lembrar sua festa. Vale pedir ajuda a um adulto! Ao completar o desafio e a última página, todas as lembrancinhas dessas datas estarão no guarda-roupa de seu avatar."}]},
-    {"type":"finish","illustration":"assets/illustrations/aprender/festas-brasileiras.svg","sticker":"MEDALHA DAS FESTAS","chapter":"Viva, {{nome}}!","title":"Um ano cheio de histórias!","blocks":[{"kind":"paragraph","text":"Você passeou por festas de muitas origens, aprendeu a ouvir diferentes histórias e ganhou todos os presentes do calendário: acessórios, fantasia, brinquedos e roupas de comemorar!"}],"medal":"🎉 Medalha das Festas conquistada!"}
+    {
+      "type": "cover",
+      "illustration": "assets/illustrations/aprender/festas-brasileiras.svg",
+      "sticker": "CALENDÁRIO MÁGICO",
+      "chapter": "Um ano de histórias 🎈",
+      "title": "{{nome}} e o Calendário das Festas",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Ao abrir um calendário gigante, {{nome}} viu doze casinhas de meses brilharem. Cada uma guardava músicas, cheiros, lembranças e jeitos diferentes de comemorar."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Festas contam histórias! Algumas são feriados, outras são tradições culturais. Vamos conhecê-las com respeito?"
+        }
+      ]
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/capitulos/o-calendario-das-festas/02.svg",
+      "sticker": "1º DE JANEIRO",
+      "chapter": "Ano-Novo 🎆",
+      "title": "A primeira folhinha do ano",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "A contagem começou: dez, nove, oito... FELIZ ANO-NOVO! Em 1º de janeiro começa outro ano do calendário que usamos."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Há famílias que se abraçam, preparam comidas especiais ou fazem desejos. Não é preciso ter fogos para celebrar: uma estrela desenhada já ilumina a festa!"
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Minha coroa brilhante de Ano-Novo vai ficar linda no avatar!"
+        }
+      ],
+      "callout": "🎁 Presente da data: coroa de Ano-Novo."
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/capitulos/o-calendario-das-festas/03.svg",
+      "sticker": "FOLIA COM RESPEITO",
+      "chapter": "Carnaval 🎭",
+      "title": "A rua virou música!",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "No Carnaval, a rua pode virar palco para marchinhas, samba, frevo, maracatu, blocos e fantasias. Cada região tem seu ritmo e sua história."
+        },
+        {
+          "kind": "paragraph",
+          "text": "É uma festa popular que muda de data todos os anos. Nem toda cidade ou família festeja do mesmo jeito. O importante é brincar com segurança e respeitar o espaço dos outros."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Eu inventei uma máscara e uma regata com glitter de faz de conta!"
+        }
+      ],
+      "callout": "🎁 Presentes da data: máscara de Carnaval e regata de glitter colorido."
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/capitulos/o-calendario-das-festas/04.svg",
+      "sticker": "OVINHOS E RENOVAÇÃO",
+      "chapter": "Páscoa 🐰",
+      "title": "O coelho das muitas histórias",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Na Páscoa cristã, as pessoas lembram a ressurreição de Jesus. Em muitas casas, ovos coloridos e coelhinhos também simbolizam a vida nova e a esperança."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Algumas famílias participam de celebrações religiosas; outras brincam de procurar ovos. Há quem não comemore, e tudo bem!"
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Minhas orelhas de coelho conseguem até escutar o chocolate chegando?"
+        }
+      ],
+      "callout": "🎁 Presentes da data: tiara de coelho e ovos de brinquedo."
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/capitulos/o-calendario-das-festas/05.svg",
+      "sticker": "ARRAIÁ!",
+      "chapter": "Festas Juninas 🌽",
+      "title": "O milho dançou quadrilha",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Em junho, muitas cidades têm bandeirinhas, quadrilha, milho, música e brincadeiras. Essas festas nasceram do encontro de muitas tradições, inclusive homenagens populares a santos católicos."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Há sotaques, comidas e danças diferentes pelo Brasil inteiro. {{nome}} aprendeu dois passinhos e quase fez o milho rodopiar!"
+        }
+      ],
+      "callout": "🎁 Presente da data: chapéu junino de palha."
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/capitulos/o-calendario-das-festas/06.svg",
+      "sticker": "7 DE SETEMBRO",
+      "chapter": "Independência do Brasil 🇧🇷",
+      "title": "Uma bandeira e muitas vozes",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Em 7 de setembro, lembramos a declaração de Independência do Brasil, feita em 1822. Mas nossa história não coube em um dia: muitos povos, incluindo indígenas, pessoas negras e outros brasileiros, participaram e seguem construindo o país."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Conhecer a história é fazer perguntas e ouvir muitas vozes! — descobriu {{nome}}."
+        }
+      ],
+      "callout": "🎁 Presente da data: bandeirinha do Brasil."
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/capitulos/o-calendario-das-festas/07.svg",
+      "sticker": "12 DE OUTUBRO",
+      "chapter": "Dia das Crianças 🪀",
+      "title": "Brincar é coisa séria!",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Em 12 de outubro se celebra o Dia das Crianças no Brasil. A data divide o calendário com o feriado de Nossa Senhora Aparecida, importante para muitos católicos."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Nenhuma criança precisa ganhar presentes caros para viver um dia especial. Brincar, aprender, descansar e ser cuidada são direitos que merecem atenção o ano todo."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Vou fazer um pião dançar! Girou, girou, girou!"
+        }
+      ],
+      "callout": "🎁 Presente da data: pião de madeira."
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/capitulos/o-calendario-das-festas/08.svg",
+      "sticker": "31 DE OUTUBRO · SACI",
+      "chapter": "Dia do Saci 🍃",
+      "title": "Um redemoinho de histórias",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Quem está pulando no redemoinho? É o Saci, personagem brincalhão das histórias do folclore brasileiro! Ele costuma usar um gorro vermelho e aparece com uma perna só nas versões mais conhecidas."
+        },
+        {
+          "kind": "paragraph",
+          "text": "O Dia do Saci acontece em 31 de outubro e foi reconhecido em lugares como o estado de São Paulo. Ele convida a conhecer nossas lendas, contadas de muitas formas."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Uhu! Posso usar uma fantasia que esconde uma perna, mas deixa a brincadeira segura!"
+        }
+      ],
+      "callout": "🎁 Presente da data: fantasia de Saci, com gorro vermelho e uma perna oculta."
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/capitulos/o-calendario-das-festas/09.svg",
+      "sticker": "31 DE OUTUBRO · HALLOWEEN",
+      "chapter": "Halloween 🎃",
+      "title": "A abóbora que piscava",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Também em 31 de outubro, algumas pessoas celebram o Halloween, ou Dia das Bruxas. Ele tem raízes em tradições antigas de outros lugares e ganhou fantasias, histórias arrepiantes e abóboras iluminadas."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Halloween e Dia do Saci não são a mesma comemoração. Podemos conhecer ambos, sem confundir nem apagar as nossas histórias!"
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Buuu! Minha abóbora tem uma velinha de desenho que dança sem fogo de verdade!"
+        }
+      ],
+      "callout": "🎁 Presentes da data: chapéu de bruxa e abóbora com vela animada (só de faz de conta)."
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/capitulos/o-calendario-das-festas/10.svg",
+      "sticker": "25 DE DEZEMBRO",
+      "chapter": "Natal 🎄",
+      "title": "Uma estrela, muitos abraços",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Para os cristãos, o Natal, em 25 de dezembro, comemora o nascimento de Jesus. Muitas famílias também montam árvores, trocam cartões e se reúnem para compartilhar carinho."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Em outras famílias a celebração é diferente, ou nem acontece. Respeitar as escolhas de cada pessoa é uma forma linda de espalhar gentileza."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Meu gorro vermelho vai guardar um abraço bem quentinho!"
+        }
+      ],
+      "callout": "🎁 Presente da data: gorro de Papai Noel."
+    },
+    {
+      "type": "story",
+      "interactive": "bibliography",
+      "illustration": "assets/illustrations/capitulos/o-calendario-das-festas/11.svg",
+      "sticker": "PÁGINA DOS ADULTOS",
+      "chapter": "Fontes e contexto 📚",
+      "title": "De onde vêm essas datas?",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Responsáveis: feriados nacionais e celebrações culturais não são a mesma coisa. Carnaval pode ser ponto facultativo conforme o lugar; Dia do Saci não é um feriado nacional. Os endereços são apenas texto, sem links para a criança abrir por engano."
+        }
+      ],
+      "bibliography": [
+        {
+          "title": "Legislação do Estado de SP — Lei nº 11.669/2004, Dia do Saci",
+          "url": "www.al.sp.gov.br/repositorio/legislacao/lei/2004/lei-11669-13.01.2004.html"
+        },
+        {
+          "title": "Planalto — Lei nº 662/1949, feriados nacionais",
+          "url": "www.planalto.gov.br/ccivil_03/leis/l0662.htm"
+        },
+        {
+          "title": "Prefeitura de São Paulo — calendário de feriados e pontos facultativos 2026",
+          "url": "prefeitura.sp.gov.br/web/prefeitura-de-sao-paulo/w/prefeitura-de-s%C3%A3o-paulo-divulga-calend%C3%A1rio-de-feriados-e-pontos-facultativos-para-2026"
+        }
+      ]
+    },
+    {
+      "type": "challenge",
+      "illustration": "assets/illustrations/capitulos/o-calendario-das-festas/12.svg",
+      "sticker": "DESAFIO DAS FESTAS",
+      "chapter": "Missão do calendário 🎯",
+      "title": "Você conhece as datas?",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Marque cada frase depois de lembrar sua festa. Vale pedir ajuda a um adulto! Ao completar o desafio e a última página, todas as lembrancinhas dessas datas estarão no guarda-roupa de seu avatar."
+        }
+      ]
+    },
+    {
+      "type": "finish",
+      "illustration": "assets/illustrations/capitulos/o-calendario-das-festas/13.svg",
+      "sticker": "MEDALHA DAS FESTAS",
+      "chapter": "Viva, {{nome}}!",
+      "title": "Um ano cheio de histórias!",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Você passeou por festas de muitas origens, aprendeu a ouvir diferentes histórias e ganhou todos os presentes do calendário: acessórios, fantasia, brinquedos e roupas de comemorar!"
+        }
+      ],
+      "medal": "🎉 Medalha das Festas conquistada!"
+    }
   ]
 }

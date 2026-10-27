@@ -1,33 +1,236 @@
 {
-  "schemaVersion": 1, "id": "o-escudo-das-vacinas", "title": "{{nome}} e o Escudo das Vacinas",
+  "schemaVersion": 1,
+  "id": "o-escudo-das-vacinas",
+  "title": "{{nome}} e o Escudo das Vacinas",
   "subtitle": "Uma aventura de proteção, carinho e coragem",
-  "subject": "Saúde · vacinação", "ageRange": [4, 8], "language": "pt-BR",
-  "cover": "assets/illustrations/aprender/vacinas.svg", "color": "#67b9d8", "medal": "🛡️ Medalha do Cuidado",
-  "rewards": [{"id":"medical_kit","label":"Kit médico"},{"id":"doctor_coat","label":"Jaleco de médico"}],
+  "subject": "Saúde · vacinação",
+  "ageRange": [
+    4,
+    8
+  ],
+  "language": "pt-BR",
+  "cover": "assets/illustrations/aprender/vacinas.svg",
+  "color": "#67b9d8",
+  "medal": "🛡️ Medalha do Cuidado",
+  "rewards": [
+    {
+      "id": "medical_kit",
+      "label": "Kit médico"
+    },
+    {
+      "id": "doctor_coat",
+      "label": "Jaleco de médico"
+    }
+  ],
   "exercises": [
-    {"syllable":"🛡️","text":"A vacina ajuda meu corpo a se proteger de doenças."},
-    {"syllable":"🧠","text":"Meu corpo aprende a reconhecer alguns germes."},
-    {"syllable":"💉","text":"A picadinha pode doer um pouquinho."},
-    {"syllable":"💧","text":"Se eu chorar, está tudo bem."},
-    {"syllable":"🤝","text":"Posso pedir colo, ajuda e respirar devagar."},
-    {"syllable":"📒","text":"Um adulto confere minha caderneta de vacinação."}
+    {
+      "syllable": "🛡️",
+      "text": "A vacina ajuda meu corpo a se proteger de doenças."
+    },
+    {
+      "syllable": "🧠",
+      "text": "Meu corpo aprende a reconhecer alguns germes."
+    },
+    {
+      "syllable": "💉",
+      "text": "A picadinha pode doer um pouquinho."
+    },
+    {
+      "syllable": "💧",
+      "text": "Se eu chorar, está tudo bem."
+    },
+    {
+      "syllable": "🤝",
+      "text": "Posso pedir colo, ajuda e respirar devagar."
+    },
+    {
+      "syllable": "📒",
+      "text": "Um adulto confere minha caderneta de vacinação."
+    }
   ],
   "pages": [
-    {"type":"cover","illustration":"assets/illustrations/aprender/vacinas.svg","sticker":"SUPERESCUDO DO CUIDADO","chapter":"Um escudo invisível 🛡️","title":"{{nome}} e o Escudo das Vacinas","blocks":[{"kind":"paragraph","text":"A doutora Estrela tinha uma missão: mostrar a {{nome}} como nosso corpo se protege de alguns germes."},{"kind":"dialogue","text":"— Pronta ou pronto para conhecer o seu escudo?"}]},
-    {"type":"story","illustration":"assets/illustrations/aprender/vacinas.svg","sticker":"GUARDIÕES DO CORPO","chapter":"Capítulo 1 · Defesa","title":"Um time de guardiões","blocks":[{"kind":"paragraph","text":"Dentro do corpo mora um time especial: o [[sistema imunológico]]. Ele ajuda a nos defender de muitos germes."},{"kind":"paragraph","text":"Alguns germes podem causar doenças. Nossos guardiões precisam aprender a reconhecê-los!"}]},
-    {"type":"story","illustration":"assets/illustrations/aprender/vacinas.svg","sticker":"ESCUDO EM TREINAMENTO","chapter":"Capítulo 2 · Vacinas","title":"Uma lição para os guardiões","blocks":[{"kind":"paragraph","text":"As [[vacinas]] ensinam nossas defesas a reconhecer certos germes, ajudando a evitar doenças e suas formas graves."},{"kind":"dialogue","text":"— É como treinar antes de uma grande aventura! Algumas vacinas precisam de mais de uma dose."}]},
-    {"type":"story","illustration":"assets/illustrations/aprender/vacinas.svg","sticker":"CORAGEM TEM SENTIMENTO","chapter":"Capítulo 3 · Picadinha","title":"Posso ficar com medo?","blocks":[{"kind":"paragraph","text":"{{nome}} viu a seringa e sentiu borboletas na barriga. Às vezes a picadinha dói um pouco e dá vontade de chorar."},{"kind":"dialogue","text":"— Pode chorar, sim! Coragem não é deixar de sentir medo. É cuidar de você mesmo com esse medo."}]},
-    {"type":"story","illustration":"assets/illustrations/aprender/vacinas.svg","sticker":"EU TENHO APOIO","chapter":"Capítulo 4 · Acolhimento","title":"Mão dada, abraço apertado","blocks":[{"kind":"paragraph","text":"Um adulto de confiança ofereceu a mão. {{nome}} respirou devagar, ouviu uma história e pediu colo."},{"kind":"paragraph","text":"Podemos contar ao profissional como estamos nos sentindo. Ninguém precisa ser chamado de fraco por chorar."}]},
-    {"type":"story","illustration":"assets/illustrations/aprender/vacinas.svg","sticker":"CADERNETA MÁGICA","chapter":"Capítulo 5 · Acompanhar","title":"Um mapa de proteção","blocks":[{"kind":"paragraph","text":"A [[caderneta de vacinação]] guarda as doses recebidas. Os adultos e profissionais de saúde conferem quais vacinas são indicadas e quando voltar."},{"kind":"dialogue","text":"— Se houver dúvidas, vamos perguntar à equipe da UBS!"}]},
-    {"type":"story","illustration":"assets/illustrations/aprender/vacinas.svg","sticker":"CUIDAR É CORAGEM","chapter":"Capítulo 6 · Juntos","title":"Todos os sentimentos são aceitos","blocks":[{"kind":"paragraph","text":"Depois da vacina, {{nome}} ganhou um abraço. O braço poderia ficar dolorido por um tempo, e a equipe de saúde poderia orientar o que observar."},{"kind":"paragraph","text":"Vacinar é um cuidado importante comigo e com a comunidade. Ter medo ou chorar não diminui minha coragem!"}]},
-    {"type":"story","interactive":"bibliography","illustration":"assets/illustrations/aprender/vacinas.svg","sticker":"PARA ADULTOS 📚","chapter":"Fontes para a família","title":"De onde vem essa história?","blocks":[{"kind":"paragraph","text":"Esta página é para quem cuida de você. As referências abaixo têm endereços escritos, mas não são botões nem links para tocar."}],
-      "bibliography":[
-        {"title":"Ministério da Saúde — Vacinação e Caderneta da Criança","url":"www.gov.br/saude/pt-br/vacinacao"},
-        {"title":"Ministério da Saúde — Calendário Nacional de Vacinação","url":"www.gov.br/saude/pt-br/vacinacao/calendario"},
-        {"title":"OMS — Como funcionam as vacinas","url":"www.who.int/pt/news-room/feature-stories/detail/how-do-vaccines-work"},
-        {"title":"OMS — Dicas para preparar crianças para vacinação","url":"www.who.int/news-room/feature-stories/detail/five-tips-for-preparing-children-for-vaccination"}
-      ],"tip":"Fontes para responsáveis. Para vacinação, siga orientações da equipe de saúde e o calendário vigente."},
-    {"type":"challenge","illustration":"assets/illustrations/aprender/vacinas.svg","sticker":"DESAFIO DO CUIDADO","chapter":"Missão da proteção 🎯","title":"Seis passos de coragem","blocks":[{"kind":"paragraph","text":"Leia ou ouça cada frase. Marque todas depois de tentar, sem pressa."},{"kind":"dialogue","text":"— Lembre: o importante é se cuidar. Chorar é permitido!"}]},
-    {"type":"finish","illustration":"assets/illustrations/aprender/vacinas.svg","sticker":"MEDALHA DO CUIDADO","chapter":"Muito bem, {{nome}}!","title":"Seu escudo está aprendendo!","blocks":[{"kind":"paragraph","text":"Você sabe que vacinas ajudam a proteger e que podemos pedir carinho quando a picadinha assusta. O kit médico e o jaleco estão liberados para brincar!"}],"medal":"🛡️ Medalha do Cuidado conquistada!"}
+    {
+      "type": "cover",
+      "illustration": "assets/illustrations/aprender/vacinas.svg",
+      "sticker": "SUPERESCUDO DO CUIDADO",
+      "chapter": "Um escudo invisível 🛡️",
+      "title": "{{nome}} e o Escudo das Vacinas",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "A doutora Estrela tinha uma missão: mostrar a {{nome}} como nosso corpo se protege de alguns germes."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Pronta ou pronto para conhecer o seu escudo?"
+        }
+      ]
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/capitulos/o-escudo-das-vacinas/02.svg",
+      "sticker": "GUARDIÕES DO CORPO",
+      "chapter": "Capítulo 1 · Defesa",
+      "title": "Um time de guardiões",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Dentro do corpo mora um time especial: o [[sistema imunológico]]. Ele ajuda a nos defender de muitos germes."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Alguns germes podem causar doenças. Nossos guardiões precisam aprender a reconhecê-los!"
+        }
+      ]
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/capitulos/o-escudo-das-vacinas/03.svg",
+      "sticker": "ESCUDO EM TREINAMENTO",
+      "chapter": "Capítulo 2 · Vacinas",
+      "title": "Uma lição para os guardiões",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "As [[vacinas]] ensinam nossas defesas a reconhecer certos germes, ajudando a evitar doenças e suas formas graves."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— É como treinar antes de uma grande aventura! Algumas vacinas precisam de mais de uma dose."
+        }
+      ]
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/capitulos/o-escudo-das-vacinas/04.svg",
+      "sticker": "CORAGEM TEM SENTIMENTO",
+      "chapter": "Capítulo 3 · Picadinha",
+      "title": "Posso ficar com medo?",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "{{nome}} viu a seringa e sentiu borboletas na barriga. Às vezes a picadinha dói um pouco e dá vontade de chorar."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Pode chorar, sim! Coragem não é deixar de sentir medo. É cuidar de você mesmo com esse medo."
+        }
+      ]
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/capitulos/o-escudo-das-vacinas/05.svg",
+      "sticker": "EU TENHO APOIO",
+      "chapter": "Capítulo 4 · Acolhimento",
+      "title": "Mão dada, abraço apertado",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Um adulto de confiança ofereceu a mão. {{nome}} respirou devagar, ouviu uma história e pediu colo."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Podemos contar ao profissional como estamos nos sentindo. Ninguém precisa ser chamado de fraco por chorar."
+        }
+      ]
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/capitulos/o-escudo-das-vacinas/06.svg",
+      "sticker": "CADERNETA MÁGICA",
+      "chapter": "Capítulo 5 · Acompanhar",
+      "title": "Um mapa de proteção",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "A [[caderneta de vacinação]] guarda as doses recebidas. Os adultos e profissionais de saúde conferem quais vacinas são indicadas e quando voltar."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Se houver dúvidas, vamos perguntar à equipe da UBS!"
+        }
+      ]
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/capitulos/o-escudo-das-vacinas/07.svg",
+      "sticker": "CUIDAR É CORAGEM",
+      "chapter": "Capítulo 6 · Juntos",
+      "title": "Todos os sentimentos são aceitos",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Depois da vacina, {{nome}} ganhou um abraço. O braço poderia ficar dolorido por um tempo, e a equipe de saúde poderia orientar o que observar."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Vacinar é um cuidado importante comigo e com a comunidade. Ter medo ou chorar não diminui minha coragem!"
+        }
+      ]
+    },
+    {
+      "type": "story",
+      "interactive": "bibliography",
+      "illustration": "assets/illustrations/capitulos/o-escudo-das-vacinas/08.svg",
+      "sticker": "PARA ADULTOS 📚",
+      "chapter": "Fontes para a família",
+      "title": "De onde vem essa história?",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Esta página é para quem cuida de você. As referências abaixo têm endereços escritos, mas não são botões nem links para tocar."
+        }
+      ],
+      "bibliography": [
+        {
+          "title": "Ministério da Saúde — Vacinação e Caderneta da Criança",
+          "url": "www.gov.br/saude/pt-br/vacinacao"
+        },
+        {
+          "title": "Ministério da Saúde — Calendário Nacional de Vacinação",
+          "url": "www.gov.br/saude/pt-br/vacinacao/calendario"
+        },
+        {
+          "title": "OMS — Como funcionam as vacinas",
+          "url": "www.who.int/pt/news-room/feature-stories/detail/how-do-vaccines-work"
+        },
+        {
+          "title": "OMS — Dicas para preparar crianças para vacinação",
+          "url": "www.who.int/news-room/feature-stories/detail/five-tips-for-preparing-children-for-vaccination"
+        }
+      ],
+      "tip": "Fontes para responsáveis. Para vacinação, siga orientações da equipe de saúde e o calendário vigente."
+    },
+    {
+      "type": "challenge",
+      "illustration": "assets/illustrations/capitulos/o-escudo-das-vacinas/09.svg",
+      "sticker": "DESAFIO DO CUIDADO",
+      "chapter": "Missão da proteção 🎯",
+      "title": "Seis passos de coragem",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Leia ou ouça cada frase. Marque todas depois de tentar, sem pressa."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Lembre: o importante é se cuidar. Chorar é permitido!"
+        }
+      ]
+    },
+    {
+      "type": "finish",
+      "illustration": "assets/illustrations/capitulos/o-escudo-das-vacinas/10.svg",
+      "sticker": "MEDALHA DO CUIDADO",
+      "chapter": "Muito bem, {{nome}}!",
+      "title": "Seu escudo está aprendendo!",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Você sabe que vacinas ajudam a proteger e que podemos pedir carinho quando a picadinha assusta. O kit médico e o jaleco estão liberados para brincar!"
+        }
+      ],
+      "medal": "🛡️ Medalha do Cuidado conquistada!"
+    }
   ]
 }

@@ -55,6 +55,8 @@ for (const entry of index.books) {
   assert(entry.subject === book.subject, `Assunto inconsistente em ${entry.id}`);
   assert(JSON.stringify(entry.ageRange) === JSON.stringify(book.ageRange), `Faixa etária inconsistente em ${entry.id}`);
   assert(book.title.includes('{{nome}}'), `Livro não herda o nome da criança: ${entry.id}`);
+  assert.equal(new Set(book.pages.map((page) => page.illustration)).size, book.pages.length,
+    `Cada página deve ter uma ilustração exclusiva: ${entry.id}`);
   assert(!/\b(?:Ellie|ELLIE)\b/.test(JSON.stringify(book)), `Nome fixo da protagonista encontrado em ${entry.id}`);
   const coverSvg = read(entry.cover);
   assert(/<use href="#(ellie|kid|protagonist)"/.test(coverSvg), `A capa de ${entry.id} não exibe um avatar personalizável`);

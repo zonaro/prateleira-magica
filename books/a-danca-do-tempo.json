@@ -1,31 +1,294 @@
 {
-  "schemaVersion":1,"id":"a-danca-do-tempo","title":"{{nome}} e a Dança do Tempo","subtitle":"Dias, semanas, meses, anos e a Lua",
-  "subject":"Ciências · calendário e astronomia","ageRange":[5,9],"language":"pt-BR",
-  "cover":"assets/illustrations/aprender/tempo-lua.svg","color":"#687fcf","medal":"🌙 Medalha do Tempo",
-  "rewards":[{"id":"calendar","label":"Calendário de brinquedo"},{"id":"moon_ball","label":"Bola com textura de Lua"},{"id":"sun_plush","label":"Pelúcia exclusiva de sol sorridente"}],
-  "exercises":[
-    {"syllable":"🌞","text":"Um dia tem cerca de 24 horas, enquanto a Terra gira em torno de si."},
-    {"syllable":"📅","text":"Uma semana tem sete dias."},
-    {"syllable":"🗓️","text":"Um ano costuma ter doze meses e 365 dias."},
-    {"syllable":"🌍","text":"A Terra faz uma volta em torno do Sol em aproximadamente um ano."},
-    {"syllable":"🌑","text":"A Lua nova é uma das fases da Lua."},
-    {"syllable":"🌓","text":"O quarto crescente mostra aproximadamente metade do disco lunar iluminado."},
-    {"syllable":"🌕","text":"Na Lua cheia vemos quase toda a face voltada para nós iluminada."},
-    {"syllable":"🌗","text":"No quarto minguante vemos de novo aproximadamente metade iluminada."}
+  "schemaVersion": 1,
+  "id": "a-danca-do-tempo",
+  "title": "{{nome}} e a Dança do Tempo",
+  "subtitle": "Dias, semanas, meses, anos e a Lua",
+  "subject": "Ciências · calendário e astronomia",
+  "ageRange": [
+    5,
+    9
   ],
-  "pages":[
-    {"type":"cover","illustration":"assets/illustrations/aprender/tempo-lua.svg","sticker":"TIC-TAC!","chapter":"O relógio encantado ⏰","title":"{{nome}} e a Dança do Tempo","blocks":[{"kind":"paragraph","text":"{{nome}} encontrou um relógio que fazia TIC, TAC... e uma Lua que piscava no céu. Um Sol sorridente convidou: — Quer conhecer a dança do tempo?"},{"kind":"dialogue","text":"— Sim! Mas o dia pula ou gira?"}]},
-    {"type":"story","illustration":"assets/illustrations/aprender/tempo-lua.svg","sticker":"DIA E NOITE","chapter":"Capítulo 1 · O dia","title":"A Terra gira como um pião!","blocks":[{"kind":"paragraph","text":"Imagine a Terra como um pião redondinho! Ela gira em torno de um eixo imaginário. Esse movimento se chama [[rotação]] e leva aproximadamente 24 horas."},{"kind":"paragraph","text":"Quando nossa parte do planeta está virada para o Sol, é dia. Quando fica voltada para o outro lado, é noite. Não é o Sol que se esconde debaixo da cama!"}]},
-    {"type":"story","illustration":"assets/illustrations/aprender/tempo-lua.svg","sticker":"SETE AMIGOS","chapter":"Capítulo 2 · A semana","title":"Segunda, terça... já é domingo?","blocks":[{"kind":"paragraph","text":"Os sete dias da semana formaram uma roda: segunda, terça, quarta, quinta, sexta, sábado e domingo."},{"kind":"dialogue","text":"— Eu ajudo a organizar estudos, brincadeiras e passeios! — disse a semana. Cada família pode ter uma rotina diferente."}]},
-    {"type":"story","illustration":"assets/illustrations/aprender/tempo-lua.svg","sticker":"12 CASINHAS","chapter":"Capítulo 3 · Meses","title":"O calendário das surpresas","blocks":[{"kind":"paragraph","text":"Um ano tem doze meses: janeiro, fevereiro, março, abril, maio, junho, julho, agosto, setembro, outubro, novembro e dezembro."},{"kind":"paragraph","text":"A maioria dos meses tem 30 ou 31 dias. Fevereiro costuma ter 28, mas ganha um dia extra nos anos bissextos. Uau: o calendário tem truques de organização!"}]},
-    {"type":"story","illustration":"assets/illustrations/aprender/tempo-lua.svg","sticker":"UMA GRANDE VOLTA","chapter":"Capítulo 4 · O ano","title":"A Terra passeia pelo Sol","blocks":[{"kind":"paragraph","text":"Além de girar em torno de si, a Terra dá uma volta ao redor do Sol. Essa viagem se chama [[translação]] e dura cerca de 365 dias e mais algumas horas."},{"kind":"paragraph","text":"Para ajustar o calendário, de quatro em quatro anos geralmente aparece o 29 de fevereiro. Esse ano especial se chama bissexto!"}]},
-    {"type":"story","illustration":"assets/illustrations/aprender/tempo-lua.svg","sticker":"ESTAÇÕES DO ANO","chapter":"Capítulo 5 · A inclinação","title":"Por que muda a estação?","blocks":[{"kind":"paragraph","text":"A Terra viaja inclinadinha. Por isso, ao longo do ano, cada região recebe a luz do Sol de um jeito diferente. Isso ajuda a formar as estações."},{"kind":"paragraph","text":"Não é simplesmente porque a Terra está mais perto ou mais longe do Sol. No Brasil, o verão acontece enquanto muitos lugares do norte do planeta têm inverno."}]},
-    {"type":"story","illustration":"assets/illustrations/aprender/tempo-lua.svg","sticker":"LUA NOVA 🌑","chapter":"Capítulo 6 · Fases da Lua","title":"A Lua faz charme","blocks":[{"kind":"paragraph","text":"A Lua não acende uma lâmpada: ela reflete a luz do Sol. À medida que passeia ao redor da Terra, vemos diferentes partes de seu lado iluminado."},{"kind":"paragraph","text":"Na [[Lua nova]], a parte iluminada fica principalmente virada para longe de nós. Ela pode ficar difícil de enxergar!"}]},
-    {"type":"story","illustration":"assets/illustrations/aprender/tempo-lua.svg","sticker":"CRESCENTE 🌓","chapter":"Capítulo 7 · Fases da Lua","title":"Um pedacinho, depois metade!","blocks":[{"kind":"paragraph","text":"Depois da Lua nova, uma faixinha iluminada aparece e vai aumentando. No quarto crescente, parece que enxergamos metade do disco lunar acesa."},{"kind":"dialogue","text":"— Ela não está crescendo de verdade, só mudou a parte iluminada que podemos ver!"}]},
-    {"type":"story","illustration":"assets/illustrations/aprender/tempo-lua.svg","sticker":"LUA CHEIA 🌕","chapter":"Capítulo 8 · Fases da Lua","title":"O grande biscoito do céu","blocks":[{"kind":"paragraph","text":"Na [[Lua cheia]], quase toda a face da Lua que vemos recebe a luz do Sol. Ela parece um biscoito redondo, mas não é feita de queijo!"},{"kind":"paragraph","text":"As quatro fases principais são nomes para momentos de um ciclo contínuo. Entre elas, a aparência muda aos pouquinhos."}]},
-    {"type":"story","illustration":"assets/illustrations/aprender/tempo-lua.svg","sticker":"MINGUANTE 🌗","chapter":"Capítulo 9 · Fases da Lua","title":"A luz dança de novo","blocks":[{"kind":"paragraph","text":"Depois da cheia, a parte iluminada que vemos diminui. Chega o quarto minguante e, pouco a pouco, voltamos à Lua nova."},{"kind":"paragraph","text":"Da Lua nova até a próxima Lua nova passam cerca de 29 dias e meio. A Lua nunca vai embora: só muda o jeito como a enxergamos!"}]},
-    {"type":"story","interactive":"bibliography","illustration":"assets/illustrations/aprender/tempo-lua.svg","sticker":"FONTES PARA ADULTOS","chapter":"Observatório da família 📚","title":"Quem explicou tudo isso?","blocks":[{"kind":"paragraph","text":"Esses endereços são referências escritas para responsáveis. Não são links clicáveis nesta história."}],"bibliography":[{"title":"NASA — Fases da Lua","url":"science.nasa.gov/moon/moon-phases/"},{"title":"NASA — Perguntas sobre a Lua","url":"science.nasa.gov/moon/top-moon-questions/"},{"title":"NASA — Fatos sobre a Terra","url":"science.nasa.gov/earth/facts/"},{"title":"Observatório Nacional — Divulgação científica","url":"www.gov.br/observatorio/pt-br"}]},
-    {"type":"challenge","illustration":"assets/illustrations/aprender/tempo-lua.svg","sticker":"DESAFIO DO TEMPO","chapter":"Missão tic-tac 🎯","title":"Oito descobertas do relógio","blocks":[{"kind":"paragraph","text":"Leia com calma e marque os acontecimentos do dia, da semana, do ano e as fases da Lua. Você está quase ganhando um calendário, uma bola lunar e o solzinho de pelúcia!"}]},
-    {"type":"finish","illustration":"assets/illustrations/aprender/tempo-lua.svg","sticker":"MEDALHA DO TEMPO","chapter":"Viva, {{nome}}!","title":"Você é explorador do tempo!","blocks":[{"kind":"paragraph","text":"Agora você sabe que a Terra gira e passeia pelo Sol, enquanto a Lua muda de aparência. Seu calendário, sua bola da Lua e o Sol sorridente estão liberados!"}],"medal":"🌙 Medalha do Tempo conquistada!"}
+  "language": "pt-BR",
+  "cover": "assets/illustrations/aprender/tempo-lua.svg",
+  "color": "#687fcf",
+  "medal": "🌙 Medalha do Tempo",
+  "rewards": [
+    {
+      "id": "calendar",
+      "label": "Calendário de brinquedo"
+    },
+    {
+      "id": "moon_ball",
+      "label": "Bola com textura de Lua"
+    },
+    {
+      "id": "sun_plush",
+      "label": "Pelúcia exclusiva de sol sorridente"
+    }
+  ],
+  "exercises": [
+    {
+      "syllable": "🌞",
+      "text": "Um dia tem cerca de 24 horas, enquanto a Terra gira em torno de si."
+    },
+    {
+      "syllable": "📅",
+      "text": "Uma semana tem sete dias."
+    },
+    {
+      "syllable": "🗓️",
+      "text": "Um ano costuma ter doze meses e 365 dias."
+    },
+    {
+      "syllable": "🌍",
+      "text": "A Terra faz uma volta em torno do Sol em aproximadamente um ano."
+    },
+    {
+      "syllable": "🌑",
+      "text": "A Lua nova é uma das fases da Lua."
+    },
+    {
+      "syllable": "🌓",
+      "text": "O quarto crescente mostra aproximadamente metade do disco lunar iluminado."
+    },
+    {
+      "syllable": "🌕",
+      "text": "Na Lua cheia vemos quase toda a face voltada para nós iluminada."
+    },
+    {
+      "syllable": "🌗",
+      "text": "No quarto minguante vemos de novo aproximadamente metade iluminada."
+    }
+  ],
+  "pages": [
+    {
+      "type": "cover",
+      "illustration": "assets/illustrations/aprender/tempo-lua.svg",
+      "sticker": "TIC-TAC!",
+      "chapter": "O relógio encantado ⏰",
+      "title": "{{nome}} e a Dança do Tempo",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "{{nome}} encontrou um relógio que fazia TIC, TAC... e uma Lua que piscava no céu. Um Sol sorridente convidou: — Quer conhecer a dança do tempo?"
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Sim! Mas o dia pula ou gira?"
+        }
+      ]
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/capitulos/a-danca-do-tempo/02.svg",
+      "sticker": "DIA E NOITE",
+      "chapter": "Capítulo 1 · O dia",
+      "title": "A Terra gira como um pião!",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Imagine a Terra como um pião redondinho! Ela gira em torno de um eixo imaginário. Esse movimento se chama [[rotação]] e leva aproximadamente 24 horas."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Quando nossa parte do planeta está virada para o Sol, é dia. Quando fica voltada para o outro lado, é noite. Não é o Sol que se esconde debaixo da cama!"
+        }
+      ]
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/capitulos/a-danca-do-tempo/03.svg",
+      "sticker": "SETE AMIGOS",
+      "chapter": "Capítulo 2 · A semana",
+      "title": "Segunda, terça... já é domingo?",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Os sete dias da semana formaram uma roda: segunda, terça, quarta, quinta, sexta, sábado e domingo."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Eu ajudo a organizar estudos, brincadeiras e passeios! — disse a semana. Cada família pode ter uma rotina diferente."
+        }
+      ]
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/capitulos/a-danca-do-tempo/04.svg",
+      "sticker": "12 CASINHAS",
+      "chapter": "Capítulo 3 · Meses",
+      "title": "O calendário das surpresas",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Um ano tem doze meses: janeiro, fevereiro, março, abril, maio, junho, julho, agosto, setembro, outubro, novembro e dezembro."
+        },
+        {
+          "kind": "paragraph",
+          "text": "A maioria dos meses tem 30 ou 31 dias. Fevereiro costuma ter 28, mas ganha um dia extra nos anos bissextos. Uau: o calendário tem truques de organização!"
+        }
+      ]
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/capitulos/a-danca-do-tempo/05.svg",
+      "sticker": "UMA GRANDE VOLTA",
+      "chapter": "Capítulo 4 · O ano",
+      "title": "A Terra passeia pelo Sol",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Além de girar em torno de si, a Terra dá uma volta ao redor do Sol. Essa viagem se chama [[translação]] e dura cerca de 365 dias e mais algumas horas."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Para ajustar o calendário, de quatro em quatro anos geralmente aparece o 29 de fevereiro. Esse ano especial se chama bissexto!"
+        }
+      ]
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/capitulos/a-danca-do-tempo/06.svg",
+      "sticker": "ESTAÇÕES DO ANO",
+      "chapter": "Capítulo 5 · A inclinação",
+      "title": "Por que muda a estação?",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "A Terra viaja inclinadinha. Por isso, ao longo do ano, cada região recebe a luz do Sol de um jeito diferente. Isso ajuda a formar as estações."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Não é simplesmente porque a Terra está mais perto ou mais longe do Sol. No Brasil, o verão acontece enquanto muitos lugares do norte do planeta têm inverno."
+        }
+      ]
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/capitulos/a-danca-do-tempo/07.svg",
+      "sticker": "LUA NOVA 🌑",
+      "chapter": "Capítulo 6 · Fases da Lua",
+      "title": "A Lua faz charme",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "A Lua não acende uma lâmpada: ela reflete a luz do Sol. À medida que passeia ao redor da Terra, vemos diferentes partes de seu lado iluminado."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Na [[Lua nova]], a parte iluminada fica principalmente virada para longe de nós. Ela pode ficar difícil de enxergar!"
+        }
+      ]
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/capitulos/a-danca-do-tempo/08.svg",
+      "sticker": "CRESCENTE 🌓",
+      "chapter": "Capítulo 7 · Fases da Lua",
+      "title": "Um pedacinho, depois metade!",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Depois da Lua nova, uma faixinha iluminada aparece e vai aumentando. No quarto crescente, parece que enxergamos metade do disco lunar acesa."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Ela não está crescendo de verdade, só mudou a parte iluminada que podemos ver!"
+        }
+      ]
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/capitulos/a-danca-do-tempo/09.svg",
+      "sticker": "LUA CHEIA 🌕",
+      "chapter": "Capítulo 8 · Fases da Lua",
+      "title": "O grande biscoito do céu",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Na [[Lua cheia]], quase toda a face da Lua que vemos recebe a luz do Sol. Ela parece um biscoito redondo, mas não é feita de queijo!"
+        },
+        {
+          "kind": "paragraph",
+          "text": "As quatro fases principais são nomes para momentos de um ciclo contínuo. Entre elas, a aparência muda aos pouquinhos."
+        }
+      ]
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/capitulos/a-danca-do-tempo/10.svg",
+      "sticker": "MINGUANTE 🌗",
+      "chapter": "Capítulo 9 · Fases da Lua",
+      "title": "A luz dança de novo",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Depois da cheia, a parte iluminada que vemos diminui. Chega o quarto minguante e, pouco a pouco, voltamos à Lua nova."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Da Lua nova até a próxima Lua nova passam cerca de 29 dias e meio. A Lua nunca vai embora: só muda o jeito como a enxergamos!"
+        }
+      ]
+    },
+    {
+      "type": "story",
+      "interactive": "bibliography",
+      "illustration": "assets/illustrations/capitulos/a-danca-do-tempo/11.svg",
+      "sticker": "FONTES PARA ADULTOS",
+      "chapter": "Observatório da família 📚",
+      "title": "Quem explicou tudo isso?",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Esses endereços são referências escritas para responsáveis. Não são links clicáveis nesta história."
+        }
+      ],
+      "bibliography": [
+        {
+          "title": "NASA — Fases da Lua",
+          "url": "science.nasa.gov/moon/moon-phases/"
+        },
+        {
+          "title": "NASA — Perguntas sobre a Lua",
+          "url": "science.nasa.gov/moon/top-moon-questions/"
+        },
+        {
+          "title": "NASA — Fatos sobre a Terra",
+          "url": "science.nasa.gov/earth/facts/"
+        },
+        {
+          "title": "Observatório Nacional — Divulgação científica",
+          "url": "www.gov.br/observatorio/pt-br"
+        }
+      ]
+    },
+    {
+      "type": "challenge",
+      "illustration": "assets/illustrations/capitulos/a-danca-do-tempo/12.svg",
+      "sticker": "DESAFIO DO TEMPO",
+      "chapter": "Missão tic-tac 🎯",
+      "title": "Oito descobertas do relógio",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Leia com calma e marque os acontecimentos do dia, da semana, do ano e as fases da Lua. Você está quase ganhando um calendário, uma bola lunar e o solzinho de pelúcia!"
+        }
+      ]
+    },
+    {
+      "type": "finish",
+      "illustration": "assets/illustrations/capitulos/a-danca-do-tempo/13.svg",
+      "sticker": "MEDALHA DO TEMPO",
+      "chapter": "Viva, {{nome}}!",
+      "title": "Você é explorador do tempo!",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Agora você sabe que a Terra gira e passeia pelo Sol, enquanto a Lua muda de aparência. Seu calendário, sua bola da Lua e o Sol sorridente estão liberados!"
+        }
+      ],
+      "medal": "🌙 Medalha do Tempo conquistada!"
+    }
   ]
 }

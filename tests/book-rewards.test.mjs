@@ -34,11 +34,13 @@ const targets = {
   'a-danca-do-tempo': ['calendar', 'moon_ball', 'sun_plush'],
   'a-turma-dos-alimentos': ['apple', 'pear', 'grapes', 'yogurt', 'salad', 'bread', 'egg'],
   'a-viagem-dos-oito-planetas': ['mercury_ball', 'venus_ball', 'earth_ball', 'mars_ball',
-    'jupiter_ball', 'saturn_ball', 'uranus_ball', 'neptune_ball']
+    'jupiter_ball', 'saturn_ball', 'uranus_ball', 'neptune_ball'],
+  'a-aventura-do-abc': ['abc_blocks'],
+  'o-jardim-das-diferencas': ['dna_helix']
 };
-assert.equal(catalog.books.length, 13, 'Quatro originais e nove educativos');
+assert.equal(catalog.books.length, 16, 'Quatro originais e doze educativos');
 const allRewards = Object.values(targets).flat();
-assert.equal(allRewards.length, 40, 'Quarenta recompensas no total');
+assert.equal(allRewards.length, 42, 'Quarenta e duas recompensas no total');
 assert.equal(new Set(allRewards).size, allRewards.length);
 assert.equal(Object.keys(avatar.rewardBooks).length, allRewards.length);
 for (const bookEntry of catalog.books) {
@@ -92,6 +94,10 @@ for (const name of ['mercury', 'venus', 'earth', 'mars', 'jupiter', 'saturn', 'u
 }
 assert(avatar.avatarSVG({ toys: ['saturn_ball'] }).includes('rotate(-22)'),
   'Os anéis de Saturno precisam ser visíveis');
+assert(avatar.avatarSVG({ toys: ['abc_blocks'] }).includes('data-detail="blocos-empilhados-abc"'),
+  'Blocos ABC precisam ser três peças empilhadas com letras distintas');
+assert(avatar.avatarSVG({ toys: ['dna_helix'] }).includes('data-detail="dupla-helice-dna"'),
+  'Brinquedo do DNA deve representar uma dupla hélice colorida');
 assert(avatar.avatarSVG({ toys: ['water_bottle'], waterColor: '#dba8ff' }).includes('fill="#dba8ff"'),
   'Água da garrafinha precisa de cor independente');
 assert(!prefs.clean({ waterColor: 'invalid' }).waterColor.includes('invalid'), 'Cor inválida recusada');
@@ -103,7 +109,8 @@ assert.equal(restored.petId, 'heart_plush');
 assert.deepEqual([...restored.toys], ['water_bottle']);
 assert.equal(restored.waterColor, '#abcf86');
 const bibliography = ['o-escudo-das-vacinas', 'o-corpo-em-movimento',
-  'o-calendario-das-festas', 'a-danca-do-tempo', 'a-turma-dos-alimentos', 'a-viagem-dos-oito-planetas'];
+  'o-calendario-das-festas', 'a-danca-do-tempo', 'a-turma-dos-alimentos', 'a-viagem-dos-oito-planetas',
+  'o-jardim-das-diferencas'];
 for (const id of bibliography) {
   const book = JSON.parse(read(`books/${id}.json`));
   const references = book.pages.filter(({ bibliography }) => Array.isArray(bibliography));
@@ -118,5 +125,5 @@ assert.deepEqual(Array.from(window.LivrinhoMusicKeyboard.notes, (note) => note[1
 assert(JSON.parse(read('books/a-festa-das-notas.json')).pages.some((page) => page.interactive === 'music-keyboard'));
 const reader = read('assets/js/reader.js');
 assert(reader.includes("url.textContent = entry.url"), 'Endereços devem ser texto puro sem âncoras');
-console.log('✓ Nove livros educativos e 40 recompensas, medalha + conclusão e bloqueio persistente');
+console.log('✓ Doze livros educativos e 42 recompensas, medalha + conclusão e bloqueio persistente');
 console.log('✓ Coração, sol, vela animada, Saci de uma perna, oito planetas e fontes não clicáveis');

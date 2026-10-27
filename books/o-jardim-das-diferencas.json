@@ -1,0 +1,269 @@
+{
+  "schemaVersion": 1,
+  "language": "pt-BR",
+  "id": "o-jardim-das-diferencas",
+  "title": "{{nome}} e o Jardim das Diferenças",
+  "subtitle": "Cada pessoa tem uma história, e todas merecem respeito",
+  "subject": "Convivência · diversidade e respeito",
+  "ageRange": [
+    6,
+    9
+  ],
+  "cover": "assets/illustrations/capitulos/o-jardim-das-diferencas/01.svg",
+  "color": "#72ada0",
+  "medal": "🤝 Medalha da Diversidade",
+  "rewards": [
+    {
+      "id": "dna_helix",
+      "label": "Dupla hélice colorida de DNA (brinquedo)"
+    }
+  ],
+  "exercises": [
+    {
+      "syllable": "🤝",
+      "text": "Toda pessoa merece respeito, seja qual for seu tom de pele."
+    },
+    {
+      "syllable": "🌿",
+      "text": "Os povos indígenas têm muitas histórias e continuam presentes no Brasil."
+    },
+    {
+      "syllable": "🌍",
+      "text": "A cultura brasileira reúne contribuições de povos de muitas origens."
+    },
+    {
+      "syllable": "💛",
+      "text": "A palavra amarela do Censo não descreve a cor literal de uma pessoa."
+    },
+    {
+      "syllable": "🧬",
+      "text": "Categorias de cor ou raça não são tipos diferentes de DNA."
+    },
+    {
+      "syllable": "🌈",
+      "text": "Se alguém sofre preconceito, posso buscar ajuda de um adulto."
+    }
+  ],
+  "pages": [
+    {
+      "type": "cover",
+      "sticker": "CADA UM É ÚNICO!",
+      "chapter": "O jardim de gente 🌍",
+      "title": "{{nome}} e o Jardim das Diferenças",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "{{nome}} entrou numa praça onde pessoas de muitas aparências, origens, cabelos e histórias brincavam juntas. Era como um jardim com flores diferentes!"
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Ninguém é uma cópia de ninguém. Que bom que existe tanta diversidade!"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/o-jardim-das-diferencas/01.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "NOMES DO CENSO",
+      "chapter": "Capítulo 1 · Autodeclaração",
+      "title": "Como as pessoas se reconhecem?",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "No Brasil, o IBGE faz perguntas para conhecer a população. No Censo, cada pessoa pode se identificar nas categorias de cor ou raça: [[branca]], [[preta]], [[parda]], [[amarela]] ou [[indígena]]."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Essas são palavras usadas na pesquisa e na sociedade, não nomes de lápis para pintar gente! Cada pessoa tem sua história e merece ser ouvida."
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/o-jardim-das-diferencas/02.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "RAÍZES INDÍGENAS",
+      "chapter": "Capítulo 2 · Primeiros povos",
+      "title": "Muitas nações, muitas línguas",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Muito antes de o Brasil existir como país, vários povos indígenas já viviam nestas terras, com diferentes línguas, saberes e histórias. Eles continuam aqui, criando, ensinando e defendendo suas comunidades."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Às vezes alguém diz \"vermelha\" ao falar de povos originários. Mas essa não é uma categoria oficial do Censo e não representa a diversidade indígena. Melhor dizer [[indígena]] e, quando souber, o nome do povo!"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/o-jardim-das-diferencas/03.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "HISTÓRIAS AFRICANAS",
+      "chapter": "Capítulo 3 · África e Brasil",
+      "title": "Muitos caminhos e muita força",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Povos de muitas regiões da África e seus descendentes ajudaram a construir o Brasil: nas músicas, comidas, conhecimentos, palavras e tantas outras partes da vida."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Muitas pessoas africanas foram trazidas à força e escravizadas no passado. Isso foi uma grande injustiça. Conhecer essa história nos ajuda a combater o racismo hoje."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Pessoas pretas têm muitas histórias, famílias, culturas e jeitos de ser. Nunca cabem num estereótipo!"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/o-jardim-das-diferencas/04.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "GENTE DE MUITOS LUGARES",
+      "chapter": "Capítulo 4 · Migrações",
+      "title": "Uma mala cheia de histórias",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Ao longo dos séculos, famílias vindas de lugares da Europa, Ásia, África, outros países das Américas e várias regiões do próprio Brasil fizeram novas casas aqui."
+        },
+        {
+          "kind": "paragraph",
+          "text": "No Censo existe a categoria \"amarela\", ligada historicamente à identificação de pessoas com origem asiática. Não significa que a pele delas seja literalmente amarela! E quem se declara branco também pode ter origens e histórias muito diferentes."
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/o-jardim-das-diferencas/05.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "MISTURAS E IDENTIDADES",
+      "chapter": "Capítulo 5 · Parda",
+      "title": "Um mosaico brasileiro",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Muitas famílias brasileiras têm ancestrais de origens variadas. A palavra [[parda]] é uma das categorias de autodeclaração do Censo. Ela não conta sozinha toda a história nem define uma receita de mistura."
+        },
+        {
+          "kind": "paragraph",
+          "text": "O Brasil tem uma diversidade enorme e muitos encontros entre povos. Não precisamos dizer que é o país mais misturado do mundo para sentir orgulho de tantas histórias!"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/o-jardim-das-diferencas/06.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "CABELO, PELE, JEITO",
+      "chapter": "Capítulo 6 · Singularidade",
+      "title": "Um mundo de rostos",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Há peles de muitos tons, cabelos lisos, crespos, ondulados, pessoas altas e baixas, que enxergam ou se movimentam de maneiras diferentes. Nenhum jeito de existir é melhor do que outro."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— O tom da pele não diz quem é gentil, inteligente, forte ou bom de brincar! Conheça a pessoa!"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/o-jardim-das-diferencas/07.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "DNA EM ESPIRAL",
+      "chapter": "Capítulo 7 · Ciência divertida",
+      "title": "A escadinha enrolada do corpo",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Dentro das células existe o [[DNA]], com informações que ajudam nosso corpo a se desenvolver. Ele parece uma escada torcida, chamada dupla hélice!"
+        },
+        {
+          "kind": "paragraph",
+          "text": "Quase todo o DNA humano é compartilhado entre as pessoas. Nossa aparência é influenciada por muitos fatores. As categorias de cor ou raça do Censo são formas de identificação social, não cinco tipos de DNA."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Minha dupla hélice de brinquedo vai lembrar que a ciência e as pessoas são cheias de descobertas!"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/o-jardim-das-diferencas/08.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "RESPEITO NA PRÁTICA",
+      "chapter": "Capítulo 8 · Convivência",
+      "title": "O combinado da praça",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "{{nome}} ouviu um comentário maldoso sobre o cabelo de uma amiga. A turma decidiu parar a brincadeira e dizer com respeito: — Esse comentário machuca. Vamos tratar todos bem."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Podemos escutar, aprender os nomes das pessoas, fazer amizades e procurar um adulto de confiança quando alguém sofre preconceito."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Ninguém precisa ser igual para brincar junto!"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/o-jardim-das-diferencas/09.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "FONTES PARA A FAMÍLIA",
+      "chapter": "Fontes e conversas 📚",
+      "title": "Onde encontrar mais informações?",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Para responsáveis: termos de cor ou raça refletem autodeclaração e contextos sociais. Os endereços abaixo são textos simples, sem links para crianças clicarem."
+        }
+      ],
+      "interactive": "bibliography",
+      "bibliography": [
+        {
+          "title": "IBGE Educa Crianças — Cor ou raça",
+          "url": "educa.ibge.gov.br/criancas/brasil/2848-nosso-povo/19624-cor-ou-raca.html"
+        },
+        {
+          "title": "IBGE — Censo 2022, identificação étnico-racial",
+          "url": "www.ibge.gov.br/estatisticas/sociais/populacao/22827-censo-demografico-2022.html?edicao=38698&t=resultados"
+        },
+        {
+          "title": "Instituto Nacional de Pesquisa do Genoma Humano — DNA",
+          "url": "www.genome.gov/genetics-glossary/Deoxyribonucleic-Acid-DNA"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/o-jardim-das-diferencas/10.svg"
+    },
+    {
+      "type": "challenge",
+      "sticker": "DESAFIO DO RESPEITO",
+      "chapter": "Missão da amizade 🎯",
+      "title": "Muitas origens, igual dignidade",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Marque as frases que lembram nossas descobertas. No fim, uma dupla hélice colorida de brinquedo vai ficar disponível para o avatar!"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/o-jardim-das-diferencas/11.svg"
+    },
+    {
+      "type": "finish",
+      "sticker": "MEDALHA DA DIVERSIDADE",
+      "chapter": "Muito bem, {{nome}}!",
+      "title": "Um jardim onde todo mundo cabe!",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Você aprendeu que aparência não define valor, que o Brasil tem muitas histórias e que respeitar as diferenças fortalece as amizades. A dupla hélice de DNA de brinquedo está liberada!"
+        }
+      ],
+      "medal": "🤝 Medalha da Diversidade conquistada!",
+      "illustration": "assets/illustrations/capitulos/o-jardim-das-diferencas/12.svg"
+    }
+  ]
+}

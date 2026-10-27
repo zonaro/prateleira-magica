@@ -35,7 +35,7 @@ assert.equal(renderer.bottomStyles.map(([key]) => key).join(','), 'pants,shorts,
 assert.equal(renderer.footwearStyles.map(([key]) => key).join(','), 'sneakers,flipflops,socks,barefoot,skates');
 assert.equal(renderer.sockPatterns.map(([key]) => key).join(','), 'plain,stripes,dots');
 assert.equal(renderer.accessoryStyles.length, 26);
-assert.equal(renderer.toyStyles.length, 42);
+assert.equal(renderer.toyStyles.length, 44);
 
 const pictures = new Set();
 for (const avatarStyle of hairStyles) {
@@ -483,7 +483,7 @@ console.log('✓ 25 cabelos × 26 roupas = 650 combinações, incluindo jaleco e
 console.log('✓ Careca, cabelos sem flores, boné maior e 26 acessórios desenhados em camadas');
 console.log('✓ Tiara de gatinho e capuz cobrindo todos os penteados sem alterá-los no perfil');
 console.log('✓ Flor sempre acima da tiara, capas atrás do corpo e máscaras exclusivas com óculos');
-console.log('✓ 42 brinquedos: 8 planetas, 7 alimentos, Saci, fantasias, instrumentos, asas e skate');
+console.log('✓ 44 brinquedos: 8 planetas, 7 alimentos, blocos ABC, DNA, Saci e instrumentos');
 console.log('✓ Patins liberados com 3 medalhas; itens bloqueados mais claros e em escala de cinza');
 console.log('✓ 5 partes de baixo, 5 calçados, 3 estampas de meias, boina com inicial e desbloqueio com 3 medalhas');
 console.log('✓ Camisas e moletons listrados, camiseta de time e cardigã alinhados ao corpo');

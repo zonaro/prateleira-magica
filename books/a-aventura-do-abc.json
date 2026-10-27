@@ -1,0 +1,639 @@
+{
+  "schemaVersion": 1,
+  "language": "pt-BR",
+  "id": "a-aventura-do-abc",
+  "title": "{{nome}} e a Aventura do ABC",
+  "subtitle": "Uma história para cada letra do alfabeto",
+  "subject": "Alfabetização · letras e vocabulário",
+  "ageRange": [
+    4,
+    8
+  ],
+  "cover": "assets/illustrations/capitulos/a-aventura-do-abc/01.svg",
+  "color": "#efac63",
+  "medal": "🔤 Medalha do ABC",
+  "rewards": [
+    {
+      "id": "abc_blocks",
+      "label": "Blocos de empilhar A, B e C"
+    }
+  ],
+  "exercises": [
+    {
+      "syllable": "A",
+      "text": "A abelha começa com A."
+    },
+    {
+      "syllable": "B",
+      "text": "Bola começa com B."
+    },
+    {
+      "syllable": "C",
+      "text": "Casa começa com C."
+    },
+    {
+      "syllable": "K",
+      "text": "K, W e Y também fazem parte do alfabeto."
+    },
+    {
+      "syllable": "L",
+      "text": "Lua começa com L."
+    },
+    {
+      "syllable": "Z",
+      "text": "O Z de zebra fecha nosso passeio pelo ABC."
+    }
+  ],
+  "pages": [
+    {
+      "type": "cover",
+      "sticker": "A, B, C... VAMOS LÁ!",
+      "chapter": "O grande passeio das letras 🔤",
+      "title": "{{nome}} e a Aventura do ABC",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Uma biblioteca se transformou num tapete de letras! {{nome}} encontrou 26 portinhas. Atrás de cada uma morava uma letra e duas palavras."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Vamos do A ao Z? Você pode apontar, escutar e inventar suas próprias palavras!"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/a-aventura-do-abc/01.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "A DE ABELHA",
+      "chapter": "Letra A · 1 de 26",
+      "title": "Olá, letra A!",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "A letra [[A]] encontrou a palavra [[abelha]] e chamou árvore para brincar."
+        },
+        {
+          "kind": "paragraph",
+          "text": "A abelha voou até uma árvore e pousou numa flor amarela."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— A está aqui! Que outra palavra começa com essa letra?"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/a-aventura-do-abc/02.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "B DE BOLA",
+      "chapter": "Letra B · 2 de 26",
+      "title": "Olá, letra B!",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "A letra [[B]] encontrou a palavra [[bola]] e chamou borboleta para brincar."
+        },
+        {
+          "kind": "paragraph",
+          "text": "A bola quicou no jardim e uma borboleta acompanhou a brincadeira."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— B está aqui! Que outra palavra começa com essa letra?"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/a-aventura-do-abc/03.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "C DE CASA",
+      "chapter": "Letra C · 3 de 26",
+      "title": "Olá, letra C!",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "A letra [[C]] encontrou a palavra [[casa]] e chamou cachorro para brincar."
+        },
+        {
+          "kind": "paragraph",
+          "text": "A casa tinha uma porta azul. Um cachorro abanou o rabinho ao entrar!"
+        },
+        {
+          "kind": "dialogue",
+          "text": "— C está aqui! Que outra palavra começa com essa letra?"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/a-aventura-do-abc/04.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "D DE DADO",
+      "chapter": "Letra D · 4 de 26",
+      "title": "Olá, letra D!",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "A letra [[D]] encontrou a palavra [[dado]] e chamou dinossauro para brincar."
+        },
+        {
+          "kind": "paragraph",
+          "text": "O dado rolou: um, dois, três! Um dinossauro de brinquedo veio jogar."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— D está aqui! Que outra palavra começa com essa letra?"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/a-aventura-do-abc/05.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "E DE ESTRELA",
+      "chapter": "Letra E · 5 de 26",
+      "title": "Olá, letra E!",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "A letra [[E]] encontrou a palavra [[estrela]] e chamou elefante para brincar."
+        },
+        {
+          "kind": "paragraph",
+          "text": "A estrela brilhou sobre o elefante, que olhou para o céu encantado."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— E está aqui! Que outra palavra começa com essa letra?"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/a-aventura-do-abc/06.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "F DE FLOR",
+      "chapter": "Letra F · 6 de 26",
+      "title": "Olá, letra F!",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "A letra [[F]] encontrou a palavra [[flor]] e chamou foguete para brincar."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Uma flor apontou para o foguete de papel que subia pelo céu."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— F está aqui! Que outra palavra começa com essa letra?"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/a-aventura-do-abc/07.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "G DE GATO",
+      "chapter": "Letra G · 7 de 26",
+      "title": "Olá, letra G!",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "A letra [[G]] encontrou a palavra [[gato]] e chamou girassol para brincar."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Um gato curioso se escondeu atrás de um girassol gigante."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— G está aqui! Que outra palavra começa com essa letra?"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/a-aventura-do-abc/08.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "H DE HIPOPÓTAMO",
+      "chapter": "Letra H · 8 de 26",
+      "title": "Olá, letra H!",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "A letra [[H]] encontrou a palavra [[hipopótamo]] e chamou helicóptero para brincar."
+        },
+        {
+          "kind": "paragraph",
+          "text": "O hipopótamo viu um helicóptero de brinquedo passar bem alto. O H pode ficar quietinho em algumas palavras!"
+        },
+        {
+          "kind": "dialogue",
+          "text": "— H está aqui! Que outra palavra começa com essa letra?"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/a-aventura-do-abc/09.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "I DE ILHA",
+      "chapter": "Letra I · 9 de 26",
+      "title": "Olá, letra I!",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "A letra [[I]] encontrou a palavra [[ilha]] e chamou iguana para brincar."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Numa ilha verde, uma iguana descansava tomando um solzinho."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— I está aqui! Que outra palavra começa com essa letra?"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/a-aventura-do-abc/10.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "J DE JACARÉ",
+      "chapter": "Letra J · 10 de 26",
+      "title": "Olá, letra J!",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "A letra [[J]] encontrou a palavra [[jacaré]] e chamou janela para brincar."
+        },
+        {
+          "kind": "paragraph",
+          "text": "O jacaré desenhado apareceu perto de uma janela. Que susto divertido!"
+        },
+        {
+          "kind": "dialogue",
+          "text": "— J está aqui! Que outra palavra começa com essa letra?"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/a-aventura-do-abc/11.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "K DE KIWI",
+      "chapter": "Letra K · 11 de 26",
+      "title": "Olá, letra K!",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "A letra [[K]] encontrou a palavra [[kiwi]] e chamou karatê para brincar."
+        },
+        {
+          "kind": "paragraph",
+          "text": "O kiwi verdinho entrou na roda de palavras. K aparece em nomes e palavras que vieram de outros idiomas!"
+        },
+        {
+          "kind": "dialogue",
+          "text": "— K está aqui! Que outra palavra começa com essa letra?"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/a-aventura-do-abc/12.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "L DE LUA",
+      "chapter": "Letra L · 12 de 26",
+      "title": "Olá, letra L!",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "A letra [[L]] encontrou a palavra [[lua]] e chamou livro para brincar."
+        },
+        {
+          "kind": "paragraph",
+          "text": "A Lua iluminou o livro que {{nome}} lia antes de dormir."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— L está aqui! Que outra palavra começa com essa letra?"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/a-aventura-do-abc/13.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "M DE MACACO",
+      "chapter": "Letra M · 13 de 26",
+      "title": "Olá, letra M!",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "A letra [[M]] encontrou a palavra [[macaco]] e chamou montanha para brincar."
+        },
+        {
+          "kind": "paragraph",
+          "text": "O macaco de pelúcia sonhou em visitar uma montanha."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— M está aqui! Que outra palavra começa com essa letra?"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/a-aventura-do-abc/14.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "N DE NAVIO",
+      "chapter": "Letra N · 14 de 26",
+      "title": "Olá, letra N!",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "A letra [[N]] encontrou a palavra [[navio]] e chamou nuvem para brincar."
+        },
+        {
+          "kind": "paragraph",
+          "text": "O navio navegou no mar e uma nuvem fez sombra nas velas."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— N está aqui! Que outra palavra começa com essa letra?"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/a-aventura-do-abc/15.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "O DE OVO",
+      "chapter": "Letra O · 15 de 26",
+      "title": "Olá, letra O!",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "A letra [[O]] encontrou a palavra [[ovo]] e chamou ovelha para brincar."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Uma ovelha olhou para o ovo no desenho e inventou uma história."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— O está aqui! Que outra palavra começa com essa letra?"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/a-aventura-do-abc/16.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "P DE PATO",
+      "chapter": "Letra P · 16 de 26",
+      "title": "Olá, letra P!",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "A letra [[P]] encontrou a palavra [[pato]] e chamou pipoca para brincar."
+        },
+        {
+          "kind": "paragraph",
+          "text": "O pato fez quá-quá enquanto o milho de pipoca estourava: POP!"
+        },
+        {
+          "kind": "dialogue",
+          "text": "— P está aqui! Que outra palavra começa com essa letra?"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/a-aventura-do-abc/17.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "Q DE QUEIJO",
+      "chapter": "Letra Q · 17 de 26",
+      "title": "Olá, letra Q!",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "A letra [[Q]] encontrou a palavra [[queijo]] e chamou quintal para brincar."
+        },
+        {
+          "kind": "paragraph",
+          "text": "O queijo apareceu no lanche do quintal. Quase sempre Q anda junto do U!"
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Q está aqui! Que outra palavra começa com essa letra?"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/a-aventura-do-abc/18.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "R DE RELÓGIO",
+      "chapter": "Letra R · 18 de 26",
+      "title": "Olá, letra R!",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "A letra [[R]] encontrou a palavra [[relógio]] e chamou rato para brincar."
+        },
+        {
+          "kind": "paragraph",
+          "text": "O relógio fazia TIC-TAC. Um ratinho de brinquedo dançava junto."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— R está aqui! Que outra palavra começa com essa letra?"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/a-aventura-do-abc/19.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "S DE SOL",
+      "chapter": "Letra S · 19 de 26",
+      "title": "Olá, letra S!",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "A letra [[S]] encontrou a palavra [[sol]] e chamou sapo para brincar."
+        },
+        {
+          "kind": "paragraph",
+          "text": "O sol sorriu para um sapo que saltou no lago."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— S está aqui! Que outra palavra começa com essa letra?"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/a-aventura-do-abc/20.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "T DE TARTARUGA",
+      "chapter": "Letra T · 20 de 26",
+      "title": "Olá, letra T!",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "A letra [[T]] encontrou a palavra [[tartaruga]] e chamou trem para brincar."
+        },
+        {
+          "kind": "paragraph",
+          "text": "A tartaruga de brinquedo passeou devagar ao lado de um trem."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— T está aqui! Que outra palavra começa com essa letra?"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/a-aventura-do-abc/21.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "U DE UVA",
+      "chapter": "Letra U · 21 de 26",
+      "title": "Olá, letra U!",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "A letra [[U]] encontrou a palavra [[uva]] e chamou urso para brincar."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Um urso de pelúcia segurou uma uva de brinquedo no piquenique."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— U está aqui! Que outra palavra começa com essa letra?"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/a-aventura-do-abc/22.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "V DE VIOLÃO",
+      "chapter": "Letra V · 22 de 26",
+      "title": "Olá, letra V!",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "A letra [[V]] encontrou a palavra [[violão]] e chamou vaca para brincar."
+        },
+        {
+          "kind": "paragraph",
+          "text": "A vaca do sítio ouviu o violão tocar uma canção baixinha."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— V está aqui! Que outra palavra começa com essa letra?"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/a-aventura-do-abc/23.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "W DE WAFFLE",
+      "chapter": "Letra W · 23 de 26",
+      "title": "Olá, letra W!",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "A letra [[W]] encontrou a palavra [[waffle]] e chamou web para brincar."
+        },
+        {
+          "kind": "paragraph",
+          "text": "O waffle do desenho parecia um quadradinho crocante. W aparece em palavras de outras línguas, como web."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— W está aqui! Que outra palavra começa com essa letra?"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/a-aventura-do-abc/24.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "X DE XÍCARA",
+      "chapter": "Letra X · 24 de 26",
+      "title": "Olá, letra X!",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "A letra [[X]] encontrou a palavra [[xícara]] e chamou xilofone para brincar."
+        },
+        {
+          "kind": "paragraph",
+          "text": "A xícara ficou ao lado de um xilofone. A letra X pode ter sons diferentes!"
+        },
+        {
+          "kind": "dialogue",
+          "text": "— X está aqui! Que outra palavra começa com essa letra?"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/a-aventura-do-abc/25.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "Y DE YAKISOBA",
+      "chapter": "Letra Y · 25 de 26",
+      "title": "Olá, letra Y!",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "A letra [[Y]] encontrou a palavra [[yakisoba]] e chamou yoga para brincar."
+        },
+        {
+          "kind": "paragraph",
+          "text": "O yakisoba é um prato com macarrão e legumes. Y também aparece em palavras emprestadas de outros idiomas."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Y está aqui! Que outra palavra começa com essa letra?"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/a-aventura-do-abc/26.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "Z DE ZEBRA",
+      "chapter": "Letra Z · 26 de 26",
+      "title": "Olá, letra Z!",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "A letra [[Z]] encontrou a palavra [[zebra]] e chamou zíper para brincar."
+        },
+        {
+          "kind": "paragraph",
+          "text": "A zebra abriu o zíper da mochila de faz de conta. Zzz... a aventura vai dormir!"
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Z está aqui! Que outra palavra começa com essa letra?"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/a-aventura-do-abc/27.svg"
+    },
+    {
+      "type": "challenge",
+      "sticker": "DESAFIO DE LETRINHAS",
+      "chapter": "Missão A até Z 🎯",
+      "title": "Vamos brincar com as 26 letras?",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Leia ou escute cada frase e marque a letra que você reconhece. Você não precisa saber tudo de cor: aprender é descobrir!"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/a-aventura-do-abc/28.svg"
+    },
+    {
+      "type": "finish",
+      "sticker": "ABC LIBERADO!",
+      "chapter": "Você chegou até o Z!",
+      "title": "O alfabeto inteiro festejou!",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Você conheceu as 26 letras e muitos mundos que cabem em palavras. Seus três blocos de empilhar A, B e C estão liberados no avatar!"
+        }
+      ],
+      "medal": "🔤 Medalha do ABC conquistada!",
+      "illustration": "assets/illustrations/capitulos/a-aventura-do-abc/29.svg"
+    }
+  ]
+}

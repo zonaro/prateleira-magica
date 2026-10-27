@@ -127,6 +127,29 @@
       "medal": "🪐 Medalha do Espaço", "label": "🪐 Oito bolas planetárias",
       "subject": "Ciências · Sistema Solar e planetas", "ageRange": [5, 9],
       "rewards": ["Bola de Mercúrio", "Bola de Vênus", "Bola da Terra", "Bola de Marte", "Bola de Júpiter", "Bola de Saturno", "Bola de Urano", "Bola de Netuno"]
+    },
+    {
+      "id": "a-aventura-do-abc", "data": "books/a-aventura-do-abc.json",
+      "title": "{{nome}} e a Aventura do ABC", "subtitle": "De A a Z, uma palavrinha por vez!",
+      "cover": "assets/illustrations/capitulos/a-aventura-do-abc/01.svg",
+      "color": "#efac63", "language": "pt-BR", "medal": "🔤 Medalha do ABC", "label": "🔤 26 letras",
+      "subject": "Alfabetização · letras e vocabulário", "ageRange": [4, 8],
+      "rewards": ["Blocos de empilhar A, B e C"]
+    },
+    {
+      "id": "a-trilha-do-nha-nhe-nhi-nho-nhu", "data": "books/a-trilha-do-nha-nhe-nhi-nho-nhu.json",
+      "title": "{{nome}} e a Trilha do NH", "subtitle": "Aranha, conhecer, companhia, ninho e nenhuma!",
+      "cover": "assets/illustrations/capitulos/a-trilha-do-nha-nhe-nhi-nho-nhu/01.svg",
+      "color": "#9b83dc", "language": "pt-BR", "medal": "🐣 Medalha do NH", "label": "🐣 Som do NH",
+      "subject": "Alfabetização · dígrafo NH e pronúncia", "ageRange": [5, 8]
+    },
+    {
+      "id": "o-jardim-das-diferencas", "data": "books/o-jardim-das-diferencas.json",
+      "title": "{{nome}} e o Jardim das Diferenças", "subtitle": "Cada pessoa é única e merece respeito",
+      "cover": "assets/illustrations/capitulos/o-jardim-das-diferencas/01.svg",
+      "color": "#72ada0", "language": "pt-BR", "medal": "🤝 Medalha da Diversidade", "label": "🧬 DNA de brinquedo",
+      "subject": "Convivência · diversidade e respeito", "ageRange": [6, 9],
+      "rewards": ["Dupla hélice colorida de DNA"]
     }
   ]
 }

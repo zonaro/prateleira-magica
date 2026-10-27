@@ -32,7 +32,10 @@ jobs:
           python3 tools/extract-avatar-components.py --check
           node tools/build-avatar-presets.mjs --check
           node tools/build-pet-parts.mjs --check
+          node tools/build-new-books.mjs --check
+          node tools/illustrate-books.mjs --check
           node tests/verify.mjs
+          node tests/new-books.test.mjs
           node tests/preferences.test.mjs
           node tests/colors.test.mjs
           node tests/avatar.test.mjs

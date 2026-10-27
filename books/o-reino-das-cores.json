@@ -1,6 +1,10 @@
 {
   "schemaVersion": 1,
-  "subject": "Artes · cores", "ageRange": [4, 8],
+  "subject": "Artes · cores",
+  "ageRange": [
+    4,
+    8
+  ],
   "id": "o-reino-das-cores",
   "title": "{{nome}} e o Reino das Cores",
   "subtitle": "Uma aventura para descobrir, misturar e combinar cores",
@@ -8,113 +12,268 @@
   "cover": "assets/illustrations/cores/capa.svg",
   "color": "#ed79a0",
   "medal": "🎨 Medalha das Cores",
-  "syllables": ["VERMELHO", "AZUL", "AMARELO", "VERDE", "ROXO"],
+  "syllables": [
+    "VERMELHO",
+    "AZUL",
+    "AMARELO",
+    "VERDE",
+    "ROXO"
+  ],
   "exercises": [
-    { "syllable": "🔴", "color": "#ed3b46", "text": "O coração vermelho pulsa de alegria." },
-    { "syllable": "🟡", "color": "#f0c522", "text": "O sol amarelo ilumina o castelo." },
-    { "syllable": "🔵", "color": "#2675da", "text": "O céu azul abraça as nuvens." },
-    { "syllable": "🟢", "color": "#43a664", "text": "A folha verde dança com o vento." },
-    { "syllable": "🟠", "color": "#f29339", "text": "A laranja tem uma cor bem quentinha." },
-    { "syllable": "🟣", "color": "#914fbb", "text": "Uma borboleta roxa pousou na flor." },
-    { "syllable": "🌸", "color": "#ec77a1", "text": "A estrela rosa deseja uma boa noite." }
+    {
+      "syllable": "🔴",
+      "color": "#ed3b46",
+      "text": "O coração vermelho pulsa de alegria."
+    },
+    {
+      "syllable": "🟡",
+      "color": "#f0c522",
+      "text": "O sol amarelo ilumina o castelo."
+    },
+    {
+      "syllable": "🔵",
+      "color": "#2675da",
+      "text": "O céu azul abraça as nuvens."
+    },
+    {
+      "syllable": "🟢",
+      "color": "#43a664",
+      "text": "A folha verde dança com o vento."
+    },
+    {
+      "syllable": "🟠",
+      "color": "#f29339",
+      "text": "A laranja tem uma cor bem quentinha."
+    },
+    {
+      "syllable": "🟣",
+      "color": "#914fbb",
+      "text": "Uma borboleta roxa pousou na flor."
+    },
+    {
+      "syllable": "🌸",
+      "color": "#ec77a1",
+      "text": "A estrela rosa deseja uma boa noite."
+    }
   ],
   "pages": [
     {
-      "type": "cover", "illustration": "assets/illustrations/cores/capa.svg", "sticker": "O MUNDO É COLORIDO!",
-      "chapter": "O livro das cores 🎨", "title": "{{nome}} e o Reino das Cores",
+      "type": "cover",
+      "illustration": "assets/illustrations/cores/capa.svg",
+      "sticker": "O MUNDO É COLORIDO!",
+      "chapter": "O livro das cores 🎨",
+      "title": "{{nome}} e o Reino das Cores",
       "blocks": [
-        { "kind": "paragraph", "text": "Um dia, {{nome}} encontrou uma porta com todas as [[cores]] do arco-íris." },
-        { "kind": "dialogue", "text": "— Venha! Cada cor tem uma história para contar! 🌈" }
+        {
+          "kind": "paragraph",
+          "text": "Um dia, {{nome}} encontrou uma porta com todas as [[cores]] do arco-íris."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Venha! Cada cor tem uma história para contar! 🌈"
+        }
       ],
       "tip": "Você pode ouvir as palavras destacadas tocando nelas."
     },
     {
-      "type": "story", "illustration": "assets/illustrations/cores/portal.svg", "sticker": "UM PORTAL SURPRESA",
-      "chapter": "Capítulo 1 · A porta encantada", "title": "Quem roubou o arco-íris?",
+      "type": "story",
+      "illustration": "assets/illustrations/cores/portal.svg",
+      "sticker": "UM PORTAL SURPRESA",
+      "chapter": "Capítulo 1 · A porta encantada",
+      "title": "Quem roubou o arco-íris?",
       "blocks": [
-        { "kind": "paragraph", "text": "O Reino das Cores estava meio cinzento. Sua amiga Pincelina precisava de ajuda para trazer as cores de volta." },
-        { "kind": "dialogue", "text": "— {{nome}}, vamos começar pelas três tintas do meu estojo?" },
-        { "kind": "paragraph", "text": "{{Pronome}} abriu a mochila e encontrou os potinhos de [[vermelho]], [[amarelo]] e [[azul]]." }
+        {
+          "kind": "paragraph",
+          "text": "O Reino das Cores estava meio cinzento. Sua amiga Pincelina precisava de ajuda para trazer as cores de volta."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— {{nome}}, vamos começar pelas três tintas do meu estojo?"
+        },
+        {
+          "kind": "paragraph",
+          "text": "{{Pronome}} abriu a mochila e encontrou os potinhos de [[vermelho]], [[amarelo]] e [[azul]]."
+        }
       ]
     },
     {
-      "type": "story", "illustration": "assets/illustrations/cores/tintas.svg", "sticker": "TRÊS POTES DE TINTA",
-      "chapter": "Capítulo 2 · Conhecendo as tintas", "title": "O começo da pintura",
+      "type": "story",
+      "illustration": "assets/illustrations/cores/tintas.svg",
+      "sticker": "TRÊS POTES DE TINTA",
+      "chapter": "Capítulo 2 · Conhecendo as tintas",
+      "title": "O começo da pintura",
       "blocks": [
-        { "kind": "paragraph", "text": "No estojo de pintura, o [[vermelho]] lembrava uma maçã, o [[amarelo]] parecia um raio de sol e o [[azul]] lembrava o céu." },
-        { "kind": "paragraph", "text": "Essas três cores são um ótimo começo para brincar de misturar tintas!" },
-        { "kind": "dialogue", "text": "— Uma cor sozinha é bonita. Mas duas juntas podem criar surpresas!" }
+        {
+          "kind": "paragraph",
+          "text": "No estojo de pintura, o [[vermelho]] lembrava uma maçã, o [[amarelo]] parecia um raio de sol e o [[azul]] lembrava o céu."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Essas três cores são um ótimo começo para brincar de misturar tintas!"
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Uma cor sozinha é bonita. Mas duas juntas podem criar surpresas!"
+        }
       ]
     },
     {
-      "type": "story", "illustration": "assets/illustrations/cores/mistura.svg", "sticker": "UMA MÁGICA DE TINTA",
-      "chapter": "Capítulo 3 · Misturar é brincar", "title": "Cores que nascem juntas",
+      "type": "story",
+      "illustration": "assets/illustrations/cores/mistura.svg",
+      "sticker": "UMA MÁGICA DE TINTA",
+      "chapter": "Capítulo 3 · Misturar é brincar",
+      "title": "Cores que nascem juntas",
       "blocks": [
-        { "kind": "paragraph", "text": "Pincelina misturou tinta [[amarela]] com [[azul]] e descobriu o [[verde]]!" },
-        { "kind": "paragraph", "text": "Depois, [[vermelho]] com [[amarelo]] fez um [[laranja]]. E [[vermelho]] com [[azul]] criou um tom de [[roxo]]." },
-        { "kind": "dialogue", "text": "— As misturas mudam conforme a tinta e a quantidade. Experimente!" }
+        {
+          "kind": "paragraph",
+          "text": "Pincelina misturou tinta [[amarela]] com [[azul]] e descobriu o [[verde]]!"
+        },
+        {
+          "kind": "paragraph",
+          "text": "Depois, [[vermelho]] com [[amarelo]] fez um [[laranja]]. E [[vermelho]] com [[azul]] criou um tom de [[roxo]]."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— As misturas mudam conforme a tinta e a quantidade. Experimente!"
+        }
       ]
     },
     {
-      "type": "story", "illustration": "assets/illustrations/cores/temperatura.svg", "sticker": "FRESQUINHO OU QUENTINHO?",
-      "chapter": "Capítulo 4 · Sensações", "title": "O abraço das cores",
+      "type": "story",
+      "illustration": "assets/illustrations/cores/temperatura.svg",
+      "sticker": "FRESQUINHO OU QUENTINHO?",
+      "chapter": "Capítulo 4 · Sensações",
+      "title": "O abraço das cores",
       "blocks": [
-        { "kind": "paragraph", "text": "O [[laranja]] e o [[vermelho]] fizeram {{nome}} lembrar de uma fogueira bem quentinha." },
-        { "kind": "paragraph", "text": "O [[azul]] e o [[verde]] pareceram uma brisa fresquinha perto de um lago." },
-        { "kind": "dialogue", "text": "— Essas são sensações, não temperaturas de verdade! As cores contam histórias no nosso coração." }
+        {
+          "kind": "paragraph",
+          "text": "O [[laranja]] e o [[vermelho]] fizeram {{nome}} lembrar de uma fogueira bem quentinha."
+        },
+        {
+          "kind": "paragraph",
+          "text": "O [[azul]] e o [[verde]] pareceram uma brisa fresquinha perto de um lago."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Essas são sensações, não temperaturas de verdade! As cores contam histórias no nosso coração."
+        }
       ]
     },
     {
-      "type": "story", "illustration": "assets/illustrations/cores/harmonia.svg", "sticker": "AS CORES SÃO AMIGAS",
-      "chapter": "Capítulo 5 · Combinar", "title": "Uma dança chamada harmonia",
+      "type": "story",
+      "illustration": "assets/illustrations/cores/harmonia.svg",
+      "sticker": "AS CORES SÃO AMIGAS",
+      "chapter": "Capítulo 5 · Combinar",
+      "title": "Uma dança chamada harmonia",
       "blocks": [
-        { "kind": "paragraph", "text": "Na roda das cores, algumas ficam bem pertinho e outras moram do lado oposto." },
-        { "kind": "paragraph", "text": "Cores vizinhas parecem conversar baixinho. Cores [[complementares]] fazem uma dupla cheia de contraste!" },
-        { "kind": "dialogue", "text": "— [[Harmonia]] é quando escolhemos cores para brincar juntas. Não existe uma única combinação certa!" }
+        {
+          "kind": "paragraph",
+          "text": "Na roda das cores, algumas ficam bem pertinho e outras moram do lado oposto."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Cores vizinhas parecem conversar baixinho. Cores [[complementares]] fazem uma dupla cheia de contraste!"
+        },
+        {
+          "kind": "dialogue",
+          "text": "— [[Harmonia]] é quando escolhemos cores para brincar juntas. Não existe uma única combinação certa!"
+        }
       ]
     },
     {
-      "type": "story", "illustration": "assets/illustrations/cores/harmonia.svg", "sticker": "TRÊS AMIGAS E UMA FAMÍLIA",
-      "chapter": "Capítulo 6 · O segredo do círculo", "title": "Trios, famílias e sentimentos",
+      "type": "story",
+      "illustration": "assets/illustrations/capitulos/o-reino-das-cores/07.svg",
+      "sticker": "TRÊS AMIGAS E UMA FAMÍLIA",
+      "chapter": "Capítulo 6 · O segredo do círculo",
+      "title": "Trios, famílias e sentimentos",
       "blocks": [
-        { "kind": "paragraph", "text": "A harmonia [[triádica]] escolhe três cores afastadas de maneira equilibrada na roda. Parece um trio de bailarinas!" },
-        { "kind": "paragraph", "text": "A harmonia [[monocromática]] reúne versões claras e escuras da mesma cor, como uma família." },
-        { "kind": "paragraph", "text": "Já as paletas por [[sentimento]] podem parecer alegres, calmas ou misteriosas — como músicas de um filme!" }
+        {
+          "kind": "paragraph",
+          "text": "A harmonia [[triádica]] escolhe três cores afastadas de maneira equilibrada na roda. Parece um trio de bailarinas!"
+        },
+        {
+          "kind": "paragraph",
+          "text": "A harmonia [[monocromática]] reúne versões claras e escuras da mesma cor, como uma família."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Já as paletas por [[sentimento]] podem parecer alegres, calmas ou misteriosas — como músicas de um filme!"
+        }
       ]
     },
     {
-      "type": "story", "interactive": "color-explorer", "illustration": "assets/illustrations/cores/laboratorio.svg",
-      "sticker": "SEU LABORATÓRIO!", "chapter": "Capítulo 7 · Você é artista", "title": "Invente uma cor mágica!",
+      "type": "story",
+      "interactive": "color-explorer",
+      "illustration": "assets/illustrations/cores/laboratorio.svg",
+      "sticker": "SEU LABORATÓRIO!",
+      "chapter": "Capítulo 7 · Você é artista",
+      "title": "Invente uma cor mágica!",
       "blocks": [
-        { "kind": "paragraph", "text": "Agora o pincel é seu! Escolha uma bolinha, use o seletor ou digite uma palavra — até uma inventada!" },
-        { "kind": "paragraph", "text": "Descubra o nome mais parecido e veja outras cores que podem combinar com ela. Toque no alto-falante para ouvir!" }
+        {
+          "kind": "paragraph",
+          "text": "Agora o pincel é seu! Escolha uma bolinha, use o seletor ou digite uma palavra — até uma inventada!"
+        },
+        {
+          "kind": "paragraph",
+          "text": "Descubra o nome mais parecido e veja outras cores que podem combinar com ela. Toque no alto-falante para ouvir!"
+        }
       ],
       "tip": "Palavras iguais sempre criam a mesma cor. Que magia!"
     },
     {
-      "type": "story", "illustration": "assets/illustrations/cores/portal.svg", "sticker": "O REINO VOLTOU A BRILHAR",
-      "chapter": "Capítulo 8 · O grande final", "title": "O arco-íris voltou!",
+      "type": "story",
+      "illustration": "assets/illustrations/capitulos/o-reino-das-cores/09.svg",
+      "sticker": "O REINO VOLTOU A BRILHAR",
+      "chapter": "Capítulo 8 · O grande final",
+      "title": "O arco-íris voltou!",
       "blocks": [
-        { "kind": "paragraph", "text": "Com as novas cores, {{nome}} pintou um céu cheio de estrelas e flores." },
-        { "kind": "paragraph", "text": "Pincelina aplaudiu: agora havia cores para todos os sentimentos e todas as aventuras!" },
-        { "kind": "dialogue", "text": "— Que tal mostrar que você reconhece essas sete cores?" }
+        {
+          "kind": "paragraph",
+          "text": "Com as novas cores, {{nome}} pintou um céu cheio de estrelas e flores."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Pincelina aplaudiu: agora havia cores para todos os sentimentos e todas as aventuras!"
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Que tal mostrar que você reconhece essas sete cores?"
+        }
       ]
     },
     {
-      "type": "challenge", "illustration": "assets/illustrations/cores/desafio.svg", "sticker": "DESAFIO COLORIDO",
-      "chapter": "Sua missão especial 🎯", "title": "Sete cores, sete frases",
+      "type": "challenge",
+      "illustration": "assets/illustrations/cores/desafio.svg",
+      "sticker": "DESAFIO COLORIDO",
+      "chapter": "Sua missão especial 🎯",
+      "title": "Sete cores, sete frases",
       "blocks": [
-        { "kind": "paragraph", "text": "Cada frase tem uma cor diferente! Observe a bolinha, leia a frase em voz alta e marque quando terminar." },
-        { "kind": "paragraph", "text": "Quando todas estiverem marcadas, você ganhará a [[Medalha das Cores]]!" }
+        {
+          "kind": "paragraph",
+          "text": "Cada frase tem uma cor diferente! Observe a bolinha, leia a frase em voz alta e marque quando terminar."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Quando todas estiverem marcadas, você ganhará a [[Medalha das Cores]]!"
+        }
       ],
       "tip": "Você pode tocar na frase para ouvi-la. Marque o quadradinho depois de tentar ler."
     },
     {
-      "type": "finish", "illustration": "assets/illustrations/cores/medalha.svg", "sticker": "MEDALHA DAS CORES",
-      "chapter": "Parabéns, artista!", "title": "{{nome}}, você coloriu o reino!",
+      "type": "finish",
+      "illustration": "assets/illustrations/cores/medalha.svg",
+      "sticker": "MEDALHA DAS CORES",
+      "chapter": "Parabéns, artista!",
+      "title": "{{nome}}, você coloriu o reino!",
       "blocks": [
-        { "kind": "paragraph", "text": "Você explorou cores, ouviu palavras, conheceu harmonias e leu as sete frases do desafio!" },
-        { "kind": "dialogue", "text": "— Cada cor conta um pedacinho da sua história. Continue criando! 🌈" }
+        {
+          "kind": "paragraph",
+          "text": "Você explorou cores, ouviu palavras, conheceu harmonias e leu as sete frases do desafio!"
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Cada cor conta um pedacinho da sua história. Continue criando! 🌈"
+        }
       ],
       "medal": "🎨 Medalha das Cores conquistada!",
       "tip": "Sua medalha fica guardada no Meu perfil."

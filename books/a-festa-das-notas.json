@@ -1,28 +1,214 @@
 {
-  "schemaVersion": 1, "id": "a-festa-das-notas", "title": "{{nome}} e a Festa das Notas",
+  "schemaVersion": 1,
+  "id": "a-festa-das-notas",
+  "title": "{{nome}} e a Festa das Notas",
   "subtitle": "Brinque com Dó, Ré, Mi, Fá, Sol, Lá, Si e Dó — e suas cifras!",
-  "subject": "Música · notas e cifras", "ageRange": [5, 9], "language": "pt-BR",
-  "cover": "assets/illustrations/aprender/musica.svg", "color": "#9b86e7", "medal": "🎼 Medalha da Música",
-  "rewards": [{"id":"mini_keyboard","label":"Mini teclado"},{"id":"guitar","label":"Violão"},{"id":"flute","label":"Flauta"}],
+  "subject": "Música · notas e cifras",
+  "ageRange": [
+    5,
+    9
+  ],
+  "language": "pt-BR",
+  "cover": "assets/illustrations/aprender/musica.svg",
+  "color": "#9b86e7",
+  "medal": "🎼 Medalha da Música",
+  "rewards": [
+    {
+      "id": "mini_keyboard",
+      "label": "Mini teclado"
+    },
+    {
+      "id": "guitar",
+      "label": "Violão"
+    },
+    {
+      "id": "flute",
+      "label": "Flauta"
+    }
+  ],
   "exercises": [
-    {"syllable":"C","text":"Dó se escreve C na cifra."},
-    {"syllable":"D","text":"Ré se escreve D na cifra."},
-    {"syllable":"E","text":"Mi se escreve E na cifra."},
-    {"syllable":"F","text":"Fá se escreve F na cifra."},
-    {"syllable":"G","text":"Sol se escreve G na cifra."},
-    {"syllable":"A","text":"Lá se escreve A na cifra."},
-    {"syllable":"B","text":"Si se escreve B na cifra."},
-    {"syllable":"C","text":"Depois de Si, o Dó volta mais agudo: C!"}
+    {
+      "syllable": "C",
+      "text": "Dó se escreve C na cifra."
+    },
+    {
+      "syllable": "D",
+      "text": "Ré se escreve D na cifra."
+    },
+    {
+      "syllable": "E",
+      "text": "Mi se escreve E na cifra."
+    },
+    {
+      "syllable": "F",
+      "text": "Fá se escreve F na cifra."
+    },
+    {
+      "syllable": "G",
+      "text": "Sol se escreve G na cifra."
+    },
+    {
+      "syllable": "A",
+      "text": "Lá se escreve A na cifra."
+    },
+    {
+      "syllable": "B",
+      "text": "Si se escreve B na cifra."
+    },
+    {
+      "syllable": "C",
+      "text": "Depois de Si, o Dó volta mais agudo: C!"
+    }
   ],
   "pages": [
-    {"type":"cover","illustration":"assets/illustrations/aprender/musica.svg","sticker":"VAMOS FAZER MÚSICA!","chapter":"O baile musical 🎵","title":"{{nome}} e a Festa das Notas","blocks":[{"kind":"paragraph","text":"Uma estrelinha chamada Clave convidou {{nome}} para uma festa cheia de sons!"},{"kind":"dialogue","text":"— Hoje vamos conhecer oito degraus musicais. Pode cantar comigo?"}]},
-    {"type":"story","illustration":"assets/illustrations/aprender/musica.svg","sticker":"ESCADINHA MUSICAL","chapter":"Capítulo 1 · Melodia","title":"Dó, Ré, Mi... lá vamos nós!","blocks":[{"kind":"paragraph","text":"As notas subiram uma escada: [[Dó]], [[Ré]], [[Mi]], [[Fá]], [[Sol]], [[Lá]], [[Si]] e [[Dó]]!"},{"kind":"paragraph","text":"O último Dó tem o mesmo nome do primeiro, mas o som fica mais [[agudo]]."}]},
-    {"type":"story","illustration":"assets/illustrations/aprender/musica.svg","sticker":"LETRAS SECRETAS","chapter":"Capítulo 2 · Cifras","title":"Notas também têm letras","blocks":[{"kind":"paragraph","text":"Músicos usam [[cifras]], letras que representam notas. Veja o mapa: Dó = C, Ré = D, Mi = E, Fá = F."},{"kind":"paragraph","text":"E o resto da turma: Sol = G, Lá = A e Si = B. Depois, voltamos ao C para o Dó mais agudo!"}],"tip":"A cifra com letras é muito usada para indicar acordes. Aqui começamos pelos nomes das notas!"},
-    {"type":"story","illustration":"assets/illustrations/aprender/musica.svg","sticker":"SOM QUE SOBE","chapter":"Capítulo 3 · Altura","title":"Grave e agudo","blocks":[{"kind":"paragraph","text":"A voz do trovão lembra um som [[grave]]. O piado de um passarinho pode ser mais [[agudo]]."},{"kind":"dialogue","text":"— Agudo não precisa ser alto no volume! Grave e agudo falam da altura da nota."}]},
-    {"type":"story","illustration":"assets/illustrations/aprender/musica.svg","sticker":"VOCÊ É MUSICISTA","chapter":"Capítulo 4 · Instrumentos","title":"Cada instrumento tem uma voz","blocks":[{"kind":"paragraph","text":"O [[teclado]] tem teclas, o [[violão]] tem cordas e a [[flauta]] faz música com o ar."},{"kind":"paragraph","text":"Podemos fazer ritmo batendo palmas e melodia cantando. Juntar tudo é uma festa!"}]},
-    {"type":"story","interactive":"music-keyboard","illustration":"assets/illustrations/aprender/musica.svg","sticker":"TOQUE AS TECLAS!","chapter":"Capítulo 5 · Laboratório","title":"Seu pequeno teclado musical","blocks":[{"kind":"paragraph","text":"Toque Dó, Ré, Mi, Fá, Sol, Lá, Si e o Dó mais alto. Cada tecla mostra o nome e sua cifra!"}],"tip":"O som sai do seu aparelho ao tocar uma tecla. Se não ouvir, confira o volume."},
-    {"type":"story","illustration":"assets/illustrations/aprender/musica.svg","sticker":"COMPONHA UM PEDACINHO","chapter":"Capítulo 6 · Criação","title":"Uma melodia só sua","blocks":[{"kind":"paragraph","text":"Que tal tocar Dó, Mi, Sol, Mi, Dó? Agora invente outra sequência! Música também é brincar e experimentar."},{"kind":"dialogue","text":"— Não existe erro na hora de criar. Escute, tente e divirta-se!"}]},
-    {"type":"challenge","illustration":"assets/illustrations/aprender/musica.svg","sticker":"MISSÃO MUSICAL","chapter":"Desafio das cifras 🎯","title":"Oito degraus, oito frases","blocks":[{"kind":"paragraph","text":"Leia as frases e encontre as letras das notas. Marque uma por uma depois de tentar!"},{"kind":"dialogue","text":"— A Medalha da Música e três instrumentos estão esperando!"}]},
-    {"type":"finish","illustration":"assets/illustrations/aprender/musica.svg","sticker":"MEDALHA DA MÚSICA","chapter":"Bravo, {{nome}}!","title":"Sua música ganhou asas!","blocks":[{"kind":"paragraph","text":"Você conheceu as notas e suas cifras. Agora pode brincar com um mini teclado, um violão e uma flauta no avatar!"}],"medal":"🎼 Medalha da Música conquistada!"}
+    {
+      "type": "cover",
+      "illustration": "assets/illustrations/aprender/musica.svg",
+      "sticker": "VAMOS FAZER MÚSICA!",
+      "chapter": "O baile musical 🎵",
+      "title": "{{nome}} e a Festa das Notas",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Uma estrelinha chamada Clave convidou {{nome}} para uma festa cheia de sons!"
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Hoje vamos conhecer oito degraus musicais. Pode cantar comigo?"
+        }
+      ]
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/capitulos/a-festa-das-notas/02.svg",
+      "sticker": "ESCADINHA MUSICAL",
+      "chapter": "Capítulo 1 · Melodia",
+      "title": "Dó, Ré, Mi... lá vamos nós!",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "As notas subiram uma escada: [[Dó]], [[Ré]], [[Mi]], [[Fá]], [[Sol]], [[Lá]], [[Si]] e [[Dó]]!"
+        },
+        {
+          "kind": "paragraph",
+          "text": "O último Dó tem o mesmo nome do primeiro, mas o som fica mais [[agudo]]."
+        }
+      ]
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/capitulos/a-festa-das-notas/03.svg",
+      "sticker": "LETRAS SECRETAS",
+      "chapter": "Capítulo 2 · Cifras",
+      "title": "Notas também têm letras",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Músicos usam [[cifras]], letras que representam notas. Veja o mapa: Dó = C, Ré = D, Mi = E, Fá = F."
+        },
+        {
+          "kind": "paragraph",
+          "text": "E o resto da turma: Sol = G, Lá = A e Si = B. Depois, voltamos ao C para o Dó mais agudo!"
+        }
+      ],
+      "tip": "A cifra com letras é muito usada para indicar acordes. Aqui começamos pelos nomes das notas!"
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/capitulos/a-festa-das-notas/04.svg",
+      "sticker": "SOM QUE SOBE",
+      "chapter": "Capítulo 3 · Altura",
+      "title": "Grave e agudo",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "A voz do trovão lembra um som [[grave]]. O piado de um passarinho pode ser mais [[agudo]]."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Agudo não precisa ser alto no volume! Grave e agudo falam da altura da nota."
+        }
+      ]
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/capitulos/a-festa-das-notas/05.svg",
+      "sticker": "VOCÊ É MUSICISTA",
+      "chapter": "Capítulo 4 · Instrumentos",
+      "title": "Cada instrumento tem uma voz",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "O [[teclado]] tem teclas, o [[violão]] tem cordas e a [[flauta]] faz música com o ar."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Podemos fazer ritmo batendo palmas e melodia cantando. Juntar tudo é uma festa!"
+        }
+      ]
+    },
+    {
+      "type": "story",
+      "interactive": "music-keyboard",
+      "illustration": "assets/illustrations/capitulos/a-festa-das-notas/06.svg",
+      "sticker": "TOQUE AS TECLAS!",
+      "chapter": "Capítulo 5 · Laboratório",
+      "title": "Seu pequeno teclado musical",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Toque Dó, Ré, Mi, Fá, Sol, Lá, Si e o Dó mais alto. Cada tecla mostra o nome e sua cifra!"
+        }
+      ],
+      "tip": "O som sai do seu aparelho ao tocar uma tecla. Se não ouvir, confira o volume."
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/capitulos/a-festa-das-notas/07.svg",
+      "sticker": "COMPONHA UM PEDACINHO",
+      "chapter": "Capítulo 6 · Criação",
+      "title": "Uma melodia só sua",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Que tal tocar Dó, Mi, Sol, Mi, Dó? Agora invente outra sequência! Música também é brincar e experimentar."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Não existe erro na hora de criar. Escute, tente e divirta-se!"
+        }
+      ]
+    },
+    {
+      "type": "challenge",
+      "illustration": "assets/illustrations/capitulos/a-festa-das-notas/08.svg",
+      "sticker": "MISSÃO MUSICAL",
+      "chapter": "Desafio das cifras 🎯",
+      "title": "Oito degraus, oito frases",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Leia as frases e encontre as letras das notas. Marque uma por uma depois de tentar!"
+        },
+        {
+          "kind": "dialogue",
+          "text": "— A Medalha da Música e três instrumentos estão esperando!"
+        }
+      ]
+    },
+    {
+      "type": "finish",
+      "illustration": "assets/illustrations/capitulos/a-festa-das-notas/09.svg",
+      "sticker": "MEDALHA DA MÚSICA",
+      "chapter": "Bravo, {{nome}}!",
+      "title": "Sua música ganhou asas!",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Você conheceu as notas e suas cifras. Agora pode brincar com um mini teclado, um violão e uma flauta no avatar!"
+        }
+      ],
+      "medal": "🎼 Medalha da Música conquistada!"
+    }
   ]
 }

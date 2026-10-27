@@ -67,7 +67,8 @@
     mercury_ball: 'a-viagem-dos-oito-planetas', venus_ball: 'a-viagem-dos-oito-planetas',
     earth_ball: 'a-viagem-dos-oito-planetas', mars_ball: 'a-viagem-dos-oito-planetas',
     jupiter_ball: 'a-viagem-dos-oito-planetas', saturn_ball: 'a-viagem-dos-oito-planetas',
-    uranus_ball: 'a-viagem-dos-oito-planetas', neptune_ball: 'a-viagem-dos-oito-planetas'
+    uranus_ball: 'a-viagem-dos-oito-planetas', neptune_ball: 'a-viagem-dos-oito-planetas',
+    abc_blocks: 'a-aventura-do-abc', dna_helix: 'o-jardim-das-diferencas'
   });
   function rewardUnlocked(settings, id) {
     const bookId = rewardBooks[id];
@@ -146,7 +147,9 @@
     ['jupiter_ball', 'Bola de Júpiter (livro do espaço)', 'hand'],
     ['saturn_ball', 'Bola de Saturno (livro do espaço)', 'hand'],
     ['uranus_ball', 'Bola de Urano (livro do espaço)', 'hand'],
-    ['neptune_ball', 'Bola de Netuno (livro do espaço)', 'hand']
+    ['neptune_ball', 'Bola de Netuno (livro do espaço)', 'hand'],
+    ['abc_blocks', 'Blocos de empilhar ABC (livro do abecedário)', 'hand'],
+    ['dna_helix', 'Dupla hélice de DNA (livro da diversidade)', 'hand']
   ];
   const hairColors = [
     ['#493a55', 'Castanho escuro'], ['#7b4c35', 'Castanho'],
@@ -453,7 +456,17 @@
       yogurt: `<path d="M-19-20h38l-5 50h-28Z" fill="#fffdf8" stroke="${ink}" stroke-width="3"/><rect x="-21" y="-25" width="42" height="9" rx="3" fill="${tone}" stroke="${ink}" stroke-width="2"/><circle cy="5" r="10" fill="#e77fa3"/><path d="M-5 4q6-8 12 0" fill="none" stroke="#fff" stroke-width="3"/>`,
       salad: `<path d="M-25 4h50q-2 26-25 27Q-23 30-25 4Z" fill="#eee9dc" stroke="${ink}" stroke-width="3"/><path d="M-20 5q-10-13 0-20 11-7 15 6 0-24 17-20 14 9 2 25Q25-24 29-9q-1 14-12 16Z" fill="#76bd74" stroke="#4e995f" stroke-width="2"/><circle cx="-8" cy="4" r="6" fill="#eb7465"/><circle cx="12" cy="1" r="6" fill="#f3b855"/>`,
       bread: `<path d="M-21 26v-37q-7-19 10-23 11-7 20 3 16-4 16 17v40Z" fill="#db9b57" stroke="#985e41" stroke-width="3"/><path d="M-15 20v-32q-4-12 9-15 12-4 18 5 10 0 7 12v30Z" fill="#f6d397"/><path d="M-8-2h2m12 9h2" stroke="#cd9c60" stroke-width="4" stroke-linecap="round"/>`,
-      egg: `<ellipse cy="1" rx="19" ry="27" fill="#fff6df" stroke="#c6bfae" stroke-width="3"/><ellipse cx="-7" cy="-11" rx="7" ry="4" fill="#fff" opacity=".65"/>`
+      egg: `<ellipse cy="1" rx="19" ry="27" fill="#fff6df" stroke="#c6bfae" stroke-width="3"/><ellipse cx="-7" cy="-11" rx="7" ry="4" fill="#fff" opacity=".65"/>`,
+      abc_blocks: `<g data-detail="blocos-empilhados-abc" font-family="system-ui,sans-serif" font-weight="900" font-size="20" text-anchor="middle" stroke="${ink}" stroke-width="2.4" stroke-linejoin="round">
+        <rect x="-15" y="-40" width="31" height="31" rx="5" fill="#f5c961"/><text x=".5" y="-17" stroke="none" fill="#754d69">A</text>
+        <rect x="-32" y="-7" width="31" height="31" rx="5" fill="#8cd2b8"/><text x="-16.5" y="16" stroke="none" fill="#426f76">B</text>
+        <rect x="2" y="-7" width="31" height="31" rx="5" fill="#f5a2bf"/><text x="17.5" y="16" stroke="none" fill="#8d4d7a">C</text>
+      </g>`,
+      dna_helix: `<g data-detail="dupla-helice-dna" fill="none" stroke-linecap="round">
+        <path d="M-17-41C26-25 26-14-17 0 26 14 26 25-17 41" stroke="${tone}" stroke-width="7"/>
+        <path d="M17-41C-26-25-26-14 17 0-26 14-26 25 17 41" stroke="${dark}" stroke-width="7"/>
+        <path d="M-13-31h26M-7-19h14M-16-6h32M-16 7h32M-7 19h14M-13 31h26" stroke="#f4cc70" stroke-width="5"/>
+      </g>`
     };
     for (const id of ['mercury_ball', 'venus_ball', 'earth_ball', 'mars_ball', 'jupiter_ball', 'saturn_ball', 'uranus_ball', 'neptune_ball']) {
       items[id] = planetBallSVG(id);
@@ -461,7 +474,7 @@
     // Instrumentos são mais largos que as bolas: a posição padrão (x=29)
     // recortava as teclas do mini teclado e o corpo/braço do violão na borda
     // esquerda do viewBox 210x340. Mantemos os outros brinquedos intactos.
-    const handPositions = { mini_keyboard: 85, guitar: 88, brazil_flag: 56, saturn_ball: 48 };
+    const handPositions = { mini_keyboard: 85, guitar: 88, abc_blocks: 75, brazil_flag: 56, saturn_ball: 48 };
     return chosen.filter(key => Object.hasOwn(items, key))
       .map(key => `<g data-toy="${key}" data-placement="hand" transform="translate(${handPositions[key] ?? 29} 237)">${items[key]}</g>`).join('');
   }

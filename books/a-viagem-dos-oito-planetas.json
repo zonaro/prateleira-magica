@@ -1,32 +1,331 @@
 {
-  "schemaVersion":1,"id":"a-viagem-dos-oito-planetas","title":"{{nome}} e a Viagem dos Oito Planetas","subtitle":"Uma aventura pelo Sistema Solar e a descoberta de Plutão",
-  "subject":"Ciências · Sistema Solar e planetas","ageRange":[5,9],"language":"pt-BR",
-  "cover":"assets/illustrations/aprender/sistema-solar.svg","color":"#6867b9","medal":"🪐 Medalha do Espaço",
-  "rewards":[{"id":"mercury_ball","label":"Bola de Mercúrio, cinza com crateras"},{"id":"venus_ball","label":"Bola de Vênus, dourada com nuvens"},{"id":"earth_ball","label":"Bola da Terra, azul e verde"},{"id":"mars_ball","label":"Bola de Marte, vermelha"},{"id":"jupiter_ball","label":"Bola de Júpiter, listrada"},{"id":"saturn_ball","label":"Bola de Saturno, com anéis"},{"id":"uranus_ball","label":"Bola de Urano, azul-claro"},{"id":"neptune_ball","label":"Bola de Netuno, azul-escuro"}],
-  "exercises":[
-    {"syllable":"☿","text":"Mercúrio é o planeta mais perto do Sol."},
-    {"syllable":"♀","text":"Vênus tem uma atmosfera que o deixa muito quente."},
-    {"syllable":"🌍","text":"A Terra é nosso lar e o único planeta onde conhecemos vida."},
-    {"syllable":"♂","text":"Marte parece avermelhado por causa do ferro em sua poeira."},
-    {"syllable":"♃","text":"Júpiter é o maior planeta do Sistema Solar."},
-    {"syllable":"♄","text":"Os anéis de Saturno são feitos de muitos pedacinhos, incluindo gelo."},
-    {"syllable":"♅","text":"Urano gira muito inclinado, como se estivesse de lado."},
-    {"syllable":"♆","text":"Netuno é o planeta mais distante do Sol."},
-    {"syllable":"⭐","text":"Plutão é um planeta anão: compartilha sua região orbital com outros corpos."}
+  "schemaVersion": 1,
+  "id": "a-viagem-dos-oito-planetas",
+  "title": "{{nome}} e a Viagem dos Oito Planetas",
+  "subtitle": "Uma aventura pelo Sistema Solar e a descoberta de Plutão",
+  "subject": "Ciências · Sistema Solar e planetas",
+  "ageRange": [
+    5,
+    9
   ],
-  "pages":[
-    {"type":"cover","illustration":"assets/illustrations/aprender/sistema-solar.svg","sticker":"EMBARQUE ESPACIAL","chapter":"A nave de papel 🚀","title":"{{nome}} e a Viagem dos Oito Planetas","blocks":[{"kind":"paragraph","text":"{{nome}} construiu uma nave de papel e apertou um botão imaginário: BIP-BIP! À frente brilhava o Sol, uma [[estrela]] enorme que ilumina nossa vizinhança espacial."},{"kind":"dialogue","text":"— Preparar para conhecer os oito planetas! Nenhum astronauta de verdade se aproxima do Sol desse jeito, então nossa viagem é de faz de conta!"}]},
-    {"type":"story","illustration":"assets/illustrations/aprender/sistema-solar.svg","sticker":"MERCÚRIO ☿","chapter":"Parada 1 · Mercúrio","title":"O pequeno corredor","blocks":[{"kind":"paragraph","text":"Mercúrio fica pertinho do Sol e completa uma volta ao redor dele em só 88 dias terrestres. Sua superfície tem muitas crateras, como a Lua."},{"kind":"paragraph","text":"Quase não tem atmosfera para guardar ou distribuir calor. Por isso, pode ficar muito quente onde o Sol bate e extremamente frio na noite."}],"callout":"🎁 Textura de bola: Mercúrio cinzento e cheio de crateras."},
-    {"type":"story","illustration":"assets/illustrations/aprender/sistema-solar.svg","sticker":"VÊNUS ♀","chapter":"Parada 2 · Vênus","title":"O forno com cobertor","blocks":[{"kind":"paragraph","text":"Vênus é quase do tamanho da Terra, mas tem uma atmosfera muito grossa, que prende calor como um cobertor exagerado. É o planeta mais quente do Sistema Solar!"},{"kind":"dialogue","text":"— Ui! Essa visita precisa ser só pela janela mágica!"}],"callout":"🎁 Textura de bola: Vênus dourado com faixas de nuvens."},
-    {"type":"story","illustration":"assets/illustrations/aprender/sistema-solar.svg","sticker":"TERRA 🌍","chapter":"Parada 3 · Terra","title":"Nossa casinha azul","blocks":[{"kind":"paragraph","text":"A Terra tem oceanos, continentes, ar e água líquida na superfície. É o único planeta onde sabemos que existe vida até agora."},{"kind":"paragraph","text":"Da janela da nave, {{nome}} viu um mundo azul e verde. — Vou cuidar bem da nossa casa!"}],"callout":"🎁 Textura de bola: Terra azul com continentes verdes."},
-    {"type":"story","illustration":"assets/illustrations/aprender/sistema-solar.svg","sticker":"MARTE ♂","chapter":"Parada 4 · Marte","title":"O deserto vermelho","blocks":[{"kind":"paragraph","text":"Marte é conhecido como planeta vermelho: sua poeira contém minerais de ferro que lhe dão tons avermelhados. Tem montanhas, vales e calotas de gelo!"},{"kind":"dialogue","text":"— Parece uma bola de terra colorida, mas explorar Marte exige robôs e equipamentos especiais!"}],"callout":"🎁 Textura de bola: Marte vermelho com manchas de poeira."},
-    {"type":"story","illustration":"assets/illustrations/aprender/sistema-solar.svg","sticker":"JÚPITER ♃","chapter":"Parada 5 · Júpiter","title":"O grandalhão listrado","blocks":[{"kind":"paragraph","text":"Júpiter é o maior planeta. É um gigante gasoso: não tem um chão sólido como a Terra para passear de tênis."},{"kind":"paragraph","text":"Suas nuvens formam faixas e uma tempestade famosa, a Grande Mancha Vermelha. A nave fingiu colocar um cachecol listrado para combinar!"}],"callout":"🎁 Textura de bola: Júpiter listrado, com mancha avermelhada."},
-    {"type":"story","illustration":"assets/illustrations/aprender/sistema-solar.svg","sticker":"SATURNO ♄","chapter":"Parada 6 · Saturno","title":"O rei dos anéis","blocks":[{"kind":"paragraph","text":"Saturno também é um gigante gasoso. Seus anéis, tão bonitos à distância, são feitos de inúmeros pedacinhos de gelo, rocha e poeira."},{"kind":"dialogue","text":"— Parecem bambolês, mas não são um anel sólido!"}],"callout":"🎁 Textura de bola: Saturno com anéis ao redor."},
-    {"type":"story","illustration":"assets/illustrations/aprender/sistema-solar.svg","sticker":"URANO ♅","chapter":"Parada 7 · Urano","title":"O planeta que rola de ladinho","blocks":[{"kind":"paragraph","text":"Urano é um gigante gelado de tom azul-esverdeado, por causa de gases como o metano em sua atmosfera."},{"kind":"paragraph","text":"Ele gira com o eixo muito inclinado, quase deitado! {{nome}} imaginou o planeta rolando de lado como uma bolinha."}],"callout":"🎁 Textura de bola: Urano azul-claro com faixas delicadas."},
-    {"type":"story","illustration":"assets/illustrations/aprender/sistema-solar.svg","sticker":"NETUNO ♆","chapter":"Parada 8 · Netuno","title":"O azul dos ventos rápidos","blocks":[{"kind":"paragraph","text":"Netuno é o planeta mais distante do Sol, bem escuro e muito frio. É azul e tem ventos fortíssimos em sua atmosfera."},{"kind":"dialogue","text":"— Ufa! Agora já conhecemos todos os oito planetas!"}],"callout":"🎁 Textura de bola: Netuno azul-escuro com faixas claras."},
-    {"type":"story","illustration":"assets/illustrations/aprender/sistema-solar.svg","sticker":"PLUTÃO ⭐","chapter":"O amigo além de Netuno","title":"Plutão não foi esquecido!","blocks":[{"kind":"paragraph","text":"Atrás de Netuno, {{nome}} encontrou Plutão, um mundo gelado e arredondado. Durante muito tempo ele foi chamado de nono planeta, mas os cientistas aperfeiçoaram a maneira de organizar os mundos do Sistema Solar."},{"kind":"paragraph","text":"Para ser classificado como planeta, além de girar ao redor do Sol e ser quase redondo, é preciso dominar sua vizinhança orbital — ter limpado a região de outros corpos semelhantes. Plutão compartilha essa área com vários mundos gelados e, por isso, é um [[planeta anão]]."},{"kind":"dialogue","text":"— Ser planeta anão não faz Plutão menos incrível! Ele continua cheio de descobertas!"}],"callout":"Plutão não é uma das oito bolas planetárias: ele ganhou uma página especial de descobertas."},
-    {"type":"story","interactive":"bibliography","illustration":"assets/illustrations/aprender/sistema-solar.svg","sticker":"FONTES ESPACIAIS","chapter":"Para os adultos 📚","title":"Quem conhece esses mundos?","blocks":[{"kind":"paragraph","text":"Os endereços a seguir são referências escritas, sem links clicáveis, para explorar com um adulto. As representações e distâncias na ilustração são fantasiosas, não estão em escala."}],"bibliography":[{"title":"NASA — Os oito planetas","url":"science.nasa.gov/solar-system/planets/"},{"title":"NASA — O que define um planeta?","url":"science.nasa.gov/solar-system/planets/what-is-a-planet/"},{"title":"NASA — Plutão, planeta anão","url":"science.nasa.gov/dwarf-planets/pluto/"},{"title":"NASA — Fatos sobre o Sistema Solar","url":"science.nasa.gov/solar-system/solar-system-facts/"}]},
-    {"type":"challenge","illustration":"assets/illustrations/aprender/sistema-solar.svg","sticker":"DESAFIO ESTELAR","chapter":"Missão dos planetas 🎯","title":"Você lembra dos oito?","blocks":[{"kind":"paragraph","text":"Leia as pistas e marque os planetas que reconheceu. Depois, lembre o motivo de Plutão ser um planeta anão. Oito bolas com texturas diferentes estão quase prontas para brincar!"}]},
-    {"type":"finish","illustration":"assets/illustrations/aprender/sistema-solar.svg","sticker":"MEDALHA DO ESPAÇO","chapter":"Missão concluída, {{nome}}!","title":"Astronauta das descobertas!","blocks":[{"kind":"paragraph","text":"Você visitou os oito planetas, aprendeu por que Plutão é classificado como planeta anão e desbloqueou oito bolas diferentes: Mercúrio, Vênus, Terra, Marte, Júpiter, Saturno, Urano e Netuno!"}],"medal":"🪐 Medalha do Espaço conquistada!"}
+  "language": "pt-BR",
+  "cover": "assets/illustrations/aprender/sistema-solar.svg",
+  "color": "#6867b9",
+  "medal": "🪐 Medalha do Espaço",
+  "rewards": [
+    {
+      "id": "mercury_ball",
+      "label": "Bola de Mercúrio, cinza com crateras"
+    },
+    {
+      "id": "venus_ball",
+      "label": "Bola de Vênus, dourada com nuvens"
+    },
+    {
+      "id": "earth_ball",
+      "label": "Bola da Terra, azul e verde"
+    },
+    {
+      "id": "mars_ball",
+      "label": "Bola de Marte, vermelha"
+    },
+    {
+      "id": "jupiter_ball",
+      "label": "Bola de Júpiter, listrada"
+    },
+    {
+      "id": "saturn_ball",
+      "label": "Bola de Saturno, com anéis"
+    },
+    {
+      "id": "uranus_ball",
+      "label": "Bola de Urano, azul-claro"
+    },
+    {
+      "id": "neptune_ball",
+      "label": "Bola de Netuno, azul-escuro"
+    }
+  ],
+  "exercises": [
+    {
+      "syllable": "☿",
+      "text": "Mercúrio é o planeta mais perto do Sol."
+    },
+    {
+      "syllable": "♀",
+      "text": "Vênus tem uma atmosfera que o deixa muito quente."
+    },
+    {
+      "syllable": "🌍",
+      "text": "A Terra é nosso lar e o único planeta onde conhecemos vida."
+    },
+    {
+      "syllable": "♂",
+      "text": "Marte parece avermelhado por causa do ferro em sua poeira."
+    },
+    {
+      "syllable": "♃",
+      "text": "Júpiter é o maior planeta do Sistema Solar."
+    },
+    {
+      "syllable": "♄",
+      "text": "Os anéis de Saturno são feitos de muitos pedacinhos, incluindo gelo."
+    },
+    {
+      "syllable": "♅",
+      "text": "Urano gira muito inclinado, como se estivesse de lado."
+    },
+    {
+      "syllable": "♆",
+      "text": "Netuno é o planeta mais distante do Sol."
+    },
+    {
+      "syllable": "⭐",
+      "text": "Plutão é um planeta anão: compartilha sua região orbital com outros corpos."
+    }
+  ],
+  "pages": [
+    {
+      "type": "cover",
+      "illustration": "assets/illustrations/aprender/sistema-solar.svg",
+      "sticker": "EMBARQUE ESPACIAL",
+      "chapter": "A nave de papel 🚀",
+      "title": "{{nome}} e a Viagem dos Oito Planetas",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "{{nome}} construiu uma nave de papel e apertou um botão imaginário: BIP-BIP! À frente brilhava o Sol, uma [[estrela]] enorme que ilumina nossa vizinhança espacial."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Preparar para conhecer os oito planetas! Nenhum astronauta de verdade se aproxima do Sol desse jeito, então nossa viagem é de faz de conta!"
+        }
+      ]
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/capitulos/a-viagem-dos-oito-planetas/02.svg",
+      "sticker": "MERCÚRIO ☿",
+      "chapter": "Parada 1 · Mercúrio",
+      "title": "O pequeno corredor",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Mercúrio fica pertinho do Sol e completa uma volta ao redor dele em só 88 dias terrestres. Sua superfície tem muitas crateras, como a Lua."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Quase não tem atmosfera para guardar ou distribuir calor. Por isso, pode ficar muito quente onde o Sol bate e extremamente frio na noite."
+        }
+      ],
+      "callout": "🎁 Textura de bola: Mercúrio cinzento e cheio de crateras."
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/capitulos/a-viagem-dos-oito-planetas/03.svg",
+      "sticker": "VÊNUS ♀",
+      "chapter": "Parada 2 · Vênus",
+      "title": "O forno com cobertor",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Vênus é quase do tamanho da Terra, mas tem uma atmosfera muito grossa, que prende calor como um cobertor exagerado. É o planeta mais quente do Sistema Solar!"
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Ui! Essa visita precisa ser só pela janela mágica!"
+        }
+      ],
+      "callout": "🎁 Textura de bola: Vênus dourado com faixas de nuvens."
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/capitulos/a-viagem-dos-oito-planetas/04.svg",
+      "sticker": "TERRA 🌍",
+      "chapter": "Parada 3 · Terra",
+      "title": "Nossa casinha azul",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "A Terra tem oceanos, continentes, ar e água líquida na superfície. É o único planeta onde sabemos que existe vida até agora."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Da janela da nave, {{nome}} viu um mundo azul e verde. — Vou cuidar bem da nossa casa!"
+        }
+      ],
+      "callout": "🎁 Textura de bola: Terra azul com continentes verdes."
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/capitulos/a-viagem-dos-oito-planetas/05.svg",
+      "sticker": "MARTE ♂",
+      "chapter": "Parada 4 · Marte",
+      "title": "O deserto vermelho",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Marte é conhecido como planeta vermelho: sua poeira contém minerais de ferro que lhe dão tons avermelhados. Tem montanhas, vales e calotas de gelo!"
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Parece uma bola de terra colorida, mas explorar Marte exige robôs e equipamentos especiais!"
+        }
+      ],
+      "callout": "🎁 Textura de bola: Marte vermelho com manchas de poeira."
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/capitulos/a-viagem-dos-oito-planetas/06.svg",
+      "sticker": "JÚPITER ♃",
+      "chapter": "Parada 5 · Júpiter",
+      "title": "O grandalhão listrado",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Júpiter é o maior planeta. É um gigante gasoso: não tem um chão sólido como a Terra para passear de tênis."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Suas nuvens formam faixas e uma tempestade famosa, a Grande Mancha Vermelha. A nave fingiu colocar um cachecol listrado para combinar!"
+        }
+      ],
+      "callout": "🎁 Textura de bola: Júpiter listrado, com mancha avermelhada."
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/capitulos/a-viagem-dos-oito-planetas/07.svg",
+      "sticker": "SATURNO ♄",
+      "chapter": "Parada 6 · Saturno",
+      "title": "O rei dos anéis",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Saturno também é um gigante gasoso. Seus anéis, tão bonitos à distância, são feitos de inúmeros pedacinhos de gelo, rocha e poeira."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Parecem bambolês, mas não são um anel sólido!"
+        }
+      ],
+      "callout": "🎁 Textura de bola: Saturno com anéis ao redor."
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/capitulos/a-viagem-dos-oito-planetas/08.svg",
+      "sticker": "URANO ♅",
+      "chapter": "Parada 7 · Urano",
+      "title": "O planeta que rola de ladinho",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Urano é um gigante gelado de tom azul-esverdeado, por causa de gases como o metano em sua atmosfera."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Ele gira com o eixo muito inclinado, quase deitado! {{nome}} imaginou o planeta rolando de lado como uma bolinha."
+        }
+      ],
+      "callout": "🎁 Textura de bola: Urano azul-claro com faixas delicadas."
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/capitulos/a-viagem-dos-oito-planetas/09.svg",
+      "sticker": "NETUNO ♆",
+      "chapter": "Parada 8 · Netuno",
+      "title": "O azul dos ventos rápidos",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Netuno é o planeta mais distante do Sol, bem escuro e muito frio. É azul e tem ventos fortíssimos em sua atmosfera."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Ufa! Agora já conhecemos todos os oito planetas!"
+        }
+      ],
+      "callout": "🎁 Textura de bola: Netuno azul-escuro com faixas claras."
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/capitulos/a-viagem-dos-oito-planetas/10.svg",
+      "sticker": "PLUTÃO ⭐",
+      "chapter": "O amigo além de Netuno",
+      "title": "Plutão não foi esquecido!",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Atrás de Netuno, {{nome}} encontrou Plutão, um mundo gelado e arredondado. Durante muito tempo ele foi chamado de nono planeta, mas os cientistas aperfeiçoaram a maneira de organizar os mundos do Sistema Solar."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Para ser classificado como planeta, além de girar ao redor do Sol e ser quase redondo, é preciso dominar sua vizinhança orbital — ter limpado a região de outros corpos semelhantes. Plutão compartilha essa área com vários mundos gelados e, por isso, é um [[planeta anão]]."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Ser planeta anão não faz Plutão menos incrível! Ele continua cheio de descobertas!"
+        }
+      ],
+      "callout": "Plutão não é uma das oito bolas planetárias: ele ganhou uma página especial de descobertas."
+    },
+    {
+      "type": "story",
+      "interactive": "bibliography",
+      "illustration": "assets/illustrations/capitulos/a-viagem-dos-oito-planetas/11.svg",
+      "sticker": "FONTES ESPACIAIS",
+      "chapter": "Para os adultos 📚",
+      "title": "Quem conhece esses mundos?",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Os endereços a seguir são referências escritas, sem links clicáveis, para explorar com um adulto. As representações e distâncias na ilustração são fantasiosas, não estão em escala."
+        }
+      ],
+      "bibliography": [
+        {
+          "title": "NASA — Os oito planetas",
+          "url": "science.nasa.gov/solar-system/planets/"
+        },
+        {
+          "title": "NASA — O que define um planeta?",
+          "url": "science.nasa.gov/solar-system/planets/what-is-a-planet/"
+        },
+        {
+          "title": "NASA — Plutão, planeta anão",
+          "url": "science.nasa.gov/dwarf-planets/pluto/"
+        },
+        {
+          "title": "NASA — Fatos sobre o Sistema Solar",
+          "url": "science.nasa.gov/solar-system/solar-system-facts/"
+        }
+      ]
+    },
+    {
+      "type": "challenge",
+      "illustration": "assets/illustrations/capitulos/a-viagem-dos-oito-planetas/12.svg",
+      "sticker": "DESAFIO ESTELAR",
+      "chapter": "Missão dos planetas 🎯",
+      "title": "Você lembra dos oito?",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Leia as pistas e marque os planetas que reconheceu. Depois, lembre o motivo de Plutão ser um planeta anão. Oito bolas com texturas diferentes estão quase prontas para brincar!"
+        }
+      ]
+    },
+    {
+      "type": "finish",
+      "illustration": "assets/illustrations/capitulos/a-viagem-dos-oito-planetas/13.svg",
+      "sticker": "MEDALHA DO ESPAÇO",
+      "chapter": "Missão concluída, {{nome}}!",
+      "title": "Astronauta das descobertas!",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Você visitou os oito planetas, aprendeu por que Plutão é classificado como planeta anão e desbloqueou oito bolas diferentes: Mercúrio, Vênus, Terra, Marte, Júpiter, Saturno, Urano e Netuno!"
+        }
+      ],
+      "medal": "🪐 Medalha do Espaço conquistada!"
+    }
   ]
 }

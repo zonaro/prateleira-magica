@@ -1,26 +1,204 @@
 {
-  "schemaVersion": 1, "id": "a-orquestra-dos-sons", "title": "{{nome}} e a Orquestra dos Sons",
+  "schemaVersion": 1,
+  "id": "a-orquestra-dos-sons",
+  "title": "{{nome}} e a Orquestra dos Sons",
   "subtitle": "Uma viagem pelos sons da natureza, dos bichos e da nossa voz",
-  "subject": "Ciências · sons e comunicação", "ageRange": [4, 7], "language": "pt-BR",
-  "cover": "assets/illustrations/aprender/sons.svg", "color": "#5fbb9e", "medal": "🎧 Medalha dos Sons",
-  "rewards": [{"id":"headphones","label":"Fones de ouvido"},{"id":"speaker","label":"Caixa de som"}],
+  "subject": "Ciências · sons e comunicação",
+  "ageRange": [
+    4,
+    7
+  ],
+  "language": "pt-BR",
+  "cover": "assets/illustrations/aprender/sons.svg",
+  "color": "#5fbb9e",
+  "medal": "🎧 Medalha dos Sons",
+  "rewards": [
+    {
+      "id": "headphones",
+      "label": "Fones de ouvido"
+    },
+    {
+      "id": "speaker",
+      "label": "Caixa de som"
+    }
+  ],
   "exercises": [
-    {"syllable":"🌧️","text":"A chuva faz plim, plim na janela."},
-    {"syllable":"🍃","text":"O vento assobia entre as folhas."},
-    {"syllable":"🐦","text":"O passarinho canta piu, piu."},
-    {"syllable":"🐸","text":"O sapo faz croac perto do lago."},
-    {"syllable":"🗣️","text":"Minha voz pode falar, cantar e rir."},
-    {"syllable":"👂","text":"Eu escuto com atenção e cuido dos meus ouvidos."}
+    {
+      "syllable": "🌧️",
+      "text": "A chuva faz plim, plim na janela."
+    },
+    {
+      "syllable": "🍃",
+      "text": "O vento assobia entre as folhas."
+    },
+    {
+      "syllable": "🐦",
+      "text": "O passarinho canta piu, piu."
+    },
+    {
+      "syllable": "🐸",
+      "text": "O sapo faz croac perto do lago."
+    },
+    {
+      "syllable": "🗣️",
+      "text": "Minha voz pode falar, cantar e rir."
+    },
+    {
+      "syllable": "👂",
+      "text": "Eu escuto com atenção e cuido dos meus ouvidos."
+    }
   ],
   "pages": [
-    {"type":"cover","illustration":"assets/illustrations/aprender/sons.svg","sticker":"ESCUTE COM CARINHO!","chapter":"A grande orquestra 🌿","title":"{{nome}} e a Orquestra dos Sons","blocks":[{"kind":"paragraph","text":"Naquela manhã, {{nome}} ouviu um barulhinho: [[plim]]! Depois outro: [[fuuu]]! O mundo parecia tocar uma música secreta."},{"kind":"dialogue","text":"— Vamos descobrir quem está tocando?"}],"tip":"Toque nas palavras coloridas para ouvi-las!"},
-    {"type":"story","illustration":"assets/illustrations/aprender/sons.svg","sticker":"A FLORESTA FALA","chapter":"Capítulo 1 · Natureza","title":"O vento e as folhas","blocks":[{"kind":"paragraph","text":"As folhas faziam [[chiii]] com o vento. Os galhos estalavam: [[crec]]! A água do riacho corria: [[chuá]]!"},{"kind":"dialogue","text":"— A natureza não precisa de instrumentos para fazer sons!"}]},
-    {"type":"story","illustration":"assets/illustrations/aprender/sons.svg","sticker":"TUM, PLIM, PLOC!","chapter":"Capítulo 2 · Chuva","title":"O concerto das gotinhas","blocks":[{"kind":"paragraph","text":"Uma gota bateu na folha: [[ploc]]. Outra tocou o telhado: [[toc, toc]]. A chuva começou fininha e depois ficou forte."},{"kind":"paragraph","text":"Sons podem ser [[fortes]] ou [[fracos]], longos ou curtinhos. Que tal imitar uma chuvinha com os dedos?"}]},
-    {"type":"story","illustration":"assets/illustrations/aprender/sons.svg","sticker":"QUEM CANTOU?","chapter":"Capítulo 3 · Animais","title":"O coral da bicharada","blocks":[{"kind":"paragraph","text":"O passarinho cantou [[piu, piu]]. O sapo respondeu [[croac]]. Uma abelhinha fez [[bzzz]] ao passar."},{"kind":"dialogue","text":"— Cada bicho tem seu jeitinho de se comunicar!"}]},
-    {"type":"story","illustration":"assets/illustrations/aprender/sons.svg","sticker":"OUÇA COM ATENÇÃO","chapter":"Capítulo 4 · Escutar","title":"O mistério dos sons","blocks":[{"kind":"paragraph","text":"{{nome}} fechou os olhos por um instante. Conseguia ouvir passos, uma risada e até o próprio respirar."},{"kind":"paragraph","text":"Nem todo som vem de longe. E silêncio também é uma pausa gostosa para os ouvidos."}]},
-    {"type":"story","illustration":"assets/illustrations/aprender/sons.svg","sticker":"A VOZ É ESPECIAL","chapter":"Capítulo 5 · Gente","title":"Nossa voz faz parte da orquestra","blocks":[{"kind":"paragraph","text":"Quando o ar passa por nossas cordas vocais, elas vibram e ajudam a criar a [[voz]]. Com a boca e a língua, fazemos palavras, canções e risadas!"},{"kind":"dialogue","text":"— Diga olá bem baixinho. Agora cante o olá! Sua voz muda de som."}]},
-    {"type":"story","illustration":"assets/illustrations/aprender/sons.svg","sticker":"VIBRA, VIBRA!","chapter":"Capítulo 6 · Descoberta","title":"Como o som viaja?","blocks":[{"kind":"paragraph","text":"Sons nascem de [[vibrações]]: movimentos bem rapidinhos. Eles viajam pelo ar até nossos ouvidos."},{"kind":"paragraph","text":"Bata palmas de leve. Sentiu o movimento? Para cuidar dos ouvidos, evite volumes muito altos."}]},
-    {"type":"challenge","illustration":"assets/illustrations/aprender/sons.svg","sticker":"DESAFIO DA ESCUTA","chapter":"Missão sonora 🎯","title":"Seis sons para lembrar","blocks":[{"kind":"paragraph","text":"Leia ou escute cada frase. Imite o som, se quiser, e marque depois de tentar!"},{"kind":"dialogue","text":"— Ao completar todas, você ganha a Medalha dos Sons. E ainda tem presentes secretos!"}]},
-    {"type":"finish","illustration":"assets/illustrations/aprender/sons.svg","sticker":"MEDALHA DOS SONS","chapter":"Parabéns, {{nome}}!","title":"Você ouviu a grande orquestra!","blocks":[{"kind":"paragraph","text":"A floresta, os animais e sua voz têm sons incríveis. Continue escutando, inventando e respeitando os ouvidos!"}],"medal":"🎧 Medalha dos Sons conquistada!"}
+    {
+      "type": "cover",
+      "illustration": "assets/illustrations/aprender/sons.svg",
+      "sticker": "ESCUTE COM CARINHO!",
+      "chapter": "A grande orquestra 🌿",
+      "title": "{{nome}} e a Orquestra dos Sons",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Naquela manhã, {{nome}} ouviu um barulhinho: [[plim]]! Depois outro: [[fuuu]]! O mundo parecia tocar uma música secreta."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Vamos descobrir quem está tocando?"
+        }
+      ],
+      "tip": "Toque nas palavras coloridas para ouvi-las!"
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/capitulos/a-orquestra-dos-sons/02.svg",
+      "sticker": "A FLORESTA FALA",
+      "chapter": "Capítulo 1 · Natureza",
+      "title": "O vento e as folhas",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "As folhas faziam [[chiii]] com o vento. Os galhos estalavam: [[crec]]! A água do riacho corria: [[chuá]]!"
+        },
+        {
+          "kind": "dialogue",
+          "text": "— A natureza não precisa de instrumentos para fazer sons!"
+        }
+      ]
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/capitulos/a-orquestra-dos-sons/03.svg",
+      "sticker": "TUM, PLIM, PLOC!",
+      "chapter": "Capítulo 2 · Chuva",
+      "title": "O concerto das gotinhas",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Uma gota bateu na folha: [[ploc]]. Outra tocou o telhado: [[toc, toc]]. A chuva começou fininha e depois ficou forte."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Sons podem ser [[fortes]] ou [[fracos]], longos ou curtinhos. Que tal imitar uma chuvinha com os dedos?"
+        }
+      ]
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/capitulos/a-orquestra-dos-sons/04.svg",
+      "sticker": "QUEM CANTOU?",
+      "chapter": "Capítulo 3 · Animais",
+      "title": "O coral da bicharada",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "O passarinho cantou [[piu, piu]]. O sapo respondeu [[croac]]. Uma abelhinha fez [[bzzz]] ao passar."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Cada bicho tem seu jeitinho de se comunicar!"
+        }
+      ]
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/capitulos/a-orquestra-dos-sons/05.svg",
+      "sticker": "OUÇA COM ATENÇÃO",
+      "chapter": "Capítulo 4 · Escutar",
+      "title": "O mistério dos sons",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "{{nome}} fechou os olhos por um instante. Conseguia ouvir passos, uma risada e até o próprio respirar."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Nem todo som vem de longe. E silêncio também é uma pausa gostosa para os ouvidos."
+        }
+      ]
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/capitulos/a-orquestra-dos-sons/06.svg",
+      "sticker": "A VOZ É ESPECIAL",
+      "chapter": "Capítulo 5 · Gente",
+      "title": "Nossa voz faz parte da orquestra",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Quando o ar passa por nossas cordas vocais, elas vibram e ajudam a criar a [[voz]]. Com a boca e a língua, fazemos palavras, canções e risadas!"
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Diga olá bem baixinho. Agora cante o olá! Sua voz muda de som."
+        }
+      ]
+    },
+    {
+      "type": "story",
+      "illustration": "assets/illustrations/capitulos/a-orquestra-dos-sons/07.svg",
+      "sticker": "VIBRA, VIBRA!",
+      "chapter": "Capítulo 6 · Descoberta",
+      "title": "Como o som viaja?",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Sons nascem de [[vibrações]]: movimentos bem rapidinhos. Eles viajam pelo ar até nossos ouvidos."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Bata palmas de leve. Sentiu o movimento? Para cuidar dos ouvidos, evite volumes muito altos."
+        }
+      ]
+    },
+    {
+      "type": "challenge",
+      "illustration": "assets/illustrations/capitulos/a-orquestra-dos-sons/08.svg",
+      "sticker": "DESAFIO DA ESCUTA",
+      "chapter": "Missão sonora 🎯",
+      "title": "Seis sons para lembrar",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Leia ou escute cada frase. Imite o som, se quiser, e marque depois de tentar!"
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Ao completar todas, você ganha a Medalha dos Sons. E ainda tem presentes secretos!"
+        }
+      ]
+    },
+    {
+      "type": "finish",
+      "illustration": "assets/illustrations/capitulos/a-orquestra-dos-sons/09.svg",
+      "sticker": "MEDALHA DOS SONS",
+      "chapter": "Parabéns, {{nome}}!",
+      "title": "Você ouviu a grande orquestra!",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "A floresta, os animais e sua voz têm sons incríveis. Continue escutando, inventando e respeitando os ouvidos!"
+        }
+      ],
+      "medal": "🎧 Medalha dos Sons conquistada!"
+    }
   ]
 }
