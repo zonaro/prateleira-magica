@@ -301,7 +301,9 @@
       if (undoHistory.length > 100) undoHistory.shift();
     }
     lastSaved = preferences.save(next);
-    draft = lastSaved;
+    // Nunca compartilhe a mesma referência: o próximo clique altera `draft`
+    // antes de compará-lo com a última versão guardada.
+    draft = preferences.clean(lastSaved);
     lastEditGroup = group;
     lastEditAt = now;
     if (redraw) drawPreview();

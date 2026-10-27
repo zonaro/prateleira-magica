@@ -53,6 +53,8 @@ for (const id of ['magicColorWord', 'magicColorApply', 'magicColorTarget', 'them
 assert(ui.includes('[draft.hairColor, draft.outfitColor, draft.bottomColor, draft.shoeColor] = palette.slice(0, 4)'),
   'Aplicar paleta ao avatar não deve tocar no tom da pele');
 assert(ui.includes('lastSaved = preferences.save(next)'), 'Personalização deve salvar automaticamente a cada mudança');
+assert(ui.includes('draft = preferences.clean(lastSaved)'),
+  'Rascunho deve ser cópia independente; caso contrário o próximo clique não será salvo');
 assert(ui.includes('undoHistory.push(lastSaved)') && ui.includes('undoHistory.pop()'),
   'O editor deve permitir desfazer escolhas feitas nesta visita');
 assert(ui.includes('fillDialog(preferences.DEFAULTS)') && ui.includes('window.confirm(warning)'),
