@@ -3,6 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <!-- Bloqueia conexões de coleta e carregamentos de imagens em hosts externos nesta página infantil. -->
+  <meta http-equiv="Content-Security-Policy" content="connect-src 'self'; img-src 'self' data: blob:; object-src 'none'; form-action 'self'">
   <meta name="theme-color" content="#faf3e8">
   <meta name="description" content="Veja as histórias, medalhas e conquistas da criança na Prateleira Mágica.">
   <link rel="icon" href="./assets/icons/icon.svg" type="image/svg+xml">
