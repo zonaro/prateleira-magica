@@ -21,6 +21,7 @@ const required = [
   'assets/js/preferences.js', 'assets/js/avatar-photo-colors.js', 'assets/js/avatar-photo.js', 'assets/js/settings-ui.js', 'assets/js/profile.js', 'assets/js/page-turn.js',
   'assets/js/colors.js', 'assets/js/color-explorer.js', 'assets/vendor/NameToColor.js', 'assets/vendor/NameToColor.ptBR.js',
   'assets/js/pet-parts.js', 'assets/pets/catalog.json',
+  'tools/vendor-mediapipe.mjs', 'tools/mediapipe-dependencies.json',
   'assets/js/pwa.js', 'books/index.json', 'assets/icons/icon.svg'
 ];
 required.forEach(reference);
