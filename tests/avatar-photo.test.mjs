@@ -26,7 +26,8 @@ const page = read('perfil.html');
 const editor = read('assets/js/settings-ui.js');
 const photo = read('assets/js/avatar-photo.js');
 const sw = read('sw.js');
-assert(page.indexOf('avatar-photo-colors.js') < page.indexOf('avatar-photo.js'));
+assert(page.indexOf('avatar-photo-colors.js') < page.indexOf('avatar-photo-crop.js'));
+assert(page.indexOf('avatar-photo-crop.js') < page.indexOf('avatar-photo.js'));
 assert(page.indexOf('avatar-photo.js') < page.indexOf('settings-ui.js'));
 assert(editor.includes('avatarPhoto?.mount('), 'A aba foto deve usar a integração com o editor');
 assert(page.includes('id="tabFoto"') && page.includes('id="profilePhoto"'), 'Aba independente por foto é obrigatória');
@@ -37,10 +38,16 @@ assert(photo.includes('Peça sempre a ajuda de um adulto!'), 'Interface infantil
 assert(photo.includes("location.hash = '#personalizar'"), 'Depois da foto retornar ao editor para revisão');
 assert(photo.includes("window.addEventListener('hashchange'"), 'Ao sair da aba interromper a câmera');
 assert(editor.includes("edit('avatar-photo'"), 'Aplicar foto deve usar histórico e autosave');
+assert(editor.includes('fillDialog(preferences.load())'), 'Editor deve atualizar os botões após aplicar foto');
+assert(editor.includes('delete draft.sourceSvg'), 'Foto deve substituir camadas de preset por editor modular');
+assert(editor.includes('draft.accessoryColor = result.accessoryColor'), 'Óculos devem atualizar a cor dos acessórios');
+assert(photo.includes('color.dominantHairColor(hairSamples)'), 'Cabelo tingido deve usar cor dominante');
+assert(photo.includes('catalog.hairColors)') && !photo.includes('catalog.hairColors.slice(0, 5)'), 'Todas as tinturas devem ser admitidas');
 assert(photo.includes('navigator.mediaDevices.getUserMedia('));
 assert(photo.includes('getImageData('));
 assert(photo.includes('result.close()'), 'Segmentador deve liberar máscaras');
-assert(photo.includes('frame.width = frame.height = 0'), 'Canvas temporário deve ser limpo');
+assert(photo.includes('canvas.width = canvas.height = 0'), 'Canvas temporário deve ser limpo');
+assert(photo.includes('avatar-photo-crop-editor') && photo.includes('analyzeCrop'), 'Recorte antes da inferência obrigatório');
 assert(photo.includes('stream.getTracks().forEach((track) => track.stop())'));
 assert(photo.includes("const MP_ROOT = new URL('./assets/vendor/mediapipe/', document.baseURI).href"));
 assert(!photo.includes('https://') && !photo.includes('http://'), 'Não permitir URLs externas na página infantil');
@@ -50,6 +57,7 @@ assert(!photo.includes('toDataURL(') && !photo.includes('fetch(file'),
   'Foto não pode ser serializada nem enviada');
 assert(sw.includes("'./assets/js/avatar-photo-colors.js'"));
 assert(sw.includes("'./assets/js/avatar-photo.js'"));
+assert(sw.includes("'./assets/js/avatar-photo-crop.js'"));
 assert(sw.includes('preCachePhotoModels(cache)'), 'Pré-cache dos modelos obrigatório');
 assert(sw.includes("relativePath.startsWith('assets/vendor/mediapipe/')"), 'O PWA deve servir modelos via cache-first');
 const pageCsp = page.match(/Content-Security-Policy[^>]*content="([^"]+)"/);
@@ -60,7 +68,7 @@ assert.equal(manifest.models.length, 2);
 assert(read('assets/js/profile-tabs.js').includes('setPhotoAvailability(false)'), 'A aba deve desaparecer quando o modelo falhar');
 assert(read('assets/css/app.css').includes('.profile-tab[hidden]'), 'CSS não deve sobrescrever o atributo hidden');
 assert(!read('assets/js/avatar-photo.js').includes('avatar-photo-modal'), 'Modal anterior deve ser removido');
-assert(read('sw.js').includes("const CACHE_NAME = 'prateleira-magica-v28'"));
+assert(read('sw.js').includes("const CACHE_NAME = 'prateleira-magica-v29'"));
 
 
 console.log('✓ Paletas, média aparada e conexão do criador por foto ao editor existente');

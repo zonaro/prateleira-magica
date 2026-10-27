@@ -149,28 +149,38 @@
     return rough > .17 ? 'curly' : 'short';
   }
 
-  function estimateGlasses(mask, mx, my, width, height, points, bounds) {
+  function estimateGlasses(pixels, mask, mx, my, width, height, points, bounds) {
     const faceW = bounds.right - bounds.left;
     const faceH = bounds.bottom - bounds.top;
     const eyePairs = [[33, 133], [362, 263]];
+    const frameSamples = [];
     const sides = eyePairs.map(([first, last]) => {
       const a = points[first], b = points[last];
       if (!a || !b) return { ratio: 0 };
-      const cx = (a.x + b.x) * width / 2;
-      const cy = (a.y + b.y) * height / 2;
-      return occupancy(mask, mx, my, width, height,
-        boundedRect(cx - faceW * .14, cy - faceH * .065,
-          cx + faceW * .14, cy + faceH * .075, width, height), LABEL.accessory);
+      const cx = (a.x + b.x) * width / 2, cy = (a.y + b.y) * height / 2;
+      const region = boundedRect(cx - faceW * .14, cy - faceH * .09,
+        cx + faceW * .14, cy + faceH * .09, width, height);
+      // A máscara de acessórios seleciona pixels da armação, não da pele ao redor.
+      frameSamples.push(...samplePixels(pixels, mask, mx, my, width, height, region, LABEL.accessory));
+      return occupancy(mask, mx, my, width, height, region, LABEL.accessory);
     });
     const bridge = points[168];
-    const bridgeScore = bridge ? occupancy(mask, mx, my, width, height,
-      boundedRect(bridge.x * width - faceW * .055, bridge.y * height - faceH * .04,
-        bridge.x * width + faceW * .055, bridge.y * height + faceH * .075,
-        width, height), LABEL.accessory).ratio : 0;
-    // Modelo multiclasse não é classificador de óculos; só sugerir quando há
-    // sinais dos dois lados E na ponte. Não apagar óculos em um falso negativo.
-    const positive = sides.every((side) => side.ratio > .16) && bridgeScore > .08;
-    return { value: Boolean(positive), confidence: positive ? 'estimativa' : 'baixa' };
+    let bridgeScore = 0;
+    if (bridge) {
+      const region = boundedRect(bridge.x * width - faceW * .065, bridge.y * height - faceH * .06,
+        bridge.x * width + faceW * .065, bridge.y * height + faceH * .09, width, height);
+      bridgeScore = occupancy(mask, mx, my, width, height, region, LABEL.accessory).ratio;
+      frameSamples.push(...samplePixels(pixels, mask, mx, my, width, height, region, LABEL.accessory));
+    }
+    // A categoria "acessórios" NÃO identifica especificamente óculos.
+    // Exigir sinais bilaterais e ponte reduz falsos positivos.
+    const positive = sides.every((side) => side.count > 3 && side.ratio > .12)
+      && bridgeScore > .05;
+    return {
+      value: Boolean(positive),
+      color: positive && frameSamples.length >= 9 ? color.trimmedColor(frameSamples, .12) : null,
+      confidence: positive ? 'estimativa' : 'baixa'
+    };
   }
 
   /** Input: canvas local efêmero. Output: apenas opções de personalização. */
@@ -226,17 +236,18 @@
       const outfitSamples = samplePixels(pixels, mask, mw, mh, width, height,
         torsoRect, LABEL.outfit);
       const catalog = window.LivrinhoAvatar;
-      const readHair = hairSamples.length > 20 ? color.trimmedColor(hairSamples) : null;
-      const readOutfit = outfitSamples.length > 25 ? color.trimmedColor(outfitSamples) : null;
-      const glasses = estimateGlasses(mask, mw, mh, width, height, landmarks, bounds);
+      const readHair = hairSamples.length > 20 ? color.dominantHairColor(hairSamples) : null;
+      const readOutfit = outfitSamples.length > 25 ? color.dominantHairColor(outfitSamples) : null;
+      const glasses = estimateGlasses(pixels, mask, mw, mh, width, height, landmarks, bounds);
       return {
         skinColor: color.nearestColor(skinRaw, NATURAL_SKIN),
-        hairColor: readHair ? color.nearestColor(readHair, catalog.hairColors.slice(0, 5)) : null,
+        hairColor: readHair ? color.nearestColor(readHair, catalog.hairColors) : null,
         outfitColor: readOutfit ? color.nearestColor(readOutfit, catalog.outfitColors) : null,
         avatarStyle: readHair ? estimateHair(mask, mw, mh, width, height, bounds) : null,
         glasses: glasses.value,
+        accessoryColor: glasses.color ? color.nearestColor(glasses.color, catalog.accessoryColors) : null,
         glassesConfidence: glasses.confidence,
-        raw: { skin: skinRaw, hair: readHair, outfit: readOutfit },
+        raw: { skin: skinRaw, hair: readHair, outfit: readOutfit, glasses: glasses.color },
         warnings: [
           ...(!readHair ? ['Cabelo não identificado; mantivemos a escolha anterior.'] : []),
           ...(!readOutfit ? ['Roupa não identificada; mantivemos a cor anterior.'] : []),
@@ -251,15 +262,16 @@
   function mount({ onApply }) {
     const screen = document.getElementById('profilePhoto');
     const host = document.getElementById('avatarPhotoApp');
-    if (!screen || !host) return;
+    const crop = window.LivrinhoAvatarPhotoCrop;
+    if (!screen || !host || !crop) return;
 
     host.innerHTML = '<div class="avatar-photo-panel">' +
       '<div class="section-kicker">UMA PITADA DE MAGIA ✨</div>' +
       '<h2>📷 Sua foto vira personagem!</h2>' +
-      '<p class="avatar-photo-intro">Que tal criar um personagem parecido com você? ' +
-        'A Prateleira Mágica vai observar as cores do seu cabelo, rosto e roupa para imaginar um novo visual! 🌈</p>' +
+      '<p class="avatar-photo-intro">Vamos descobrir as cores do seu cabelo, rosto e roupa? ' +
+        'Até cabelo azul, rosa ou verde pode entrar nessa aventura! 🌈</p>' +
       '<p class="avatar-photo-adult">🧑‍🧑‍🧒 <strong>Chame uma pessoa adulta para ajudar!</strong> ' +
-        'Juntos, escolham uma foto só sua, de frente, com o rosto e a roupa aparecendo e bastante luz.</p>' +
+        'Escolham uma foto só sua, de frente e com bastante luz. Antes da mágica, vocês vão poder ajustar o enquadramento.</p>' +
       '<div class="avatar-photo-camera-area">' +
         '<div class="avatar-photo-camera-placeholder" aria-hidden="true">🪄📸✨</div>' +
         '<video class="avatar-photo-video" playsinline muted autoplay hidden aria-label="Prévia da câmera"></video>' +
@@ -270,11 +282,24 @@
         '<button type="button" data-action="file">🖼️ Escolher uma foto</button>' +
         '<a href="#personalizar" class="avatar-photo-back">🎨 Voltar a personalizar</a>' +
       '</div>' +
+      '<section class="avatar-photo-crop-editor" hidden aria-label="Recortar e ampliar a foto">' +
+        '<h3>✂️ Enquadre sua foto!</h3>' +
+        '<p>Arraste para centralizar o rosto e a roupa. Use o zoom para chegar mais perto. ' +
+          'Peça ajuda de um adulto. 💜</p>' +
+        '<canvas class="avatar-photo-crop-preview" width="360" height="450" tabindex="0" ' +
+          'role="img" aria-label="Prévia do recorte. Arraste para mover ou use as setas do teclado." ></canvas>' +
+        '<label class="avatar-photo-zoom-label" for="avatarPhotoZoom">🔍 Aproximar ou afastar</label>' +
+        '<input class="avatar-photo-zoom" type="range" id="avatarPhotoZoom" min="1" max="4" step="0.05" value="1">' +
+        '<div class="avatar-photo-crop-buttons">' +
+          '<button type="button" data-action="reset-crop">↺ Recentralizar</button>' +
+          '<button type="button" data-action="cancel-crop">← Escolher outra foto</button>' +
+          '<button type="button" data-action="analyze">✨ Criar meu personagem</button>' +
+        '</div>' +
+      '</section>' +
       '<input class="avatar-photo-input" type="file" accept="image/jpeg,image/png,image/webp" hidden>' +
       '<p class="avatar-photo-status" role="status" aria-live="polite">Tudo pronto para começar? 🌟</p>' +
-      '<p class="avatar-photo-privacy">🔒 Sua foto fica só neste aparelho enquanto a mágica acontece. ' +
-        'Depois, ela é descartada: guardamos apenas as cores e escolhas do seu personagem. ' +
-        'Peça sempre a ajuda de um adulto!</p>' +
+      '<p class="avatar-photo-privacy">🔒 A foto fica apenas na memória deste aparelho durante o recorte e a mágica. ' +
+        'Depois será descartada. Só guardamos as escolhas do personagem. Peça sempre a ajuda de um adulto!</p>' +
       '</div>';
 
     const find = (selector) => host.querySelector(selector);
@@ -283,16 +308,42 @@
     const cameraButton = find('[data-action="camera"]');
     const captureButton = find('[data-action="capture"]');
     const chooseButton = find('[data-action="file"]');
+    const cameraArea = find('.avatar-photo-camera-area');
+    const cameraActions = find('.avatar-photo-buttons');
     const placeholder = find('.avatar-photo-camera-placeholder');
-    let stream = null, busy = false, runId = 0, activeFrame = null;
+    const cropPanel = find('.avatar-photo-crop-editor');
+    const preview = find('.avatar-photo-crop-preview');
+    const zoomSlider = find('.avatar-photo-zoom');
+    const analyzeButton = find('[data-action="analyze"]');
+    const resetCropButton = find('[data-action="reset-crop"]');
+    const cancelCropButton = find('[data-action="cancel-crop"]');
+    let stream = null, busy = false, runId = 0;
+    let activeFrame = null, cropSource = null, cropState = null;
+    const pointers = new Map();
+    let pinchDistance = null;
     const isActive = () => !screen.hidden && location.hash === '#foto';
 
-    function scrubFrame() {
-      if (!activeFrame) return;
-      const canvas = activeFrame;
-      activeFrame = null;
+    function wipe(canvas) {
+      if (!canvas) return;
       canvas.getContext('2d')?.clearRect(0, 0, canvas.width, canvas.height);
       canvas.width = canvas.height = 0;
+    }
+    function scrubFrame() {
+      if (!activeFrame) return;
+      const frame = activeFrame;
+      activeFrame = null;
+      wipe(frame);
+    }
+    function releaseCrop() {
+      pointers.clear();
+      pinchDistance = null;
+      if (cropSource) wipe(cropSource);
+      cropSource = cropState = null;
+      preview.getContext('2d')?.clearRect(0, 0, preview.width, preview.height);
+      cropPanel.hidden = true;
+      cameraArea.hidden = false;
+      cameraActions.hidden = false;
+      input.value = '';
     }
     function stopCamera() {
       if (stream) {
@@ -310,9 +361,13 @@
       cameraButton.disabled = value;
       captureButton.disabled = value;
       chooseButton.disabled = value;
+      analyzeButton.disabled = value;
+      resetCropButton.disabled = value;
+      cancelCropButton.disabled = value;
+      zoomSlider.disabled = value;
     }
     function describeError(error) {
-      if (error?.name === 'NotAllowedError') return 'A câmera não foi autorizada. Um adulto pode ajudar ou escolher uma foto. 🖼️';
+      if (error?.name === 'NotAllowedError') return 'A câmera não foi autorizada. Uma pessoa adulta pode ajudar ou escolher uma foto. 🖼️';
       if (error?.name === 'NotFoundError') return 'Não encontramos uma câmera. Você pode escolher uma foto!';
       if (error?.name === 'NotReadableError') return 'A câmera está ocupada. Feche outro aplicativo e tente de novo.';
       return error?.message || 'A foto não deu certo desta vez. Vamos tentar outra? 🌟';
@@ -321,25 +376,53 @@
       runId++;
       stopCamera();
       scrubFrame();
-      input.value = '';
+      releaseCrop();
       setBusy(false);
     }
-    async function takeFrom(source) {
-      if (busy || !isActive()) return;
-      const token = ++runId;
+    function renderCrop() {
+      if (!cropSource || !cropState) return;
+      const ctx = preview.getContext('2d', { alpha: false });
+      if (!ctx) return;
+      crop.draw(cropSource, cropState, ctx, preview.width, preview.height);
+      zoomSlider.value = String(cropState.zoom);
+    }
+    function setCropSource(source, mirrored = false) {
       const width = source.videoWidth || source.width;
       const height = source.videoHeight || source.height;
-      if (!width || !height) { status.textContent = 'Não conseguimos enxergar essa foto. Tente outra!'; return; }
-      const scale = Math.min(1, 768 / Math.max(width, height));
+      if (!(width > 0 && height > 0)) throw Error('Não conseguimos ler a imagem. Escolha outra foto.');
+      releaseCrop();
+      cropSource = document.createElement('canvas');
+      const scale = Math.min(1, 1600 / Math.max(width, height));
+      cropSource.width = Math.max(1, Math.round(width * scale));
+      cropSource.height = Math.max(1, Math.round(height * scale));
+      const ctx = cropSource.getContext('2d', { willReadFrequently: true });
+      if (!ctx) throw Error('Não foi possível preparar o recorte neste aparelho.');
+      if (mirrored) {
+        ctx.translate(cropSource.width, 0);
+        ctx.scale(-1, 1);
+      }
+      ctx.drawImage(source, 0, 0, cropSource.width, cropSource.height);
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      cropState = crop.make(cropSource.width, cropSource.height);
+      stopCamera();
+      cropPanel.hidden = false;
+      cameraArea.hidden = true;
+      cameraActions.hidden = true;
+      status.textContent = '✂️ Ajuste o enquadramento e toque em Criar meu personagem!';
+      renderCrop();
+      preview.focus({ preventScroll: true });
+    }
+    async function analyzeCrop() {
+      if (busy || !isActive() || !cropSource || !cropState) return;
+      const token = ++runId;
       const frame = document.createElement('canvas');
       activeFrame = frame;
-      frame.width = Math.max(1, Math.round(width * scale));
-      frame.height = Math.max(1, Math.round(height * scale));
+      frame.width = 512;
+      frame.height = 640;
       const ctx = frame.getContext('2d', { willReadFrequently: true });
-      if (!ctx) { status.textContent = 'Este aparelho não conseguiu abrir a imagem.'; stopCamera(); scrubFrame(); return; }
+      if (!ctx) { status.textContent = 'Este aparelho não conseguiu preparar a análise.'; scrubFrame(); return; }
       try {
-        ctx.drawImage(source, 0, 0, frame.width, frame.height);
-        stopCamera();
+        crop.draw(cropSource, cropState, ctx, frame.width, frame.height);
         setBusy(true);
         status.textContent = '✨ Misturando cores e criando seu personagem…';
         await new Promise((resolve) => requestAnimationFrame(resolve));
@@ -357,17 +440,85 @@
           }
         }
       } finally {
-        ctx.clearRect(0, 0, frame.width, frame.height);
-        frame.width = frame.height = 0;
-        if (activeFrame === frame) activeFrame = null;
+        if (activeFrame === frame) scrubFrame();
+        else wipe(frame);
         if (token === runId) setBusy(false);
       }
     }
+    function panBy(dx, dy) {
+      if (busy || !cropState) return;
+      cropState = crop.pan(cropState, dx, dy, preview.width, preview.height);
+      renderCrop();
+    }
+    function zoomTo(value) {
+      if (busy || !cropState) return;
+      cropState.zoom = crop.clamp(value, 1, 4);
+      renderCrop();
+    }
+    preview.addEventListener('pointerdown', (event) => {
+      if (busy || !cropState) return;
+      preview.setPointerCapture(event.pointerId);
+      pointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+      pinchDistance = null;
+      event.preventDefault();
+    });
+    preview.addEventListener('pointermove', (event) => {
+      if (!pointers.has(event.pointerId) || !cropState || busy) return;
+      const before = [...pointers.values()];
+      const last = pointers.get(event.pointerId);
+      pointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+      const now = [...pointers.values()];
+      const scaleX = preview.width / Math.max(1, preview.getBoundingClientRect().width);
+      const scaleY = preview.height / Math.max(1, preview.getBoundingClientRect().height);
+      if (now.length === 1) {
+        panBy((event.clientX - last.x) * scaleX, (event.clientY - last.y) * scaleY);
+      } else if (now.length === 2) {
+        const distance = Math.hypot(now[0].x - now[1].x, now[0].y - now[1].y);
+        const previous = Math.hypot(before[0].x - before[1].x, before[0].y - before[1].y);
+        if (previous > 0) zoomTo(cropState.zoom * distance / previous);
+        pinchDistance = distance;
+      }
+      event.preventDefault();
+    });
+    function releasePointer(event) {
+      pointers.delete(event.pointerId);
+      pinchDistance = null;
+    }
+    preview.addEventListener('pointerup', releasePointer);
+    preview.addEventListener('pointercancel', releasePointer);
+    preview.addEventListener('lostpointercapture', releasePointer);
+    preview.addEventListener('wheel', (event) => {
+      if (!cropState) return;
+      event.preventDefault();
+      zoomTo(cropState.zoom * (event.deltaY > 0 ? .92 : 1.08));
+    }, { passive: false });
+    preview.addEventListener('keydown', (event) => {
+      if (!cropState) return;
+      const offsets = { ArrowUp: [0, -15], ArrowDown: [0, 15],
+        ArrowLeft: [-15, 0], ArrowRight: [15, 0] };
+      if (offsets[event.key]) { panBy(...offsets[event.key]); event.preventDefault(); }
+      if (event.key === '+' || event.key === '=') { zoomTo(cropState.zoom + .1); event.preventDefault(); }
+      if (event.key === '-') { zoomTo(cropState.zoom - .1); event.preventDefault(); }
+    });
+    zoomSlider.addEventListener('input', () => zoomTo(Number(zoomSlider.value)));
+    resetCropButton.addEventListener('click', () => {
+      if (!busy && cropSource) {
+        cropState = crop.make(cropSource.width, cropSource.height);
+        renderCrop();
+      }
+    });
+    cancelCropButton.addEventListener('click', () => {
+      if (!busy) {
+        releaseCrop();
+        status.textContent = 'Escolha outra foto para continuar. 📷';
+      }
+    });
+    analyzeButton.addEventListener('click', analyzeCrop);
 
     cameraButton.addEventListener('click', async () => {
       if (busy || !isActive()) return;
       if (!navigator.mediaDevices?.getUserMedia || !window.isSecureContext) {
-        status.textContent = 'Para abrir a câmera, use um site seguro (HTTPS) ou escolha uma foto.';
+        status.textContent = 'Para abrir a câmera, use HTTPS ou escolha uma foto.';
         return;
       }
       const token = ++runId;
@@ -385,7 +536,7 @@
         await video.play();
         if (token !== runId || !isActive()) { stopCamera(); return; }
         captureButton.hidden = false;
-        status.textContent = 'Sorria para a câmera! Quando estiver pronto, tire sua foto. 😄';
+        status.textContent = 'Sorria para a câmera! Tire a foto e depois ajuste o recorte. 😄';
       } catch (error) {
         stopCamera();
         if (token === runId && isActive()) status.textContent = describeError(error);
@@ -393,25 +544,33 @@
         if (token === runId) setBusy(false);
       }
     });
-    captureButton.addEventListener('click', () => takeFrom(video));
+    captureButton.addEventListener('click', () => {
+      if (busy || !isActive()) return;
+      try { setCropSource(video, true); }
+      catch (error) { status.textContent = describeError(error); }
+    });
     chooseButton.addEventListener('click', () => { if (isActive() && !busy) input.click(); });
     input.addEventListener('change', async () => {
       const file = input.files?.[0];
-      if (!file || !isActive()) return;
+      if (!file || !isActive() || busy) return;
       if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type) || file.size > 10_000_000) {
         status.textContent = 'Escolha uma foto JPG, PNG ou WebP de até 10 MB.';
         input.value = '';
         return;
       }
+      const token = ++runId;
       let bitmap;
+      setBusy(true);
+      status.textContent = '🖼️ Preparando o recorte da foto…';
       try {
         bitmap = await createImageBitmap(file);
-        if (isActive()) await takeFrom(bitmap);
+        if (token === runId && isActive()) setCropSource(bitmap);
       } catch (error) {
-        if (isActive()) status.textContent = describeError(error);
+        if (token === runId && isActive()) status.textContent = describeError(error);
       } finally {
         bitmap?.close();
         input.value = '';
+        if (token === runId) setBusy(false);
       }
     });
     window.addEventListener('hashchange', () => {

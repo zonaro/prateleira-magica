@@ -150,3 +150,28 @@ A publicação do GitHub Pages deve usar **Settings → Pages → Build and depl
 O workflow `.github/workflows/pages.yml` prepara e testa os sete arquivos em `assets/vendor/mediapipe` antes de empacotar. **Após** `actions/deploy-pages`, executa `node tools/check-photo-deployment.mjs --public` para checar por HTTP no domínio final os sete arquivos (JS, WASM, modelos) e o HTML que contém `tabFoto`. Um 404/HTML de erro causa falha do deploy, mesmo que a etapa `actions/deploy-pages` tenha terminado com sucesso. O teste faz requisições `HEAD` e não transfere modelos grandes; a inferência e qualidade de fotos reais ainda exigem testes com dispositivo.
 
 O SW `v28` força nova instalação do cache após a correção da publicação; sem espaço para todos os arquivos, a função por foto continua indisponível offline, sem quebrar os livros.
+
+## Ajustes do editor por foto (crop, cores e óculos)
+
+- Antes de executar os modelos, câmera e upload passam por uma etapa de **recorte
+  4:5 ajustável**, com zoom entre 1× e 4×, arraste por mouse/toque,
+  pinça com dois dedos, rolagem e setas do teclado. A análise recebe apenas
+  o recorte final (Canvas 512×640), não o arquivo completo.
+- O quadro da câmera é espelhado para corresponder à prévia; tracks são
+  paradas imediatamente após capturar, antes do recorte.
+- A classificação da cor do cabelo usa concentração da matiz e saturação
+  para identificar tinturas fortes, sem perder cabelo castanho e preto.
+  A paleta inclui vermelho, verde, laranja e turquesa fantasia.
+- A detecção de acessórios nas regiões dos dois olhos e da ponte
+  é heurística; só tenta escolher a cor da armação quando há sinais
+  suficientes de óculos. A cor escolhida é gravada em `accessoryColor`,
+  compartilhada com outros acessórios conforme o editor atual.
+- Após analisar a foto, o editor aplica as opções em `draft`, salva
+  com histórico e desfazer, remove as camadas SVG herdadas de personagens
+  prontos quando necessário e re-renderiza **todas** as opções e swatches,
+  não só o SVG principal. A escolha pode ser corrigida manualmente.
+- Ao fechar/trocar aba, cancelamento, erro e conclusão, imagens temporárias
+  são limpas da memória JS e a câmera é desligada. O aplicativo não
+  envia, exporta ou salva a fotografia (apenas parâmetros do avatar).
+- Teste de regressão: `node tests/avatar-photo-enhancements.test.mjs`.
+  A verificação funcional em Android/iOS requer revisão em dispositivo real.

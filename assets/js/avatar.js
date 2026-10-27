@@ -81,7 +81,9 @@
     ['#493a55', 'Castanho escuro'], ['#7b4c35', 'Castanho'],
     ['#c47b43', 'Ruivo'], ['#f5c35b', 'Loiro'],
     ['#303448', 'Preto'], ['#d38ec4', 'Rosa fantasia'],
-    ['#65b8cc', 'Azul fantasia'], ['#8c6bd0', 'Roxo fantasia']
+    ['#65b8cc', 'Azul fantasia'], ['#8c6bd0', 'Roxo fantasia'],
+    ['#e65a76', 'Vermelho fantasia'], ['#53b978', 'Verde fantasia'],
+    ['#ed9653', 'Laranja fantasia'], ['#46c5bd', 'Turquesa fantasia']
   ];
   const outfitColors = [
     ['#fa7195', 'Rosa'], ['#639de8', 'Azul'], ['#79bc8d', 'Verde'],
@@ -186,8 +188,8 @@
         .map(key => `<g data-accessory="${key}" data-placement="back">${rearDrawings[key]}</g>`).join('');
     }
     const drawings = {
-      glasses_round: `<g fill="none" stroke="${ink}" stroke-width="9"><circle cx="176" cy="183" r="31"/><circle cx="288" cy="183" r="31"/><path d="M207 179q25-15 50 0M145 178h-25m199 0h25"/></g>`,
-      glasses_square: `<g fill="none" stroke="${ink}" stroke-width="9" stroke-linejoin="round"><rect x="143" y="150" width="67" height="65" rx="10"/><rect x="254" y="150" width="67" height="65" rx="10"/><path d="M210 178q22-12 44 0M143 178h-23m201 0h23"/></g>`,
+      glasses_round: `<g fill="none" stroke="${decoration}" stroke-width="9"><circle cx="176" cy="183" r="31"/><circle cx="288" cy="183" r="31"/><path d="M207 179q25-15 50 0M145 178h-25m199 0h25"/></g>`,
+      glasses_square: `<g fill="none" stroke="${decoration}" stroke-width="9" stroke-linejoin="round"><rect x="143" y="150" width="67" height="65" rx="10"/><rect x="254" y="150" width="67" height="65" rx="10"/><path d="M210 178q22-12 44 0M143 178h-23m201 0h23"/></g>`,
       glasses_sunglasses: `<g fill="${colors.ACCESSORY_DEEP}" fill-opacity=".86" stroke="${ink}" stroke-width="8"><rect x="142" y="152" width="68" height="62" rx="15"/><rect x="254" y="152" width="68" height="62" rx="15"/><path d="M210 178q22-12 44 0M142 178h-22m202 0h22" fill="none"/></g>`,
       glasses_disguise: `<g stroke="${ink}" stroke-width="7" fill="none"><circle cx="176" cy="182" r="29"/><circle cx="288" cy="182" r="29"/><path d="M205 177q27-14 54 0m-113 0h-23m196 0h23"/></g>
         <path d="M232 183q-23 32-12 43h27q12-12-15-43Z" fill="${colors.SKIN_DARK}" stroke="${ink}" stroke-width="4"/>
