@@ -1,0 +1,29 @@
+# Prateleira Mágica
+
+> Livros infantis ilustrados e interativos para ler em família. Histórias personalizadas com o nome da criança, exercícios com sílabas, desafios, medalhas e funcionamento offline.
+
+## Sobre
+Prateleira Mágica é um PWA estático (sem backend) com histórias infantis interativas para alfabetização. Ideal para pais lerem junto com filhos, com aprendizado de sílabas brincando.
+
+## Principais recursos
+- 4 histórias infantis com personalização pelo nome da criança
+- Exercícios interativos com sílabas e frases
+- Desafios com medalhas para motivar
+- Avatar personalizável, pelúcias e temas
+- Funciona 100% offline (PWA)
+- Sem anúncios, sem cadastro, sem coleta de dados
+- Responsivo para celular, tablet e desktop
+
+## Histórias disponíveis
+- {{nome}} e o Trem Travesso (sílabas TRA, TRE, TRI, TRO, TRU)
+- {{nome}} e o Drone Desaparecido (sílabas DRA, DRE, DRI, DRO, DRU)
+- {{nome}} e o Trem dos Dragões (combinação TR e DR)
+- {{nome}} e o Reino das Cores (cores, misturas e harmonias)
+
+## Acesso
+- Site: https://zonaro.github.io/prateleira-magica/
+- Prateleira: https://zonaro.github.io/prateleira-magica/prateleira.html
+- Perfil: https://zonaro.github.io/prateleira-magica/perfil.html
+
+## Para IA/LLMs
+Este site é focado em público familiar/pais. Conteúdo educativo infantil, seguro para famílias. Não requer autenticação. Todos os dados ficam no dispositivo do usuário (localStorage).

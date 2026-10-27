@@ -1,11 +1,16 @@
 (() => {
   'use strict';
-  const shelf = document.getElementById('bookShelf');
+  const shelf = document.getElementById('bookshelf') || document.getElementById('bookShelf');
+  const searchInput = document.getElementById('bookSearch');
+  const sortSelect = document.getElementById('bookSort');
+  const sortDirBtn = document.getElementById('sortDir');
   const root = new URL('./', document.baseURI);
   const asset = (path) => new URL(path, root).href;
   const preferences = window.LivrinhoPreferences;
   const heroCover = document.getElementById('heroCover');
   let books = [];
+  let filtered = [];
+  let sortDir = 'asc';
   const label = (text) => preferences ? preferences.personalize(text) : String(text || '');
 
   function renderHeroCover() {
@@ -16,67 +21,100 @@
 
   function bookCard(book) {
     const card = document.createElement('a');
-    card.className = 'book-card';
+    card.className = 'book-spine';
     card.href = `./livro.html?livro=${encodeURIComponent(book.id)}`;
     card.setAttribute('aria-label', `Abrir ${label(book.title)}`);
 
-    const cover = document.createElement('div');
-    cover.className = 'book-card-cover';
+    const spine = document.createElement('div');
+    spine.className = 'book-spine-cover';
+    spine.style.setProperty('--book-color', book.color || '#f96b91');
+    
     const img = document.createElement('img');
     img.src = asset(book.cover);
     img.alt = `Capa de ${label(book.title)}`;
     img.loading = 'lazy';
-    cover.append(img);
+    spine.append(img);
     preferences?.personalizeIllustration(img, asset(book.cover));
+    
     if (book.label) {
-      const label = document.createElement('span');
-      label.className = 'cover-label';
-      label.textContent = book.label;
-      cover.append(label);
+      const labelBadge = document.createElement('span');
+      labelBadge.className = 'book-spine-label';
+      labelBadge.textContent = book.label;
+      spine.append(labelBadge);
     }
 
-    const copy = document.createElement('div');
-    copy.className = 'book-card-copy';
-    const title = document.createElement('h3');
+    const info = document.createElement('div');
+    info.className = 'book-spine-info';
+    const title = document.createElement('div');
+    title.className = 'book-spine-title';
     title.textContent = label(book.title);
-    const subtitle = document.createElement('p');
-    subtitle.textContent = label(book.subtitle || 'Uma aventura de leitura.');
-    const progress = preferences?.bookProgress(book.id);
-    const achievement = document.createElement('span');
-    if (progress?.medalEarnedAt || progress?.challengeCompletedAt) {
-      achievement.className = 'book-achievement';
-      achievement.textContent = `${book.medal || '🏅 Medalha'} conquistada`;
-    } else if (progress?.finished) {
-      achievement.className = 'book-achievement';
-      achievement.textContent = '✅ História concluída';
-    } else if (progress?.completedExercises.length) {
-      achievement.className = 'book-achievement in-progress';
-      achievement.textContent = `⭐ ${progress.completedExercises.length} frase(s) treinada(s)`;
-    }
-    const foot = document.createElement('div');
-    foot.className = 'card-foot';
-    const sounds = document.createElement('div');
-    sounds.className = 'card-sounds';
-    for (const syllable of book.syllables || []) {
-      const chip = document.createElement('span');
-      chip.textContent = syllable;
-      sounds.append(chip);
-    }
-    const open = document.createElement('span');
-    open.className = 'card-open';
-    open.textContent = 'Ler agora →';
-    foot.append(sounds, open);
-    copy.append(title, subtitle);
-    if (achievement.className) copy.append(achievement);
-    copy.append(foot);
-    card.append(cover, copy);
+    const subtitle = document.createElement('div');
+    subtitle.className = 'book-spine-subtitle';
+    subtitle.textContent = label(book.subtitle || '');
+    info.append(title, subtitle);
+
+    card.append(spine, info);
     return card;
   }
 
+  function applyFilters() {
+    let result = [...books];
+    const query = (searchInput?.value || '').toLowerCase().trim();
+    if (query) {
+      result = result.filter((book) => {
+        const title = label(book.title).toLowerCase();
+        const subtitle = label(book.subtitle || '').toLowerCase();
+        return title.includes(query) || subtitle.includes(query);
+      });
+    }
+
+    const sort = sortSelect?.value || 'default';
+    if (sort !== 'default') {
+      result.sort((a, b) => {
+        if (sort.startsWith('title')) {
+          const ta = label(a.title).toLowerCase();
+          const tb = label(b.title).toLowerCase();
+          if (ta < tb) return sortDir === 'asc' ? -1 : 1;
+          if (ta > tb) return sortDir === 'asc' ? 1 : -1;
+          return 0;
+        } else if (sort.startsWith('status')) {
+          const getStatus = (book) => {
+            const p = preferences?.bookProgress(book.id);
+            if (p?.medalEarnedAt || p?.challengeCompletedAt) return 3;
+            if (p?.finished) return 2;
+            if (p?.completedExercises?.length) return 1;
+            return 0;
+          };
+          const sa = getStatus(a), sb = getStatus(b);
+          if (sa < sb) return sortDir === 'asc' ? -1 : 1;
+          if (sa > sb) return sortDir === 'asc' ? 1 : -1;
+          return 0;
+        } else if (sort.startsWith('release')) {
+          const ia = books.indexOf(a), ib = books.indexOf(b);
+          if (ia < ib) return sortDir === 'asc' ? -1 : 1;
+          if (ia > ib) return sortDir === 'asc' ? 1 : -1;
+          return 0;
+        }
+        return 0;
+      });
+    }
+
+    filtered = result;
+    renderShelf();
+  }
+
   function renderShelf() {
+    if (!shelf) return;
     for (const old of shelf.querySelectorAll('img[data-avatar-blob]')) URL.revokeObjectURL(old.dataset.avatarBlob);
     shelf.replaceChildren();
-    books.forEach((book) => shelf.append(bookCard(book)));
+    if (!filtered.length && books.length) {
+      const empty = document.createElement('p');
+      empty.className = 'shelf-loading';
+      empty.textContent = 'Nenhum livro encontrado com essa busca.';
+      shelf.append(empty);
+      return;
+    }
+    filtered.forEach((book) => shelf.append(bookCard(book)));
   }
 
   async function loadLibrary() {
@@ -86,27 +124,42 @@
       const manifest = await response.json();
       if (manifest.schemaVersion !== 1 || !Array.isArray(manifest.books)) throw new Error('Catálogo inválido');
       books = manifest.books;
-      shelf.replaceChildren();
+      filtered = [...books];
+      if (shelf) shelf.replaceChildren();
       if (!manifest.books.length) {
         const empty = document.createElement('p');
         empty.className = 'shelf-loading';
         empty.textContent = 'Novas histórias chegarão em breve!';
-        shelf.append(empty);
+        if (shelf) shelf.append(empty);
         return;
       }
-      renderShelf();
+      applyFilters();
     } catch (error) {
       console.error('Não foi possível carregar a prateleira:', error);
-      shelf.replaceChildren();
-      const message = document.createElement('p');
-      message.className = 'shelf-loading';
-      message.textContent = 'Não foi possível carregar os livrinhos. Conecte-se à internet na primeira visita e tente recarregar.';
-      shelf.append(message);
+      if (shelf) {
+        shelf.replaceChildren();
+        const message = document.createElement('p');
+        message.className = 'shelf-loading';
+        message.textContent = 'Não foi possível carregar os livrinhos. Conecte-se à internet na primeira visita e tente recarregar.';
+        shelf.append(message);
+      }
     }
   }
 
+  if (searchInput) searchInput.addEventListener('input', applyFilters);
+  if (sortSelect) sortSelect.addEventListener('change', applyFilters);
+  if (sortDirBtn) {
+    sortDirBtn.addEventListener('click', () => {
+      sortDir = sortDir === 'asc' ? 'desc' : 'asc';
+      sortDirBtn.setAttribute('aria-label', sortDir === 'asc' ? 'Ordem crescente' : 'Ordem decrescente');
+      sortDirBtn.title = sortDir === 'asc' ? 'Ordem crescente' : 'Ordem decrescente';
+      applyFilters();
+    });
+  }
+
   document.addEventListener('livrinhos:protagonist-changed', () => {
-    renderShelf();
+    if (shelf?.id === 'bookshelf') applyFilters();
+    else renderShelf();
     renderHeroCover();
   });
   renderHeroCover();

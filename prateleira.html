@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#faf3e8">
+  <meta name="description" content="Prateleira Mágica: explore nossa coleção de livros infantis ilustrados e interativos.">
+  <link rel="icon" href="./assets/icons/icon.svg" type="image/svg+xml">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="stylesheet" href="./assets/css/app.css">
+  <script src="./assets/js/avatar-parts.js" defer></script>
+  <script src="./assets/js/pet-parts.js" defer></script>
+  <script src="./assets/js/avatar.js" defer></script>
+  <script src="./assets/js/preferences.js" defer></script>
+  <script src="./assets/vendor/NameToColor.js" defer></script>
+  <script src="./assets/vendor/NameToColor.ptBR.js" defer></script>
+  <script src="./assets/js/colors.js" defer></script>
+  <script src="./assets/js/library.js" defer></script>
+  <script src="./assets/js/settings-ui.js" defer></script>
+  <script src="./assets/js/pwa.js" defer></script>
+  <title>Prateleira Mágica · Nossa coleção</title>
+</head>
+<body class="shelf-page">
+  <div class="shelf-shell">
+    <header class="shelf-header">
+      <a class="shelf-brand" href="./index.html" aria-label="Prateleira Mágica, início">
+        <img src="./assets/icons/icon.svg" alt="" width="51" height="51">
+        <span><strong>Prateleira Mágica ✨</strong><small>Pequenas histórias, grandes descobertas</small></span>
+      </a>
+      <div class="shelf-actions">
+        <a class="customize-action" href="./index.html">🏠 Início</a>
+        <a class="customize-action profile-action" href="./perfil.html">🏅 Meu perfil</a>
+        <a class="customize-action" href="./perfil.html#personalizar" data-open-settings>⚙ Personalizar</a>
+        <span class="connection-status" id="connectionStatus" aria-live="polite">● Pronto para ler</span>
+        <button class="install-action" id="installButton" type="button" hidden>↓ Instalar app</button>
+      </div>
+    </header>
+    <main>
+      <section class="shelf-section" id="livros" aria-labelledby="shelfTitle">
+        <div class="section-topline">
+          <div><div class="section-kicker">A NOSSA COLEÇÃO</div><h2 id="shelfTitle">Escolha seu livrinho <span aria-hidden="true">📚</span></h2></div>
+          <p>Toque em um livro para abrir</p>
+        </div>
+        <div class="shelf-controls">
+          <div class="shelf-search">
+            <label for="bookSearch" class="visually-hidden">Buscar livro</label>
+            <input type="search" id="bookSearch" class="shelf-search-input" placeholder="🔍 Buscar por título..." autocomplete="off">
+          </div>
+          <div class="shelf-sort">
+            <label for="bookSort" class="visually-hidden">Ordenar por</label>
+            <select id="bookSort" class="shelf-select">
+              <option value="default">Ordem padrão</option>
+              <option value="title-asc">Alfabética (A-Z)</option>
+              <option value="title-desc">Alfabética (Z-A)</option>
+              <option value="status-asc">Status</option>
+              <option value="status-desc">Status (invertido)</option>
+              <option value="release-asc">Ordem de lançamento (antigo)</option>
+              <option value="release-desc">Ordem de lançamento (recente)</option>
+            </select>
+            <button id="sortDir" class="shelf-sort-dir" type="button" aria-label="Inverter ordem" title="Inverter ordem">↕</button>
+          </div>
+        </div>
+        <div class="bookshelf" id="bookshelf" aria-live="polite">
+          <p class="shelf-loading">Preparando os livrinhos…</p>
+        </div>
+      </section>
+      <div class="shelf-footnote">🌟 Um pouquinho de leitura por dia já é uma grande conquista.</div>
+    </main>
+    <footer class="site-footer"><span>Feito para pequenas leitoras e pequenos leitores 💕</span><span>Os livros podem ficar disponíveis mesmo sem internet.</span></footer>
+  </div>
+</body>
+</html>

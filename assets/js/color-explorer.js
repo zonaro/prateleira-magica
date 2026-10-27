@@ -19,7 +19,7 @@
         <label>Escolha no arco-íris <input data-color-picker type="color" value="#f44e9a" aria-label="Escolher uma cor no seletor"></label>
         <label>Ou escreva uma palavra mágica <input data-color-word type="text" maxlength="120" placeholder="Ex.: azul, girassol, abraço…" autocomplete="off"></label>
       </div>
-      <div class="color-ready"><span>Ou toque em uma bolinha:</span><div data-color-quick class="color-quick" aria-label="Cores prontas"></div></div>
+      <div class="color-ready"><span>Ou toque em uma bolinha:</span><div class="color-quick-row"><button type="button" class="color-random-btn" data-color-random aria-label="Sortear cor aleatória">🎲 Sortear cor</button><div data-color-quick class="color-quick" aria-label="Cores prontas"></div></div></div>
       <p data-color-feedback class="color-feedback" role="status" aria-live="polite">Qual cor você vai inventar hoje?</p>
       <div class="color-harmonies-heading"><strong>🎼 Qual combinação vamos criar?</strong>
         <label>Qual é o clima das cores? <select data-color-mood aria-label="Escolher o clima das cores"></select></label>
@@ -37,6 +37,7 @@
       moodSelect.append(option);
     }
     moodSelect.value = mood;
+    const quickContainer = $('[data-color-quick]');
     for (const [hex, name] of colors.swatches) {
       const button = document.createElement('button');
       button.type = 'button';
@@ -46,8 +47,14 @@
       button.title = name;
       button.setAttribute('aria-label', `Escolher ${name}`);
       button.addEventListener('click', () => updateColor(hex, '', `Você escolheu ${name}!`));
-      $('[data-color-quick]').append(button);
+      quickContainer.append(button);
     }
+    $('[data-color-random]').addEventListener('click', () => {
+      const list = colors.swatches || [];
+      if (!list.length) return;
+      const [hex, name] = list[Math.floor(Math.random() * list.length)];
+      updateColor(hex, '', `Surpresa! Sorteamos a cor ${name.toLowerCase()}!`);
+    });
     function temperatureLabel(temp) {
       const value = String(temp || '').toLowerCase();
       if (!value) return '';
