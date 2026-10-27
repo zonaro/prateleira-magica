@@ -10,8 +10,8 @@
     const baseWidth = Math.min(width, height * ratio);
     const cropWidth = baseWidth / zoom;
     const cropHeight = cropWidth / ratio;
-    const cx = clamp(Number(state.cx) || .5, cropWidth / (2 * width), 1 - cropWidth / (2 * width));
-    const cy = clamp(Number(state.cy) || .5, cropHeight / (2 * height), 1 - cropHeight / (2 * height));
+    const cx = clamp(Number.isFinite(state.cx) ? state.cx : .5, cropWidth / (2 * width), 1 - cropWidth / (2 * width));
+    const cy = clamp(Number.isFinite(state.cy) ? state.cy : .5, cropHeight / (2 * height), 1 - cropHeight / (2 * height));
     return {
       x: clamp(cx * width - cropWidth / 2, 0, width - cropWidth),
       y: clamp(cy * height - cropHeight / 2, 0, height - cropHeight),
@@ -24,10 +24,12 @@
   }
   function pan(state, deltaX, deltaY, viewportWidth, viewportHeight) {
     const crop = rect(state);
+    const limitX = crop.width / (2 * state.width);
+    const limitY = crop.height / (2 * state.height);
     return {
       ...state,
-      cx: state.cx - (deltaX / viewportWidth) * (crop.width / state.width),
-      cy: state.cy - (deltaY / viewportHeight) * (crop.height / state.height)
+      cx: clamp(state.cx - (deltaX / viewportWidth) * (crop.width / state.width), limitX, 1 - limitX),
+      cy: clamp(state.cy - (deltaY / viewportHeight) * (crop.height / state.height), limitY, 1 - limitY)
     };
   }
   function draw(image, state, ctx, targetWidth, targetHeight) {
