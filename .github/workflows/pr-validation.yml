@@ -25,6 +25,7 @@ jobs:
           node tests/colors.test.mjs
           node tests/avatar.test.mjs
           node tests/avatar-photo.test.mjs
+          node tests/avatar-photo-availability.test.mjs
           node tests/progression.test.mjs
           node tests/page-turn.test.mjs
           node tests/speech.test.mjs
