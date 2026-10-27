@@ -46,6 +46,10 @@ const calls=[];crop.draw({fake:'image'},crop.make(1200,1600),{drawImage:(...args
 assert.equal(calls.length,1);assert.equal(calls[0][7],512);assert.equal(calls[0][8],640);
 assert(Math.abs(calls[0][3]/calls[0][4]-.8)<1e-9);
 assert.throws(()=>crop.make(0,100),/inválida/);
+assert(photo.includes("input = find('input.avatar-photo-input[type=\"file\"]')"),
+  'Deve ouvir mudanças no campo correto e não no slider de zoom');
+assert(!photo.includes('input.click();'), 'Usar seletor de arquivos nativo por toque direto');
+assert(photo.includes('input.disabled = value'), 'Bloquear escolha de foto durante inferência');
 for(const marker of ['avatar-photo-crop-editor','data-action="reset-crop"','data-action="cancel-crop"',
   'data-action="analyze"','pointerdown','pointermove','pointercancel','wheel','keydown',
   'zoomSlider.addEventListener','setCropSource(video, true)','setCropSource(bitmap)',

@@ -279,7 +279,9 @@
       '<div class="avatar-photo-buttons">' +
         '<button type="button" data-action="camera">📷 Abrir a câmera</button>' +
         '<button type="button" data-action="capture" hidden>✨ Tirar minha foto</button>' +
-        '<button type="button" data-action="file">🖼️ Escolher uma foto</button>' +
+        '<label class="avatar-photo-file-control" data-action="file">🖼️ Escolher uma foto' +
+          '<input class="avatar-photo-input" type="file" accept="image/jpeg,image/png,image/webp" ' +
+            'aria-label="Escolher uma foto na galeria"></label>' +
         '<a href="#personalizar" class="avatar-photo-back">🎨 Voltar a personalizar</a>' +
       '</div>' +
       '<section class="avatar-photo-crop-editor" hidden aria-label="Recortar e ampliar a foto">' +
@@ -296,14 +298,15 @@
           '<button type="button" data-action="analyze">✨ Criar meu personagem</button>' +
         '</div>' +
       '</section>' +
-      '<input class="avatar-photo-input" type="file" accept="image/jpeg,image/png,image/webp" hidden>' +
       '<p class="avatar-photo-status" role="status" aria-live="polite">Tudo pronto para começar? 🌟</p>' +
       '<p class="avatar-photo-privacy">🔒 A foto fica apenas na memória deste aparelho durante o recorte e a mágica. ' +
         'Depois será descartada. Só guardamos as escolhas do personagem. Peça sempre a ajuda de um adulto!</p>' +
       '</div>';
 
     const find = (selector) => host.querySelector(selector);
-    const video = find('video'), input = find('input');
+    // Nunca usar find('input'): o primeiro campo agora é o slider de zoom.
+    // O upload fica dentro da área clicável para ativação nativa no celular.
+    const video = find('video'), input = find('input.avatar-photo-input[type="file"]');
     const status = find('.avatar-photo-status');
     const cameraButton = find('[data-action="camera"]');
     const captureButton = find('[data-action="capture"]');
@@ -360,7 +363,9 @@
       busy = value;
       cameraButton.disabled = value;
       captureButton.disabled = value;
-      chooseButton.disabled = value;
+      input.disabled = value;
+      chooseButton.classList.toggle('disabled', value);
+      chooseButton.setAttribute('aria-disabled', String(value));
       analyzeButton.disabled = value;
       resetCropButton.disabled = value;
       cancelCropButton.disabled = value;
@@ -549,10 +554,12 @@
       try { setCropSource(video, true); }
       catch (error) { status.textContent = describeError(error); }
     });
-    chooseButton.addEventListener('click', () => { if (isActive() && !busy) input.click(); });
     input.addEventListener('change', async () => {
       const file = input.files?.[0];
-      if (!file || !isActive() || busy) return;
+      if (!file || !isActive() || busy) {
+        input.value = '';
+        return;
+      }
       if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type) || file.size > 10_000_000) {
         status.textContent = 'Escolha uma foto JPG, PNG ou WebP de até 10 MB.';
         input.value = '';

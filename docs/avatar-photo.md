@@ -175,3 +175,17 @@ O SW `v28` força nova instalação do cache após a correção da publicação;
   envia, exporta ou salva a fotografia (apenas parâmetros do avatar).
 - Teste de regressão: `node tests/avatar-photo-enhancements.test.mjs`.
   A verificação funcional em Android/iOS requer revisão em dispositivo real.
+
+## Correção do seletor de foto
+
+O controle de zoom usa `input[type=range]`. O upload deve sempre usar o campo
+`input.avatar-photo-input[type=file]`; selecionar genericamente `input` aponta
+para o slider e impede a galeria de abrir. Para evitar permissões de clique
+programático variáveis entre Android, iOS e desktop, o campo de arquivo agora
+ocupa, de forma transparente, a área do controle **Escolher uma foto** e recebe
+o clique/toque **nativamente**. O campo é desabilitado durante a análise e
+limpo após o uso, permitindo escolher o mesmo arquivo outra vez.
+
+O teste `tests/avatar-photo-picker.test.mjs` executa o evento de escolha de
+arquivo numa aba que contém simultaneamente os inputs de zoom e upload,
+validando a passagem ao recorte e a limpeza ao sair da aba.
