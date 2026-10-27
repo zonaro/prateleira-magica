@@ -511,6 +511,8 @@ html[data-color-theme] .profile-tabs{border-color:var(--outline);background:var(
 .color-explorer-description{display:flex;flex-direction:column;align-items:flex-start;gap:3px;min-width:0}
 .color-mini-label{font-size:11px;font-weight:1000;letter-spacing:.1em;color:#9374ae}
 .color-explorer-description strong{font-size:27px;line-height:1.1;overflow-wrap:anywhere}
+.color-explorer-meta{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:12px;font-weight:900;color:#727c92}
+.color-explorer-temp{color:#8a7aa9}
 .color-explorer-description [data-color-hex]{font-size:12px;font-weight:900;color:#727c92}
 .color-explorer-description button{border:0;background:#7354b0;color:#fff;border-radius:12px;padding:7px 12px;font-size:13px;font-weight:950;margin-top:5px}
 .color-explorer-pickers{display:grid;grid-template-columns:1fr;gap:9px}

@@ -2,7 +2,15 @@
   "description": "Componentes vetoriais retirados dos SVGs originais da coleção Kids Avatars (SVG Repo). Os índices referem-se a root.iter() do XML original; nenhuma peça de cabelo ou roupa é redesenhada.",
   "base": {
     "source": "3914-girl.svg",
-    "nodes": [2, 4, 5, 6, 7, 9, 10],
+    "nodes": [
+      2,
+      4,
+      5,
+      6,
+      7,
+      9,
+      10
+    ],
     "colors": {
       "#FFD7A3": "SKIN",
       "#FDC88E": "SKIN_DARK",
@@ -11,47 +19,776 @@
     }
   },
   "hair": {
-    "puffs": { "source": "31423-girl.svg", "back": [15, 17, 21, 23], "front": [35, 37], "colors": { "#9D6E48": "HAIR", "#8D5F3D": "HAIR_DARK" } },
-    "short": { "source": "12676-boy.svg", "back": [6], "front": [], "colors": { "#734A3E": "HAIR" } },
-    "side": { "source": "31150-boy.svg", "back": [4, 7], "front": [26, 28], "colors": { "#FF9656": "HAIR", "#EF8C56": "HAIR_DARK" } },
-    "long": { "source": "31132-girl.svg", "back": [4, 9], "front": [29, 30, 32], "colors": { "#9D6E48": "HAIR", "#8D5F3D": "HAIR_DARK" } },
-    "curly": { "source": "38284-boy.svg", "back": [4, 5], "front": [], "colors": { "#9D6E48": "HAIR", "#8D5F3D": "HAIR_DARK" } },
-    "afro": { "source": "38246-girl.svg", "back": [4], "front": [], "colors": { "#623F33": "HAIR" } },
-    "braids": { "source": "166241-girl.svg", "back": [3, 4, 35, 39], "front": [29, 31, 6, 8, 10, 12, 33, 37], "colors": { "#6E4439": "HAIR", "#5E342E": "HAIR_DARK" } },
-    "ponytail": { "source": "3896-girl.svg", "back": [4, 6, 10, 12], "front": [26, 28, 8, 14], "colors": { "#6E4439": "HAIR", "#5E342E": "HAIR_DARK", "#653C34": "HAIR_DARK" } },
-    "cap": { "source": "66804-boy.svg", "back": [], "front": [15, 17, 19, 21, 23, 25, 27], "colors": { "#57B9DD": "HAIR", "#43A0C5": "HAIR_DARK", "#1179A2": "HAIR_DEEP", "#E09156": "HAIR_LIGHT" } },
-    "bob": { "source": "38251-girl.svg", "back": [], "front": [9, 10], "colors": { "#6E4439": "HAIR", "#5E342E": "HAIR_DARK" } },
-    "straight": { "source": "3914-girl.svg", "back": [], "front": [12, 13], "colors": { "#FFC85C": "HAIR", "#F6B45E": "HAIR_DARK" } },
-    "waves": { "source": "65066-girl.svg", "back": [3, 4], "front": [21, 22], "colors": { "#734A3E": "HAIR", "#5E342E": "HAIR_DARK" } },
-    "flower_braids": { "source": "31122-girl.svg", "back": [3, 14, 15], "front": [16, 17, 18, 19, 20, 21, 22], "colors": { "#6E4439": "HAIR", "#5E342E": "HAIR_DARK" } },
-    "mohawk": { "source": "38239-boy.svg", "back": [], "front": [32, 33], "colors": { "#734A3E": "HAIR", "#5E342E": "HAIR_DARK" } },
-    "undercut": { "source": "38252-boy.svg", "back": [], "front": [17, 19, 21], "colors": { "#9A6C52": "HAIR_LIGHT", "#6E4439": "HAIR", "#5E342E": "HAIR_DARK" } },
-    "bow": { "source": "38256-girl.svg", "back": [3, 4], "front": [19, 20, 7, 8, 9, 10], "colors": { "#683F39": "HAIR", "#5E342E": "HAIR_DARK" } },
-    "quiff": { "source": "38261-boy.svg", "back": [], "front": [15, 17], "colors": { "#8DB9E2": "HAIR", "#6AA2DE": "HAIR_DARK" } },
-    "flower_bob": { "source": "42225-girl.svg", "back": [4, 5], "front": [18, 46, 27, 30, 33, 36, 39, 42, 45], "colors": { "#9D6E48": "HAIR", "#8D5F3D": "HAIR_DARK" } },
-    "flower_long": { "source": "66793-girl.svg", "back": [3, 4], "front": [19, 27, 28, 20, 21, 22, 23, 24, 25, 26], "colors": { "#E8A055": "HAIR_DARK", "#F6B45E": "HAIR", "#FFC85C": "HAIR_LIGHT" } },
-    "medium_waves": { "source": "66815-girl.svg", "back": [3, 5], "front": [22, 23], "colors": { "#9D6E48": "HAIR", "#8D5F3D": "HAIR_DARK" } },
-    "side_sweep": { "source": "41010-girl.svg", "back": [3, 5], "front": [28, 29], "colors": { "#E69F5F": "HAIR", "#E09156": "HAIR_DARK" } },
-    "ringlets": { "source": "3869-boy.svg", "back": [3], "front": [25], "colors": { "#623F33": "HAIR" } }
+    "puffs": {
+      "source": "31423-girl.svg",
+      "back": [
+        15,
+        17,
+        21,
+        23
+      ],
+      "front": [
+        35,
+        37
+      ],
+      "colors": {
+        "#9D6E48": "HAIR",
+        "#8D5F3D": "HAIR_DARK"
+      }
+    },
+    "short": {
+      "source": "12676-boy.svg",
+      "back": [
+        6
+      ],
+      "front": [],
+      "colors": {
+        "#734A3E": "HAIR"
+      }
+    },
+    "side": {
+      "source": "31150-boy.svg",
+      "back": [
+        4,
+        7
+      ],
+      "front": [
+        26,
+        28
+      ],
+      "colors": {
+        "#FF9656": "HAIR",
+        "#EF8C56": "HAIR_DARK"
+      }
+    },
+    "long": {
+      "source": "31132-girl.svg",
+      "back": [
+        4,
+        9
+      ],
+      "front": [
+        29,
+        30,
+        32
+      ],
+      "colors": {
+        "#9D6E48": "HAIR",
+        "#8D5F3D": "HAIR_DARK"
+      }
+    },
+    "curly": {
+      "source": "38284-boy.svg",
+      "back": [
+        4,
+        5
+      ],
+      "front": [],
+      "colors": {
+        "#9D6E48": "HAIR",
+        "#8D5F3D": "HAIR_DARK"
+      }
+    },
+    "afro": {
+      "source": "38246-girl.svg",
+      "back": [
+        4
+      ],
+      "front": [],
+      "colors": {
+        "#623F33": "HAIR"
+      }
+    },
+    "braids": {
+      "source": "166241-girl.svg",
+      "back": [
+        3,
+        4,
+        35,
+        39
+      ],
+      "front": [
+        29,
+        31,
+        6,
+        8,
+        10,
+        12,
+        33,
+        37
+      ],
+      "colors": {
+        "#6E4439": "HAIR",
+        "#5E342E": "HAIR_DARK"
+      }
+    },
+    "ponytail": {
+      "source": "3896-girl.svg",
+      "back": [
+        4,
+        6,
+        10,
+        12
+      ],
+      "front": [
+        26,
+        28,
+        8,
+        14
+      ],
+      "colors": {
+        "#6E4439": "HAIR",
+        "#5E342E": "HAIR_DARK",
+        "#653C34": "HAIR_DARK"
+      }
+    },
+    "cap": {
+      "source": "66804-boy.svg",
+      "back": [],
+      "front": [
+        15,
+        17,
+        19,
+        21,
+        23,
+        25,
+        27
+      ],
+      "colors": {
+        "#57B9DD": "HAIR",
+        "#43A0C5": "HAIR_DARK",
+        "#1179A2": "HAIR_DEEP",
+        "#E09156": "HAIR_LIGHT"
+      }
+    },
+    "bob": {
+      "source": "38251-girl.svg",
+      "back": [],
+      "front": [
+        9,
+        10
+      ],
+      "colors": {
+        "#6E4439": "HAIR",
+        "#5E342E": "HAIR_DARK"
+      }
+    },
+    "straight": {
+      "source": "3914-girl.svg",
+      "back": [],
+      "front": [
+        12,
+        13
+      ],
+      "colors": {
+        "#FFC85C": "HAIR",
+        "#F6B45E": "HAIR_DARK"
+      }
+    },
+    "waves": {
+      "source": "65066-girl.svg",
+      "back": [
+        3,
+        4
+      ],
+      "front": [
+        21,
+        22
+      ],
+      "colors": {
+        "#734A3E": "HAIR",
+        "#5E342E": "HAIR_DARK"
+      }
+    },
+    "flower_braids": {
+      "source": "31122-girl.svg",
+      "back": [
+        3,
+        14,
+        15
+      ],
+      "front": [
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22
+      ],
+      "colors": {
+        "#6E4439": "HAIR",
+        "#5E342E": "HAIR_DARK"
+      }
+    },
+    "mohawk": {
+      "source": "38239-boy.svg",
+      "back": [],
+      "front": [
+        32,
+        33
+      ],
+      "colors": {
+        "#734A3E": "HAIR",
+        "#5E342E": "HAIR_DARK"
+      }
+    },
+    "undercut": {
+      "source": "38252-boy.svg",
+      "back": [],
+      "front": [
+        17,
+        19,
+        21
+      ],
+      "colors": {
+        "#9A6C52": "HAIR_LIGHT",
+        "#6E4439": "HAIR",
+        "#5E342E": "HAIR_DARK"
+      }
+    },
+    "bow": {
+      "source": "38256-girl.svg",
+      "back": [
+        3,
+        4
+      ],
+      "front": [
+        19,
+        20,
+        7,
+        8,
+        9,
+        10
+      ],
+      "colors": {
+        "#683F39": "HAIR",
+        "#5E342E": "HAIR_DARK"
+      }
+    },
+    "quiff": {
+      "source": "38261-boy.svg",
+      "back": [],
+      "front": [
+        15,
+        17
+      ],
+      "colors": {
+        "#8DB9E2": "HAIR",
+        "#6AA2DE": "HAIR_DARK"
+      }
+    },
+    "flower_bob": {
+      "source": "42225-girl.svg",
+      "back": [
+        4,
+        5
+      ],
+      "front": [
+        18,
+        46,
+        27,
+        30,
+        33,
+        36,
+        39,
+        42,
+        45
+      ],
+      "colors": {
+        "#9D6E48": "HAIR",
+        "#8D5F3D": "HAIR_DARK"
+      }
+    },
+    "flower_long": {
+      "source": "66793-girl.svg",
+      "back": [
+        3,
+        4
+      ],
+      "front": [
+        19,
+        27,
+        28,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26
+      ],
+      "colors": {
+        "#E8A055": "HAIR_DARK",
+        "#F6B45E": "HAIR",
+        "#FFC85C": "HAIR_LIGHT"
+      }
+    },
+    "medium_waves": {
+      "source": "66815-girl.svg",
+      "back": [
+        3,
+        5
+      ],
+      "front": [
+        22,
+        23
+      ],
+      "colors": {
+        "#9D6E48": "HAIR",
+        "#8D5F3D": "HAIR_DARK"
+      }
+    },
+    "side_sweep": {
+      "source": "41010-girl.svg",
+      "back": [
+        3,
+        5
+      ],
+      "front": [
+        28,
+        29
+      ],
+      "colors": {
+        "#E69F5F": "HAIR",
+        "#E09156": "HAIR_DARK"
+      }
+    },
+    "ringlets": {
+      "source": "3869-boy.svg",
+      "back": [
+        3
+      ],
+      "front": [
+        25
+      ],
+      "colors": {
+        "#623F33": "HAIR"
+      }
+    },
+    "ponytail_bow": {
+      "source": "111605-girl.svg",
+      "back": [
+        5,
+        7,
+        11,
+        13
+      ],
+      "front": [
+        29,
+        31,
+        9,
+        15
+      ],
+      "colors": {
+        "#D48F60": "HAIR",
+        "#C57E52": "HAIR_DARK",
+        "#43A0C5": "HAIR_LIGHT"
+      }
+    },
+    "mullet": {
+      "source": "127797-boy.svg",
+      "back": [
+        16,
+        17
+      ],
+      "front": [
+        4
+      ],
+      "colors": {
+        "#734A3E": "HAIR",
+        "#623F33": "HAIR_DARK"
+      }
+    },
+    "flower_heart": {
+      "source": "65095-girl.svg",
+      "back": [
+        3,
+        14,
+        15
+      ],
+      "front": [
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22
+      ],
+      "colors": {
+        "#6E4439": "HAIR",
+        "#5E342E": "HAIR_DARK"
+      }
+    }
   },
   "outfit": {
-    "hoodie": { "source": "3852-boy.svg", "nodes": [2, 17, 19, 21, 23, 25], "colors": { "#FF4F4F": "OUTFIT", "#F23F44": "OUTFIT_DARK", "#A63F44": "OUTFIT_DEEP" } },
-    "tee": { "source": "12676-boy.svg", "nodes": [18, 20, 22], "colors": { "#00BEA4": "OUTFIT", "#00AB9A": "OUTFIT_DARK" } },
-    "dress": { "source": "3896-girl.svg", "nodes": [31, 34, 36, 37, 38], "colors": { "#F05467": "OUTFIT", "#BD445A": "OUTFIT_DARK" } },
-    "overalls": { "source": "65066-girl.svg", "nodes": [18, 20], "colors": { "#FF8C51": "OUTFIT", "#FF7941": "OUTFIT_DARK" } },
-    "jacket": { "source": "82178-boy.svg", "nodes": [3, 12, 13, 14, 15, 16, 18], "colors": { "#43A0C5": "OUTFIT", "#2C8CB3": "OUTFIT_DARK", "#9BCE7A": "OUTFIT_LIGHT", "#8ABE69": "OUTFIT_LIGHT" } },
-    "jersey": { "source": "66804-boy.svg", "nodes": [29, 31, 33, 35, 37, 39], "colors": { "#FF9B4F": "OUTFIT", "#43A0C5": "OUTFIT_DARK", "#1179A2": "OUTFIT_DEEP" } },
-    "blouse": { "source": "38251-girl.svg", "nodes": [11, 12, 13, 14, 15, 16, 17, 18], "colors": { "#FF6473": "OUTFIT", "#CA64B3": "OUTFIT_DARK" } },
-    "coat": { "source": "38284-boy.svg", "nodes": [13, 14, 15, 16, 17, 18], "colors": { "#FFA64E": "OUTFIT", "#FFDD8B": "OUTFIT_LIGHT", "#F4873F": "OUTFIT_DARK" } },
-    "tank": { "source": "132866-boy.svg", "nodes": [19], "colors": { "#8D5F3D": "OUTFIT" } },
-    "sports_tee": { "source": "132848-boy.svg", "nodes": [5, 17, 19, 21, 23], "colors": { "#FFD739": "OUTFIT_LIGHT", "#FFC33D": "OUTFIT", "#FFB440": "OUTFIT_DARK" } },
-    "collared": { "source": "31130-boy.svg", "nodes": [12, 13, 14, 15, 16, 17, 18, 19], "colors": { "#95B995": "OUTFIT", "#79A67C": "OUTFIT_DARK" } },
-    "bib": { "source": "38239-boy.svg", "nodes": [16, 19, 21, 24, 26, 29, 31], "colors": { "#4F6E7F": "OUTFIT_DEEP", "#FF4F4F": "OUTFIT", "#F23F44": "OUTFIT_DARK", "#FFC84A": "OUTFIT_LIGHT", "#FFAC4D": "OUTFIT_LIGHT", "#9BCE7A": "OUTFIT_LIGHT", "#8ABE69": "OUTFIT_LIGHT" } },
-    "sleeveless": { "source": "38256-girl.svg", "nodes": [17, 18], "colors": { "#00AB9A": "OUTFIT_DARK", "#00BEA4": "OUTFIT" } },
-    "patterned": { "source": "38261-boy.svg", "nodes": [19, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39, 41, 43, 45, 47, 49, 51], "colors": { "#9BCE7A": "OUTFIT", "#8ABE69": "OUTFIT_DARK", "#76AB5F": "OUTFIT_DEEP" } },
-    "necklace": { "source": "45972-girl.svg", "nodes": [5, 23, 25, 27, 30], "colors": { "#00858A": "OUTFIT_DEEP", "#57B9DD": "OUTFIT", "#43A0C5": "OUTFIT_DARK" } },
-    "team_tee": { "source": "66797-boy.svg", "nodes": [7, 18, 20, 22, 24], "colors": { "#F23F44": "OUTFIT_DARK", "#FF4F4F": "OUTFIT", "#C93F44": "OUTFIT_DEEP" } },
-    "cardigan": { "source": "66829-girl.svg", "nodes": [10, 11, 12], "colors": { "#FF6473": "OUTFIT_LIGHT", "#8DB9E2": "OUTFIT", "#6AA2DE": "OUTFIT_DARK" } },
-    "polo": { "source": "83069-boy.svg", "nodes": [2, 9, 11, 13, 26], "colors": { "#4E87BB": "OUTFIT_DEEP", "#8DB9E2": "OUTFIT", "#6AA2DE": "OUTFIT_DARK" } }
+    "hoodie": {
+      "source": "3852-boy.svg",
+      "nodes": [
+        2,
+        17,
+        19,
+        21,
+        23,
+        25
+      ],
+      "colors": {
+        "#FF4F4F": "OUTFIT",
+        "#F23F44": "OUTFIT_DARK",
+        "#A63F44": "OUTFIT_DEEP"
+      }
+    },
+    "tee": {
+      "source": "12676-boy.svg",
+      "nodes": [
+        18,
+        20,
+        22
+      ],
+      "colors": {
+        "#00BEA4": "OUTFIT",
+        "#00AB9A": "OUTFIT_DARK"
+      }
+    },
+    "dress": {
+      "source": "3896-girl.svg",
+      "nodes": [
+        31,
+        34,
+        36,
+        37,
+        38
+      ],
+      "colors": {
+        "#F05467": "OUTFIT",
+        "#BD445A": "OUTFIT_DARK"
+      }
+    },
+    "overalls": {
+      "source": "65066-girl.svg",
+      "nodes": [
+        18,
+        20
+      ],
+      "colors": {
+        "#FF8C51": "OUTFIT",
+        "#FF7941": "OUTFIT_DARK"
+      }
+    },
+    "jacket": {
+      "source": "82178-boy.svg",
+      "nodes": [
+        3,
+        12,
+        13,
+        14,
+        15,
+        16,
+        18
+      ],
+      "colors": {
+        "#43A0C5": "OUTFIT",
+        "#2C8CB3": "OUTFIT_DARK",
+        "#9BCE7A": "OUTFIT_LIGHT",
+        "#8ABE69": "OUTFIT_LIGHT"
+      }
+    },
+    "jersey": {
+      "source": "66804-boy.svg",
+      "nodes": [
+        29,
+        31,
+        33,
+        35,
+        37,
+        39
+      ],
+      "colors": {
+        "#FF9B4F": "OUTFIT",
+        "#43A0C5": "OUTFIT_DARK",
+        "#1179A2": "OUTFIT_DEEP"
+      }
+    },
+    "blouse": {
+      "source": "38251-girl.svg",
+      "nodes": [
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18
+      ],
+      "colors": {
+        "#FF6473": "OUTFIT",
+        "#CA64B3": "OUTFIT_DARK"
+      }
+    },
+    "coat": {
+      "source": "38284-boy.svg",
+      "nodes": [
+        13,
+        14,
+        15,
+        16,
+        17,
+        18
+      ],
+      "colors": {
+        "#FFA64E": "OUTFIT",
+        "#FFDD8B": "OUTFIT_LIGHT",
+        "#F4873F": "OUTFIT_DARK"
+      }
+    },
+    "tank": {
+      "source": "132866-boy.svg",
+      "nodes": [
+        19
+      ],
+      "colors": {
+        "#8D5F3D": "OUTFIT"
+      }
+    },
+    "sports_tee": {
+      "source": "132848-boy.svg",
+      "nodes": [
+        5,
+        17,
+        19,
+        21,
+        23
+      ],
+      "colors": {
+        "#FFD739": "OUTFIT_LIGHT",
+        "#FFC33D": "OUTFIT",
+        "#FFB440": "OUTFIT_DARK"
+      }
+    },
+    "collared": {
+      "source": "31130-boy.svg",
+      "nodes": [
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "colors": {
+        "#95B995": "OUTFIT",
+        "#79A67C": "OUTFIT_DARK"
+      }
+    },
+    "bib": {
+      "source": "38239-boy.svg",
+      "nodes": [
+        16,
+        19,
+        21,
+        24,
+        26,
+        29,
+        31
+      ],
+      "colors": {
+        "#4F6E7F": "OUTFIT_DEEP",
+        "#FF4F4F": "OUTFIT",
+        "#F23F44": "OUTFIT_DARK",
+        "#FFC84A": "OUTFIT_LIGHT",
+        "#FFAC4D": "OUTFIT_LIGHT",
+        "#9BCE7A": "OUTFIT_LIGHT",
+        "#8ABE69": "OUTFIT_LIGHT"
+      }
+    },
+    "sleeveless": {
+      "source": "38256-girl.svg",
+      "nodes": [
+        17,
+        18
+      ],
+      "colors": {
+        "#00AB9A": "OUTFIT_DARK",
+        "#00BEA4": "OUTFIT"
+      }
+    },
+    "patterned": {
+      "source": "38261-boy.svg",
+      "nodes": [
+        19,
+        21,
+        23,
+        25,
+        27,
+        29,
+        31,
+        33,
+        35,
+        37,
+        39,
+        41,
+        43,
+        45,
+        47,
+        49,
+        51
+      ],
+      "colors": {
+        "#9BCE7A": "OUTFIT",
+        "#8ABE69": "OUTFIT_DARK",
+        "#76AB5F": "OUTFIT_DEEP"
+      }
+    },
+    "necklace": {
+      "source": "45972-girl.svg",
+      "nodes": [
+        5,
+        23,
+        25,
+        27,
+        30
+      ],
+      "colors": {
+        "#00858A": "OUTFIT_DEEP",
+        "#57B9DD": "OUTFIT",
+        "#43A0C5": "OUTFIT_DARK"
+      }
+    },
+    "team_tee": {
+      "source": "66797-boy.svg",
+      "nodes": [
+        7,
+        18,
+        20,
+        22,
+        24
+      ],
+      "colors": {
+        "#F23F44": "OUTFIT_DARK",
+        "#FF4F4F": "OUTFIT",
+        "#C93F44": "OUTFIT_DEEP"
+      }
+    },
+    "cardigan": {
+      "source": "66829-girl.svg",
+      "nodes": [
+        10,
+        11,
+        12
+      ],
+      "colors": {
+        "#FF6473": "OUTFIT_LIGHT",
+        "#8DB9E2": "OUTFIT",
+        "#6AA2DE": "OUTFIT_DARK"
+      }
+    },
+    "polo": {
+      "source": "83069-boy.svg",
+      "nodes": [
+        2,
+        9,
+        11,
+        13,
+        26
+      ],
+      "colors": {
+        "#4E87BB": "OUTFIT_DEEP",
+        "#8DB9E2": "OUTFIT",
+        "#6AA2DE": "OUTFIT_DARK"
+      }
+    },
+    "varsity": {
+      "source": "45943-boy.svg",
+      "nodes": [
+        15,
+        17,
+        19,
+        21,
+        23,
+        25,
+        27,
+        29
+      ],
+      "colors": {
+        "#8DB9E2": "OUTFIT",
+        "#6AA2DE": "OUTFIT_DARK",
+        "#9BCE7A": "OUTFIT_LIGHT",
+        "#8ABE69": "OUTFIT_LIGHT",
+        "#76AB5F": "OUTFIT_DEEP"
+      }
+    },
+    "tee_round": {
+      "source": "31119-girl.svg",
+      "nodes": [
+        9,
+        23,
+        25,
+        27
+      ],
+      "colors": {
+        "#00BEA4": "OUTFIT",
+        "#00AB9A": "OUTFIT_DARK"
+      }
+    },
+    "shirt_stripes": {
+      "source": "65104-boy.svg",
+      "nodes": [
+        12,
+        15,
+        16,
+        18,
+        19
+      ],
+      "colors": {
+        "#95B995": "OUTFIT",
+        "#79A67C": "OUTFIT_DARK"
+      }
+    },
+    "hoodie_zip": {
+      "source": "127797-boy.svg",
+      "nodes": [
+        20,
+        22,
+        24
+      ],
+      "colors": {
+        "#FFA64E": "OUTFIT",
+        "#FF8C51": "OUTFIT_DARK"
+      }
+    },
+    "hoodie_patch": {
+      "source": "45966-boy.svg",
+      "nodes": [
+        13,
+        14,
+        15,
+        16,
+        18
+      ],
+      "colors": {
+        "#FFA64E": "OUTFIT",
+        "#FFDD8B": "OUTFIT_LIGHT",
+        "#F0C578": "OUTFIT_DEEP"
+      }
+    },
+    "hoodie_stripes": {
+      "source": "45966-boy.svg",
+      "nodes": [
+        13,
+        14,
+        15,
+        16,
+        18
+      ],
+      "colors": {
+        "#FFA64E": "OUTFIT",
+        "#FFDD8B": "OUTFIT_LIGHT",
+        "#F0C578": "OUTFIT_DEEP"
+      }
+    }
   }
 }

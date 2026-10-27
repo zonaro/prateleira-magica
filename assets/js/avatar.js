@@ -14,19 +14,21 @@
   const hairStyles = [
     ['puffs', 'Maria-chiquinha'], ['short', 'Curtinho'], ['side', 'De lado'],
     ['long', 'Longo ondulado'], ['curly', 'Cacheado'], ['afro', 'Afro'],
-    ['braids', 'Trancinhas'], ['ponytail', 'Rabos de cavalo'], ['cap', 'Boné'],
+    ['braids', 'Trancinhas'], ['ponytail', 'Rabos de cavalo'], ['ponytail_bow', 'Rabos com laços'],
+    ['cap', 'Boné'],
     ['bob', 'Chanel'], ['straight', 'Chanel loiro'], ['waves', 'Ondulado'],
     ['flower_braids', 'Flor lateral'], ['mohawk', 'Moicano'], ['undercut', 'Topete lateral'],
     ['bow', 'Laços laterais'], ['quiff', 'Topete alto'], ['flower_bob', 'Chanel com flor'],
-    ['flower_long', 'Longo com flor'], ['medium_waves', 'Ondas médias'],
-    ['side_sweep', 'Franja longa'], ['ringlets', 'Cachos curtinhos']
+    ['flower_heart', 'Coração floral'], ['flower_long', 'Longo com flor'], ['medium_waves', 'Ondas médias'],
+    ['side_sweep', 'Franja longa'], ['ringlets', 'Cachos curtinhos'], ['mullet', 'Mullets']
   ];
   const outfitStyles = [
-    ['hoodie', 'Moletom'], ['tee', 'Camiseta'], ['dress', 'Regata estampada'],
-    ['overalls', 'Regata'], ['jacket', 'Jaqueta'], ['jersey', 'Esportivo'],
+    ['hoodie', 'Moletom'], ['hoodie_zip', 'Moletom zíper'], ['hoodie_patch', 'Moletom com patch'], ['hoodie_stripes', 'Moletom listrado'],
+    ['tee', 'Camiseta'], ['tee_round', 'Camiseta redonda'], ['dress', 'Vestido'],
+    ['overalls', 'Macacão'], ['jacket', 'Jaqueta'], ['jersey', 'Esportivo'], ['varsity', 'Camiseta universitária'],
     ['blouse', 'Blusa'], ['coat', 'Casaco'],
     ['tank', 'Regata básica'], ['sports_tee', 'Camiseta de treino'],
-    ['collared', 'Camisa social'], ['bib', 'Jardineira divertida'],
+    ['collared', 'Camisa social'], ['shirt_stripes', 'Camisa listrada'], ['bib', 'Jardineira divertida'],
     ['sleeveless', 'Blusa sem mangas'], ['patterned', 'Estampada de bolinhas'],
     ['necklace', 'Blusa com colar'], ['team_tee', 'Camiseta de time'],
     ['cardigan', 'Cardigã'], ['polo', 'Polo']

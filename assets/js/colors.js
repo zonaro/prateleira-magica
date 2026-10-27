@@ -12,12 +12,15 @@
   ];
   const ids = new Set(moods.map(([id]) => id));
   const swatches = [
-    ['#ff0000', 'Vermelho'], ['#ff7300', 'Laranja'], ['#ffcb00', 'Amarelo'],
-    ['#53b949', 'Verde'], ['#078bca', 'Azul'], ['#5338ae', 'Roxo'],
-    ['#f44e9a', 'Rosa'], ['#71402b', 'Marrom'], ['#161923', 'Preto'],
-    ['#ffffff', 'Branco'], ['#969696', 'Cinza'], ['#41ccba', 'Turquesa'],
-    ['#a5c637', 'Verde-limão'], ['#b77ddb', 'Lilás'], ['#f9a66a', 'Coral'],
-    ['#9bcff5', 'Azul-claro'], ['#f3dbac', 'Bege'], ['#cf8d3d', 'Ocre']
+    ['#ff0000', 'Vermelho'], ['#00ff00', 'Verde'], ['#0000ff', 'Azul'],
+    ['#ffff00', 'Amarelo'], ['#ff00ff', 'Magenta'], ['#00ffff', 'Ciano'],
+    ['#000000', 'Preto'], ['#ffffff', 'Branco'],
+    ['#ff7300', 'Laranja'], ['#ffcb00', 'Amarelo-laranja'], ['#53b949', 'Verde'],
+    ['#078bca', 'Azul'], ['#5338ae', 'Roxo'], ['#f44e9a', 'Rosa'],
+    ['#71402b', 'Marrom'], ['#161923', 'Preto'], ['#969696', 'Cinza'],
+    ['#41ccba', 'Turquesa'], ['#a5c637', 'Verde-limão'], ['#b77ddb', 'Lilás'],
+    ['#f9a66a', 'Coral'], ['#9bcff5', 'Azul-claro'], ['#f3dbac', 'Bege'],
+    ['#cf8d3d', 'Ocre']
   ];
   const validHex = (value) => /^#[\da-f]{6}$/i.test(value || '');
   const hex = (value) => {
@@ -100,6 +103,20 @@
     for (let i = 0; i < 12 && contrastWithWhite(result) < 4.5; i++) result = mix(result, '#16283c', .17);
     return result;
   }
+  function temperature(color) {
+    if (!validHex(color)) return '';
+    try {
+      if (typeof window.temperature === 'function') {
+        const result = window.temperature(color);
+        return result ? String(result) : '';
+      }
+      if (window.NameToColor && typeof window.NameToColor.temperature === 'function') {
+        const result = window.NameToColor.temperature(color);
+        return result ? String(result) : '';
+      }
+    } catch { /* Ignora falhas e não exibe temperatura. */ }
+    return '';
+  }
   function applyTheme(mood) {
     const root = document.documentElement;
     const colors = palette(mood);
@@ -126,5 +143,5 @@
     applyTheme(preferences.load().themeMood);
     document.addEventListener('livrinhos:protagonist-changed', () => applyTheme(preferences.load().themeMood));
   }
-  window.LivrinhoColors = { moods, swatches, ids, hex, validHex, mix, name, palette, harmonies, applyTheme };
+  window.LivrinhoColors = { moods, swatches, ids, hex, validHex, mix, name, palette, harmonies, temperature, applyTheme };
 })();

@@ -12,7 +12,7 @@
       <div class="color-explorer-top">
         <div class="color-explorer-preview" data-color-preview aria-hidden="true">✦</div>
         <div class="color-explorer-description"><span class="color-mini-label">MINHA COR MÁGICA</span>
-          <strong data-color-name aria-live="polite">Rosa</strong><span data-color-hex>#f44e9a</span>
+          <strong data-color-name aria-live="polite">Rosa</strong><div class="color-explorer-meta"><span data-color-hex>#f44e9a</span><span data-color-temp class="color-explorer-temp"></span></div>
           <button type="button" data-hear-color aria-label="Ouvir nome da cor">🔊 Ouvir esta cor</button></div>
       </div>
       <div class="color-explorer-pickers">
@@ -48,15 +48,35 @@
       button.addEventListener('click', () => updateColor(hex, '', `Você escolheu ${name}!`));
       $('[data-color-quick]').append(button);
     }
+    function temperatureLabel(temp) {
+      const value = String(temp || '').toLowerCase();
+      if (!value) return '';
+      if (value.includes('veryhot')) return 'Muito quente';
+      if (value.includes('hot')) return 'Quente';
+      if (value.includes('neutralhot')) return 'Neutro-quente';
+      if (value.includes('neutralcold')) return 'Neutro-frio';
+      if (value.includes('cold')) return 'Frio';
+      if (value.includes('verycold')) return 'Muito frio';
+      if (value.includes('neutral')) return 'Neutro';
+      return temp;
+    }
     function updateColor(color, word = '', feedback = '') {
       if (!colors.validHex(color)) return;
       current = color.toLowerCase();
       $('[data-color-preview]').style.background = current;
-      $('[data-color-name]').textContent = colors.name(current);
+      const name = colors.name(current);
+      $('[data-color-name]').textContent = name;
       $('[data-color-hex]').textContent = current.toUpperCase();
+      const tempEl = $('[data-color-temp]');
+      if (tempEl) {
+        const temp = colors.temperature ? colors.temperature(current) : '';
+        const label = temperatureLabel(temp);
+        tempEl.textContent = label ? `• Temperatura: ${label.toLowerCase()}` : '';
+        tempEl.style.display = label ? 'inline' : 'none';
+      }
       $('[data-color-picker]').value = current;
       $('[data-color-word]').value = word;
-      $('[data-color-feedback]').textContent = feedback || `Essa cor parece ${colors.name(current).toLowerCase()}.`;
+      $('[data-color-feedback]').textContent = feedback || `Essa cor parece ${name.toLowerCase()}.`;
       for (const button of $('[data-color-quick]').children) {
         const selected = button.dataset.color.toLowerCase() === current;
         button.setAttribute('aria-pressed', String(selected));
@@ -76,12 +96,14 @@
         const swatchRow = document.createElement('div');
         swatchRow.className = 'color-harmony-swatches';
         for (const hex of harmony.colors) {
+          if (!hex) continue;
           const swatch = document.createElement('button');
           swatch.type = 'button';
           swatch.style.background = hex;
-          swatch.title = `${colors.name(hex)} · ${hex}`;
-          swatch.setAttribute('aria-label', `Escolher ${colors.name(hex)} (${hex})`);
-          swatch.addEventListener('click', () => updateColor(hex, '', `Agora vamos descobrir a cor ${colors.name(hex).toLowerCase()}!`));
+          const colorName = colors.name(hex);
+          swatch.title = `${colorName} · ${String(hex).toUpperCase()}`;
+          swatch.setAttribute('aria-label', `Escolher ${colorName} (${String(hex).toUpperCase()})`);
+          swatch.addEventListener('click', () => updateColor(hex, '', `Agora vamos descobrir a cor ${colorName.toLowerCase()}!`));
           swatchRow.append(swatch);
         }
         card.append(title, text, swatchRow);
@@ -100,7 +122,8 @@
     });
     moodSelect.addEventListener('change', () => { mood = moodSelect.value; renderHarmonies(); });
     $('[data-hear-color]').addEventListener('click', () => {
-      narrator?.play(`Esta cor se chama ${colors.name(current)}.`, { lang: 'pt-BR', rate: .77, pitch: 1.08 });
+      const name = colors.name(current);
+      narrator?.play(`Esta cor se chama ${name}.`, { lang: 'pt-BR', rate: .77, pitch: 1.08 });
     });
     updateColor(current);
     return section;
