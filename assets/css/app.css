@@ -775,3 +775,127 @@ html[data-color-theme] .profile-tabs{border-color:var(--outline);background:var(
     display:block;
   }
 }
+
+/* Enhanced theme application */
+.theme-enhanced body,
+.theme-enhanced .shelf-page,
+.theme-enhanced .landing-page,
+.theme-enhanced .profile-screen,
+.theme-enhanced .settings-screen {
+  background: radial-gradient(circle at 18% 5%, var(--theme-gradient-start, #f7ddeb) 0, transparent 40%),
+              radial-gradient(circle at 82% 15%, var(--theme-gradient-mid, #e8dffc) 0, transparent 35%),
+              radial-gradient(circle at 50% 100%, var(--theme-gradient-end, #ffdfbb) 0, transparent 45%),
+              var(--theme-bg, #faf3e8) !important;
+}
+
+.theme-enhanced .shelf-shell,
+.theme-enhanced .landing-page .shelf-shell,
+.theme-enhanced .profile-main,
+.theme-enhanced .settings-page-shell {
+  background: transparent;
+}
+
+.theme-enhanced .shelf-header,
+.theme-enhanced .site-header,
+.theme-enhanced .settings-site-header {
+  background: linear-gradient(90deg, var(--theme-surface, #fffaf4) 0%, var(--theme-card, #ffffff) 100%);
+  border-radius: 20px;
+  padding: 12px 24px;
+  margin-top: 16px;
+  box-shadow: 0 8px 24px rgba(120, 90, 120, 0.12);
+  border: 1px solid var(--theme-border, #e9dece);
+}
+
+.theme-enhanced .shelf-brand,
+.theme-enhanced .page-title {
+  color: var(--theme-text, #3d4268) !important;
+}
+
+.theme-enhanced .shelf-hero,
+.theme-enhanced .landing-hero {
+  background: var(--theme-hero) !important;
+  box-shadow: 0 20px 50px rgba(120, 90, 140, 0.18);
+}
+
+.theme-enhanced .book-card,
+.theme-enhanced .benefit-card,
+.theme-enhanced .story-preview-card,
+.theme-enhanced .donation-card,
+.theme-enhanced .faq-item,
+.theme-enhanced .profile-identity,
+.theme-enhanced .profile-book-card,
+.theme-enhanced .settings-screen .preferences-form,
+.theme-enhanced .profile-backup {
+  background: linear-gradient(180deg, var(--theme-surface, #fffaf4) 0%, var(--theme-card, #ffffff) 100%) !important;
+  border-color: var(--theme-border, #efe4da) !important;
+  box-shadow: 0 14px 36px rgba(110, 80, 120, 0.16);
+}
+
+.theme-enhanced .shelf-section,
+.theme-enhanced .landing-section {
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 28px;
+  padding: clamp(32px, 5vw, 48px);
+  margin: 32px 0;
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--theme-border, #e9dece);
+}
+
+.theme-enhanced .section-topline h2,
+.theme-enhanced .landing-hero h1,
+.theme-enhanced .donation-copy h2,
+.theme-enhanced .landing-cta-box h2,
+.theme-enhanced .benefit-card h3,
+.theme-enhanced .faq-item summary {
+  color: var(--theme-text, #3d4268) !important;
+}
+
+.theme-enhanced .section-kicker,
+.theme-enhanced .hero-kicker {
+  color: var(--theme-accent, #ab5b91) !important;
+}
+
+.theme-enhanced .hero-button,
+.theme-enhanced .landing-center .hero-button,
+.theme-enhanced .landing-cta-box .hero-button {
+  background: linear-gradient(135deg, var(--theme-accent, #f76e96) 0%, var(--pink-dark, #df4f7f) 100%) !important;
+  box-shadow: 0 8px 0 rgba(223, 79, 127, 0.6);
+  border: none;
+}
+
+.theme-enhanced .customize-action,
+.theme-enhanced .profile-action,
+.theme-enhanced .landing-secondary {
+  background: linear-gradient(90deg, var(--theme-soft, #f9eefb) 0%, var(--theme-surface, #ffffff) 100%) !important;
+  border-color: var(--theme-border, #e5d5e9) !important;
+  color: var(--violet, #8655a5) !important;
+}
+
+.theme-enhanced .site-footer {
+  background: linear-gradient(90deg, var(--theme-surface, #fffaf4) 0%, var(--theme-card, #ffffff) 100%);
+  border-radius: 20px 20px 0 0;
+  padding: 24px 32px;
+  margin-top: 40px;
+  border: 1px solid var(--theme-border, #e9dece);
+  border-bottom: none;
+}
+
+.theme-enhanced .bookshelf {
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      var(--theme-border, #c4a484) 0px,
+      var(--theme-border, #c4a484) 8px,
+      mix(var(--theme-border), #000, 10%) 8px,
+      mix(var(--theme-border), #000, 10%) 12px,
+      transparent 12px,
+      transparent 150px
+    ) !important;
+  border-color: var(--theme-border, #a0825c) !important;
+}
+
+.theme-enhanced .shelf-footnote {
+  background: linear-gradient(90deg, var(--theme-highlight, #fff2d5) 0%, var(--theme-soft, #fdf0e0) 100%) !important;
+  color: mix(var(--theme-text), #8a6d5a, 40%) !important;
+  border: 1px solid var(--theme-border, #f2e0c8);
+}

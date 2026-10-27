@@ -1,6 +1,4 @@
-/* Integração offline com a biblioteca original NameToColor (zonaro/NameToColor).
- * Os dois arquivos originais são carregados antes deste adaptador.
- */
+/* Integração offline com a biblioteca original NameToColor (zonaro/NameToColor). */
 (() => {
   'use strict';
   const moods = [
@@ -40,7 +38,6 @@
   }
   function closestFriendlyName(color) {
     const [r, g, b] = rgb(color);
-    // Distância ponderada: aproxima as cores que crianças reconhecem pelo nome.
     return swatches.reduce((best, [sample, name]) => {
       const [sr, sg, sb] = rgb(sample);
       const redMean = (r + sr) / 2;
@@ -54,8 +51,6 @@
     try {
       const brazilian = window.nameToColorPtBRPack?.colorNames || {};
       const translated = new Set(Object.values(brazilian).flat());
-      // O NameToColor sabe o nome exato ou o mais próximo. Quando o resultado
-      // não está traduzido, procuramos o tom próximo dentre os 181 tons pt-BR.
       const exact = window.colorName(color, 'pt-BR');
       if (exact && translated.has(exact)) return exact;
       const closest = window.closestName(color, 'pt-BR');
@@ -85,10 +80,10 @@
   function harmonies(color, mood = 'Fun') {
     const base = validHex(color) ? color : '#f44e9a';
     return [
-      { id: 'monochrome', title: '🎨 Uma família de cores', description: 'A mesma cor vestida de clarinho e escurinho. São irmãs da mesma família!', colors: window.generateMonochrome(base, 5) },
-      { id: 'triadic', title: '🔺 Três amigas', description: 'Três amigas espalhadas pela roda das cores. Cada uma brilha sem brigar com a outra!', colors: window.generateTriadic(base) },
-      { id: 'complementary', title: '🧲 Uma dupla diferente', description: 'Duas cores de lados opostos da roda. Juntas fazem uma festa de contrastes!', colors: [base, window.generateComplementary(base)] },
-      { id: 'mood', title: '💖 Cores com sentimentos', description: 'É como escolher a música da aventura: uma paleta alegre, calma ou misteriosa muda o clima!', colors: palette(mood) || palette('Fun') }
+      { id: 'monochrome', title: '🎨 Uma família de cores', description: 'A mesma cor vestida de clarinho e escurinho.', colors: window.generateMonochrome(base, 5) },
+      { id: 'triadic', title: '🔺 Três amigas', description: 'Três cores em harmonia.', colors: window.generateTriadic(base) },
+      { id: 'complementary', title: '🧲 Uma dupla diferente', description: 'Cores contrastantes.', colors: [base, window.generateComplementary(base)] },
+      { id: 'mood', title: '💖 Cores com sentimentos', description: 'Paleta com o clima escolhido.', colors: palette(mood) || palette('Fun') }
     ];
   }
   function contrastWithWhite(color) {
@@ -114,7 +109,7 @@
         const result = window.NameToColor.temperature(color);
         return result ? String(result) : '';
       }
-    } catch { /* Ignora falhas e não exibe temperatura. */ }
+    } catch { }
     return '';
   }
   function applyTheme(mood) {
@@ -122,21 +117,40 @@
     const colors = palette(mood);
     root.toggleAttribute('data-color-theme', Boolean(colors));
     const properties = ['--ink', '--muted', '--pink', '--pink-dark', '--violet', '--cyan', '--outline',
-      '--theme-page', '--theme-hero', '--theme-card', '--theme-soft', '--theme-accent', '--theme-text'];
-    if (!colors) { for (const property of properties) root.style.removeProperty(property); return; }
+      '--theme-page', '--theme-hero', '--theme-card', '--theme-soft', '--theme-accent', '--theme-text',
+      '--theme-bg', '--theme-surface', '--theme-border', '--theme-highlight', '--theme-gradient-start', '--theme-gradient-mid', '--theme-gradient-end'];
+    if (!colors) { 
+      for (const property of properties) root.style.removeProperty(property); 
+      // Remove aggressive classes
+      document.body.classList.remove('theme-enhanced');
+      return; 
+    }
     const accent = readableAccent(colors[1]);
     const emphasis = readableAccent(colors[2]);
     const values = {
-      '--ink': mix(colors[0], '#1b293a', .65), '--muted': mix(colors[0], '#617181', .62),
-      '--pink': accent, '--pink-dark': emphasis, '--violet': readableAccent(colors[3]),
-      '--cyan': readableAccent(colors[2]), '--outline': mix(colors[3], '#ffffff', .67),
+      '--ink': mix(colors[0], '#1b293a', .65), 
+      '--muted': mix(colors[0], '#617181', .62),
+      '--pink': accent, 
+      '--pink-dark': emphasis, 
+      '--violet': readableAccent(colors[3]),
+      '--cyan': readableAccent(colors[2]), 
+      '--outline': mix(colors[3], '#ffffff', .67),
       '--theme-page': mix(colors[4], '#fff9f1', .76),
-      '--theme-hero': `linear-gradient(135deg,${mix(colors[1], '#ffffff', .78)},${mix(colors[3], '#ffffff', .74)},${mix(colors[2], '#ffffff', .81)})`,
-      '--theme-card': mix(colors[4], '#ffffff', .9),
-      '--theme-soft': mix(colors[3], '#ffffff', .81),
-      '--theme-accent': accent, '--theme-text': mix(colors[0], '#223048', .65)
+      '--theme-hero': `linear-gradient(135deg,${mix(colors[1], '#ffffff', .72)},${mix(colors[3], '#ffffff', .68)},${mix(colors[2], '#ffffff', .75)})`,
+      '--theme-card': mix(colors[4], '#ffffff', .88),
+      '--theme-soft': mix(colors[3], '#ffffff', .78),
+      '--theme-accent': accent, 
+      '--theme-text': mix(colors[0], '#223048', .65),
+      '--theme-bg': mix(colors[4], '#fdf7f0', .82),
+      '--theme-surface': mix(colors[4], '#ffffff', .92),
+      '--theme-border': mix(colors[3], '#e8dcd0', .60),
+      '--theme-highlight': mix(colors[2], '#ffffff', .70),
+      '--theme-gradient-start': mix(colors[1], '#ffffff', .65),
+      '--theme-gradient-mid': mix(colors[3], '#ffffff', .62),
+      '--theme-gradient-end': mix(colors[2], '#ffffff', .68)
     };
     Object.entries(values).forEach(([key, value]) => root.style.setProperty(key, value));
+    document.body.classList.add('theme-enhanced');
   }
   const preferences = window.LivrinhoPreferences;
   if (preferences) {
