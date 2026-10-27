@@ -39,6 +39,7 @@ jobs:
           node tests/pix-landing.test.mjs
           node tests/avatar-photo.test.mjs
           node tests/avatar-photo-enhancements.test.mjs
+          node tests/avatar-photo-picker.test.mjs
           node tests/avatar-photo-availability.test.mjs
           node tests/progression.test.mjs
           node tests/page-turn.test.mjs
