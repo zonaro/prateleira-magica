@@ -598,7 +598,6 @@
   // A análise não salva a foto: só transfere campos reconhecidos para o draft.
   // Reaproveitar edit() garante undo, auto-save e refresh de todos os SVGs.
   avatarPhoto?.mount({
-    editor,
     onApply: (result) => {
       edit('avatar-photo', () => {
         const next = {
