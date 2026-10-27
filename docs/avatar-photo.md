@@ -3,8 +3,20 @@
 ## Arquitetura
 
 O projeto é estático e usa **HTML + JavaScript vanilla**, sem React, bundler
-ou backend. A opção **📷 Criar pela minha foto** aparece em
-`perfil.html#personalizar`, na interface gerada por `assets/js/settings-ui.js`.
+ou backend. A opção **📷 Minha foto** aparece como a quarta aba de `perfil.html`, ao lado de
+**Meu perfil**, **Personagens prontos** e **Personalizar**. A aba inicia
+oculta e só aparece depois da confirmação de que os **sete recursos locais**
+(bundle JS, arquivos WASM e ambos os modelos) estão disponíveis no domínio
+do site ou no cache do PWA. Se faltar um deles, ela não aparece. Um link
+direto para `perfil.html#foto` retorna a `#personalizar` se os recursos não
+estiverem acessíveis. A checagem usa `HEAD` sem descarregar modelos grandes
+só para verificar a disponibilidade. A conexão/restauração do Service Worker
+permite reavaliar os recursos. A interação é uma tela própria, **sem pop-up**.
+
+O texto apresentado à criança usa linguagem lúdica, solicita expressamente
+ajuda de um adulto e explica que a foto será descartada após a criação.
+O editor `assets/js/settings-ui.js` ainda recebe o resultado para preservar
+undo, autosave e todos os dados existentes.
 
 O processo é inteiramente client-side:
 
@@ -68,7 +80,8 @@ node tools/vendor-mediapipe.mjs
 python3 -m http.server 8000
 ```
 
-Abra `http://localhost:8000/perfil.html#personalizar`. A câmera exige
+Abra `http://localhost:8000/perfil.html#foto` após o carregamento dos
+modelos. A câmera exige
 HTTPS ou localhost e permissão explícita. Abrir arquivos `file://` não serve.
 
 ### Testar
@@ -76,6 +89,7 @@ HTTPS ou localhost e permissão explícita. Abrir arquivos `file://` não serve.
 ```sh
 node tools/vendor-mediapipe.mjs
 node tests/avatar-photo.test.mjs
+node tests/avatar-photo-availability.test.mjs
 node tests/verify.mjs
 node tests/offline.test.mjs
 ```
@@ -86,6 +100,9 @@ produção.
 
 ### Offline
 
+A aba só aparece quando os recursos estão publicados na origem ou disponíveis
+integralmente no Cache Storage. Uma instalação sem rede nem cache suficiente
+não mostra a aba. Após a instalação completa, ela fica acessível offline.
 O Service Worker do PWA baixa os arquivos do MediaPipe para o Cache Storage
 durante a instalação/atualização, separadamente do núcleo do app. Assim, um
 erro/quota insuficiente para ~dezenas de MB de modelos **não impede a
