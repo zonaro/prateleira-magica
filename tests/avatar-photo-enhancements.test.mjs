@@ -36,8 +36,11 @@ for(const [w,h] of [[1200,1600],[2000,950],[420,1100]]) {
   assert(r.width<Math.min(w,h*.8));
   state.cx=-100;state.cy=100;r=crop.rect(state);
   assert(r.x>=0&&r.y>=0&&r.x+r.width<=w+1e-6&&r.y+r.height<=h+1e-6);
-  const next=crop.pan(state,40,-20,360,450);
-  assert(next.cx<state.cx&&next.cy>state.cy);
+  const normal=crop.make(w,h);normal.zoom=3;
+  const next=crop.pan(normal,40,-20,360,450);
+  assert(next.cx<normal.cx&&next.cy>normal.cy);
+  assert(crop.pan(normal,99999,99999,360,450).cx>=0,
+    'O arraste não pode deixar o centro fora da imagem');
 }
 const calls=[];crop.draw({fake:'image'},crop.make(1200,1600),{drawImage:(...args)=>calls.push(args)},512,640);
 assert.equal(calls.length,1);assert.equal(calls[0][7],512);assert.equal(calls[0][8],640);
