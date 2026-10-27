@@ -36,6 +36,10 @@
   const bottomStyles = avatarCatalog.bottomStyles;
   const petStyles = avatarCatalog.petStyles;
   let draft = preferences.load();
+  let lastSaved = preferences.clean(draft);
+  const undoHistory = [];
+  let lastEditGroup = '';
+  let lastEditAt = 0;
   let pronunciationTouched = false;
 
   const dialog = editor;
@@ -45,17 +49,18 @@
         <div class="avatar-editor"><div class="avatar-stage" id="avatarStage"></div>
           <div class="settings-preview-label"><strong id="previewName">Meu personagem</strong><span>⭐ Sua estrela!</span></div>
         </div>
-        <p class="settings-preview-help">O personagem acompanha suas escolhas enquanto você explora a página.</p>
+        <div class="editor-history-tools"><button id="undoSettings" type="button" disabled>↶ Desfazer</button>
+          <span id="autoSaveStatus" role="status" aria-live="polite">✓ Tudo guardado!</span></div>
       </aside>
     <form class="preferences-form" id="avatarSettingsForm">
       <div class="preferences-heading">
-        <div><div class="section-kicker">NOSSA ESTRELA</div><h2 id="settingsTitle">Personalizar protagonista ✨</h2></div>
+        <div><div class="section-kicker">NOSSA ESTRELA</div><h2 id="settingsTitle">Crie seu personagem ✨</h2></div>
         <a class="settings-close" id="closeSettings" aria-label="Ir para Meu perfil" href="${returnUrl}">🏅 Meu perfil</a>
       </div>
       <p class="settings-intro">Monte seu personagem combinando cabelos, roupas e cores. Ele aparecerá nas ilustrações de todos os livros!</p>
       <div class="preferences-content">
         <div class="preferences-fields">
-          <label class="field-label" for="childName">Nome da criança</label>
+          <label class="field-label" for="childName">Meu nome</label>
           <input id="childName" name="childName" type="text" maxlength="32" autocomplete="off" placeholder="Ex.: Ellie" required>
           <label class="field-label" for="childPronunciation">Como a voz deve pronunciar o nome?</label>
           <div class="pronunciation-input-row">
@@ -66,7 +71,7 @@
           <label class="field-label" for="birthDate">Data de nascimento</label>
           <input id="birthDate" name="birthDate" type="date" aria-describedby="birthAgeHint">
           <p id="birthAgeHint" class="field-help">Opcional. A idade pode personalizar os próximos livros.</p>
-          <fieldset class="gender-fieldset"><legend>Gênero e pronomes</legend>
+          <fieldset class="gender-fieldset"><legend>Como os livros vão falar de você?</legend>
             <label><input type="radio" name="childGender" value="masculino"><span>Masculino<small>ele / dele</small></span></label>
             <label><input type="radio" name="childGender" value="feminino"><span>Feminino<small>ela / dela</small></span></label>
             <label><input type="radio" name="childGender" value="neutro"><span>Neutro<small>elu / delu</small></span></label>
@@ -101,7 +106,7 @@
       </div>
       <section class="magic-color-maker" aria-labelledby="magicColorTitle">
         <h3 id="magicColorTitle">✨ Invente uma cor com palavras!</h3>
-        <p>Escreva uma cor, um sentimento ou uma palavra maluca. O NameToColor transforma letras em uma cor mágica, sempre igual para a mesma palavra!</p>
+        <p>Escreva uma cor, um sentimento ou uma palavra maluca e veja que cor aparece! A mesma palavra sempre cria a mesma cor.</p>
         <label for="magicColorWord">Minha palavra mágica</label>
         <input id="magicColorWord" type="text" maxlength="120" placeholder="Ex.: girassol, lilás, abraço…" autocomplete="off">
         <div class="magic-color-result">
@@ -120,25 +125,25 @@
       </section>
       <section class="mood-theme-maker" aria-labelledby="themeMoodTitle">
         <h3 id="themeMoodTitle">🌈 Meu mundo, minhas cores!</h3>
-        <p>Escolha o sentimento das cores do aplicativo inteiro. Cada clima tem uma paleta especial do NameToColor.</p>
+        <p>Que tal dar um novo clima para a prateleira? Escolha as cores que combinam com seu dia!</p>
         <label for="themeMood">Qual o clima da sua prateleira?</label>
         <select id="themeMood"><option value="">💗 Original da Prateleira Mágica</option></select>
         <div id="themeMoodSwatches" class="theme-mood-swatches" aria-label="Prévia da paleta"></div>
         <button id="applyThemeAvatar" type="button">✨ Vestir meu personagem com esta paleta</button>
         <p class="theme-avatar-hint">Só cabelo, roupa, calça/shorts/saia e sapatos mudam. <strong>A cor da pele continua como você escolheu.</strong></p>
       </section>
-      <section class="profile-backup" aria-label="Backup do personagem">
-        <h3>💾 Guarde seu personagem</h3>
-        <p>Baixe o personagem como uma imagem SVG. Ela também guarda nome, pronúncia, nascimento, pronomes, pelúcia e conquistas dos livros para recuperar tudo depois.</p>
+      <section class="profile-backup" aria-label="Guardar e recuperar perfil">
+        <h3>💾 Leve suas aventuras com você!</h3>
+        <p>Guarde seu perfil para usar em outro celular ou computador. Ele leva seu personagem, seu nome, suas pelúcias e todas as medalhas!</p>
         <div class="profile-backup-actions">
-          <button id="downloadProfile" type="button">↓ Baixar personagem SVG</button>
-          <button id="importProfile" type="button">↑ Importar personagem SVG</button>
+          <button id="downloadProfile" type="button">↓ Exportar perfil</button>
+          <button id="importProfile" type="button">↑ Importar perfil</button>
         </div>
-        <input id="profileFile" type="file" accept=".svg,image/svg+xml" hidden aria-label="Selecionar backup SVG da criança">
+        <input id="profileFile" type="file" accept=".svg,image/svg+xml" hidden aria-label="Escolher o perfil guardado">
         <p id="profileBackupStatus" class="profile-backup-status" role="status" aria-live="polite"></p>
       </section>
-      <p class="settings-privacy">🔒 Os dados são locais. Atenção: o arquivo SVG exportado contém o nome e o progresso da criança; compartilhe-o com cuidado.</p>
-      <div class="settings-actions"><button id="resetSettings" type="button" class="settings-reset">Restaurar padrão</button><button type="submit" class="settings-save">Salvar personagem <span aria-hidden="true">✓</span></button></div>
+      <p class="settings-privacy">🔒 Seu nome e suas conquistas ficam guardados neste aparelho. Se compartilhar seu perfil, uma pessoa poderá ver essas informações.</p>
+      <div class="settings-actions"><button id="clearProfile" type="button" class="settings-reset">🧹 Apagar meu perfil e começar de novo</button></div>
     </form>
     </div>`;
 
@@ -262,16 +267,59 @@
       : `🎂 ${years} ano${years === 1 ? '' : 's'} — pronta ou pronto para muitas aventuras!`;
   }
 
-  function fillDialog() {
-    draft = preferences.load();
+  function fillDialog(state = preferences.load()) {
+    draft = preferences.clean(state);
     pronunciationTouched = false;
-    $('#profileBackupStatus').textContent = '';
     nameInput.value = draft.name;
     pronunciationInput.value = draft.pronunciation;
     birthInput.value = draft.birthDate;
     refreshMagicColor();
     $(`input[name="childGender"][value="${draft.gender}"]`).checked = true;
     drawPreview();
+  }
+
+  // Cada mudança é guardada de imediato. O histórico existe somente durante
+  // esta visita à página; digitação/arraste contínuos formam um único passo.
+  function refreshHistory() {
+    $('#undoSettings').disabled = undoHistory.length === 0;
+    $('#autoSaveStatus').textContent = '✓ Tudo guardado!';
+  }
+  function currentDraft() {
+    return preferences.clean({ ...draft, name: nameInput.value,
+      pronunciation: pronunciationInput.value || nameInput.value, birthDate: birthInput.value });
+  }
+  function saveChange(group = '', redraw = true) {
+    const next = currentDraft();
+    if (JSON.stringify(next) === JSON.stringify(lastSaved)) {
+      if (redraw) drawPreview();
+      return;
+    }
+    const now = Date.now();
+    const sameEdit = Boolean(group && group === lastEditGroup && now - lastEditAt < 900 && undoHistory.length);
+    if (!sameEdit) {
+      undoHistory.push(lastSaved);
+      if (undoHistory.length > 100) undoHistory.shift();
+    }
+    lastSaved = preferences.save(next);
+    draft = lastSaved;
+    lastEditGroup = group;
+    lastEditAt = now;
+    if (redraw) drawPreview();
+    refreshHistory();
+  }
+
+  $('#undoSettings').addEventListener('click', () => {
+    if (!undoHistory.length) return;
+    const previous = undoHistory.pop();
+    lastEditGroup = '';
+    lastSaved = preferences.save(previous);
+    fillDialog(lastSaved);
+    refreshHistory();
+    $('#profileBackupStatus').textContent = '↶ Voltamos à escolha anterior!';
+  });
+  function edit(group, change, redraw = true) {
+    change();
+    saveChange(group, redraw);
   }
 
   function addStyles(containerId, entries, field) {
@@ -284,7 +332,7 @@
       button.setAttribute('aria-label', label);
       button.innerHTML = '<span class="style-preview"></span><span class="style-label"></span>';
       button.querySelector('.style-label').textContent = label;
-      button.addEventListener('click', () => { draft[field] = style; drawPreview(); });
+      button.addEventListener('click', () => edit('', () => { draft[field] = style; }));
       container.append(button);
     }
   }
@@ -299,7 +347,7 @@
     none.id = 'noPet';
     none.className = 'pet-choice';
     none.innerHTML = '<span class="pet-image pet-none">💜</span><span>Sem pelúcia</span>';
-    none.addEventListener('click', () => { draft.petId = null; drawPreview(); });
+    none.addEventListener('click', () => edit('', () => { draft.petId = null; }));
     container.append(none);
     for (const [id, name, source] of petStyles) {
       const option = document.createElement('button');
@@ -316,8 +364,7 @@
       option.append(img, caption);
       option.addEventListener('click', () => {
         if (preferences.medalCount(draft) < 2) return;
-        draft.petId = id;
-        drawPreview();
+        edit('', () => { draft.petId = id; });
       });
       container.append(option);
     }
@@ -334,7 +381,7 @@
       button.title = label;
       button.setAttribute('aria-label', label);
       button.style.backgroundColor = color;
-      button.addEventListener('click', () => { draft[field] = color; drawPreview(); });
+      button.addEventListener('click', () => edit('', () => { draft[field] = color; }));
       container.append(button);
     }
   }
@@ -352,62 +399,55 @@
     if (!generatedColor) return;
     const target = $('#magicColorTarget').value;
     if (!['skinColor', 'hairColor', 'outfitColor', 'bottomColor', 'shoeColor'].includes(target)) return;
-    draft[target] = generatedColor;
-    drawPreview();
+    edit('', () => { draft[target] = generatedColor; });
   });
   moodSelect.addEventListener('change', () => {
-    draft.themeMood = moodSelect.value;
-    colors?.applyTheme(draft.themeMood);
-    // O tema vale para todas as páginas, mesmo antes de salvar o avatar.
-    preferences.save({ ...preferences.load(), themeMood: draft.themeMood });
-    drawThemePalette();
+    edit('', () => { draft.themeMood = moodSelect.value; });
   });
   $('#applyThemeAvatar').addEventListener('click', () => {
     const palette = colors?.palette(draft.themeMood) || defaultThemeColors;
-    [draft.hairColor, draft.outfitColor, draft.bottomColor, draft.shoeColor] = palette.slice(0, 4);
-    drawPreview();
+    edit('', () => {
+      [draft.hairColor, draft.outfitColor, draft.bottomColor, draft.shoeColor] = palette.slice(0, 4);
+    });
   });
 
   fillDialog();
+  refreshHistory();
   nameInput.addEventListener('input', () => {
-    draft.name = nameInput.value;
-    $('#previewName').textContent = nameInput.value.trim() || 'Meu personagem';
-    if (!pronunciationTouched) {
-      pronunciationInput.value = nameInput.value;
-      draft.pronunciation = nameInput.value;
-    }
+    edit('name', () => {
+      draft.name = nameInput.value;
+      if (!pronunciationTouched) {
+        pronunciationInput.value = nameInput.value;
+        draft.pronunciation = nameInput.value;
+      }
+      $('#previewName').textContent = nameInput.value.trim() || 'Meu personagem';
+    }, false);
   });
   pronunciationInput.addEventListener('input', () => {
-    pronunciationTouched = true;
-    draft.pronunciation = pronunciationInput.value;
+    edit('pronunciation', () => {
+      pronunciationTouched = true;
+      draft.pronunciation = pronunciationInput.value;
+    }, false);
   });
-  birthInput.addEventListener('change', () => { draft.birthDate = birthInput.value; drawPreview(); });
+  birthInput.addEventListener('change', () => edit('', () => { draft.birthDate = birthInput.value; }));
   for (const option of dialog.querySelectorAll('input[name="childGender"]')) {
-    option.addEventListener('change', () => { draft.gender = option.value; drawPreview(); });
+    option.addEventListener('change', () => edit('', () => { draft.gender = option.value; }));
   }
-  $('#customSkinColor').addEventListener('input', (event) => { draft.skinColor = event.target.value; drawPreview(); });
-  $('#customHairColor').addEventListener('input', (event) => { draft.hairColor = event.target.value; drawPreview(); });
-  $('#customOutfitColor').addEventListener('input', (event) => { draft.outfitColor = event.target.value; drawPreview(); });
-  $('#customBottomColor').addEventListener('input', (event) => { draft.bottomColor = event.target.value; drawPreview(); });
-  $('#customShoeColor').addEventListener('input', (event) => { draft.shoeColor = event.target.value; drawPreview(); });
-  $('#resetSettings').addEventListener('click', () => {
-    draft = { ...preferences.DEFAULTS, achievements: draft.achievements };
-    pronunciationTouched = false;
-    nameInput.value = draft.name;
-    pronunciationInput.value = draft.pronunciation;
-    birthInput.value = draft.birthDate;
-    $(`input[name="childGender"][value="${draft.gender}"]`).checked = true;
-    colors?.applyTheme(draft.themeMood);
-    drawPreview();
+  for (const [inputId, field] of [['customSkinColor', 'skinColor'], ['customHairColor', 'hairColor'],
+    ['customOutfitColor', 'outfitColor'], ['customBottomColor', 'bottomColor'], ['customShoeColor', 'shoeColor']]) {
+    $(`#${inputId}`).addEventListener('input', (event) => edit(field, () => { draft[field] = event.target.value; }));
+  }
+  $('#clearProfile').addEventListener('click', () => {
+    const warning = 'Tem certeza de que quer começar de novo? Seu personagem, seus livros lidos e todas as medalhas serão apagados deste aparelho. Se quiser guardar uma cópia, use “Exportar perfil” primeiro.\n\nVocê ainda poderá tocar em “Desfazer” antes de sair desta página.';
+    if (!window.confirm(warning)) return;
+    fillDialog(preferences.DEFAULTS);
+    saveChange();
+    $('#profileBackupStatus').textContent = '🌱 Começamos de novo! Suas histórias e medalhas foram zeradas.';
   });
-  function currentDraft() {
-    return preferences.clean({ ...draft, name: nameInput.value, pronunciation: pronunciationInput.value || nameInput.value,
-      birthDate: birthInput.value });
-  }
 
   $('#downloadProfile').addEventListener('click', () => {
     try {
-      const saved = preferences.save(currentDraft());
+      const saved = preferences.load();
       const svg = preferences.exportProfileSVG(saved);
       const url = URL.createObjectURL(new Blob([svg], { type: 'image/svg+xml;charset=utf-8' }));
       const link = document.createElement('a');
@@ -419,8 +459,7 @@
       link.click();
       link.remove();
       setTimeout(() => URL.revokeObjectURL(url), 1000);
-      draft = saved;
-      $('#profileBackupStatus').textContent = 'Prontinho! Seu SVG inclui o personagem e as conquistas atuais.';
+      $('#profileBackupStatus').textContent = 'Prontinho! Seu personagem e suas conquistas estão guardados. 🌟';
     } catch (error) {
       $('#profileBackupStatus').textContent = `Não foi possível baixar o perfil: ${error.message}`;
     }
@@ -432,17 +471,17 @@
     if (!file) return;
     try {
       if (!file.name.toLowerCase().endsWith('.svg') || file.size > 1_000_000) {
-        throw Error('Escolha um SVG de perfil com até 1 MB.');
+        throw Error('Escolha um perfil exportado pela Prateleira Mágica.');
       }
       const imported = preferences.parseProfileSVG(await file.text());
-      const message = `Importar o perfil de ${imported.name}? Isso substituirá o personagem e as conquistas guardadas neste navegador.`;
+      const message = `Trazer o perfil de ${imported.name}? O personagem e as medalhas atuais serão substituídos neste aparelho.`;
       if (!window.confirm(message)) {
         $('#profileBackupStatus').textContent = 'Importação cancelada. Seu personagem não foi alterado.';
         return;
       }
-      preferences.save(imported);
-      fillDialog();
-      $('#profileBackupStatus').textContent = `Perfil de ${imported.name} restaurado! Nome, voz, avatar e conquistas recuperados.`;
+      fillDialog(imported);
+      saveChange();
+      $('#profileBackupStatus').textContent = `🌟 Oi, ${imported.name}! Seu personagem e suas medalhas voltaram!`;
     } catch (error) {
       $('#profileBackupStatus').textContent = `Não foi possível importar: ${error.message}`;
     } finally {
@@ -451,8 +490,7 @@
   });
   $('.preferences-form').addEventListener('submit', (event) => {
     event.preventDefault();
-    preferences.save(currentDraft());
-    location.hash = 'conquistas';
+    saveChange();
   });
 
 })();

@@ -88,7 +88,7 @@
         { "kind": "paragraph", "text": "Agora o pincel é seu! Escolha uma bolinha, use o seletor ou digite uma palavra — até uma inventada!" },
         { "kind": "paragraph", "text": "Descubra o nome mais parecido e veja outras cores que podem combinar com ela. Toque no alto-falante para ouvir!" }
       ],
-      "tip": "Palavras iguais sempre geram a mesma cor. É a magia do NameToColor!"
+      "tip": "Palavras iguais sempre criam a mesma cor. Que magia!"
     },
     {
       "type": "story", "illustration": "assets/illustrations/cores/portal.svg", "sticker": "O REINO VOLTOU A BRILHAR",

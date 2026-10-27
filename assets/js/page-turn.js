@@ -8,6 +8,7 @@
   let folding = false;
   let mobile = false;
   let pageWidth = 0;
+  let dragEnabled = true;
 
   function isMobile() { return window.matchMedia('(max-width: 820px)').matches; }
   function physicalPage(logical) { return logical * (mobile ? 1 : 2); }
@@ -19,9 +20,22 @@
       engine = null;
     }
     folding = false;
+    dragEnabled = true;
   }
 
-  function mount(book, pages, logicalIndex, onFlip) {
+  // O motor captura mousedown/touchstart no livro inteiro. Na oficina de cores,
+  // desligamos esses listeners para inputs, seletores e botões receberem os gestos.
+  // A navegação pelos botões/teclado continua usando a animação normalmente.
+  function setDragEnabled(allow) {
+    if (!engine || dragEnabled === allow) return;
+    const ui = engine.getUI?.();
+    if (!ui?.removeHandlers || !ui?.setHandlers) return;
+    if (allow) ui.setHandlers();
+    else ui.removeHandlers();
+    dragEnabled = allow;
+  }
+
+  function mount(book, pages, logicalIndex, onFlip, options = {}) {
     if (!window.St?.PageFlip) throw Error('O mecanismo de páginas não foi carregado.');
     const parent = book.parentNode;
     const nextSibling = book.nextSibling;
@@ -60,11 +74,14 @@
     engine.on('flip', (event) => {
       if (!ready) return;
       folding = false;
-      onFlip(Math.floor(event.data / (mobile ? 1 : 2)));
+      const index = Math.floor(event.data / (mobile ? 1 : 2));
+      setDragEnabled(options.canDragPage?.(index) !== false);
+      onFlip(index);
     });
     engine.loadFromHTML(pages);
     engine.turnToPage(Math.min(pages.length - 1, physicalPage(logicalIndex)));
     ready = true;
+    setDragEnabled(options.canDragPage?.(logicalIndex) !== false);
     return { mobile, pageWidth, height };
   }
 

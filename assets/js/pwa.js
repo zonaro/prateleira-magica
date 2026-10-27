@@ -8,7 +8,7 @@
     if (!status) return;
     const offline = navigator.onLine === false;
     status.classList.toggle('offline', offline);
-    status.textContent = offline ? '● Modo offline' : '● Pronto para ler';
+    status.textContent = offline ? '● Sem internet, pode ler!' : '● Pronto para ler';
   }
   updateConnection();
   window.addEventListener('online', updateConnection);

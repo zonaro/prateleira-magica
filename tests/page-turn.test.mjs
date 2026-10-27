@@ -23,7 +23,15 @@ const host = {
   getBoundingClientRect() { return { width: this.clientWidth }; }
 };
 class PageFlip {
-  constructor(element, options) { this.element = element; this.options = options; this.handlers = {}; PageFlip.last = this; }
+  constructor(element, options) {
+    this.element = element;
+    this.options = options;
+    this.handlers = {};
+    this.ui = { removeHandlers: () => { this.dragHandlers = false; }, setHandlers: () => { this.dragHandlers = true; } };
+    this.dragHandlers = true;
+    PageFlip.last = this;
+  }
+  getUI() { return this.ui; }
   on(name, callback) { this.handlers[name] = callback; }
   loadFromHTML(pages) { this.pages = pages; }
   turnToPage(index) { this.current = index; this.handlers.flip({ data: index }); }
@@ -58,11 +66,17 @@ assert.equal(turn.busy(), false);
 portrait = true;
 host.clientWidth = 360;
 assert(turn.needsResize(host));
-turn.mount(host, Array.from({ length: 4 }, (_, i) => ({ i })), 2, (index) => received.push(index));
+turn.mount(host, Array.from({ length: 4 }, (_, i) => ({ i })), 2, (index) => received.push(index), {
+  canDragPage: (index) => index !== 2
+});
 assert.equal(PageFlip.last.options.usePortrait, true);
 assert.equal(PageFlip.last.current, 2, 'No celular cada página lógica deve ter uma única folha');
+assert.equal(PageFlip.last.dragHandlers, false, 'Laboratório de cores deve soltar os gestos dos campos e botões');
 assert.equal(turn.go(3), true);
 assert.equal(PageFlip.last.current, 3);
+assert.equal(PageFlip.last.dragHandlers, true, 'Ao sair do laboratório, o virar de páginas pelo dedo deve voltar');
+turn.go(2);
+assert.equal(PageFlip.last.dragHandlers, false, 'Retorno ao laboratório deve desligar o arraste novamente');
 reducedMotion = true;
 turn.go(1);
 assert.equal(PageFlip.last.current, 1, 'Movimento reduzido usa mudança instantânea');
@@ -76,6 +90,7 @@ assert(css.includes('.reader-shell .controls{position:fixed'));
 assert(css.includes('.reader-shell .book .stf__wrapper{position:relative;width:100%;height:100%'), 'Sem altura o motor corta a metade superior do livro');
 assert(css.includes('object-fit:contain'), 'SVGs devem ser encaixados sem recorte');
 assert(reader.includes('pageTurn.mount(') && reader.includes('pageTurn.go('));
+assert(reader.includes('canDragPage: (index) => !book.pages[index]?.interactive'));
 assert(reader.includes('if (!canVisit(destination))'), 'Desafio deve bloquear avanço pelo teclado e botões');
 assert(reader.includes('const say = event.target.closest?.(\'[data-say]\')'));
 assert(reader.includes('narrator.pause()') && reader.includes('narrator.resume()'), 'Ouvir deve pausar e continuar sem reiniciar');

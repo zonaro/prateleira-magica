@@ -4,11 +4,11 @@
 (() => {
   'use strict';
   const moods = [
-    ['Vibrant', '🌈 Vibrante'], ['Futuristic', '🚀 Futurista'],
-    ['Fun', '🎉 Divertido'], ['Soft Pastel', '🧁 Pastel suave'],
-    ['Calm', '🌊 Calmo'], ['Vintage', '📻 Retrô'],
-    ['Organic', '🌿 Orgânico'], ['Sophisticated', '✨ Sofisticado'],
-    ['Dark', '🌙 Escuro'], ['Corporate', '💼 Corporativo']
+    ['Vibrant', '🌈 Arco-íris animado'], ['Futuristic', '🚀 Viagem espacial'],
+    ['Fun', '🎉 Dia de festa'], ['Soft Pastel', '🧁 Mundo dos docinhos'],
+    ['Calm', '🌊 Mar tranquilo'], ['Vintage', '📻 Tempos antigos'],
+    ['Organic', '🌿 Jardim encantado'], ['Sophisticated', '✨ Baile elegante'],
+    ['Dark', '🌙 Noite estrelada'], ['Corporate', '💼 Dia de trabalho']
   ];
   const ids = new Set(moods.map(([id]) => id));
   const swatches = [
@@ -82,10 +82,10 @@
   function harmonies(color, mood = 'Fun') {
     const base = validHex(color) ? color : '#f44e9a';
     return [
-      { id: 'monochrome', title: '🎨 Monocromática', description: 'A mesma cor vestida de clarinho e escurinho. São irmãs da mesma família!', colors: window.generateMonochrome(base, 5) },
-      { id: 'triadic', title: '🔺 Triádica', description: 'Três amigas espalhadas pela roda das cores. Cada uma brilha sem brigar com a outra!', colors: window.generateTriadic(base) },
-      { id: 'complementary', title: '🧲 Complementar', description: 'Duas cores de lados opostos da roda. Juntas fazem uma festa de contrastes!', colors: [base, window.generateComplementary(base)] },
-      { id: 'mood', title: '💖 Paleta por sentimento', description: 'É como escolher a música da aventura: uma paleta alegre, calma ou misteriosa muda o clima!', colors: palette(mood) || palette('Fun') }
+      { id: 'monochrome', title: '🎨 Uma família de cores', description: 'A mesma cor vestida de clarinho e escurinho. São irmãs da mesma família!', colors: window.generateMonochrome(base, 5) },
+      { id: 'triadic', title: '🔺 Três amigas', description: 'Três amigas espalhadas pela roda das cores. Cada uma brilha sem brigar com a outra!', colors: window.generateTriadic(base) },
+      { id: 'complementary', title: '🧲 Uma dupla diferente', description: 'Duas cores de lados opostos da roda. Juntas fazem uma festa de contrastes!', colors: [base, window.generateComplementary(base)] },
+      { id: 'mood', title: '💖 Cores com sentimentos', description: 'É como escolher a música da aventura: uma paleta alegre, calma ou misteriosa muda o clima!', colors: palette(mood) || palette('Fun') }
     ];
   }
   function contrastWithWhite(color) {

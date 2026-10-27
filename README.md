@@ -102,7 +102,7 @@ O catálogo gera automaticamente um card na prateleira (até três colunas no de
 }
 ```
 
-Nas páginas, coloque `[[palavra]]` para exibir uma palavra colorida que pode ser tocada para ouvi-la. `kind: "dialogue"` destaca o parágrafo como fala. Propriedades opcionais de página: `syllables`, `speech`, `tip`, `callout`, `medal`, `interactive`. `type: "challenge"` exibe os exercícios do livro; `type: "finish"` conclui a aventura. A página com `"interactive": "color-explorer"` mostra o laboratório de cores sem alterar as demais funções da leitura. O item `exercises[].color`, quando informado como `#rrggbb`, mostra a cor da frase. O campo opcional `medal` no JSON do livro e no catálogo personaliza o nome/emoji da medalha exibida após o desafio.
+Nas páginas, coloque `[[palavra]]` para exibir uma palavra colorida que pode ser tocada para ouvi-la. `kind: "dialogue"` destaca o parágrafo como fala. Propriedades opcionais de página: `syllables`, `speech`, `tip`, `callout`, `medal`, `interactive`. `type: "challenge"` exibe os exercícios do livro; `type: "finish"` conclui a aventura. A página com `"interactive": "color-explorer"` mostra o laboratório de cores sem alterar as demais funções da leitura. **Nesta página os listeners de arraste do motor de folhas são desligados temporariamente** para permitir digitação, seleção de cores, audição e troca de clima. Os botões e as setas continuam virando as páginas com a animação; o arraste volta a funcionar ao sair da oficina. O item `exercises[].color`, quando informado como `#rrggbb`, mostra a cor da frase. O campo opcional `medal` no JSON do livro e no catálogo personaliza o nome/emoji da medalha exibida após o desafio.
 
 ### Protagonista personalizável
 
@@ -119,6 +119,9 @@ O botão **Personalizar** (na prateleira e na aba Perfil) abre [`perfil.html#per
 - **Paleta do aplicativo por mood:** uma seleção entre os dez estilos oficiais do NameToColor (Vibrante, Futurista, Divertido, Pastel suave, Calmo, Retrô, Orgânico, Sofisticado, Escuro e Corporativo), mais o tema original. O tema muda as cores de navegação e da interface na prateleira, no leitor e no perfil, sem afetar as cores do livro, ilustrações ou pele.
 - O botão **Vestir meu personagem com esta paleta** usa quatro tons da paleta para cabelo, roupa, parte inferior e tênis. **Não altera `skinColor`**. A criança pode seguir customizando cada parte depois.
 - Uma das **20 pelúcias originais** da coleção [Cute Animal Vectors](https://www.svgrepo.com/collection/cute-animal-vectors/), desbloqueada somente depois de conquistar **duas medalhas**. A pelúcia fica ao lado do avatar, apoiada no chão na altura dos tênis, nas ilustrações, no editor e no perfil.
+- **Gravação automática:** não há botão Salvar. Cada escolha é persistida imediatamente via `preferences.save` e refletida no perfil e nos próximos livros.
+- **Desfazer:** um histórico em memória registra as alterações desde que o editor foi carregado. Digitação contínua e arraste do seletor de cores são agrupados em um único passo. O histórico some ao sair/recarregar a página.
+- **Apagar meu perfil e começar de novo:** pede confirmação e redefine também as conquistas e os livros lidos (`achievements.books = {}`), além do avatar, pronúncia, nome, nascimento, tema e pelúcia. A ação pode ser desfeita durante a mesma visita ao editor.
 
 ### Progresso e medalhas
 
@@ -132,13 +135,13 @@ Essas preferências ficam apenas no `localStorage` do navegador, sem conta ou se
 
 #### SVG de personagem como backup
 
-No editor, **Baixar personagem SVG** salva as escolhas atuais e oferece um arquivo `.svg` que funciona como uma ilustração vetorial comum. Ele inclui um elemento `<metadata id="prateleira-magica-profile" data-format="application/json">` contendo um JSON inline com:
+No editor, **Exportar perfil** oferece um arquivo `.svg` que funciona como uma ilustração vetorial comum. A extensão e os detalhes do formato **não são exibidos à criança**, mas permanecem como contrato técnico. O arquivo inclui um elemento `<metadata id="prateleira-magica-profile" data-format="application/json">` contendo um JSON inline com:
 
 - `profile`: `name`, `pronunciation`, `birthDate`, `gender`, `petId`, `avatarStyle`, `outfitStyle`, `skinColor`, `hairColor`, `outfitColor`, `bottomStyle`, `bottomColor`, `shoeColor`, `themeMood`;
 - `achievements.books`: cada ID de livro com frases marcadas (`completedExercises`), páginas visitadas (`visitedPages`), conclusão da história (`finished`, `finishedAt`) e medalha (`medalEarnedAt`, `challengeCompletedAt` legado);
 - `app`, `schemaVersion` e `exportedAt` para identificar a origem, versão e data do backup.
 
-As frases marcadas ficam salvas automaticamente no navegador e reaparecem ao abrir o mesmo livro. A conclusão de um livro também fica registrada quando a criança alcança a página final. Ao tocar em **Importar personagem SVG**, escolha um backup baixado anteriormente; o aplicativo valida o JSON de perfil e pede confirmação para **substituir** as preferências e conquistas existentes. Por segurança, os elementos gráficos de SVGs importados **não** são inseridos no app: o personagem é redesenhado localmente usando apenas os dados validados do JSON.
+As frases marcadas ficam salvas automaticamente no navegador e reaparecem ao abrir o mesmo livro. A conclusão de um livro também fica registrada quando a criança alcança a página final. Ao tocar em **Importar perfil**, escolha um arquivo exportado anteriormente; o aplicativo valida o JSON de perfil e pede confirmação para **substituir** as preferências e conquistas existentes. Por segurança, os elementos gráficos de SVGs importados **não** são inseridos no app: o personagem é redesenhado localmente usando apenas os dados validados do JSON.
 
 O backup não exige conta, servidor nem conexão. **Privacidade:** como o arquivo contém o nome da criança e seu histórico de leitura, guarde-o em um local seguro e evite compartilhá-lo publicamente. Um SVG sem os metadados de perfil da Prateleira Mágica não pode ser importado como backup.
 

@@ -52,6 +52,15 @@ for (const id of ['magicColorWord', 'magicColorApply', 'magicColorTarget', 'them
 }
 assert(ui.includes('[draft.hairColor, draft.outfitColor, draft.bottomColor, draft.shoeColor] = palette.slice(0, 4)'),
   'Aplicar paleta ao avatar não deve tocar no tom da pele');
+assert(ui.includes('lastSaved = preferences.save(next)'), 'Personalização deve salvar automaticamente a cada mudança');
+assert(ui.includes('undoHistory.push(lastSaved)') && ui.includes('undoHistory.pop()'),
+  'O editor deve permitir desfazer escolhas feitas nesta visita');
+assert(ui.includes('fillDialog(preferences.DEFAULTS)') && ui.includes('window.confirm(warning)'),
+  'Recomeçar precisa apagar inclusive as conquistas somente após confirmação');
+assert(!ui.includes('type="submit" class="settings-save"'), 'Não deve existir botão de salvar');
+assert(!ui.includes('O NameToColor') && !ui.includes('imagem SVG'),
+  'Termos técnicos não devem aparecer nas instruções para crianças');
+assert(ui.includes('↓ Exportar perfil') && ui.includes('↑ Importar perfil'));
 const reader = read('assets/js/reader.js');
 assert(reader.includes('LivrinhoColorExplorer.create'), 'Página interativa não é renderizada no leitor');
 const book = JSON.parse(read('books/o-reino-das-cores.json'));
@@ -62,4 +71,5 @@ assert.equal(book.medal, '🎨 Medalha das Cores');
 console.log('✓ NameToColor + pacote pt-BR integrados offline: palavras, cores e nomes');
 console.log('✓ 10 moods, harmonias e tema global reversível');
 console.log('✓ Editor do avatar com palavra mágica e paleta, sem alterar cor de pele automaticamente');
+console.log('✓ Personalização com gravação automática, desfazer e limpeza confirmada do perfil');
 console.log('✓ Livro interativo com sete cores únicas no desafio e Medalha das Cores');

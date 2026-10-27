@@ -546,3 +546,15 @@ html[data-color-theme] .profile-tabs{border-color:var(--outline);background:var(
   .color-explorer-pickers input{font-size:16px}
   .reader-shell .flip-page .challenge-color-dot{width:14px;height:37px}
 }
+
+/* Histórico de escolhas: permanece ao lado do personagem durante a rolagem. */
+.editor-history-tools{margin:13px 5px 0;display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap}
+.editor-history-tools button{min-height:42px;padding:8px 14px;border:2px solid #b4a2db;border-radius:13px;background:#fff;color:#694c96;font-size:14px;font-weight:950;cursor:pointer}
+.editor-history-tools button:disabled{opacity:.47;cursor:default}
+.editor-history-tools span{color:#477d66;font-size:12px;font-weight:900}
+.settings-actions .settings-reset{border-color:#e8aab6;background:#fff7f7;color:#a34559;text-align:center}
+@media(max-width:600px){
+  .editor-history-tools{margin:0;padding:6px 10px;justify-content:space-between;gap:5px}
+  .editor-history-tools button{min-height:34px;padding:5px 12px;font-size:12px}
+  .editor-history-tools span{font-size:11px}
+}

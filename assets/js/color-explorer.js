@@ -22,7 +22,7 @@
       <div class="color-ready"><span>Ou toque em uma bolinha:</span><div data-color-quick class="color-quick" aria-label="Cores prontas"></div></div>
       <p data-color-feedback class="color-feedback" role="status" aria-live="polite">Qual cor você vai inventar hoje?</p>
       <div class="color-harmonies-heading"><strong>🎼 Qual combinação vamos criar?</strong>
-        <label>Sentimento da paleta <select data-color-mood aria-label="Escolher sentimento da paleta"></select></label>
+        <label>Qual é o clima das cores? <select data-color-mood aria-label="Escolher o clima das cores"></select></label>
       </div><div data-color-harmonies class="color-harmonies"></div>
       <p class="color-harmony-hint">💡 Harmonia é como uma banda: as cores podem tocar a mesma melodia ou fazer contrastes divertidos. Experimente!</p>`;
 

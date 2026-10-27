@@ -186,19 +186,19 @@
 
   function parseProfileSVG(svgText) {
     if (typeof svgText !== 'string' || svgText.length > 1_000_000 || !/^\s*(?:<\?xml[^>]*>\s*)?<svg\s/.test(svgText)) {
-      throw Error('Selecione um arquivo SVG de perfil válido.');
+      throw Error('Escolha um perfil exportado pela Prateleira Mágica.');
     }
     const match = svgText.match(/<metadata id="prateleira-magica-profile" data-format="application\/json">([\s\S]*?)<\/metadata>/);
-    if (!match) throw Error('Este SVG não contém um backup da Prateleira Mágica.');
+    if (!match) throw Error('Este arquivo não é um perfil da Prateleira Mágica.');
     let payload;
     try { payload = JSON.parse(xmlUnescape(match[1])); }
-    catch { throw Error('Os dados do perfil estão corrompidos.'); }
+    catch { throw Error('Não conseguimos ler esse perfil. Tente outra cópia.'); }
     if (payload?.app !== 'prateleira-magica' || payload.schemaVersion !== 1
         || !payload.profile || typeof payload.profile.name !== 'string' || !payload.profile.name.trim()
         || typeof payload.profile.pronunciation !== 'string'
         || !Object.hasOwn(genders, payload.profile.gender)
         || !payload.achievements || typeof payload.achievements.books !== 'object') {
-      throw Error('Formato de backup incompatível ou incompleto.');
+      throw Error('Este perfil está incompleto ou foi criado por outro aplicativo.');
     }
     return clean({ ...payload.profile, achievements: payload.achievements });
   }

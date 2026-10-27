@@ -264,7 +264,9 @@
     await Promise.allSettled(pendingImages);
     if (request !== mountedCount) return;
     const staleBlobs = [...$('#book').querySelectorAll('img[data-avatar-blob]')].map((img) => img.dataset.avatarBlob);
-    pageTurn.mount($('#book'), pages, page, onPageFlip);
+    pageTurn.mount($('#book'), pages, page, onPageFlip, {
+      canDragPage: (index) => !book.pages[index]?.interactive
+    });
     for (const old of staleBlobs) URL.revokeObjectURL(old);
     updateVisiblePageNumbers();
     $('#readerApp').hidden = false;

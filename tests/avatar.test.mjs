@@ -176,11 +176,11 @@ assert.equal(recoveredPet.petId, 'fox', 'O SVG deve guardar o pet escolhido');
 assert.equal(recoveredPet.birthDate, '2020-02-29', 'O SVG deve guardar o nascimento');
 assert.equal(prefs.medalCount(recoveredPet), 2, 'O SVG deve restaurar duas medalhas');
 assert.deepEqual([...recoveredPet.achievements.books['ellie-e-o-trem-dos-dragoes'].visitedPages], [0, 1, 3]);
-assert.throws(() => prefs.parseProfileSVG('<svg xmlns="http://www.w3.org/2000/svg"></svg>'), /backup/);
-assert.throws(() => prefs.parseProfileSVG(svgBackup.replace('&quot;schemaVersion&quot;:1', '&quot;schemaVersion&quot;:99')), /incompatível/);
-assert.throws(() => prefs.parseProfileSVG(svgBackup.replace('&quot;app&quot;:&quot;prateleira-magica&quot;', '&quot;app&quot;:&quot;outro&quot;')), /incompatível/);
-assert.throws(() => prefs.parseProfileSVG(svgBackup.replace('&quot;name&quot;:&quot;Mia', '&quot;name&quot;:false,&quot;unused&quot;:&quot;Mia')), /incompatível/);
-assert.throws(() => prefs.parseProfileSVG('<script>alert(1)</script>'), /válido/);
+assert.throws(() => prefs.parseProfileSVG('<svg xmlns="http://www.w3.org/2000/svg"></svg>'), /não é um perfil/);
+assert.throws(() => prefs.parseProfileSVG(svgBackup.replace('&quot;schemaVersion&quot;:1', '&quot;schemaVersion&quot;:99')), /incompleto/);
+assert.throws(() => prefs.parseProfileSVG(svgBackup.replace('&quot;app&quot;:&quot;prateleira-magica&quot;', '&quot;app&quot;:&quot;outro&quot;')), /incompleto/);
+assert.throws(() => prefs.parseProfileSVG(svgBackup.replace('&quot;name&quot;:&quot;Mia', '&quot;name&quot;:false,&quot;unused&quot;:&quot;Mia')), /incompleto/);
+assert.throws(() => prefs.parseProfileSVG('<script>alert(1)</script>'), /Escolha um perfil/);
 assert.equal(prefs.load().name, backupName, 'Um arquivo inválido não altera o perfil');
 
 const ui = fs.readFileSync(path.join(root, 'assets/js/settings-ui.js'), 'utf8');

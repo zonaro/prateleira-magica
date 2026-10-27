@@ -113,7 +113,7 @@
       renderBooks();
     } catch (error) {
       console.warn('Histórico de leitura indisponível:', error);
-      $('#profileBooks').textContent = 'Não foi possível carregar os livros. Abra o aplicativo online uma vez para disponibilizá-los offline.';
+      $('#profileBooks').textContent = 'Não conseguimos encontrar os livros. Conecte-se à internet uma vez e tente de novo.';
     }
   }
 
