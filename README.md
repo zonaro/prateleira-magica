@@ -9,8 +9,16 @@ Site: `https://zonaro.github.io/prateleira-magica/`
 Para desenvolver localmente, execute na raiz do repositório:
 
 ```bash
+# Apenas uma vez (ou após limpar os modelos): baixar os binários MediaPipe para uso local
+node tools/vendor-mediapipe.mjs
 python3 -m http.server 8000
 ```
+
+O comando de preparação usa npm e tar **apenas na máquina de desenvolvimento ou no CI**;
+o site em execução continua estático, sem npm, sem servidor de API e sem React.
+Os arquivos de IA gerados em `assets/vendor/mediapipe/` ficam fora do Git,
+mas são copiados para o GitHub Pages durante a publicação e armazenados no
+cache do PWA. Leia [a documentação da função por foto](docs/avatar-photo.md).
 
 Abra `http://localhost:8000/`. Por segurança do navegador, abrir o HTML diretamente como `file://` não permite carregar os livros em JSON. O GitHub Pages (HTTPS) oferece o modo PWA completo.
 
