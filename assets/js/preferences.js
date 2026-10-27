@@ -123,7 +123,8 @@
       avatarStyle: input.avatarStyle === 'cap' ? 'short' : styles.includes(input.avatarStyle) ? input.avatarStyle : DEFAULTS.avatarStyle,
       outfitStyle: outfits.includes(input.outfitStyle) ? input.outfitStyle : DEFAULTS.outfitStyle,
       bottomStyle: bottoms.includes(input.bottomStyle) ? input.bottomStyle : DEFAULTS.bottomStyle,
-      footwearStyle: footwear.includes(input.footwearStyle) ? input.footwearStyle : DEFAULTS.footwearStyle,
+      footwearStyle: footwear.includes(input.footwearStyle) && (input.footwearStyle !== 'skates' || medals >= 3)
+        ? input.footwearStyle : DEFAULTS.footwearStyle,
       sockPattern: sockPatterns.includes(input.sockPattern) ? input.sockPattern : DEFAULTS.sockPattern,
       skinColor: /^#[0-9a-f]{6}$/i.test(input.skinColor || '') ? input.skinColor.toLowerCase() : DEFAULTS.skinColor,
       hairColor: /^#[0-9a-f]{6}$/i.test(input.hairColor || '') ? input.hairColor.toLowerCase() : DEFAULTS.hairColor,

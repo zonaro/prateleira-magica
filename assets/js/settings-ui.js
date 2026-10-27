@@ -294,13 +294,18 @@
     for (const [container, field] of [['#footwearStyles', 'footwearStyle'], ['#sockPatterns', 'sockPattern']]) {
       for (const item of $(container).querySelectorAll('button')) {
         const selected = item.dataset.style === draft[field];
+        const locked = field === 'footwearStyle' && item.dataset.style === 'skates'
+          && preferences.medalCount(draft) < 3;
         item.classList.toggle('selected', selected);
+        item.classList.toggle('locked', locked);
         item.setAttribute('aria-pressed', String(selected));
-        item.disabled = field === 'sockPattern' && draft.footwearStyle !== 'socks';
+        item.disabled = locked || field === 'sockPattern' && draft.footwearStyle !== 'socks';
         const thumb = item.querySelector('.style-preview');
-        if (thumb) thumb.innerHTML = preferences.avatarSVG({ ...draft,
-          [field]: item.dataset.style,
-          ...(field === 'sockPattern' ? { footwearStyle: 'socks' } : {}) });
+        if (thumb) {
+          const preview = { ...draft, [field]: item.dataset.style,
+            ...(field === 'sockPattern' ? { footwearStyle: 'socks' } : {}) };
+          thumb.innerHTML = locked ? avatarCatalog.avatarSVG(preview) : preferences.avatarSVG(preview);
+        }
       }
     }
     $('#sockPatternFieldset').classList.toggle('locked', draft.footwearStyle !== 'socks');
@@ -447,6 +452,7 @@
       button.innerHTML = '<span class="style-preview"></span><span class="style-label"></span>';
       button.querySelector('.style-label').textContent = label;
       button.addEventListener('click', () => edit('', () => {
+        if (field === 'footwearStyle' && style === 'skates' && preferences.medalCount(draft) < 3) return;
         if (field === 'avatarStyle' || field === 'outfitStyle') markPresetEdit(field);
         draft[field] = style;
       }));

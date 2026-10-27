@@ -32,10 +32,10 @@ assert.equal(new Set(hairStyles).size, 25);
 assert.equal(new Set(outfits).size, 24);
 assert.equal(renderer.petStyles.length, 20, 'Catálogo completo de pets original ausente');
 assert.equal(renderer.bottomStyles.map(([key]) => key).join(','), 'pants,shorts,skirt,long_skirt,diaper');
-assert.equal(renderer.footwearStyles.map(([key]) => key).join(','), 'sneakers,flipflops,socks,barefoot');
+assert.equal(renderer.footwearStyles.map(([key]) => key).join(','), 'sneakers,flipflops,socks,barefoot,skates');
 assert.equal(renderer.sockPatterns.map(([key]) => key).join(','), 'plain,stripes,dots');
 assert.equal(renderer.accessoryStyles.length, 19);
-assert.equal(renderer.toyStyles.length, 11);
+assert.equal(renderer.toyStyles.length, 12);
 
 const pictures = new Set();
 for (const avatarStyle of hairStyles) {
@@ -71,8 +71,8 @@ for (const [bottomStyle] of renderer.bottomStyles) {
   assert(prefs.avatarSVG({ bottomStyle }).includes('data-layer="pernas-originais-do-app"'));
 }
 for (const [footwearStyle] of renderer.footwearStyles) {
-  assert.equal(prefs.clean({ footwearStyle }).footwearStyle, footwearStyle);
-  const footwearSvg = prefs.avatarSVG({ footwearStyle });
+  if (footwearStyle !== 'skates') assert.equal(prefs.clean({ footwearStyle }).footwearStyle, footwearStyle);
+  const footwearSvg = renderer.avatarSVG({ footwearStyle });
   assert.equal((footwearSvg.match(new RegExp(`data-footwear="${footwearStyle}"`, 'g')) || []).length, 2);
 }
 for (const [sockPattern] of renderer.sockPatterns) {
@@ -139,6 +139,12 @@ assert(mixedToys.indexOf('data-placement="floor"') > mixedToys.indexOf('data-lay
   'O skate deve ser desenhado sob os pés do avatar');
 assert(renderer.avatarSVG({ toys: ['pocket_ball'] }).includes('data-toy="pocket_ball"'),
   'Bola de monstrinho de bolso não foi desenhada');
+const ghostSvg = renderer.avatarSVG({ toys: ['ghost_costume', 'soccer_ball', 'fairy_wings'] });
+assert(ghostSvg.includes('data-toy="ghost_costume" data-placement="costume"'), 'Fantasia de fantasma ausente');
+assert(ghostSvg.includes('fill-rule="evenodd"'), 'Olhos da fantasia precisam ser furados no lençol');
+assert(ghostSvg.indexOf('data-placement="costume"') > ghostSvg.indexOf('data-layer="tenis-direito"')
+  && ghostSvg.indexOf('data-placement="costume"') > ghostSvg.indexOf('data-placement="hand"'),
+  'Fantasia deve cobrir a criança inteira, inclusive pés e brinquedos na mão');
 const layeredAccessories = renderer.avatarSVG({ accessories: ['flower_clip', 'headband'] });
 const reversedAccessories = renderer.avatarSVG({ accessories: ['headband', 'flower_clip'] });
 for (const svg of [layeredAccessories, reversedAccessories]) {
@@ -174,6 +180,12 @@ assert(!prefs.clean({ toys: ['skateboard'], achievements: threeMedals }).toys.in
   'Três medalhas ainda não podem liberar o skate');
 assert(prefs.clean({ toys: ['skateboard'], achievements: fourMedals }).toys.includes('skateboard'),
   'Skate deve ser liberado com 4 medalhas');
+assert.equal(prefs.clean({ footwearStyle: 'skates' }).footwearStyle, 'sneakers',
+  'Patins devem estar bloqueados sem 3 medalhas');
+assert.equal(prefs.clean({ footwearStyle: 'skates', achievements: threeMedals }).footwearStyle, 'skates',
+  'Patins devem ser liberados com 3 medalhas');
+assert(renderer.avatarSVG({ footwearStyle: 'skates' }).includes('transform="translate(60 297)"'),
+  'Patins precisam ficar alinhados ao chão com rodas visíveis');
 assert.equal(prefs.clean({ toys: ['soccer_ball', 'basketball', 'fairy_wings', 'bat_wings', 'unknown'] }).toys.join(','),
   'soccer_ball,fairy_wings', 'Brinquedos do mesmo grupo devem ser exclusivos');
 assert(!prefs.clean({ accessories: ['plumber_beret'] }).accessories.includes('plumber_beret'),
@@ -191,6 +203,8 @@ const toyBackup = prefs.parseProfileSVG(prefs.exportProfileSVG(toyProfile));
 assert.equal(toyBackup.toys.join(','), 'skateboard,pocket_ball,bat_wings',
   'Backup deve preservar brinquedos combinados e desbloqueados');
 assert.equal(toyBackup.toyColor, '#9c80df', 'Backup deve preservar a cor dos brinquedos');
+const skatesBackup = prefs.parseProfileSVG(prefs.exportProfileSVG({ footwearStyle: 'skates', achievements: threeMedals }));
+assert.equal(skatesBackup.footwearStyle, 'skates', 'Backup deve restaurar patins desbloqueados');
 for (const [id, expected] of [['hoodie', 'Moletom com capuz'], ['hoodie_zip', 'Moletom'],
   ['hoodie_patch', 'Moletom com zíper'], ['necklace', 'Blusa com broche'],
   ['bib', 'Regata com lantejoula'], ['flower_long', 'Longo liso']]) {
@@ -384,6 +398,9 @@ for (const marker of ['outfitStyles', 'hairColorOptions', 'outfitColorOptions', 
   'downloadProfile', 'importProfile', 'profileFile', 'parseProfileSVG']) {
   assert(ui.includes(marker), `Editor sem o controle ${marker}`);
 }
+const editorCss = fs.readFileSync(path.join(root, 'assets/css/app.css'), 'utf8');
+assert(editorCss.includes('.avatar-style.locked') && editorCss.includes('grayscale(1)'),
+  'Itens bloqueados devem aparecer mais claros e em escala de cinza');
 
 const referenceDir = path.join(root, 'assets/avatar-reference/svgrepo-kids');
 const downloaded = fs.readdirSync(referenceDir).filter((file) => file.endsWith('.svg'));
@@ -396,8 +413,9 @@ for (const file of downloaded) {
 console.log('✓ 25 cabelos × 24 roupas = 600 combinações com vetores originais do SVG Repo');
 console.log('✓ Careca, cabelos sem flores, boné maior e 19 acessórios desenhados em camadas');
 console.log('✓ Flor sempre acima da tiara, capas atrás do corpo e máscaras exclusivas com óculos');
-console.log('✓ 11 brinquedos com cor independente, asas atrás, skate sob os pés e desbloqueio com 4 medalhas');
-console.log('✓ 5 partes de baixo, 4 calçados, 3 estampas de meias, boina com inicial e desbloqueio com 3 medalhas');
+console.log('✓ 12 brinquedos com cor independente, fantasia de fantasma, asas atrás e skate sob os pés');
+console.log('✓ Patins liberados com 3 medalhas; itens bloqueados mais claros e em escala de cinza');
+console.log('✓ 5 partes de baixo, 5 calçados, 3 estampas de meias, boina com inicial e desbloqueio com 3 medalhas');
 console.log('✓ Camisas e moletons listrados, camiseta de time e cardigã alinhados ao corpo');
 console.log('✓ 73 personagens prontos renderizados inline, com pernas e backup compatível');
 console.log('✓ Tons de pele fantasia e cores independentes de cabelo, roupa, calça/shorts/saia e tênis espelhados');

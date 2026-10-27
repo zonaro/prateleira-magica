@@ -36,7 +36,7 @@
   const bottomStyles = [['pants', 'Calça'], ['shorts', 'Shorts'], ['skirt', 'Saia'],
     ['long_skirt', 'Saia longa'], ['diaper', 'Fralda']];
   const footwearStyles = [['sneakers', 'Tênis'], ['flipflops', 'Chinelo'],
-    ['socks', 'De meias'], ['barefoot', 'Descalço']];
+    ['socks', 'De meias'], ['barefoot', 'Descalço'], ['skates', 'Patins (3 medalhas)']];
   const sockPatterns = [['plain', 'Lisas'], ['stripes', 'Listradas'], ['dots', 'De bolinhas']];
   const petStyles = Object.entries(petParts).map(([id, part]) => [id, part.name, part.source]);
   const accessoryStyles = [
@@ -72,7 +72,8 @@
     ['shuttlecock', 'Peteca', 'hand'],
     ['chess_pieces', 'Peças de xadrez', 'hand'],
     ['fairy_wings', 'Asas de fada', 'back'],
-    ['bat_wings', 'Asas de morcego', 'back']
+    ['bat_wings', 'Asas de morcego', 'back'],
+    ['ghost_costume', 'Fantasia de fantasma', 'costume']
   ];
   const hairColors = [
     ['#493a55', 'Castanho escuro'], ['#7b4c35', 'Castanho'],
@@ -253,6 +254,18 @@
             <path d="M33 317q72 8 144 0" fill="none" stroke="${light}" stroke-width="4" stroke-linecap="round"/>
           </g>` : '';
     }
+    if (placement === 'costume') {
+      return chosen.includes('ghost_costume')
+        ? `<g data-toy="ghost_costume" data-placement="costume" transform="translate(105 0) scale(1.24 1) translate(-105 0)">
+            <path d="M105 19C147 19 168 50 172 95L181 313q5 19-7 26-9 5-20-4-12 12-25 1-13 12-24 1-15 10-28-1-13 10-25-1-12 9-21 4-12-7-7-26L38 95Q43 19 105 19Z
+              M69 113a12 15 0 1 0 24 0a12 15 0 1 0-24 0Z
+              M117 113a12 15 0 1 0 24 0a12 15 0 1 0-24 0Z"
+              fill="#fbfbff" fill-rule="evenodd" stroke="${dark}" stroke-width="2.7" stroke-linejoin="round"/>
+            <path d="M49 85Q58 32 105 31q44 1 57 54M47 174l-5 112m124-112 5 112" fill="none" stroke="${light}" stroke-width="4" opacity=".7"/>
+            <path d="M98 143q7 11 14 0" fill="none" stroke="${ink}" stroke-width="3" stroke-linecap="round"/>
+            <path d="M83 245q20 7 39 0" fill="none" stroke="${tone}" stroke-width="3" stroke-dasharray="5 8"/>
+          </g>` : '';
+    }
     if (placement !== 'hand') return '';
     const items = {
       soccer_ball: `<circle r="22" fill="#fffdf5" stroke="${ink}" stroke-width="2.5"/>
@@ -328,21 +341,28 @@
       <path d="M24 18 13 24m11-6 11 6" fill="none" stroke="${shade(shoes, -.15)}" stroke-width="5" stroke-linecap="round"/>`;
     const socks = `<path d="M21 4h17l4 12 5 6v6H0v-6Q3 10 21 4Z" fill="${shoes}" stroke="${shade(shoes, -.2)}" stroke-width="2"/>
       <path d="M1 25h45" stroke="${shade(shoes, .4)}" stroke-width="4"/>`;
+    const skates = `${sneaker}<path d="M5 29h39" stroke="${shade(shoes, -.3)}" stroke-width="4" stroke-linecap="round"/>
+      <circle cx="11" cy="36" r="5.5" fill="${shoes}" stroke="${shade(shoes, -.3)}" stroke-width="2"/>
+      <circle cx="37" cy="36" r="5.5" fill="${shoes}" stroke="${shade(shoes, -.3)}" stroke-width="2"/>
+      <circle cx="11" cy="36" r="2" fill="${shade(shoes, .65)}"/>
+      <circle cx="37" cy="36" r="2" fill="${shade(shoes, .65)}"/>`;
     const sockPattern = settings.sockPattern === 'stripes'
       ? `<path d="M15 13h25M9 20h35" stroke="${shade(shoes, .6)}" stroke-width="3.5"/>`
       : settings.sockPattern === 'dots'
         ? `<g fill="${shade(shoes, .65)}"><circle cx="22" cy="13" r="3"/><circle cx="34" cy="19" r="3"/><circle cx="13" cy="21" r="3"/></g>` : '';
     const footwear = settings.footwearStyle === 'flipflops' ? flipflop
       : settings.footwearStyle === 'barefoot' ? barefoot
-        : settings.footwearStyle === 'socks' ? socks + sockPattern : sneaker;
+        : settings.footwearStyle === 'socks' ? socks + sockPattern
+          : settings.footwearStyle === 'skates' ? skates : sneaker;
+    const footwearY = settings.footwearStyle === 'skates' ? 297 : 304;
     const groundShadow = Array.isArray(settings.toys) && settings.toys.includes('skateboard') ? ''
       : '<ellipse cx="105" cy="327" rx="74" ry="9" fill="#243f59" opacity=".13"/>';
     return `<g data-layer="pernas-originais-do-app">
       ${groundShadow}
       ${legs}${clothing}
       <path d="M72 303h24v12H72Zm41 0h24v12h-24Z" fill="${shorts || skirt || diaper || settings.footwearStyle === 'barefoot' || settings.footwearStyle === 'flipflops' ? skin : shade(bottoms, -.08)}"/>
-      <g data-layer="tenis-esquerdo" data-footwear="${settings.footwearStyle || 'sneakers'}" transform="translate(60 304)">${footwear}</g>
-      <g data-layer="tenis-direito" data-footwear="${settings.footwearStyle || 'sneakers'}" transform="translate(150 304) scale(-1 1)">${footwear}</g>
+      <g data-layer="tenis-esquerdo" data-footwear="${settings.footwearStyle || 'sneakers'}" transform="translate(60 ${footwearY})">${footwear}</g>
+      <g data-layer="tenis-direito" data-footwear="${settings.footwearStyle || 'sneakers'}" transform="translate(150 ${footwearY}) scale(-1 1)">${footwear}</g>
     </g>`;
   }
 
@@ -407,6 +427,7 @@
           ${accessoriesSVG(settings, colors)}
         </g>
         ${toysSVG(settings, colors, 'hand')}
+        ${toysSVG(settings, colors, 'costume')}
       </g>
       ${toysSVG(settings, colors, 'floor')}${companion}`;
   }
