@@ -293,7 +293,7 @@
       : (light ? 'Páginas do livrinho em modo leve. Deslize horizontalmente ou use os botões.' :
         'Páginas do livrinho. Arraste um canto para virar a página.'));
     $('.bottom-note').textContent = exploring
-      ? 'Brinque à vontade com as cores! Para virar a página, use Voltar ou Próxima. Teclado: ← anterior · → próxima · Espaço para ouvir ou pausar.'
+      ? 'Brinque à vontade com as cores! Para virar a página, use os botões Voltar ou Próxima. Teclado: ← anterior · → próxima · Espaço para ouvir ou pausar.'
       : 'Toque nas palavras coloridas para ouvi-las. ' + guidance;
     $('#pageAnimationMode').value = pageTurn.preference();
     $('#pageAnimationStatus').textContent = light ? '📖 Leitura leve ativa' : '✨ Virada animada';
