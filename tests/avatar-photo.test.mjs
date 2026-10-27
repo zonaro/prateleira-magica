@@ -28,7 +28,14 @@ const photo = read('assets/js/avatar-photo.js');
 const sw = read('sw.js');
 assert(page.indexOf('avatar-photo-colors.js') < page.indexOf('avatar-photo.js'));
 assert(page.indexOf('avatar-photo.js') < page.indexOf('settings-ui.js'));
-assert(editor.includes('avatarPhoto?.mount('), 'Montagem deve ocorrer no editor atual');
+assert(editor.includes('avatarPhoto?.mount('), 'A aba foto deve usar a integração com o editor');
+assert(page.includes('id="tabFoto"') && page.includes('id="profilePhoto"'), 'Aba independente por foto é obrigatória');
+assert(page.includes('href="#foto"') && page.includes('hidden aria-hidden="true"'), 'A aba deve iniciar oculta');
+assert(!photo.includes('showModal(') && !photo.includes('createElement(\'dialog\')'), 'Criador não deve abrir modal');
+assert(photo.includes('checkAvailability') && photo.includes("method: 'HEAD'"), 'A aba depende de todos os assets de IA');
+assert(photo.includes('Peça sempre a ajuda de um adulto!'), 'Interface infantil deve recomendar um adulto');
+assert(photo.includes("location.hash = '#personalizar'"), 'Depois da foto retornar ao editor para revisão');
+assert(photo.includes("window.addEventListener('hashchange'"), 'Ao sair da aba interromper a câmera');
 assert(editor.includes("edit('avatar-photo'"), 'Aplicar foto deve usar histórico e autosave');
 assert(photo.includes('navigator.mediaDevices.getUserMedia('));
 assert(photo.includes('getImageData('));
@@ -50,6 +57,10 @@ assert(pageCsp && pageCsp[1].includes("connect-src 'self'"), 'CSP deve bloquear 
 const manifest = JSON.parse(read('tools/mediapipe-dependencies.json'));
 assert.equal(manifest.version, '0.10.21');
 assert.equal(manifest.models.length, 2);
+assert(read('assets/js/profile-tabs.js').includes('setPhotoAvailability(false)'), 'A aba deve desaparecer quando o modelo falhar');
+assert(read('assets/css/app.css').includes('.profile-tab[hidden]'), 'CSS não deve sobrescrever o atributo hidden');
+assert(!read('assets/js/avatar-photo.js').includes('avatar-photo-modal'), 'Modal anterior deve ser removido');
+assert(read('sw.js').includes("const CACHE_NAME = 'prateleira-magica-v26'"));
 
 
 console.log('✓ Paletas, média aparada e conexão do criador por foto ao editor existente');
