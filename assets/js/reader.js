@@ -315,7 +315,11 @@
     }
     if (index === page) return;
     stopSpeech();
+    const returned = index < page;
     page = index;
+    if (returned && preferences?.unlockYoYo?.()) {
+      notify('🪀 Um ioiô mágico foi desbloqueado! Veja nos brinquedos do personagem.');
+    }
     rememberPage();
     if (book.pages[page]?.type === 'finish') {
       preferences?.recordBookProgress(book.id, { finished: true }, book.exercises?.length || 0);

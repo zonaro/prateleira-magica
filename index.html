@@ -32,7 +32,6 @@
   <script src="./assets/js/colors.js" defer></script>
   <script src="./assets/js/settings-ui.js" defer></script>
   <script src="./assets/js/pwa.js" defer></script>
-  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js" defer></script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -162,15 +161,20 @@
             <p>Este projeto é feito com muito carinho para ajudar famílias a criar o hábito da leitura. Se ele tem sido útil para vocês, qualquer valor via PIX ajuda a manter o projeto online e gratuito para todos.</p>
             <div class="donation-info">
               <div class="donation-key">
-                <strong>Chave PIX (BRCode)</strong>
-                <code>43077469880</code>
-                <span>Gabriel Forti Zonaro</span>
+                <label for="pixCopyPaste"><strong>PIX copia e cola</strong></label>
+                <textarea id="pixCopyPaste" rows="3" readonly spellcheck="false" aria-label="Código PIX copia e cola">00020126580014BR.GOV.BCB.PIX01368d90c534-1b58-4a5c-b736-613fba5c56dd5204000053039865802BR5901N6001C62140510DONPRATMAG6304776C</textarea>
+                <button type="button" id="copyPix">📋 Copiar código PIX</button>
+                <span id="pixCopyStatus" role="status" aria-live="polite"></span>
               </div>
               <p class="donation-note">Doação voluntária. Não é necessário para usar o app.</p>
             </div>
           </div>
           <div class="donation-qr">
-            <div id="pixQr" class="pix-qr"></div>
+            <div id="pixQr" class="pix-qr">
+              <img src="./assets/images/pix-qrcode.png" width="280" height="280"
+                alt="QR Code PIX para doação voluntária à Prateleira Mágica"
+                loading="lazy" decoding="async">
+            </div>
             <p>Escaneie o QR Code com seu app bancário</p>
           </div>
         </div>
@@ -218,19 +222,30 @@
     </footer>
   </div>
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      var qrEl = document.getElementById('pixQr');
-      if (qrEl && typeof QRCode !== 'undefined') {
-        new QRCode(qrEl, {
-          text: '00020126580014br.gov.bcb.pix0136430774698805204000053039865802BR5920GABRIEL FORTI ZONARO6009SAO PAULO62070503***6304',
-          width: 200,
-          height: 200,
-          colorDark : "#3d4268",
-          colorLight : "#ffffff",
-          correctLevel : QRCode.CorrectLevel.M
-        });
-      }
-    });
+    (() => {
+      const copyButton = document.getElementById('copyPix');
+      const code = document.getElementById('pixCopyPaste');
+      const status = document.getElementById('pixCopyStatus');
+      if (!copyButton || !code || !status) return;
+      copyButton.addEventListener('click', async () => {
+        const value = code.value.trim();
+        try {
+          if (navigator.clipboard?.writeText && window.isSecureContext) {
+            await navigator.clipboard.writeText(value);
+          } else {
+            code.focus();
+            code.select();
+            if (!document.execCommand('copy')) throw Error('Cópia não autorizada');
+            code.setSelectionRange(0, 0);
+          }
+          status.textContent = '✨ Código PIX copiado! Agora é só colar no seu app bancário.';
+        } catch {
+          code.focus();
+          code.select();
+          status.textContent = 'Selecione e copie o código acima para usar no app bancário.';
+        }
+      });
+    })();
   </script>
 </body>
 </html>

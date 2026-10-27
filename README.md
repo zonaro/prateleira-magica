@@ -114,6 +114,18 @@ O catálogo gera automaticamente um card na prateleira (até três colunas no de
 
 Nas páginas, coloque `[[palavra]]` para exibir uma palavra colorida que pode ser tocada para ouvi-la. `kind: "dialogue"` destaca o parágrafo como fala. Propriedades opcionais de página: `syllables`, `speech`, `tip`, `callout`, `medal`, `interactive`. `type: "challenge"` exibe os exercícios do livro; `type: "finish"` conclui a aventura. A página com `"interactive": "color-explorer"` mostra o laboratório de cores sem alterar as demais funções da leitura. **Nesta página os listeners de arraste do motor de folhas são desligados temporariamente** para permitir digitação, seleção de cores, audição e troca de clima. Os botões e as setas continuam virando as páginas com a animação; o arraste volta a funcionar ao sair da oficina. O item `exercises[].color`, quando informado como `#rrggbb`, mostra a cor da frase. O campo opcional `medal` no JSON do livro e no catálogo personaliza o nome/emoji da medalha exibida após o desafio.
 
+### Novidades de personalização, capas e doações
+
+- O ioiô colorível aparece em Brinquedos e é desbloqueado uma única vez ao voltar
+  uma página em qualquer livro (inclusive pelo gesto de virar a folha). A
+  conquista permanece no perfil e acompanha a exportação do SVG.
+- Gabriel e Bruno recebem ajuste de eixo nas peças SVG originais do tronco,
+  permitindo combinar outras roupas sem deslocar mangas e ombros.
+- As capas exibidas na landing e na prateleira usam bordas `10px 40px 40px 10px`.
+- As doações PIX usam QR Code **local** (imagem fornecida pelo responsável pelo
+  projeto e conferida com o BR Code). Há PIX copia e cola, sem exibir nome ou
+  CPF do recebedor na página inicial.
+
 ### Avatar por foto — aba opcional 📷
 
 No perfil, a aba **📷 Minha foto** aparece apenas quando todos os arquivos

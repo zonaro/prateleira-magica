@@ -96,7 +96,7 @@
         <div id="accessoryStyles" class="avatar-style-grid"></div>
       </fieldset>
       <fieldset class="avatar-style-fieldset"><legend>Brinquedos 🪀</legend>
-        <p class="settings-intro" style="margin-bottom:8px;">Escolha algo para segurar, asas ou um skate! Você pode combinar um de cada tipo. O skate é liberado com 4 medalhas. 🏅</p>
+        <p class="settings-intro" style="margin-bottom:8px;">Escolha algo para segurar, asas ou um skate! Você pode combinar um de cada tipo. 🏅 Skate: 4 medalhas. 🪀 Ioiô: volte uma página em qualquer livro!</p>
         <div id="toyStyles" class="avatar-style-grid"></div>
       </fieldset>
       <fieldset class="avatar-style-fieldset pet-fieldset"><legend>Minha pelúcia companheira 🧸</legend>
@@ -333,7 +333,8 @@
     for (const item of $('#toyStyles').querySelectorAll('button[data-toy]')) {
       const id = item.dataset.toy;
       const selected = selectedToys.includes(id);
-      const locked = id === 'skateboard' && preferences.medalCount(draft) < 4;
+      const locked = (id === 'skateboard' && preferences.medalCount(draft) < 4)
+        || (id === 'yoyo' && !draft.achievements?.pageReturn);
       item.disabled = locked;
       item.classList.toggle('locked', locked);
       item.classList.toggle('selected', selected);
@@ -504,6 +505,7 @@
     button.querySelector('.style-label').textContent = label;
     button.addEventListener('click', () => {
       if (id === 'skateboard' && preferences.medalCount(draft) < 4) return;
+      if (id === 'yoyo' && !draft.achievements?.pageReturn) return;
       edit('toys', () => {
         const current = Array.isArray(draft.toys) ? draft.toys : [];
         draft.toys = current.includes(id) ? current.filter(toy => toy !== id)

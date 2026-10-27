@@ -16,7 +16,7 @@ const reference = (file) => {
 
 const required = [
   'index.html', 'livro.html', 'personagem.html', 'perfil.html', 'manifest.webmanifest', 'sw.js',
-  'assets/css/app.css', 'assets/js/library.js', 'assets/js/reader.js', 'assets/js/avatar-parts.js', 'assets/js/avatar-presets.js', 'assets/js/avatar.js',
+  'assets/css/app.css', 'assets/images/pix-qrcode.png', 'assets/js/library.js', 'assets/js/reader.js', 'assets/js/avatar-parts.js', 'assets/js/avatar-presets.js', 'assets/js/avatar.js',
   'assets/data/avatar-presets.json',
   'assets/js/preferences.js', 'assets/js/avatar-photo-colors.js', 'assets/js/avatar-photo.js', 'assets/js/settings-ui.js', 'assets/js/profile.js', 'assets/js/page-turn.js',
   'assets/js/colors.js', 'assets/js/color-explorer.js', 'assets/vendor/NameToColor.js', 'assets/vendor/NameToColor.ptBR.js',

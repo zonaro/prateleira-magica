@@ -28,5 +28,10 @@ assert(source.includes("$('#next').disabled = challengeLocked"), 'Botão avança
 assert(source.includes('dot.disabled = true'), 'Bolinhas de páginas não podem pular o desafio');
 assert(source.includes('if (!canVisit(destination))'), 'Setas e deslizes não podem pular o desafio');
 assert(source.includes('rememberPage()'), 'Cada página visitada deve contar no progresso');
+assert(source.includes('const returned = index < page'), 'Somente uma navegação para trás pode liberar ioiô');
+assert(source.includes('returned && preferences?.unlockYoYo?.()'), 'A volta real deve desbloquear o ioiô');
+assert(source.indexOf('unlockYoYo') > source.indexOf('function onPageFlip'), 'Desbloqueio não deve ocorrer no carregamento');
+assert(!source.includes('unlockYoYo?.()') || source.indexOf('unlockYoYo?.()') < source.indexOf('function go('),
+  'A conquista deve ser decidida no flip efetivo, não ao tentar trocar de página');
 console.log('✓ Desafio final bloqueia botão, bolinhas, teclado e deslizes até todas as frases serem marcadas');
 console.log('✓ A página final só libera com as 3/3 frases marcadas');
