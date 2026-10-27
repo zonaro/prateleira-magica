@@ -25,7 +25,7 @@
     accessories: [],
     toys: [],
     toyColor: '#ed4d56',
-    achievements: { books: {} }
+    achievements: { books: {}, pageReturn: false }
   });
   const styles = avatar.hairStyles.map(([key]) => key);
   const outfits = avatar.outfitStyles.map(([key]) => key);
@@ -69,7 +69,7 @@
   function cleanAchievements(value) {
     const raw = value && typeof value === 'object' ? value.books : null;
     const books = {};
-    if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return { books };
+    if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return { books, pageReturn: value?.pageReturn === true };
     for (const [id, entry] of Object.entries(raw).slice(0, 200)) {
       if (!/^[a-z0-9][a-z0-9-]{0,79}$/.test(id) || !entry || typeof entry !== 'object') continue;
       const completedExercises = [...new Set((Array.isArray(entry.completedExercises) ? entry.completedExercises : [])
@@ -86,7 +86,7 @@
         medalEarnedAt: date(entry.medalEarnedAt) || date(entry.challengeCompletedAt)
       };
     }
-    return { books };
+    return { books, pageReturn: value?.pageReturn === true };
   }
 
   function clean(value) {
@@ -111,7 +111,7 @@
     const toys = [];
     for (const id of Array.isArray(input.toys) ? input.toys : []) {
       const group = toyGroups[id];
-      if (group && (id !== 'skateboard' || medals >= 4)
+      if (group && (id !== 'skateboard' || medals >= 4) && (id !== 'yoyo' || achievements.pageReturn)
           && !toys.some(chosen => toyGroups[chosen] === group)) toys.push(id);
     }
     const result = {
@@ -187,6 +187,19 @@
     try { localStorage.setItem(STORAGE_KEY, JSON.stringify(memory)); } catch { /* segue em memória */ }
     document.dispatchEvent(new CustomEvent('livrinhos:progress-changed', { detail: { id, progress: next } }));
     return next;
+  }
+
+  // Desbloqueia apenas uma vez, ao retornar efetivamente para página anterior.
+  // A conquista pertence ao perfil (qualquer livro) e sobrevive ao backup SVG.
+  function unlockYoYo() {
+    const state = load();
+    if (state.achievements.pageReturn) return false;
+    state.achievements.pageReturn = true;
+    memory = clean(state);
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(memory)); } catch { /* apenas memória */ }
+    document.dispatchEvent(new CustomEvent('livrinhos:progress-changed',
+      { detail: { achievement: 'pageReturn' } }));
+    return true;
   }
 
   function xmlEscape(value) {
@@ -277,6 +290,6 @@
 
   window.LivrinhoPreferences = { DEFAULTS, styles, outfits, bottoms, pets, genders, load, save, clean,
     ageOnDate, medalCount, validBirthDate,
-    bookProgress, recordBookProgress, exportProfileSVG, parseProfileSVG,
+    bookProgress, recordBookProgress, unlockYoYo, exportProfileSVG, parseProfileSVG,
     personalize, avatarSymbol, avatarSVG, personalizeIllustration };
 })();
