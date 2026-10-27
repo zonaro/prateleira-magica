@@ -12,36 +12,26 @@
   <script src="./assets/js/pet-parts.js" defer></script>
   <script src="./assets/js/avatar.js" defer></script>
   <script src="./assets/js/preferences.js" defer></script>
+  <script src="./assets/vendor/page-flip.browser.js" defer></script>
   <script src="./assets/js/page-turn.js" defer></script>
   <script src="./assets/js/reader.js" defer></script>
-  <script src="./assets/js/settings-ui.js" defer></script>
   <script src="./assets/js/pwa.js" defer></script>
   <title>Lendo um livrinho · Prateleira Mágica</title>
 </head>
-<body>
-  <main class="shell">
-    <header class="topbar reader-topbar">
-      <a class="back-to-shelf" href="./index.html" aria-label="Voltar para a prateleira">← <span>Prateleira</span></a>
-      <img class="reader-logo" src="./assets/icons/icon.svg" alt="" width="45" height="45">
-      <div class="brand-copy"><strong id="bookBrand">Meu livrinho</strong><span>Uma aventura de leitura e descobertas</span></div>
-      <a class="customize-action" href="./personagem.html" data-open-settings>⚙ <span>Personalizar</span></a>
-      <a class="customize-action profile-action" href="./perfil.html">🏅 <span>Perfil</span></a>
-      <div class="top-pill">✦ Feito para ler com carinho</div>
-    </header>
+<body class="reader-screen">
+  <main class="shell reader-shell">
     <div id="readerError" class="reader-error" hidden role="alert"></div>
     <section id="readerApp" hidden aria-label="Leitor de livros">
       <div class="progress" aria-label="Progresso da leitura"><div class="progress-track"><div class="progress-bar" id="progressBar"></div></div><span class="progress-label" id="progressLabel"></span></div>
-      <article class="book" id="book" aria-live="polite">
-        <section class="art-panel" aria-label="Ilustração da página"><img id="scene" alt=""><div class="art-sticker" id="artSticker"></div></section>
-        <section class="read-panel" id="readPanel"></section>
-      </article>
-      <nav class="controls" aria-label="Navegação das páginas">
-        <button class="nav-button prev" id="prev" type="button" aria-label="Página anterior" aria-keyshortcuts="ArrowLeft">← Voltar</button>
-        <button class="nav-button listen" id="listen" type="button" title="Ouvir a página (barra de espaço)" aria-keyshortcuts="Space">🔊 Ouvir</button>
-        <button class="nav-button next" id="next" type="button" aria-keyshortcuts="ArrowRight">Começar →</button>
-      </nav>
+      <div class="book" id="book" aria-label="Páginas do livrinho. Arraste um canto para virar a página."></div>
       <div class="dots" id="dots" aria-label="Escolher página"></div>
-      <p class="bottom-note">Toque nas palavras coloridas para ouvi-las. Teclado: ← anterior · → próxima · Espaço ouvir. Também é possível deslizar para os lados.</p>
+      <p class="bottom-note">Toque nas palavras coloridas para ouvi-las. Arraste os cantos das páginas para virá-las. Teclado: ← anterior · → próxima · Espaço para ouvir ou pausar.</p>
+      <nav class="controls" aria-label="Navegação e leitura">
+        <a class="nav-button shelf-nav" href="./index.html" aria-label="Voltar à prateleira"><span aria-hidden="true">📚</span><span>Prateleira</span></a>
+        <button class="nav-button listen" id="listen" type="button" title="Ouvir ou pausar a página (barra de espaço)" aria-label="Ouvir a página" aria-pressed="false" aria-keyshortcuts="Space"><span class="listen-icon" aria-hidden="true">▶</span><span class="listen-text">Ouvir</span></button>
+        <button class="nav-button prev" id="prev" type="button" aria-label="Página anterior" aria-keyshortcuts="ArrowLeft"><span aria-hidden="true">←</span><span>Voltar</span></button>
+        <button class="nav-button next" id="next" type="button" aria-keyshortcuts="ArrowRight"><span class="next-text">Começar</span><span aria-hidden="true">→</span></button>
+      </nav>
     </section>
   </main>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>

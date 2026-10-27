@@ -63,10 +63,12 @@ vm.runInNewContext(source, { self, caches, fetch: localFetch, URL, Response, con
 let pending;
 listeners.install({ waitUntil(promise) { pending = promise; } });
 await pending;
-const cache = await caches.open('prateleira-magica-v7');
+const cache = await caches.open('prateleira-magica-v8');
 assert(await cache.match(`${scope}assets/js/avatar-parts.js`), 'Peças originais dos avatares não foram salvas offline');
 assert(await cache.match(`${scope}assets/js/pet-parts.js`), 'Pets para ilustrações não foram salvos offline');
 assert(await cache.match(`${scope}assets/js/avatar.js`), 'Renderização dos avatares não foi salva offline');
+assert(await cache.match(`${scope}assets/vendor/page-flip.browser.js`), 'Motor da virada de páginas deve funcionar offline');
+assert(await cache.match(`${scope}assets/js/profile-tabs.js`), 'Abas do perfil não funcionam offline');
 const petCatalog = JSON.parse(fs.readFileSync(path.join(root, 'assets/pets/catalog.json'), 'utf8'));
 for (const pet of petCatalog.pets) {
   assert(await cache.match(`${scope}${pet.file}`), `Pet original não foi salvo offline: ${pet.id}`);
@@ -98,9 +100,10 @@ assert((await shelf.text()).includes('Prateleira Mágica'));
 const reader = await offlineRequest('livro.html?livro=ellie-e-o-trem-travesso', 'navigate');
 assert((await reader.text()).includes('readerApp'));
 const editor = await offlineRequest('personagem.html', 'navigate');
-assert((await editor.text()).includes('settingsApp'), 'Editor em página dedicada não funciona offline');
+assert((await editor.text()).includes('perfil.html#personalizar'), 'Link antigo não redireciona ao editor unificado offline');
 const profile = await offlineRequest('perfil.html', 'navigate');
-assert((await profile.text()).includes('profileBooks'), 'Página de medalhas não funciona offline');
+const profileContent = await profile.text();
+assert(profileContent.includes('profileBooks') && profileContent.includes('settingsApp'), 'Perfil e editor unificados não funcionam offline');
 for (const entry of catalog.books) {
   const data = await offlineRequest(entry.data, 'cors');
   const book = await data.json();

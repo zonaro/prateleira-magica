@@ -19,20 +19,23 @@ Abra `http://localhost:8000/`. Por segurança do navegador, abrir o HTML diretam
 ```text
 index.html                         Prateleira / catálogo
 livro.html                         Leitor de livros
-personagem.html                    Editor de protagonista em tela dedicada
-perfil.html                        Histórico de leitura, porcentagens e medalhas
+personagem.html                    Redirecionamento legado para a aba Personalizar
+perfil.html                        Abas Meu perfil (medalhas) e Personalizar (avatar)
 books/index.json                   Manifesto dos livros disponíveis
 books/<slug>.json                  História completa e exercícios de cada livro
 assets/css/app.css                 Estilos da biblioteca e do leitor
 assets/js/library.js               Prateleira dinâmica
 assets/js/reader.js                Leitor e narração
-assets/js/page-turn.js             Virada de folha 3D, sem dependências
+assets/js/page-turn.js             Adaptador da virada de páginas por toque
+assets/vendor/page-flip.browser.js Motor StPageFlip 2.0.7, MIT, disponível offline
+assets/vendor/LICENSE              Licença MIT da biblioteca StPageFlip
 assets/js/avatar-parts.js          Peças vetoriais extraídas dos SVGs originais (geradas)
 assets/js/pet-parts.js             Vetores dos 20 pets originais (gerados)
 assets/js/avatar.js                Compositor das peças originais + pernas customizáveis
 assets/js/preferences.js           Nome, nascimento, pronomes, pet, progresso e conquistas
 assets/js/settings-ui.js           Editor de personagem, pets e backup SVG
 assets/js/profile.js               Tela de perfil, livros lidos e medalhas
+assets/js/profile-tabs.js          Navegação acessível entre abas do perfil
 assets/js/pwa.js                   Instalação PWA e status de conexão
 assets/illustrations/<slug>/*.svg  Ilustrações por página
 assets/avatar-reference/svgrepo-kids/ SVGs de referência da coleção Kids Avatars
@@ -98,7 +101,7 @@ Nas páginas, coloque `[[palavra]]` para exibir uma palavra colorida que pode se
 
 ### Protagonista personalizável
 
-O botão **Personalizar** (na prateleira e no leitor) abre a página independente [`personagem.html`](personagem.html). A prévia do personagem fica **fixa durante a rolagem**: em coluna lateral no computador e em uma faixa compacta no topo do celular. Nessa tela, é possível configurar:
+O botão **Personalizar** (na prateleira e na aba Perfil) abre [`perfil.html#personalizar`](perfil.html#personalizar). O histórico de leitura e o editor agora são **abas da mesma página Perfil**. O endereço antigo `personagem.html` redireciona para essa aba. A prévia do personagem fica **fixa durante a rolagem**: em coluna lateral no computador e em uma faixa compacta no topo do celular. Nessa tela, é possível configurar:
 
 - Nome da criança e escrita fonética separada para a narração.
 - Data de nascimento opcional para calcular a idade e preencher `{{idade}}` em roteiros futuros.
@@ -155,9 +158,10 @@ O texto exibido é personalizado com o nome escolhido, mas a escrita fonética a
 
 ## Controles
 
-- Clique ou toque em **Próxima** e **Voltar**, ou deslize na área do livro.
-- A transição usa uma **virada de folha 3D**, inspirada visualmente no [Turn.js](https://github.com/blasten/turn.js), mas implementada manualmente com CSS e JavaScript (sem jQuery ou código do plugin). No celular vira a folha inteira; no desktop vira uma metade do livro. Quem prefere movimento reduzido não recebe a animação.
-- `←` página anterior; `→` próxima; **Espaço** ou botão **Ouvir** narra a página atual.
+- O leitor não tem cabeçalho: somente **barra de progresso**, **livrinho** e paginação/legenda. O rodapé fixo mantém **Prateleira**, **Ouvir**, **Voltar** e o botão rosa de avanço visíveis durante a leitura.
+- Arraste o **canto da folha com o dedo ou mouse** para acompanhar a dobra em tempo real. A animação usa [StPageFlip 2.0.7](https://github.com/Nodlik/StPageFlip), motor realista sem jQuery e de licença MIT, empacotado localmente. No desktop cada página lógica reúne ilustração à esquerda e texto à direita; no celular ambos aparecem na mesma folha. O motor respeita `prefers-reduced-motion` na navegação por botões.
+- `←` página anterior; `→` próxima; **Espaço** ou botão **Ouvir** alterna entre narrar, pausar e continuar do mesmo ponto.
+- As ilustrações SVG usam `object-fit: contain` em todas as resoluções, sem cortar as bordas do desenho.
 - Toque em palavras coloridas ou nas sílabas para ouvi-las individualmente.
 - No desafio, marque **todas** as frases lidas para liberar a página final e ganhar a medalha.
 

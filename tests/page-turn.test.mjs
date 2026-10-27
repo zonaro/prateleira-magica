@@ -5,76 +5,79 @@ import vm from 'node:vm';
 import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const js = fs.readFileSync(path.join(root, 'assets/js/page-turn.js'), 'utf8');
+const source = fs.readFileSync(path.join(root, 'assets/js/page-turn.js'), 'utf8');
 const css = fs.readFileSync(path.join(root, 'assets/css/app.css'), 'utf8');
-let reduced = false;
-let mobile = false;
-
-class Node {
-  constructor(name) {
-    this.name = name;
-    this.children = [];
-    this.handlers = {};
-    this.attributes = {};
-    this.className = '';
-    this.classList = { add: (value) => { this.className += ` ${value}`; } };
-  }
-  cloneNode() { return new Node(this.name); }
-  querySelectorAll() { return []; }
-  removeAttribute(name) { delete this.attributes[name]; }
-  setAttribute(name, value) { this.attributes[name] = value; }
-  append(...elements) { for (const element of elements) this.children.push(element); }
-  addEventListener(name, fn) { this.handlers[name] = fn; }
-  remove() { this.removed = true; }
-}
-const art = new Node('art-panel');
-const read = new Node('read-panel');
-const book = new Node('book');
-book.querySelector = (selector) => selector === '.art-panel' ? art : read;
-const window = { matchMedia: (query) => ({ matches: query.includes('reduced-motion') ? reduced : mobile }) };
-vm.runInNewContext(js, {
-  window,
-  document: { createElement: (name) => new Node(name) },
-  setTimeout: () => 42,
-  clearTimeout: () => {},
-  requestAnimationFrame: (fn) => fn()
-});
-
-const turn = window.LivrinhoPageTurn;
-assert(turn?.snapshot && turn?.animate && turn?.busy);
-turn.animate(book, turn.snapshot(book), 'forward');
-assert.equal(turn.busy(), true);
-const layer = book.children.at(-1);
-assert(layer.className.includes('forward') && layer.className.includes('turning'));
-assert.equal(layer.attributes['aria-hidden'], 'true');
-assert.equal(layer.children.length, 2, 'A animação deve formar uma parte fixa e uma folha');
-assert.equal(layer.children[1].children.length, 2, 'A folha deve ter frente e verso');
-assert.equal(turn.snapshot(book), null, 'Uma nova virada não começa antes da anterior terminar');
-const leaf = layer.children[1];
-leaf.handlers.transitionend({ target: leaf, propertyName: 'transform' });
-assert.equal(turn.busy(), false);
-assert(layer.removed);
-
-mobile = true;
-turn.animate(book, turn.snapshot(book), 'backward');
-const mobileLayer = book.children.at(-1);
-assert(mobileLayer.className.includes('mobile-leaf') && mobileLayer.className.includes('backward'));
-const mobileLeaf = mobileLayer.children[1];
-assert.equal(mobileLeaf.children[0].children[0].children.length, 2, 'No celular, ambas as metades viram juntas');
-mobileLeaf.handlers.transitionend({ target: mobileLeaf, propertyName: 'transform' });
-
-reduced = true;
-const count = book.children.length;
-turn.animate(book, turn.snapshot(book), 'forward');
-assert.equal(turn.busy(), false, 'Preferência por movimento reduzido deve pular a animação');
-assert.equal(book.children.length, count);
-
 const reader = fs.readFileSync(path.join(root, 'assets/js/reader.js'), 'utf8');
-assert(reader.includes('pageTurn.animate(') && reader.includes('pageTurn?.snapshot('));
-assert(reader.includes('if (!canVisit(destination))'), 'A virada não pode contornar o desafio bloqueado');
-assert(reader.includes('document.addEventListener(\'keydown\''));
+const html = fs.readFileSync(path.join(root, 'livro.html'), 'utf8');
+const bundle = fs.readFileSync(path.join(root, 'assets/vendor/page-flip.browser.js'), 'utf8');
+let portrait = false;
+let reducedMotion = false;
+const received = [];
+const host = {
+  parentNode: { insertBefore(node) { node.parentNode = this; } },
+  nextSibling: null,
+  clientWidth: 1180,
+  style: {},
+  classList: { toggle(name, value) { this[name] = value; } },
+  replaceChildren(...pages) { this.pages = pages; },
+  getBoundingClientRect() { return { width: this.clientWidth }; }
+};
+class PageFlip {
+  constructor(element, options) { this.element = element; this.options = options; this.handlers = {}; PageFlip.last = this; }
+  on(name, callback) { this.handlers[name] = callback; }
+  loadFromHTML(pages) { this.pages = pages; }
+  turnToPage(index) { this.current = index; this.handlers.flip({ data: index }); }
+  flip(index) {
+    this.handlers.changeState({ data: 'flipping' });
+    this.current = index;
+    this.handlers.flip({ data: index });
+    this.handlers.changeState({ data: 'read' });
+  }
+  destroy() { this.element.parentNode = null; }
+}
+const window = {
+  innerHeight: 820,
+  St: { PageFlip },
+  matchMedia(query) { return { matches: query.includes('reduced-motion') ? reducedMotion : portrait }; }
+};
+vm.runInNewContext(source, { window, console });
+const turn = window.LivrinhoPageTurn;
+assert(turn?.mount && turn?.go && turn?.busy && turn?.needsResize);
+
+turn.mount(host, Array.from({ length: 8 }, (_, i) => ({ i })), 0, (index) => received.push(index));
+assert.equal(PageFlip.last.options.drawShadow, true);
+assert.equal(PageFlip.last.options.usePortrait, false);
+assert.equal(PageFlip.last.options.mobileScrollSupport, true, 'Gestos verticais devem permitir rolagem da história');
+assert.equal(PageFlip.last.options.clickEventForward, true, 'Toque em palavras e desafio deve continuar');
+assert.equal(PageFlip.last.options.disableFlipByClick, true, 'Folha deve ser puxada pelo canto e não por clique no texto');
+assert.equal(turn.go(2), true);
+assert.equal(PageFlip.last.current, 4, 'Duas faces físicas por página lógica no desktop');
+assert.equal(received.at(-1), 2);
+assert.equal(turn.busy(), false);
+
+portrait = true;
+host.clientWidth = 360;
+assert(turn.needsResize(host));
+turn.mount(host, Array.from({ length: 4 }, (_, i) => ({ i })), 2, (index) => received.push(index));
+assert.equal(PageFlip.last.options.usePortrait, true);
+assert.equal(PageFlip.last.current, 2, 'No celular cada página lógica deve ter uma única folha');
+assert.equal(turn.go(3), true);
+assert.equal(PageFlip.last.current, 3);
+reducedMotion = true;
+turn.go(1);
+assert.equal(PageFlip.last.current, 1, 'Movimento reduzido usa mudança instantânea');
+assert.equal(turn.needsResize(host), false);
+turn.destroy();
+
+assert(bundle.includes('St=') && bundle.includes('PageFlip'), 'Bundle real do motor de páginas indisponível');
+assert(html.includes('assets/vendor/page-flip.browser.js'));
+assert(html.includes('class="controls"') && !html.includes('reader-topbar'));
+assert(css.includes('.reader-shell .controls{position:fixed'));
+assert(css.includes('object-fit:contain'), 'SVGs devem ser encaixados sem recorte');
+assert(reader.includes('pageTurn.mount(') && reader.includes('pageTurn.go('));
+assert(reader.includes('if (!canVisit(destination))'), 'Desafio deve bloquear avanço pelo teclado e botões');
 assert(reader.includes('const say = event.target.closest?.(\'[data-say]\')'));
-assert(css.includes('rotateY(-180deg)') && css.includes('rotateY(180deg)'));
-assert(css.includes('.page-turn-face.page-turn-back'));
-console.log('✓ Virada 3D para frente/trás, frente/verso, mobile e movimento reduzido');
-console.log('✓ Leitor mantém teclado, sons das palavras e bloqueio do desafio');
+assert(reader.includes('synth.pause()') && reader.includes('synth.resume()'), 'Ouvir deve pausar e continuar sem reiniciar');
+assert(reader.includes('event.key === \'ArrowRight\'') && reader.includes('event.key === \'ArrowLeft\''));
+console.log('✓ Motor MIT com dobra e gesto: páginas físicas desktop/mobile, avanço e movimento reduzido');
+console.log('✓ Leitura por voz pausa/retoma, controles fixos, SVG inteiro e bloqueio de desafio');

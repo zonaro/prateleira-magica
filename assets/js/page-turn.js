@@ -1,72 +1,88 @@
-/* Virada de página em CSS3, inspirada no efeito visual do Turn.js.
- * Implementação independente: não depende de jQuery nem modifica texto, som,
- * navegação, progresso ou comportamento dos controles do leitor.
+/* Páginas flexíveis de verdade, com dobra, curvatura e arraste por mouse/toque.
+ * Motor StPageFlip 2.0.7 (MIT), distribuído localmente em assets/vendor para uso offline.
+ * Este adaptador apenas converte páginas físicas em páginas lógicas do livrinho.
  */
 (() => {
   'use strict';
-  let turning = false;
+  let engine = null;
+  let folding = false;
+  let mobile = false;
+  let pageWidth = 0;
 
-  function cleanedClone(node) {
-    const clone = node.cloneNode(true);
-    clone.removeAttribute('id');
-    clone.querySelectorAll('[id]').forEach((element) => element.removeAttribute('id'));
-    return clone;
+  function isMobile() { return window.matchMedia('(max-width: 820px)').matches; }
+  function physicalPage(logical) { return logical * (mobile ? 1 : 2); }
+  function busy() { return folding; }
+
+  function destroy() {
+    if (engine) {
+      try { engine.destroy(); } catch (error) { console.warn('Falha ao desmontar o livro:', error); }
+      engine = null;
+    }
+    folding = false;
   }
 
-  function snapshot(book) {
-    if (!book || turning) return null;
-    return {
-      art: cleanedClone(book.querySelector('.art-panel')),
-      text: cleanedClone(book.querySelector('.read-panel'))
-    };
-  }
-
-  function animate(book, previous, direction) {
-    if (!previous || !book || turning || window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return;
-    turning = true;
-    const backwards = direction === 'backward';
-    const mobile = window.matchMedia?.('(max-width: 820px)').matches;
-    const layer = document.createElement('div');
-    layer.className = `page-turn-layer ${backwards ? 'backward' : 'forward'}${mobile ? ' mobile-leaf' : ''}`;
-    layer.setAttribute('aria-hidden', 'true');
-    layer.inert = true;
-
-    const still = document.createElement('div');
-    still.className = 'page-turn-still';
-    if (!mobile) still.append(backwards ? previous.text : previous.art);
-    const leaf = document.createElement('div');
-    leaf.className = 'page-turn-leaf';
-    const front = document.createElement('div');
-    front.className = 'page-turn-face page-turn-front';
-    if (mobile) {
-      const spread = document.createElement('div');
-      spread.className = 'page-turn-mobile-spread';
-      spread.append(previous.art, previous.text);
-      front.append(spread);
-    } else front.append(backwards ? previous.art : previous.text);
-    const back = document.createElement('div');
-    back.className = 'page-turn-face page-turn-back';
-    const paperMark = document.createElement('span');
-    paperMark.className = 'page-turn-watermark';
-    paperMark.textContent = '✦';
-    back.append(paperMark);
-    leaf.append(front, back);
-    layer.append(still, leaf);
-    book.append(layer);
-
-    let timeout;
-    const finish = () => {
-      if (!turning) return;
-      turning = false;
-      clearTimeout(timeout);
-      layer.remove();
-    };
-    leaf.addEventListener('transitionend', (event) => {
-      if (event.target === leaf && event.propertyName === 'transform') finish();
+  function mount(book, pages, logicalIndex, onFlip) {
+    if (!window.St?.PageFlip) throw Error('O mecanismo de páginas não foi carregado.');
+    const parent = book.parentNode;
+    const nextSibling = book.nextSibling;
+    destroy();
+    // O destrutor do StPageFlip remove o elemento-raiz; recoloque-o antes de montar.
+    if (parent && !book.parentNode) parent.insertBefore(book, nextSibling);
+    mobile = isMobile();
+    book.replaceChildren(...pages);
+    const available = Math.max(290, Math.floor(book.getBoundingClientRect().width || book.clientWidth));
+    pageWidth = Math.floor(available / (mobile ? 1 : 2));
+    // No celular a ilustração e o texto compõem uma única folha, mais alta.
+    // No desktop cada lado do livro corresponde a uma folha física.
+    const height = mobile ? Math.max(660, Math.min(810, Math.round(window.innerHeight * .9)))
+      : Math.max(620, Math.min(890, Math.round(pageWidth * 1.22)));
+    book.style.height = `${height}px`;
+    book.classList.toggle('reader-portrait', mobile);
+    book.classList.toggle('reader-landscape', !mobile);
+    engine = new window.St.PageFlip(book, {
+      width: pageWidth,
+      height,
+      size: 'fixed',
+      usePortrait: mobile,
+      autoSize: false,
+      showCover: false,
+      drawShadow: true,
+      maxShadowOpacity: .48,
+      flippingTime: 760,
+      mobileScrollSupport: true,
+      clickEventForward: true,
+      disableFlipByClick: true,
+      swipeDistance: 42,
+      useMouseEvents: true
     });
-    timeout = setTimeout(finish, 1000);
-    requestAnimationFrame(() => requestAnimationFrame(() => layer.classList.add('turning')));
+    let ready = false;
+    engine.on('changeState', (event) => { if (ready) folding = event.data !== 'read'; });
+    engine.on('flip', (event) => {
+      if (!ready) return;
+      folding = false;
+      onFlip(Math.floor(event.data / (mobile ? 1 : 2)));
+    });
+    engine.loadFromHTML(pages);
+    engine.turnToPage(Math.min(pages.length - 1, physicalPage(logicalIndex)));
+    ready = true;
+    return { mobile, pageWidth, height };
   }
 
-  window.LivrinhoPageTurn = { snapshot, animate, busy: () => turning };
+  function go(logicalIndex, animate = true) {
+    if (!engine || busy()) return false;
+    if (animate && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      engine.flip(physicalPage(logicalIndex), 'bottom');
+    } else {
+      engine.turnToPage(physicalPage(logicalIndex));
+    }
+    return true;
+  }
+
+  function needsResize(book) {
+    if (!engine) return false;
+    const width = Math.floor(Math.max(290, book.getBoundingClientRect().width || book.clientWidth) / (isMobile() ? 1 : 2));
+    return mobile !== isMobile() || Math.abs(width - pageWidth) > 20;
+  }
+
+  window.LivrinhoPageTurn = { mount, go, busy, destroy, needsResize, isMobile };
 })();

@@ -2,30 +2,11 @@
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#faf3e8">
-  <meta name="description" content="Personalize o protagonista da Prateleira Mágica com roupas, cabelos e cores.">
-  <link rel="icon" href="./assets/icons/icon.svg" type="image/svg+xml">
-  <link rel="manifest" href="./manifest.webmanifest">
-  <link rel="stylesheet" href="./assets/css/app.css">
-  <script src="./assets/js/avatar-parts.js" defer></script>
-  <script src="./assets/js/pet-parts.js" defer></script>
-  <script src="./assets/js/avatar.js" defer></script>
-  <script src="./assets/js/preferences.js" defer></script>
-  <script src="./assets/js/settings-ui.js" defer></script>
-  <script src="./assets/js/pwa.js" defer></script>
-  <title>Personalizar personagem · Prateleira Mágica</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="refresh" content="0; url=./perfil.html#personalizar">
+  <meta name="robots" content="noindex">
+  <title>Personalizar · Prateleira Mágica</title>
+  <script>location.replace(new URL('./perfil.html#personalizar', location.href));</script>
 </head>
-<body class="settings-screen">
-  <div class="settings-page-shell">
-    <header class="settings-site-header">
-      <a class="shelf-brand" href="./index.html" aria-label="Prateleira Mágica, início">
-        <img src="./assets/icons/icon.svg" alt="" width="51" height="51">
-        <span><strong>Prateleira Mágica ✨</strong><small>Seu personagem, sua aventura</small></span>
-      </a>
-      <div class="settings-header-actions"><a class="customize-action profile-action" href="./perfil.html">🏅 Ver perfil</a><span class="connection-status" id="connectionStatus" aria-live="polite">● Pronto para brincar</span></div>
-    </header>
-    <main id="settingsApp" class="settings-app" aria-label="Editor de personagem"></main>
-  </div>
-</body>
+<body><p>O editor agora é uma aba do perfil. <a href="./perfil.html#personalizar">Abrir Personalizar</a>.</p></body>
 </html>

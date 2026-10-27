@@ -12,8 +12,11 @@
   let book = null;
   let page = 0;
   let toastTimer;
-  let startX = null;
-  let startY = null;
+  let currentSpeech = null;
+  let voiceState = 'idle';
+  let activeMode = null;
+  let mountedCount = 0;
+  let resizeTimer;
 
   function challengeComplete() {
     return !book?.exercises?.length || (completed.size === book.exercises.length
@@ -63,12 +66,26 @@
     return result;
   }
 
+  function updateListenButton() {
+    const playing = voiceState === 'playing';
+    const paused = voiceState === 'paused';
+    $('#listen').setAttribute('aria-pressed', String(playing));
+    $('#listen').setAttribute('aria-label', playing ? 'Pausar leitura' : paused ? 'Retomar leitura' : 'Ouvir página');
+    $('.listen-icon').textContent = playing ? '⏸' : '▶';
+    $('.listen-text').textContent = playing ? 'Pausar' : paused ? 'Continuar' : 'Ouvir';
+  }
+  function stopSpeech() {
+    currentSpeech = null;
+    voiceState = 'idle';
+    window.speechSynthesis?.cancel();
+    updateListenButton();
+  }
   function speak(text) {
     if (!('speechSynthesis' in window)) {
       notify('A leitura em voz alta não está disponível neste navegador.');
       return;
     }
-    window.speechSynthesis.cancel();
+    stopSpeech();
     const utterance = new SpeechSynthesisUtterance(speechText(text));
     utterance.lang = book?.language || 'pt-BR';
     utterance.rate = .78;
@@ -77,6 +94,12 @@
     const preferred = voices.find((voice) => voice.lang.toLowerCase() === utterance.lang.toLowerCase())
       || voices.find((voice) => voice.lang.toLowerCase().startsWith('pt'));
     if (preferred) utterance.voice = preferred;
+    currentSpeech = utterance;
+    voiceState = 'playing';
+    utterance.onend = utterance.onerror = () => {
+      if (currentSpeech === utterance) { currentSpeech = null; voiceState = 'idle'; updateListenButton(); }
+    };
+    updateListenButton();
     window.speechSynthesis.speak(utterance);
   }
 
@@ -84,7 +107,18 @@
   function hearCurrentPage() {
     const current = book.pages[page];
     const words = current.blocks.map((block) => plainText(label(block.text))).join(' ');
-    speak(label(current.speech || `${current.title}. ${words}`));
+    const synth = window.speechSynthesis;
+    if (currentSpeech && synth?.speaking && !synth.paused) {
+      synth.pause();
+      voiceState = 'paused';
+      updateListenButton();
+    } else if (currentSpeech && synth?.paused) {
+      synth.resume();
+      voiceState = 'playing';
+      updateListenButton();
+    } else {
+      speak(label(current.speech || `${current.title}. ${words}`));
+    }
   }
 
   function renderText(container, text) {
@@ -132,17 +166,25 @@
     }
   }
 
-  function render() {
-    window.speechSynthesis?.cancel();
-    const current = book.pages[page];
-    const art = $('#scene');
-    art.src = asset(current.illustration);
-    preferences?.personalizeIllustration(art, asset(current.illustration));
-    art.alt = `Ilustração: ${label(current.title)}`;
-    $('#artSticker').textContent = label(current.sticker || '');
-    const panel = $('#readPanel');
+  function createArt(current, pendingImages) {
+    const panel = document.createElement('section');
+    panel.className = 'art-panel';
+    panel.setAttribute('aria-label', `Ilustração: ${label(current.title)}`);
+    const img = document.createElement('img');
+    img.src = asset(current.illustration);
+    img.alt = `Ilustração: ${label(current.title)}`;
+    img.draggable = false;
+    if (preferences?.personalizeIllustration) pendingImages.push(preferences.personalizeIllustration(img, asset(current.illustration)));
+    const sticker = document.createElement('div');
+    sticker.className = 'art-sticker';
+    sticker.textContent = label(current.sticker || '');
+    panel.append(img, sticker);
+    return panel;
+  }
+
+  function createRead(current) {
+    const panel = document.createElement('section');
     panel.className = `read-panel${current.type === 'cover' ? ' cover' : ''}`;
-    panel.replaceChildren();
     const chapter = document.createElement('div');
     chapter.className = 'chapter';
     chapter.textContent = label(current.chapter || '');
@@ -190,16 +232,70 @@
     hint.textContent = label(current.tip || 'Toque nas palavras coloridas e leia no seu ritmo.');
     const pageNumber = document.createElement('span');
     pageNumber.className = 'page-number';
-    pageNumber.textContent = `${String(page + 1).padStart(2, '0')} / ${String(book.pages.length).padStart(2, '0')}`;
     panel.append(hint, pageNumber);
+    return panel;
+  }
 
+  function updateVisiblePageNumbers() {
+    for (const number of $('#book').querySelectorAll('[data-logical-page] .page-number')) {
+      const logical = Number(number.closest('[data-logical-page]').dataset.logicalPage);
+      number.textContent = `${String(logical + 1).padStart(2, '0')} / ${String(book.pages.length).padStart(2, '0')}`;
+    }
+  }
+
+  function createPages(mobile) {
+    const pages = [];
+    const pendingImages = [];
+    const challenge = challengePageIndex();
+    const count = challenge >= 0 && !challengeComplete() ? challenge + 1 : book.pages.length;
+    for (let index = 0; index < count; index++) {
+      const current = book.pages[index];
+      const art = createArt(current, pendingImages);
+      const text = createRead(current);
+      if (mobile) {
+        const leaf = document.createElement('div');
+        leaf.className = 'flip-page flip-combined';
+        leaf.dataset.logicalPage = String(index);
+        leaf.append(art, text);
+        pages.push(leaf);
+      } else {
+        const artLeaf = document.createElement('div');
+        artLeaf.className = 'flip-page flip-illustration';
+        artLeaf.dataset.logicalPage = String(index);
+        artLeaf.append(art);
+        const textLeaf = document.createElement('div');
+        textLeaf.className = 'flip-page flip-story';
+        textLeaf.dataset.logicalPage = String(index);
+        textLeaf.append(text);
+        pages.push(artLeaf, textLeaf);
+      }
+    }
+    return { pages, pendingImages };
+  }
+
+  async function mountPages() {
+    const request = ++mountedCount;
+    const { pages, pendingImages } = createPages(pageTurn.isMobile());
+    await Promise.allSettled(pendingImages);
+    if (request !== mountedCount) return;
+    const staleBlobs = [...$('#book').querySelectorAll('img[data-avatar-blob]')].map((img) => img.dataset.avatarBlob);
+    pageTurn.mount($('#book'), pages, page, onPageFlip);
+    for (const old of staleBlobs) URL.revokeObjectURL(old);
+    updateVisiblePageNumbers();
+    $('#readerApp').hidden = false;
+    updateControls();
+  }
+
+  function updateControls() {
     $('#progressBar').style.width = `${(page + 1) / book.pages.length * 100}%`;
     $('#progressLabel').textContent = `Página ${page + 1} de ${book.pages.length}`;
     $('#prev').disabled = page === 0;
-    const challengeLocked = current.type === 'challenge' && !challengeComplete();
+    const challengeLocked = book.pages[page].type === 'challenge' && !challengeComplete();
     $('#next').disabled = challengeLocked;
-    $('#next').textContent = challengeLocked ? 'Complete todas as frases 🔒'
-      : page === 0 ? 'Começar →' : page === book.pages.length - 1 ? '↻ Ler de novo' : 'Próxima →';
+    $('.next-text').textContent = challengeLocked ? 'Desafio 🔒'
+      : page === 0 ? 'Começar' : page === book.pages.length - 1 ? 'Reler' : 'Próxima';
+    $('#next').setAttribute('aria-label', challengeLocked ? 'Marque todas as frases para continuar'
+      : page === 0 ? 'Começar leitura' : page === book.pages.length - 1 ? 'Ler o livro novamente' : 'Próxima página');
     const dots = $('#dots');
     dots.replaceChildren();
     book.pages.forEach((item, index) => {
@@ -217,6 +313,22 @@
     });
   }
 
+  function onPageFlip(index) {
+    if (!canVisit(index)) {
+      pageTurn.go(page, false);
+      notify('🔒 Complete todas as frases do desafio para avançar.');
+      return;
+    }
+    if (index === page) return;
+    stopSpeech();
+    page = index;
+    rememberPage();
+    if (book.pages[page]?.type === 'finish') {
+      preferences?.recordBookProgress(book.id, { finished: true }, book.exercises?.length || 0);
+    }
+    updateControls();
+  }
+
   function go(target) {
     if (pageTurn?.busy()) return;
     const destination = Math.min(book.pages.length - 1, Math.max(0, target));
@@ -224,16 +336,8 @@
       notify('🔒 Leia e marque todas as frases do desafio para receber a medalha!');
       return;
     }
-    const previousPage = page;
-    const previousSpread = previousPage !== destination ? pageTurn?.snapshot($('#book')) : null;
-    page = destination;
-    rememberPage();
-    if (page === book.pages.length - 1 && book.pages[page].type === 'finish') {
-      preferences?.recordBookProgress(book.id, { finished: true }, book.exercises?.length || 0);
-    }
-    render();
-    if (previousSpread) pageTurn.animate($('#book'), previousSpread, destination < previousPage ? 'backward' : 'forward');
-    if (window.innerWidth < 821) window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (destination === page) return;
+    pageTurn.go(destination);
   }
 
   function showError(message) {
@@ -261,7 +365,17 @@
       if (completed.has(index)) completed.delete(index);
       else { completed.add(index); notify(challengeComplete() ? '🏅 Você ganhou uma medalha!' : 'Muito bem! ⭐'); }
       preferences?.recordBookProgress(book.id, { completedExercises: [...completed] }, book.exercises.length);
-      render();
+      if (challengeComplete()) {
+        // Acrescenta a folha de conclusão apenas depois que todas as frases forem marcadas.
+        mountPages();
+      } else {
+        for (const button of $('#book').querySelectorAll('[data-check]')) {
+          const rowIndex = Number(button.dataset.check);
+          button.setAttribute('aria-pressed', String(completed.has(rowIndex)));
+          button.textContent = completed.has(rowIndex) ? '✓' : book.exercises[rowIndex].syllable;
+        }
+        updateControls();
+      }
     }
   });
   document.addEventListener('keydown', (event) => {
@@ -278,18 +392,11 @@
   document.addEventListener('keyup', (event) => {
     if (book && (event.code === 'Space' || event.key === ' ')) event.preventDefault();
   });
-  $('#book').addEventListener('touchstart', (event) => {
-    startX = event.touches[0].clientX;
-    startY = event.touches[0].clientY;
-  }, { passive: true });
-  $('#book').addEventListener('touchend', (event) => {
-    if (startX === null || !book) return;
-    const dx = event.changedTouches[0].clientX - startX;
-    const dy = event.changedTouches[0].clientY - startY;
-    if (Math.abs(dx) > 65 && Math.abs(dx) > Math.abs(dy) * 1.4) go(page + (dx < 0 ? 1 : -1));
-    startX = null;
-    startY = null;
-  }, { passive: true });
+  window.addEventListener('resize', () => {
+    if (!book || !pageTurn.needsResize($('#book'))) return;
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(mountPages, 230);
+  });
 
   async function loadBook() {
     if (!bookId) { showError('Escolha um livrinho na prateleira para começar.'); return; }
@@ -312,10 +419,9 @@
       }
       document.title = `${label(book.title)} · Prateleira Mágica`;
       document.documentElement.lang = book.language || 'pt-BR';
-      $('#bookBrand').textContent = label(book.title);
       $('#readerApp').hidden = false;
       rememberPage();
-      render();
+      await mountPages();
     } catch (error) {
       console.error('Erro ao abrir livro:', error);
       showError('Não foi possível abrir o livro. Se for o primeiro acesso, conecte-se à internet e tente novamente.');
@@ -327,8 +433,7 @@
     completed = new Set((preferences?.bookProgress(book.id).completedExercises || [])
       .filter((index) => index < (book.exercises?.length || 0)));
     document.title = `${label(book.title)} · Prateleira Mágica`;
-    $('#bookBrand').textContent = label(book.title);
-    render();
+    mountPages();
   });
   loadBook();
 })();

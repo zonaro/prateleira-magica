@@ -68,8 +68,8 @@ const css = fs.readFileSync(path.join(root, 'assets/css/app.css'), 'utf8');
 assert(css.includes('.book-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))'), 'Prateleira sem três colunas no desktop');
 assert(css.includes('.settings-preview-column{position:sticky;top:20px'), 'Prévia do avatar precisa ficar fixa na rolagem do desktop');
 assert(css.includes('.settings-preview-column{position:sticky;top:0'), 'Prévia do avatar precisa ficar fixa na rolagem do celular');
-const editor = fs.readFileSync(path.join(root, 'personagem.html'), 'utf8');
-assert(editor.includes('id="settingsApp"') && editor.includes('settings-ui.js'), 'Personalização não tem tela própria');
+const editor = fs.readFileSync(path.join(root, 'perfil.html'), 'utf8');
+assert(editor.includes('id="settingsApp"') && editor.includes('settings-ui.js'), 'Personalização não está na aba Perfil');
 assert(editor.includes('pet-parts.js'), 'Pet precisa ser renderizado no editor');
 const editorUi = fs.readFileSync(path.join(root, 'assets/js/settings-ui.js'), 'utf8');
 assert(editorUi.includes('settings-layout') && editorUi.includes('settings-preview-column'));
@@ -77,9 +77,9 @@ for (const marker of ['birthDate', 'petStyles', 'petUnlockStatus', 'petId']) {
   assert(editorUi.includes(marker), `Editor sem ${marker}`);
 }
 assert(!editorUi.includes('showModal('), 'O editor ainda abre um popup');
-for (const page of ['index.html', 'livro.html']) {
-  assert(fs.readFileSync(path.join(root, page), 'utf8').includes('href="./personagem.html"'), `${page} sem link para editor dedicado`);
-}
+assert(fs.readFileSync(path.join(root, 'index.html'), 'utf8').includes('href="./perfil.html#personalizar"'));
+assert(fs.readFileSync(path.join(root, 'personagem.html'), 'utf8').includes('perfil.html#personalizar'));
+assert(editor.includes('id="tabPersonalizar"') && editor.includes('id="tabConquistas"'));
 assert(fs.readFileSync(path.join(root, 'index.html'), 'utf8').includes('href="./perfil.html"'));
 const profileHtml = fs.readFileSync(path.join(root, 'perfil.html'), 'utf8');
 const profileJs = fs.readFileSync(path.join(root, 'assets/js/profile.js'), 'utf8');

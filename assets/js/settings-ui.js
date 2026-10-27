@@ -15,18 +15,13 @@
     for (const button of document.querySelectorAll('[data-open-settings]')) {
       button.addEventListener('click', (event) => {
         event.preventDefault();
-        const back = location.pathname.endsWith('/livro.html') ? `livro.html${location.search}`
-          : location.pathname.endsWith('/perfil.html') ? 'perfil.html' : 'index.html';
-        const destination = new URL(`personagem.html?voltar=${encodeURIComponent(back)}`, root);
+        const destination = new URL('perfil.html#personalizar', root);
         location.assign(destination.href);
       });
     }
     return;
   }
-  const backParam = new URLSearchParams(location.search).get('voltar');
-  const candidate = backParam ? new URL(backParam, root) : new URL('index.html', root);
-  const returnUrl = candidate.origin === root.origin && candidate.pathname.startsWith(root.pathname)
-    && /\/(?:index|livro|perfil)\.html$/.test(candidate.pathname) ? candidate.href : new URL('index.html', root).href;
+  const returnUrl = '#conquistas';
   const skinColors = [
     ['#f5d4b3', 'Pele clara'], ['#e9aa83', 'Pele média clara'],
     ['#c98760', 'Pele média'], ['#a66846', 'Pele bronzeada'],
@@ -53,7 +48,7 @@
     <form class="preferences-form" id="avatarSettingsForm">
       <div class="preferences-heading">
         <div><div class="section-kicker">NOSSA ESTRELA</div><h2 id="settingsTitle">Personalizar protagonista ✨</h2></div>
-        <a class="settings-close" id="closeSettings" aria-label="Voltar" href="${returnUrl}">← Voltar</a>
+        <a class="settings-close" id="closeSettings" aria-label="Ir para Meu perfil" href="${returnUrl}">🏅 Meu perfil</a>
       </div>
       <p class="settings-intro">Monte seu personagem combinando cabelos, roupas e cores. Ele aparecerá nas ilustrações de todos os livros!</p>
       <div class="preferences-content">
@@ -343,7 +338,7 @@
   $('.preferences-form').addEventListener('submit', (event) => {
     event.preventDefault();
     preferences.save(currentDraft());
-    location.assign(returnUrl);
+    location.hash = 'conquistas';
   });
 
 })();
