@@ -121,9 +121,23 @@
       updateColor(generated, word, `A palavra “${word}” criou uma cor parecida com ${colors.name(generated).toLowerCase()}!`);
     });
     moodSelect.addEventListener('change', () => { mood = moodSelect.value; renderHarmonies(); });
+    function temperatureLabelForSpeech(temp) {
+      const value = String(temp || '').toLowerCase();
+      if (!value) return '';
+      if (value.includes('veryhot')) return 'muito quente';
+      if (value.includes('hot')) return 'quente';
+      if (value.includes('neutralhot')) return 'neutro-quente';
+      if (value.includes('neutralcold')) return 'neutro-fria';
+      if (value.includes('cold')) return 'fria';
+      if (value.includes('verycold')) return 'muito fria';
+      if (value.includes('neutral')) return 'neutra';
+      return '';
+    }
     $('[data-hear-color]').addEventListener('click', () => {
       const name = colors.name(current);
-      const text = `Esta cor se chama ${name}.`;
+      const temp = colors.temperature ? colors.temperature(current) : '';
+      const tempLabel = temperatureLabelForSpeech(temp);
+      const text = tempLabel ? `Essa cor se chama ${name} e ela é ${tempLabel}.` : `Essa cor se chama ${name}.`;
       try {
         const synth = window.speechSynthesis;
         if (synth && typeof synth.resume === 'function' && synth.state === 'paused') {

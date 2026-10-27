@@ -4,7 +4,20 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#faf3e8">
-  <meta name="description" content="Prateleira Mágica: livros infantis ilustrados e interativos para treinar a leitura brincando, até offline.">
+  <title>Prateleira Mágica | Livros infantis ilustrados para ler brincando</title>
+  <meta name="description" content="Prateleira Mágica: livros infantis ilustrados e interativos para pais lerem com filhos, ensinar sílabas, palavras e estimular o hábito da leitura. PWA offline.">
+  <meta name="keywords" content="livros infantis, histórias infantis, leitura infantil, sílabas, alfabetização, PWA infantil, livros interativos, leitura para crianças">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://zonaro.github.io/prateleira-magica/">
+  <meta property="og:title" content="Prateleira Mágica | Livros infantis ilustrados para ler brincando">
+  <meta property="og:description" content="Histórias ilustradas e interativas para pais e filhos treinarem a leitura juntos, com desafios, medalhas e uso offline.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://zonaro.github.io/prateleira-magica/">
+  <meta property="og:image" content="https://zonaro.github.io/prateleira-magica/assets/icons/icon-512.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Prateleira Mágica | Livros infantis ilustrados para ler brincando">
+  <meta name="twitter:description" content="Livros infantis ilustrados e interativos para ler em família.">
+  <meta name="twitter:image" content="https://zonaro.github.io/prateleira-magica/assets/icons/icon-512.png">
   <link rel="icon" href="./assets/icons/icon.svg" type="image/svg+xml">
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="stylesheet" href="./assets/css/app.css">
@@ -15,19 +28,47 @@
   <script src="./assets/vendor/NameToColor.js" defer></script>
   <script src="./assets/vendor/NameToColor.ptBR.js" defer></script>
   <script src="./assets/js/colors.js" defer></script>
-  <script src="./assets/js/library.js" defer></script>
   <script src="./assets/js/settings-ui.js" defer></script>
   <script src="./assets/js/pwa.js" defer></script>
-  <title>Prateleira Mágica · Ler é uma aventura</title>
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js" defer></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Prateleira Mágica",
+    "url": "https://zonaro.github.io/prateleira-magica/",
+    "description": "Livros infantis ilustrados e interativos para ler em família.",
+    "inLanguage": "pt-BR",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Prateleira Mágica"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "EducationalOrganization",
+    "name": "Prateleira Mágica",
+    "url": "https://zonaro.github.io/prateleira-magica/",
+    "description": "Plataforma de leitura infantil com histórias ilustradas, sílabas interativas e desafios para alfabetização.",
+    "inLanguage": "pt-BR",
+    "audience": {
+      "@type": "EducationalAudience",
+      "educationalRole": "parent"
+    }
+  }
+  </script>
 </head>
-<body class="shelf-page">
+<body class="landing-page">
   <div class="shelf-shell">
     <header class="shelf-header">
       <a class="shelf-brand" href="./index.html" aria-label="Prateleira Mágica, início">
         <img src="./assets/icons/icon.svg" alt="" width="51" height="51">
-        <span><strong>Prateleira Mágica ✨</strong><small>Pequenas histórias, grandes descobertas</small></span>
+        <span><strong>Prateleira Mágica ✨</strong><small>Livros infantis para ler em família</small></span>
       </a>
       <div class="shelf-actions">
+        <a class="customize-action" href="./prateleira.html">📚 Ver prateleira</a>
         <a class="customize-action profile-action" href="./perfil.html">🏅 Meu perfil</a>
         <a class="customize-action" href="./perfil.html#personalizar" data-open-settings>⚙ Personalizar</a>
         <span class="connection-status" id="connectionStatus" aria-live="polite">● Pronto para ler</span>
@@ -35,32 +76,180 @@
       </div>
     </header>
     <main>
-      <section class="shelf-hero" aria-labelledby="heroTitle">
-        <div class="shelf-hero-copy">
-          <div class="hero-kicker">✦ LEITURA COM CARINHO</div>
-          <h1 id="heroTitle">Cada página, uma nova aventura<span class="hero-period">.</span></h1>
-          <p>Histórias ilustradas, palavras para descobrir e desafios para ler no seu ritmo. Escolha um livrinho e vamos começar!</p>
-          <a class="hero-button" href="#livros">Escolher um livro <span aria-hidden="true">↗</span></a>
+      <section class="landing-hero" aria-labelledby="landingTitle">
+        <div class="landing-hero-copy">
+          <div class="hero-kicker">✦ LEITURA EM FAMÍLIA</div>
+          <h1 id="landingTitle">Transforme momentos em <span class="hero-highlight">aventuras de leitura</span><span class="hero-period">.</span></h1>
+          <p>Para pais que querem despertar o amor pela leitura: histórias ilustradas, sílabas interativas, desafios divertidos e medalhas que incentivam seu filho a ler todos os dias. Funciona offline, sem anúncios e feito com muito carinho.</p>
+          <div class="landing-ctas">
+            <a class="hero-button" href="./prateleira.html">Começar a ler agora <span aria-hidden="true">↗</span></a>
+            <a class="landing-secondary" href="#beneficios">Ver benefícios</a>
+          </div>
+          <ul class="landing-bullets">
+            <li>✅ Histórias personalizadas com o nome da criança</li>
+            <li>✅ Aprendizado de sílabas brincando</li>
+            <li>✅ Funciona 100% offline após primeira visita</li>
+            <li>✅ Sem anúncios, sem coleta de dados pessoais</li>
+          </ul>
         </div>
-        <div class="hero-visual" aria-hidden="true">
-          <div class="hero-star hero-star-a">✦</div><div class="hero-star hero-star-b">✴</div>
-          <div class="hero-book hero-book-back"></div>
-          <div class="hero-book hero-book-front"><img id="heroCover" src="./assets/illustrations/ellie/cover.svg" alt=""></div>
-          <div class="hero-avatar" id="heroAvatar"></div>
-          <div class="hero-shelf"></div>
-          <div class="hero-sparkle">✳</div>
+        <div class="landing-hero-visual" aria-hidden="true">
+          <div class="landing-book-stack">
+            <div class="landing-book landing-book-1"></div>
+            <div class="landing-book landing-book-2"></div>
+            <div class="landing-book landing-book-3"></div>
+          </div>
+          <div class="landing-sparkles">✨ ✦ ✳</div>
         </div>
       </section>
-      <section class="shelf-section" id="livros" aria-labelledby="shelfTitle">
+
+      <section class="landing-section" id="beneficios" aria-labelledby="benefitsTitle">
         <div class="section-topline">
-          <div><div class="section-kicker">A NOSSA COLEÇÃO</div><h2 id="shelfTitle">Escolha seu livrinho <span aria-hidden="true">📚</span></h2></div>
-          <p>Toque em uma capa para abrir.</p>
+          <div><div class="section-kicker">POR QUE ESCOLHER</div><h2 id="benefitsTitle">Leitura que diverte e ensina</h2></div>
+          <p>Ideal para criar o hábito da leitura em família</p>
         </div>
-        <div class="book-grid" id="bookShelf" aria-live="polite"><p class="shelf-loading">Preparando os livrinhos…</p></div>
+        <div class="benefits-grid">
+          <article class="benefit-card">
+            <div class="benefit-icon">👨‍👩‍👧</div>
+            <h3>Para ler em família</h3>
+            <p>Crie momentos especiais lendo junto. A narração, os desafios e as ilustrações tornam cada história única para vocês.</p>
+          </article>
+          <article class="benefit-card">
+            <div class="benefit-icon">🧩</div>
+            <h3>Aprendizado interativo</h3>
+            <p>Exercícios com sílabas, palavras coloridas e desafios de frases ajudam na alfabetização de forma natural e divertida.</p>
+          </article>
+          <article class="benefit-card">
+            <div class="benefit-icon">🎨</div>
+            <h3>Personalizável</h3>
+            <p>Crie o avatar da criança, escolha cores, pelúcias e veja seu nome nas histórias. Cada leitura fica ainda mais especial.</p>
+          </article>
+          <article class="benefit-card">
+            <div class="benefit-icon">📴</div>
+            <h3>Offline & PWA</h3>
+            <p>Instale no celular ou tablet e leia em qualquer lugar, até sem internet. Perfeito para viagens e momentos fora de casa.</p>
+          </article>
+          <article class="benefit-card">
+            <div class="benefit-icon">🏅</div>
+            <h3>Motivação com medalhas</h3>
+            <p>Conquistas e medalhas incentivam a criança a completar as histórias e celebrar cada progresso.</p>
+          </article>
+          <article class="benefit-card">
+            <div class="benefit-icon">🔒</div>
+            <h3>Privacidade total</h3>
+            <p>Sem cadastro, sem anúncios, sem rastreamento. Tudo fica salvo apenas no seu dispositivo.</p>
+          </article>
+        </div>
       </section>
-      <div class="shelf-footnote">🌟 Um pouquinho de leitura por dia já é uma grande conquista.</div>
+
+      <section class="landing-section" aria-labelledby="storiesTitle">
+        <div class="section-topline">
+          <div><div class="section-kicker">NOSSAS HISTÓRIAS</div><h2 id="storiesTitle">Aventuras prontas para começar</h2></div>
+          <p>Quatro histórias para diferentes fases da alfabetização</p>
+        </div>
+        <div class="stories-preview">
+          <div class="story-preview-card">
+            <div class="story-preview-cover" style="background:linear-gradient(135deg,#f96b91,#ff9fb8)"></div>
+            <h3>{{nome}} e o Trem Travesso</h3>
+            <p>Aprenda TRA, TRE, TRI, TRO, TRU</p>
+          </div>
+          <div class="story-preview-card">
+            <div class="story-preview-cover" style="background:linear-gradient(135deg,#8b79dd,#b8a9ff)"></div>
+            <h3>{{nome}} e o Drone Desaparecido</h3>
+            <p>Aprenda DRA, DRE, DRI, DRO, DRU</p>
+          </div>
+          <div class="story-preview-card">
+            <div class="story-preview-cover" style="background:linear-gradient(135deg,#4c9fbe,#7bc5e0)"></div>
+            <h3>{{nome}} e o Trem dos Dragões</h3>
+            <p>Junte TR e DR em uma grande aventura</p>
+          </div>
+          <div class="story-preview-card">
+            <div class="story-preview-cover" style="background:linear-gradient(135deg,#ed79a0,#ffb3d1)"></div>
+            <h3>{{nome}} e o Reino das Cores</h3>
+            <p>Explore cores, misturas e harmonias</p>
+          </div>
+        </div>
+        <div class="landing-center">
+          <a class="hero-button" href="./prateleira.html">Ver todas as histórias <span aria-hidden="true">→</span></a>
+        </div>
+      </section>
+
+      <section class="landing-section" id="doacoes" aria-labelledby="donationTitle">
+        <div class="donation-card">
+          <div class="donation-copy">
+            <div class="section-kicker">APOIE O PROJETO</div>
+            <h2 id="donationTitle">Ajude a manter a Prateleira Mágica gratuita</h2>
+            <p>Este projeto é feito com muito carinho para ajudar famílias a criar o hábito da leitura. Se ele tem sido útil para vocês, qualquer valor via PIX ajuda a manter o projeto online e gratuito para todos.</p>
+            <div class="donation-info">
+              <div class="donation-key">
+                <strong>Chave PIX (BRCode)</strong>
+                <code>43077469880</code>
+                <span>Gabriel Forti Zonaro</span>
+              </div>
+              <p class="donation-note">Doação voluntária. Não é necessário para usar o app.</p>
+            </div>
+          </div>
+          <div class="donation-qr">
+            <div id="pixQr" class="pix-qr"></div>
+            <p>Escaneie o QR Code com seu app bancário</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="landing-section" aria-labelledby="faqTitle">
+        <div class="section-topline">
+          <div><div class="section-kicker">PERGUNTAS FREQUENTES</div><h2 id="faqTitle">Dúvidas dos pais</h2></div>
+        </div>
+        <div class="faq-list">
+          <details class="faq-item" open>
+            <summary>Preciso criar conta para usar?</summary>
+            <p>Não! A Prateleira Mágica não tem cadastro, login ou coleta de dados. Tudo fica salvo apenas no seu dispositivo.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Funciona sem internet?</summary>
+            <p>Sim! Após a primeira visita, você pode instalar como app (PWA) e ler todas as histórias offline, em qualquer lugar.</p>
+          </details>
+          <details class="faq-item">
+            <summary>É gratuito?</summary>
+            <p>Sim, completamente gratuito. Não tem anúncios. Doações são voluntárias para ajudar a manter o projeto.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Para qual idade é indicado?</summary>
+            <p>Ideal para crianças em fase de alfabetização, geralmente entre 4 e 8 anos. Os pais podem ler junto e ajudar nos desafios.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Posso usar no tablet e celular?</summary>
+            <p>Sim! É responsivo e pode ser instalado como app no Android, iOS e desktop.</p>
+          </details>
+        </div>
+      </section>
+
+      <section class="landing-section landing-cta-section">
+        <div class="landing-cta-box">
+          <h2>Pronto para começar a aventura?</h2>
+          <p>Escolha um livrinho e crie momentos inesquecíveis de leitura em família</p>
+          <a class="hero-button" href="./prateleira.html">Abrir prateleira mágica <span aria-hidden="true">✨</span></a>
+        </div>
+      </section>
     </main>
-    <footer class="site-footer"><span>Feito para pequenas leitoras e pequenos leitores 💕</span><span>Os livros podem ficar disponíveis mesmo sem internet.</span></footer>
+    <footer class="site-footer">
+      <span>Feito com ❤️ para famílias que amam ler</span>
+      <span>Prateleira Mágica · Livros infantis ilustrados e interativos</span>
+    </footer>
   </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var qrEl = document.getElementById('pixQr');
+      if (qrEl && typeof QRCode !== 'undefined') {
+        new QRCode(qrEl, {
+          text: '00020126580014br.gov.bcb.pix0136430774698805204000053039865802BR5920GABRIEL FORTI ZONARO6009SAO PAULO62070503***6304',
+          width: 200,
+          height: 200,
+          colorDark : "#3d4268",
+          colorLight : "#ffffff",
+          correctLevel : QRCode.CorrectLevel.M
+        });
+      }
+    });
+  </script>
 </body>
 </html>
