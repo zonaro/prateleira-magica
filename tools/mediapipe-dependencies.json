@@ -1,0 +1,17 @@
+{
+  "$comment": "Dependências de IA preparadas somente no build; nunca carregar modelos de hosts terceiros no navegador.",
+  "npmPackage": "@mediapipe/tasks-vision",
+  "version": "0.10.21",
+  "models": [
+    {
+      "name": "face_landmarker.task",
+      "url": "https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task",
+      "sha256": null
+    },
+    {
+      "name": "selfie_multiclass_256x256.tflite",
+      "url": "https://storage.googleapis.com/mediapipe-models/image_segmenter/selfie_multiclass_256x256/float32/latest/selfie_multiclass_256x256.tflite",
+      "sha256": null
+    }
+  ]
+}
