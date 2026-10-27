@@ -184,6 +184,12 @@
     .field-label,.gender-fieldset legend,.avatar-style-fieldset legend,.skin-fieldset legend{font-size:14px;font-weight:1000;color:#4f556f;margin-bottom:8px}
     .preferences-fields input[type=text]{width:100%;height:45px;padding:10px 13px;border:2px solid #e7dbe3;background:white;border-radius:13px;font-size:16px;color:#33495f;margin-bottom:16px;min-width:0}
     .preferences-fields input[type=text]:focus{outline:3px solid #d9c4fe;border-color:#af8de5}
+    .pronunciation-input-row{display:flex;align-items:stretch;gap:10px;min-width:0;margin-bottom:16px}
+    .preferences-fields .pronunciation-input-row input[type=text]{flex:1;min-width:0;width:auto;margin:0}
+    .pronunciation-preview-button{display:inline-flex;align-items:center;justify-content:center;gap:6px;flex:none;min-width:100px;min-height:45px;border-radius:13px;border:2px solid #d9c4f0;background:#f0e5ff;color:#664797;font-size:14px;font-weight:900;cursor:pointer;transition:background .16s ease}
+    .pronunciation-preview-button:hover{background:#e4d2ff}
+    .pronunciation-preview-button:focus-visible{outline:3px solid #a67df0;outline-offset:2px}
+    @media(max-width:370px){.pronunciation-preview-button{min-width:48px;padding:0 10px}.pronunciation-preview-text{display:none}}
     .field-help{font-size:12px;color:#8d8496;margin:-8px 0 17px;line-height:1.35}
     .gender-fieldset,.avatar-style-fieldset,.skin-fieldset{border:0;padding:0;margin:0 0 18px;min-width:0}
     .gender-fieldset{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}

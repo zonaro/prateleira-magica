@@ -154,13 +154,13 @@ Os arquivos `assets/pets/*.svg` são os **20 SVGs originais e sem alterações**
 
 ### Pronúncia
 
-O texto exibido é personalizado com o nome escolhido, mas a escrita fonética aparece somente na voz. `pronunciation.names` continua disponível para personagens secundários (por exemplo, Drica e Draco); a pronúncia definida pela criança tem prioridade. `pronunciation.syllables` envia sons fonéticos e palavras de apoio (TRO: “tró, como em troca”; TRU: “trú, como em truque”). A disponibilidade e a qualidade da voz dependem do sintetizador de fala instalado no navegador/dispositivo.
+O texto exibido é personalizado com o nome escolhido, mas a escrita fonética aparece somente na voz. O botão **🔊 Ouvir**, ao lado do campo de pronúncia em **Perfil → Personalizar**, testa exatamente o texto digitado, sem precisar salvá-lo. `pronunciation.names` continua disponível para personagens secundários (por exemplo, Drica e Draco); a pronúncia definida pela criança tem prioridade. `pronunciation.syllables` envia sons fonéticos e palavras de apoio (TRO: “tró, como em troca”; TRU: “trú, como em truque”). A disponibilidade e a qualidade da voz dependem do sintetizador de fala instalado no navegador/dispositivo.
 
 ## Controles
 
 - O leitor não tem cabeçalho: somente **barra de progresso**, **livrinho** e paginação/legenda. O rodapé fixo mantém **Prateleira**, **Ouvir**, **Voltar** e o botão rosa de avanço visíveis durante a leitura.
 - Arraste o **canto da folha com o dedo ou mouse** para acompanhar a dobra em tempo real. A animação usa [StPageFlip 2.0.7](https://github.com/Nodlik/StPageFlip), motor realista sem jQuery e de licença MIT, empacotado localmente. No desktop cada página lógica reúne ilustração à esquerda e texto à direita; no celular ambos aparecem na mesma folha. O motor respeita `prefers-reduced-motion` na navegação por botões.
-- `←` página anterior; `→` próxima; **Espaço** ou botão **Ouvir** alterna entre narrar, pausar e continuar do mesmo ponto.
+- `←` página anterior; `→` próxima; **Espaço** ou botão **Ouvir** alterna entre narrar, pausar e continuar da última palavra identificada. O módulo `assets/js/speech.js` divide textos em trechos curtos e preserva o progresso: se o navegador não informar limites de palavra, no máximo o trecho atual é repetido, nunca a página inteira.
 - As ilustrações SVG usam `object-fit: contain` em todas as resoluções, sem cortar as bordas do desenho.
 - Toque em palavras coloridas ou nas sílabas para ouvi-las individualmente.
 - No desafio, marque **todas** as frases lidas para liberar a página final e ganhar a medalha.

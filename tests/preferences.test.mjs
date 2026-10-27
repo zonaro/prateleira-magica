@@ -57,7 +57,7 @@ for (const entry of catalog.books) {
 
 prefs.save({ name: 'Meggie', pronunciation: 'Mégui', gender: 'feminino', avatarStyle: 'short', skinColor: '#8bcfff' });
 const readerSource = fs.readFileSync(path.join(root, 'assets/js/reader.js'), 'utf8');
-const speechCode = readerSource.slice(readerSource.indexOf('function escapeRegExp'), readerSource.indexOf('function speak'));
+const speechCode = readerSource.slice(readerSource.indexOf('function escapeRegExp'), readerSource.indexOf('function updateListenButton'));
 const book = JSON.parse(fs.readFileSync(path.join(root, 'books/ellie-e-o-trem-dos-dragoes.json'), 'utf8'));
 const speechText = new Function('book', 'preferences', 'label', `${speechCode}\nreturn speechText;`)(book, prefs, prefs.personalize);
 assert.equal(speechText('Meggie e Draco no trem.'), 'Mégui e Dráco no trem.');

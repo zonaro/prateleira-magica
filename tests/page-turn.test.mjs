@@ -78,7 +78,7 @@ assert(css.includes('object-fit:contain'), 'SVGs devem ser encaixados sem recort
 assert(reader.includes('pageTurn.mount(') && reader.includes('pageTurn.go('));
 assert(reader.includes('if (!canVisit(destination))'), 'Desafio deve bloquear avanço pelo teclado e botões');
 assert(reader.includes('const say = event.target.closest?.(\'[data-say]\')'));
-assert(reader.includes('synth.pause()') && reader.includes('synth.resume()'), 'Ouvir deve pausar e continuar sem reiniciar');
+assert(reader.includes('narrator.pause()') && reader.includes('narrator.resume()'), 'Ouvir deve pausar e continuar sem reiniciar');
 assert(reader.includes('event.key === \'ArrowRight\'') && reader.includes('event.key === \'ArrowLeft\''));
 console.log('✓ Motor MIT com dobra e gesto: páginas físicas desktop/mobile, avanço e movimento reduzido');
 console.log('✓ Leitura por voz pausa/retoma, controles fixos, SVG inteiro e bloqueio de desafio');

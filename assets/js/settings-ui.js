@@ -2,6 +2,7 @@
   'use strict';
   const preferences = window.LivrinhoPreferences;
   const avatarCatalog = window.LivrinhoAvatar;
+  const narrator = window.LivrinhoSpeech;
   if (!preferences || !avatarCatalog) return;
   const root = new URL('./', document.baseURI);
   const editor = document.getElementById('settingsApp');
@@ -56,7 +57,10 @@
           <label class="field-label" for="childName">Nome da criança</label>
           <input id="childName" name="childName" type="text" maxlength="32" autocomplete="off" placeholder="Ex.: Ellie" required>
           <label class="field-label" for="childPronunciation">Como a voz deve pronunciar o nome?</label>
-          <input id="childPronunciation" name="childPronunciation" type="text" maxlength="64" autocomplete="off" placeholder="Ex.: Éli">
+          <div class="pronunciation-input-row">
+            <input id="childPronunciation" name="childPronunciation" type="text" maxlength="64" autocomplete="off" placeholder="Ex.: Éli">
+            <button id="hearPronunciation" class="pronunciation-preview-button" type="button" aria-label="Ouvir a pronúncia digitada" title="Testar a pronúncia digitada"><span aria-hidden="true">🔊</span> <span class="pronunciation-preview-text">Ouvir</span></button>
+          </div>
           <p class="field-help">Escreva como se fala, com acentos se ajudar. Ex.: Ellie → Éli.</p>
           <label class="field-label" for="birthDate">Data de nascimento</label>
           <input id="birthDate" name="birthDate" type="date" aria-describedby="birthAgeHint">
@@ -113,6 +117,25 @@
   const nameInput = $('#childName');
   const pronunciationInput = $('#childPronunciation');
   const birthInput = $('#birthDate');
+
+  narrator.subscribe((status) => {
+    const previewButton = $('#hearPronunciation');
+    if (!previewButton) return;
+    const playing = status === 'playing';
+    previewButton.setAttribute('aria-label', playing ? 'Parar teste de pronúncia' : 'Ouvir a pronúncia digitada');
+    previewButton.setAttribute('aria-pressed', String(playing));
+    previewButton.querySelector('span[aria-hidden]').textContent = playing ? '⏹' : '🔊';
+    previewButton.querySelector('.pronunciation-preview-text').textContent = playing ? 'Parar' : 'Ouvir';
+  });
+  $('#hearPronunciation').addEventListener('click', () => {
+    if (narrator.state() === 'playing') { narrator.stop(); return; }
+    const value = pronunciationInput.value.trim() || nameInput.value.trim();
+    if (!value) { pronunciationInput.focus(); return; }
+    if (!narrator.play(value, { lang: 'pt-BR', rate: .78, pitch: 1.08 })) {
+      $('#hearPronunciation').title = 'Este navegador não oferece leitura em voz alta.';
+    }
+  });
+  window.addEventListener('hashchange', () => narrator.stop());
 
   function drawPreview() {
     $('#avatarStage').innerHTML = preferences.avatarSVG(draft);

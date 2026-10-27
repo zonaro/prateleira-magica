@@ -5,6 +5,7 @@
   const asset = (path) => new URL(path, root).href;
   const preferences = window.LivrinhoPreferences;
   const pageTurn = window.LivrinhoPageTurn;
+  const narrator = window.LivrinhoSpeech;
   const label = (value) => preferences ? preferences.personalize(value) : String(value || '');
   const params = new URLSearchParams(location.search);
   const bookId = params.get('livro');
@@ -12,8 +13,6 @@
   let book = null;
   let page = 0;
   let toastTimer;
-  let currentSpeech = null;
-  let voiceState = 'idle';
   let activeMode = null;
   let mountedCount = 0;
   let resizeTimer;
@@ -67,57 +66,30 @@
   }
 
   function updateListenButton() {
-    const playing = voiceState === 'playing';
-    const paused = voiceState === 'paused';
+    const playing = narrator.state() === 'playing';
+    const paused = narrator.state() === 'paused';
     $('#listen').setAttribute('aria-pressed', String(playing));
     $('#listen').setAttribute('aria-label', playing ? 'Pausar leitura' : paused ? 'Retomar leitura' : 'Ouvir página');
     $('.listen-icon').textContent = playing ? '⏸' : '▶';
     $('.listen-text').textContent = playing ? 'Pausar' : paused ? 'Continuar' : 'Ouvir';
   }
   function stopSpeech() {
-    currentSpeech = null;
-    voiceState = 'idle';
-    window.speechSynthesis?.cancel();
-    updateListenButton();
+    narrator.stop();
   }
   function speak(text) {
-    if (!('speechSynthesis' in window)) {
+    if (!narrator.play(speechText(text), { lang: book?.language || 'pt-BR', rate: .78, pitch: 1.08 })) {
       notify('A leitura em voz alta não está disponível neste navegador.');
-      return;
     }
-    stopSpeech();
-    const utterance = new SpeechSynthesisUtterance(speechText(text));
-    utterance.lang = book?.language || 'pt-BR';
-    utterance.rate = .78;
-    utterance.pitch = 1.08;
-    const voices = window.speechSynthesis.getVoices();
-    const preferred = voices.find((voice) => voice.lang.toLowerCase() === utterance.lang.toLowerCase())
-      || voices.find((voice) => voice.lang.toLowerCase().startsWith('pt'));
-    if (preferred) utterance.voice = preferred;
-    currentSpeech = utterance;
-    voiceState = 'playing';
-    utterance.onend = utterance.onerror = () => {
-      if (currentSpeech === utterance) { currentSpeech = null; voiceState = 'idle'; updateListenButton(); }
-    };
-    updateListenButton();
-    window.speechSynthesis.speak(utterance);
   }
 
   function plainText(text) { return String(text).replace(/\[\[([^\]]+)\]\]/g, '$1'); }
   function hearCurrentPage() {
     const current = book.pages[page];
     const words = current.blocks.map((block) => plainText(label(block.text))).join(' ');
-    const synth = window.speechSynthesis;
-    // Alguns navegadores demoram para marcar `speaking=true` enquanto a fala
-    // já está na fila. Use o estado do botão para não reiniciar a narração.
-    if (currentSpeech && voiceState === 'playing') {
-      synth.pause();
-      voiceState = 'paused';
-      updateListenButton();
-    } else if (currentSpeech && voiceState === 'paused') {
-      synth.resume();
-      voiceState = 'playing';
-      updateListenButton();
+    if (narrator.state() === 'playing') {
+      narrator.pause();
+    } else if (narrator.state() === 'paused') {
+      narrator.resume();
     } else {
       speak(label(current.speech || `${current.title}. ${words}`));
     }
@@ -353,6 +325,7 @@
     error.hidden = false;
   }
 
+  narrator.subscribe(updateListenButton);
   $('#prev').addEventListener('click', () => go(page - 1));
   $('#next').addEventListener('click', () => go(page === book.pages.length - 1 ? 0 : page + 1));
   $('#listen').addEventListener('click', hearCurrentPage);
