@@ -126,6 +126,23 @@ Nas páginas, coloque `[[palavra]]` para exibir uma palavra colorida que pode se
   projeto e conferida com o BR Code). Há PIX copia e cola, sem exibir nome ou
   CPF do recebedor na página inicial.
 
+### Leitor adaptativo de páginas 📖
+
+O leitor escolhe **automaticamente** entre a virada StPageFlip e um modo
+leve sem animação/engine de dobra, que mantém texto, ilustrações, toque horizontal,
+botões, teclado, narração e medalhas. Aparelhos com memória/CPU limitadas e
+quem usa preferência do sistema para reduzir movimento já iniciam com leitura
+leve. Nos demais, o leitor mede a fluidez **apenas durante a virada**: quadros
+repetidamente atrasados ou uma virada que não termina ativam o modo leve
+automaticamente, mantendo a página atual. A detecção desconsidera abas
+ocultas e evita monitoramento permanente.
+
+O seletor **Animação das páginas**, na página do livro, permite escolher
+*Automática*, *Desligada — leitura leve* ou *Tentar animação novamente*.
+Um aparelho com engasgos usa temporariamente leitura leve (24h), mas o leitor
+pode experimentar a animação novamente. A preferência de movimento reduzido do
+sistema prevalece. Tudo funciona offline.
+
 ### Avatar por foto — aba opcional 📷
 
 No perfil, a aba **📷 Minha foto** aparece apenas quando todos os arquivos
