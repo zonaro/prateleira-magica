@@ -1,0 +1,332 @@
+{
+  "schemaVersion": 1,
+  "language": "pt-BR",
+  "id": "a-roupa-nova-do-imperador",
+  "title": "A Roupa Nova do Imperador",
+  "subtitle": "O desfile mais estranho do reino e a coragem de dizer a verdade",
+  "subject": "Contos clássicos · honestidade e pensamento crítico",
+  "ageRange": [
+    5,
+    9
+  ],
+  "color": "#d59c75",
+  "medal": "👑 Medalha da Sinceridade",
+  "originalAuthors": [
+    "Hans Christian Andersen"
+  ],
+  "originalPublicationYear": 1837,
+  "sourceDocument": "https://www.baixelivros.com.br/infantil/a-roupa-nova-do-imperador-pdf",
+  "sourceNotice": "Reconto original da obra em domínio público. Não foi utilizada a tradução de 2021 ou suas ilustrações.",
+  "rewards": [
+    {
+      "id": "emperor_crown",
+      "label": "Coroa imperial com pedras brilhantes"
+    }
+  ],
+  "exercises": [
+    {
+      "syllable": "👗",
+      "text": "O imperador gostava muito de roupas novas."
+    },
+    {
+      "syllable": "🧵",
+      "text": "Os visitantes afirmaram tecer um pano mágico que ninguém conseguia ver."
+    },
+    {
+      "syllable": "🤫",
+      "text": "Muitos adultos fingiram ver o tecido porque tinham medo de passar vergonha."
+    },
+    {
+      "syllable": "👀",
+      "text": "As máquinas de costura estavam vazias o tempo todo."
+    },
+    {
+      "syllable": "🗣️",
+      "text": "Uma criança foi sincera ao contar o que estava vendo."
+    },
+    {
+      "syllable": "💛",
+      "text": "Podemos dizer a verdade com gentileza, mesmo quando outras pessoas discordam."
+    }
+  ],
+  "pages": [
+    {
+      "type": "cover",
+      "sticker": "O DESFILE DO REINO",
+      "chapter": "Era uma vez...",
+      "title": "A Roupa Nova do Imperador",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Num reino de ruas coloridas vivia um imperador que adorava roupas elegantes. Tinha casacos para o sol, capas para a chuva e botas para dias de festa!"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/a-roupa-nova-do-imperador/01.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "UM ARMÁRIO GIGANTE",
+      "chapter": "O sonho de desfilar",
+      "title": "O sonho de desfilar",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "O guarda-roupa do imperador era tão grande que parecia um labirinto. Mesmo assim, ele repetia:"
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Preciso de algo que ninguém nunca viu!"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/a-roupa-nova-do-imperador/02.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "DOIS VISITANTES",
+      "chapter": "Os tecelões misteriosos",
+      "title": "Os tecelões misteriosos",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Certo dia, chegaram dois visitantes dizendo que sabiam fabricar o tecido mais raro do mundo."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Nossa roupa é tão especial que somente pessoas muito inteligentes podem enxergá-la!"
+        },
+        {
+          "kind": "paragraph",
+          "text": "Mas era um truque: eles não tinham tecido nenhum."
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/a-roupa-nova-do-imperador/03.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "TEARES VAZIOS",
+      "chapter": "Tic-tac, sem nenhum fio",
+      "title": "Tic-tac, sem nenhum fio",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Os visitantes fingiam trabalhar dia e noite. Faziam movimentos com as mãos, contavam botões invisíveis e pediam carretéis de linha."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Quando alguém entrava, via apenas máquinas vazias."
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/a-roupa-nova-do-imperador/04.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "O MINISTRO VISITA",
+      "chapter": "Será que posso falar?",
+      "title": "Será que posso falar?",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Um ministro olhou, olhou e não enxergou nadinha."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Se eu disser a verdade, vão pensar que não entendo de roupas?"
+        },
+        {
+          "kind": "paragraph",
+          "text": "Com vergonha, ele fingiu admirar listras e bordados que não existiam."
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/a-roupa-nova-do-imperador/05.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "TODO MUNDO FINGE",
+      "chapter": "O boato cresce",
+      "title": "O boato cresce",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Outros visitantes também diziam ver seda brilhante e flores douradas. Cada um tinha medo de ser o único a discordar."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Às vezes, quando um grupo inteiro repete algo, parece difícil fazer uma pergunta simples."
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/a-roupa-nova-do-imperador/06.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "A PROVA DA ROUPA",
+      "chapter": "Uma roupa imaginária",
+      "title": "Uma roupa imaginária",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Chegou o dia da prova. Os falsos alfaiates movimentaram os braços ao redor do imperador, como se vestissem um casaco invisível."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Que elegante! — disseram, tentando esconder a surpresa."
+        },
+        {
+          "kind": "paragraph",
+          "text": "O imperador estava apenas com sua roupa de baixo."
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/a-roupa-nova-do-imperador/07.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "MÚSICA NA RUA",
+      "chapter": "Começa o desfile",
+      "title": "Começa o desfile",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "As trombetas tocaram e o imperador desfilou por ruas cheias de bandeirinhas. A multidão aplaudia sua suposta roupa encantada."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Quase ninguém tinha coragem de dizer o que realmente via."
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/a-roupa-nova-do-imperador/08.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "A CRIANÇA CORAJOSA",
+      "chapter": "Uma voz diferente",
+      "title": "Uma voz diferente",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "No meio da praça, uma criança perguntou bem alto:"
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Ué! Onde está a roupa nova? Eu só vejo a roupa de baixo!"
+        },
+        {
+          "kind": "paragraph",
+          "text": "As pessoas ficaram em silêncio por um instante."
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/a-roupa-nova-do-imperador/09.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "RISADAS E REFLEXÃO",
+      "chapter": "Quando a verdade aparece",
+      "title": "Quando a verdade aparece",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Primeiro veio um cochicho, depois outro. Todos perceberam que tinham sido enganados."
+        },
+        {
+          "kind": "paragraph",
+          "text": "O imperador ficou vermelho de vergonha. Em vez de culpar a criança, resolveu pensar sobre o que aconteceu."
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/a-roupa-nova-do-imperador/10.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "CORAGEM GENTIL",
+      "chapter": "Uma lição para o reino",
+      "title": "Uma lição para o reino",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "O imperador aprendeu a escutar opiniões sinceras. E todos entenderam que não é preciso concordar com uma mentira só para fazer parte do grupo."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Uma pergunta honesta pode ser mais valiosa do que mil elogios falsos!"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/a-roupa-nova-do-imperador/11.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "A ROUPA MAIS BONITA",
+      "chapter": "Vestido de sinceridade",
+      "title": "Vestido de sinceridade",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "No dia seguinte, o imperador vestiu uma roupa bem comum e saiu para conversar com as pessoas."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Descobriu que uma boa conversa aquece muito mais do que qualquer capa mágica."
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/a-roupa-nova-do-imperador/12.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "FONTES PARA FAMÍLIAS",
+      "chapter": "De onde veio este conto?",
+      "title": "De onde veio este conto?",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Esta história é uma nova versão infantil de uma obra clássica em domínio público. Escrevemos o texto em português e desenhamos todas as cenas especialmente para a Prateleira Mágica."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Os endereços são informações para os adultos: aparecem como texto e não abrem links durante a leitura. Traduções e ilustrações de edições recentes podem ter direitos próprios."
+        }
+      ],
+      "interactive": "bibliography",
+      "bibliography": [
+        {
+          "title": "A Roupa Nova do Imperador — ficha bibliográfica no Baixe Livros",
+          "url": "www.baixelivros.com.br/infantil/a-roupa-nova-do-imperador-pdf"
+        },
+        {
+          "title": "Baixe Livros — explicação sobre licenças de uso",
+          "url": "www.baixelivros.com.br/licencas"
+        },
+        {
+          "title": "Brasil — Lei de Direitos Autorais nº 9.610/1998 (artigo 41)",
+          "url": "www.planalto.gov.br/ccivil_03/leis/l9610.htm"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/a-roupa-nova-do-imperador/13.svg"
+    },
+    {
+      "type": "challenge",
+      "sticker": "DESAFIO DO CONTO",
+      "chapter": "O que ficou da história?",
+      "title": "O que ficou da história?",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Que aventura! Agora recorde as passagens de A Roupa Nova do Imperador, marcando as frases verdadeiras. Leia com alguém de casa, se quiser. Ao completar o desafio e chegar à última página, você ganha sua medalha e uma coroa imperial!"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/a-roupa-nova-do-imperador/14.svg"
+    },
+    {
+      "type": "finish",
+      "sticker": "MEDALHA DA SINCERIDADE",
+      "chapter": "A coragem de ser sincero",
+      "title": "A coragem de ser sincero",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Você percebeu como a verdade pode ajudar uma comunidade. Uma coroa imperial está esperando no guarda-roupa do seu avatar!"
+        }
+      ],
+      "medal": "👑 Medalha da Sinceridade conquistada!",
+      "illustration": "assets/illustrations/capitulos/a-roupa-nova-do-imperador/15.svg"
+    }
+  ],
+  "protagonistMode": "fixed",
+  "adaptation": "Texto original da Prateleira Mágica, inspirado na narrativa em domínio público",
+  "cover": "assets/illustrations/capitulos/a-roupa-nova-do-imperador/01.svg"
+}

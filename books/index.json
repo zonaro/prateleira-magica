@@ -166,6 +166,38 @@
       "color": "#ac8aca", "language": "pt-BR", "medal": "🌸 Medalha dos Contos", "label": "📖 Clássico ilustrado",
       "subject": "Contos clássicos · literatura e imaginação", "ageRange": [7, 9],
       "protagonistMode": "fixed", "rewards": ["Cabelo de Rapunzel com tranças compridas"]
+    },
+    {
+      "id": "o-rouxinol-e-o-imperador", "data": "books/o-rouxinol-e-o-imperador.json",
+      "title": "O Rouxinol e o Imperador", "subtitle": "Um passarinho de verdade e a canção mais bonita do palácio",
+      "cover": "assets/illustrations/capitulos/o-rouxinol-e-o-imperador/01.svg",
+      "color": "#80b6ad", "language": "pt-BR", "medal": "🐦 Medalha do Canto", "label": "🐦 Clássico de Andersen",
+      "subject": "Contos clássicos · música, natureza e amizade", "ageRange": [6, 9],
+      "protagonistMode": "fixed", "rewards": ["Pelúcia de rouxinol cantor"]
+    },
+    {
+      "id": "a-roupa-nova-do-imperador", "data": "books/a-roupa-nova-do-imperador.json",
+      "title": "A Roupa Nova do Imperador", "subtitle": "O desfile mais estranho do reino e a coragem de dizer a verdade",
+      "cover": "assets/illustrations/capitulos/a-roupa-nova-do-imperador/01.svg",
+      "color": "#d59c75", "language": "pt-BR", "medal": "👑 Medalha da Sinceridade", "label": "👑 Conto sobre honestidade",
+      "subject": "Contos clássicos · honestidade e pensamento crítico", "ageRange": [5, 9],
+      "protagonistMode": "fixed", "rewards": ["Coroa imperial com pedras brilhantes"]
+    },
+    {
+      "id": "as-fabulas-de-esopo", "data": "books/as-fabulas-de-esopo.json",
+      "title": "Fábulas de Esopo", "subtitle": "Quatro bichos, quatro aventuras e boas ideias para conversar",
+      "cover": "assets/illustrations/capitulos/as-fabulas-de-esopo/01.svg",
+      "color": "#86b57d", "language": "pt-BR", "medal": "🐢 Medalha da Sabedoria", "label": "🐢 Quatro fábulas",
+      "subject": "Fábulas clássicas · persistência, amizade e convivência", "ageRange": [5, 9],
+      "protagonistMode": "fixed", "rewards": ["Tartaruguinha de madeira de brinquedo"]
+    },
+    {
+      "id": "a-historia-de-pedro-coelho", "data": "books/a-historia-de-pedro-coelho.json",
+      "title": "A História de Pedro Coelho", "subtitle": "Um coelhinho curioso encontra aventuras num jardim de verduras",
+      "cover": "assets/illustrations/capitulos/a-historia-de-pedro-coelho/01.svg",
+      "color": "#8cb8de", "language": "pt-BR", "medal": "🥕 Medalha do Jardim", "label": "🥕 Clássico de Beatrix Potter",
+      "subject": "Contos clássicos · natureza, escolhas e cuidado", "ageRange": [4, 8],
+      "protagonistMode": "fixed", "rewards": ["Cenoura do jardim de Pedro Coelho"]
     }
   ]
 }

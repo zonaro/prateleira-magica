@@ -47,7 +47,16 @@
   const sunPlush = { name: 'Sol Sorridente', source: 'assets/pets/sol-sorridente.svg',
     originalViewBox: '0 0 128 128', viewBox: '0 0 128 128',
     body: `<g fill="#f6ae40" stroke="#e28c38" stroke-width="4" stroke-linejoin="round"><path d="M64 4 76 24 96 12 96 36 121 34 107 53 124 66 103 76 113 100 88 97 77 121 62 104 46 121 39 98 14 100 25 76 4 65 24 53 9 34 34 37 32 12 52 25Z"/></g><circle cx="64" cy="65" r="40" fill="#ffdb67" stroke="#ecac37" stroke-width="4"/><ellipse cx="49" cy="60" rx="5" ry="7" fill="#60434a"/><ellipse cx="79" cy="60" rx="5" ry="7" fill="#60434a"/><path d="M49 79q15 15 30 0" fill="none" stroke="#60434a" stroke-width="5" stroke-linecap="round"/><circle cx="37" cy="73" r="7" fill="#f39b89" opacity=".65"/><circle cx="91" cy="73" r="7" fill="#f39b89" opacity=".65"/>` };
-  const allPetParts = { ...petParts, heart_plush: heartPlush, sun_plush: sunPlush };
+  const nightingalePlush = { name: 'Rouxinol Cantor', source: 'assets/pets/rouxinol-cantor.svg',
+    originalViewBox: '0 0 128 128', viewBox: '0 0 128 128',
+    body: `<path d="M39 92Q3 92 7 65 23 73 41 63" fill="#9a78a5" stroke="#73567d" stroke-width="4"/>
+      <ellipse cx="64" cy="79" rx="48" ry="34" fill="#bd95ab" stroke="#755b82" stroke-width="4"/>
+      <path d="M42 55Q13 68 39 96q36 9 52-25" fill="#9379a8" stroke="#755b82" stroke-width="4"/>
+      <circle cx="90" cy="52" r="29" fill="#c7a0b4" stroke="#755b82" stroke-width="4"/>
+      <circle cx="100" cy="45" r="5" fill="#51485c"/><path d="M115 57l12 8-12 7Z" fill="#f3c572"/>
+      <path d="M54 106l-4 17m31-16 5 16" stroke="#a37b7b" stroke-width="5" stroke-linecap="round"/>
+      <text x="13" y="40" font-family="sans-serif" font-size="28" fill="#a67ec6">♫<animate attributeName="opacity" values=".4;1;.4" dur="3s" repeatCount="indefinite"/></text>` };
+  const allPetParts = { ...petParts, heart_plush: heartPlush, sun_plush: sunPlush, nightingale_plush: nightingalePlush };
   const petStyles = Object.entries(allPetParts).map(([id, part]) => [id, part.name, part.source]);
   const rewardBooks = Object.freeze({
     headphones: 'a-orquestra-dos-sons', speaker: 'a-orquestra-dos-sons',
@@ -70,7 +79,9 @@
     jupiter_ball: 'a-viagem-dos-oito-planetas', saturn_ball: 'a-viagem-dos-oito-planetas',
     uranus_ball: 'a-viagem-dos-oito-planetas', neptune_ball: 'a-viagem-dos-oito-planetas',
     abc_blocks: 'a-aventura-do-abc', dna_helix: 'o-jardim-das-diferencas',
-    toothbrush: 'o-clube-dos-dentinhos', rapunzel: 'rapunzel-contos-dos-grimm'
+    toothbrush: 'o-clube-dos-dentinhos', rapunzel: 'rapunzel-contos-dos-grimm',
+    nightingale_plush: 'o-rouxinol-e-o-imperador', emperor_crown: 'a-roupa-nova-do-imperador',
+    wooden_tortoise: 'as-fabulas-de-esopo', garden_carrot: 'a-historia-de-pedro-coelho'
   });
   function rewardUnlocked(settings, id) {
     const bookId = rewardBooks[id];
@@ -95,6 +106,7 @@
     ['headband', 'Tiara', 'hat'],
     ['cat_headband', 'Tiara de gatinho', 'hat'],
     ['new_year_crown', 'Coroa de Ano-Novo (livro das festas)', 'hat'],
+    ['emperor_crown', 'Coroa imperial (livro da roupa nova)', 'hat'],
     ['bunny_headband', 'Orelhas de coelho (livro das festas)', 'hat'],
     ['june_hat', 'Chapéu de Festa Junina (livro das festas)', 'hat'],
     ['witch_hat', 'Chapéu de bruxa (livro das festas)', 'hat'],
@@ -152,7 +164,9 @@
     ['neptune_ball', 'Bola de Netuno (livro do espaço)', 'hand'],
     ['abc_blocks', 'Blocos de empilhar ABC (livro do abecedário)', 'hand'],
     ['dna_helix', 'Dupla hélice de DNA (livro da diversidade)', 'hand'],
-    ['toothbrush', 'Escova de dentes (livro da escovação)', 'hand']
+    ['toothbrush', 'Escova de dentes (livro da escovação)', 'hand'],
+    ['wooden_tortoise', 'Tartaruguinha de madeira (fábulas de Esopo)', 'hand'],
+    ['garden_carrot', 'Cenoura de Pedro Coelho (conto clássico)', 'hand']
   ];
   const hairColors = [
     ['#493a55', 'Castanho escuro'], ['#7b4c35', 'Castanho'],
@@ -314,6 +328,10 @@
         <path d="M112 78 108 6q57 19 86 73ZM352 78l4-72q-57 19-86 73Z" fill="${decoration}" stroke="${ink}" stroke-width="8" stroke-linejoin="round"/>
         <path d="M128 54 125 26l39 44ZM336 54l3-28-39 44Z" fill="${colors.ACCESSORY_LIGHT}"/>`,
       new_year_crown: `<path d="M96 138 101 42l61 49 70-75 68 75 62-49 6 96Z" fill="${decoration}" stroke="${ink}" stroke-width="8" stroke-linejoin="round"/><path d="M96 137h272v26H96Z" fill="${colors.ACCESSORY_LIGHT}" stroke="${ink}" stroke-width="6"/><circle cx="232" cy="67" r="12" fill="#fff5ae"/>`,
+      emperor_crown: `<g data-detail="coroa-imperial"><path d="M112 139 96 37l73 43 63-68 63 68 73-43-16 102Z" fill="#f5cf68" stroke="#997459" stroke-width="8" stroke-linejoin="round"/>
+        <path d="M111 129h242v35H111Z" fill="${decoration}" stroke="#997459" stroke-width="7"/>
+        <path d="M131 120 117 68l55 29 60-60 60 60 55-29-14 52Z" fill="${colors.ACCESSORY_LIGHT}" opacity=".67"/>
+        <g stroke="#fff4d2" stroke-width="3"><ellipse cx="166" cy="144" rx="12" ry="15" fill="#b98ddc"/><ellipse cx="232" cy="143" rx="15" ry="18" fill="#72bbcf"/><ellipse cx="298" cy="144" rx="12" ry="15" fill="#f0879b"/></g></g>`,
       bunny_headband: `<path d="M109 131Q126 26 232 26T355 131" fill="none" stroke="${ink}" stroke-width="25"/><path d="M109 131Q126 26 232 26T355 131" fill="none" stroke="${decoration}" stroke-width="16"/><path d="M151 69Q93-45 131-55q44-7 74 111Zm157 0q58-114 20-124-44-7-74 111Z" fill="#fff9fa" stroke="${ink}" stroke-width="8"/><path d="M165 43Q124-32 139-37q26 3 47 80Zm133 0q41-75 26-80-26 3-47 80Z" fill="#f5aabe"/>`,
       june_hat: `<path d="M98 134 146 23h174l46 111Z" fill="#dfab60" stroke="#8c6239" stroke-width="8"/><path d="M84 126q148-26 296 0l-14 32q-134 19-268 0Z" fill="#edbf6e" stroke="#8c6239" stroke-width="7"/><path d="M143 79q90-17 179 0" fill="none" stroke="${decoration}" stroke-width="18"/><path d="m170 82 13-19 13 19m72 0 13-19 13 19" fill="${decoration}" stroke="${ink}" stroke-width="3"/>`,
       witch_hat: `<path d="M149 137 238-49l90 186Z" fill="${colors.ACCESSORY_DEEP}" stroke="${ink}" stroke-width="9" stroke-linejoin="round"/><path d="M113 106q115 21 246 0l26 42q-147 49-302 0Z" fill="${decoration}" stroke="${ink}" stroke-width="8"/><path d="M153 105q76 20 158 0" fill="none" stroke="#ffd368" stroke-width="18"/><rect x="219" y="95" width="33" height="24" rx="4" fill="#ffe9a0" stroke="${ink}" stroke-width="5"/>`,
@@ -443,6 +461,12 @@
       dumbbells: `<g stroke="${ink}" stroke-width="3"><path d="M-29-4h58" stroke-width="6"/><rect x="-32" y="-18" width="11" height="28" rx="4" fill="${dark}"/><rect x="21" y="-18" width="11" height="28" rx="4" fill="${dark}"/><rect x="-39" y="-13" width="7" height="18" rx="3" fill="${tone}"/><rect x="32" y="-13" width="7" height="18" rx="3" fill="${tone}"/></g>`,
       water_bottle: `<g data-detail="agua-colorida"><rect x="-16" y="-28" width="32" height="60" rx="10" fill="#f3fcff" stroke="${ink}" stroke-width="3"/><path d="M-12-2h24v22q0 7-9 8H-3q-9-1-9-8Z" fill="${safeColor(settings.waterColor, '#64c9ed')}" opacity=".83"/><rect x="-10" y="-36" width="20" height="11" rx="3" fill="${tone}"/><path d="M-8-19h16" stroke="#fff" stroke-width="3"/></g>`,
       toothbrush: `<g data-detail="escova-de-dentes" transform="rotate(-25)"><rect x="-6" y="-28" width="12" height="69" rx="6" fill="${tone}" stroke="${ink}" stroke-width="2.5"/><rect x="-4" y="-10" width="8" height="38" rx="3" fill="${light}" opacity=".9"/><rect x="-10" y="-43" width="20" height="20" rx="6" fill="${dark}" stroke="${ink}" stroke-width="2"/><g stroke="#e2f7ff" stroke-width="3" stroke-linecap="round"><path d="M-7-42v-10M-2-42v-12M3-42v-12M8-42v-10"/></g><circle cx="0" cy="19" r="3" fill="${dark}"/></g>`,
+      wooden_tortoise: `<g data-detail="tartaruguinha-madeira"><ellipse cx="-19" cy="19" rx="12" ry="7" fill="#a97747"/><ellipse cx="20" cy="19" rx="12" ry="7" fill="#a97747"/>
+        <ellipse cx="0" cy="4" rx="28" ry="23" fill="#bd9165" stroke="#815c42" stroke-width="3"/>
+        <path d="M-25 1 0-15 24 1 0 25ZM0-15V25M-25 1h49" fill="none" stroke="#8a6549" stroke-width="2"/>
+        <circle cx="28" cy="-2" r="15" fill="#d9b58a" stroke="#815c42" stroke-width="3"/><circle cx="33" cy="-6" r="3.5" fill="#554c4b"/><path d="M27 6q5 4 9 0" stroke="#745b50" stroke-width="2" fill="none"/></g>`,
+      garden_carrot: `<g data-detail="cenoura-pedro-coelho" transform="rotate(19)"><path d="M0-18q-11-14-24-41 19-6 28 29 13-32 29-29Q23-24 6-13Z" fill="#72b880" stroke="#4f886a" stroke-width="3"/>
+        <path d="M-21-14q20-9 42 0L5 54q-4 17-11 0Z" fill="#ed9958" stroke="#b56f47" stroke-width="3"/><path d="M-15 6h12m5 14h12m-17 14h8" stroke="#d27b49" stroke-width="2"/></g>`,
       chess_pieces: `<g fill="${tone}" stroke="${ink}" stroke-width="2.5" stroke-linejoin="round">
           <path d="M-20 19h19v-4h-2l-3-21 5-6-7-9-7 9 5 6-3 21h-7Z"/>
           <path d="M1 19h21v-4h-3l-2-22h4v-13H3v13h4l-2 22H1Z"/>

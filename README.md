@@ -1,6 +1,6 @@
 # Prateleira Mágica ✨📚
 
-Um PWA estático, leve e extensível para leitura infantil com ilustrações, sílabas interativas, narração pelo navegador, desafios e uso offline. A prateleira reúne **18 livros**: aventuras personalizadas com a criança como protagonista e **contos clássicos com personagens próprios**, começando por *Rapunzel*. Os livros personalizados adaptam títulos, textos e ilustrações à criança configurada.
+Um PWA estático, leve e extensível para leitura infantil com ilustrações, sílabas interativas, narração pelo navegador, desafios e uso offline. A prateleira reúne **22 livros**: aventuras personalizadas com a criança como protagonista e **cinco contos clássicos com personagens próprios**, incluindo *Rapunzel*, Andersen, Esopo e Beatrix Potter. Os livros personalizados adaptam títulos, textos e ilustrações à criança configurada.
 
 ## Usar
 
@@ -54,7 +54,7 @@ assets/js/pwa.js                   Instalação PWA e status de conexão
 assets/illustrations/<slug>/*.svg  Ilustrações por página
 assets/avatar-reference/svgrepo-kids/ SVGs de referência da coleção Kids Avatars
 assets/avatar-reference/component-map.json Seleção de caminhos e cores dos SVGs originais
-assets/pets/*.svg                   20 pelúcias CC0 originais + coração exclusivo animado
+assets/pets/*.svg                   20 pelúcias CC0 originais + coração, sol e rouxinol exclusivos
 assets/pets/catalog.json           Catálogo e fontes das pelúcias
 assets/icons/                     Ícones PWA
 manifest.webmanifest               Manifesto instalável
@@ -64,7 +64,7 @@ tests/preferences.test.mjs         Testes da personalização
 tests/offline.test.mjs             Teste completo do cache offline
 tests/colors.test.mjs              Gerador de cores, harmonias, moods e novo livro
 tests/progression.test.mjs         Desafio final e trava de páginas
-tests/book-rewards.test.mjs        Cinco livros novos, dez recompensas, requisitos e backup
+tests/book-rewards.test.mjs        Catálogo completo de recompensas, travas de conclusão e backup
 tests/page-turn.test.mjs           Virada de página desktop e mobile
 tools/generate-story-art.mjs       Geração dos SVGs dos livros de Draco
 tools/download-kids-avatars.mjs    Atualização dos SVGs de referência
@@ -74,6 +74,7 @@ tools/download-cute-animal-pets.mjs Download original da coleção de pelúcias
 tools/build-pet-parts.mjs          Empacota SVGs originais das pelúcias para uso offline
 tools/preview-avatar-combinations.mjs Prévia visual das combinações de avatar
 tools/build-escovacao-rapunzel.mjs Gera livro de higiene bucal e transcreve Rapunzel com atribuição
+tools/build-classicos-publicos.mjs Gera quatro recontos originais de histórias em domínio público
 books/rapunzel-fonte.txt          Fonte textual licenciada extraída do PDF de referência
 docs/avatar-components.md         Proveniência, extração e compatibilidade
 .github/workflows/pages.yml        Deploy no GitHub Pages
@@ -142,16 +143,22 @@ A prateleira oferece busca por título/assunto, filtro por assunto e faixa etár
 | Jardim das Diferenças | Convivência, respeito e diversidade brasileira | 6–9 anos | Dupla hélice de DNA de brinquedo |
 | Clube dos Dentinhos | Saúde, higiene bucal, flúor e escovação | 4–8 anos | Escova de dentes de brinquedo |
 | Rapunzel (conto clássico) | Literatura e imaginação; leitura acompanhada | 7–9 anos | Cabelo de Rapunzel com tranças longas |
+| O Rouxinol e o Imperador (Andersen) | Contos clássicos, música e liberdade | 6–9 anos | Pelúcia exclusiva de rouxinol cantor |
+| A Roupa Nova do Imperador (Andersen) | Contos clássicos, sinceridade e pensamento crítico | 5–9 anos | Coroa imperial com pedras coloridas |
+| Fábulas de Esopo | Fábulas e convivência: tartaruga, leão, rato, raposa e corvo | 5–9 anos | Tartaruguinha de madeira |
+| A História de Pedro Coelho (Potter) | Contos clássicos, escolhas e respeito ao espaço alheio | 4–8 anos | Cenoura de brinquedo |
 
-Todo livro mantém um desafio antes da última página. As **44 recompensas** só ficam selecionáveis depois de **marcar todas as frases do desafio e chegar à página final** (`finished` + `medalEarnedAt` ou `challengeCompletedAt`). O livro de dígrafo NH desbloqueia apenas a medalha, como os livros originais de alfabetização. No livro das festas, **todos os presentes de cada data** são liberados juntos ao terminar a aventura completa. Os itens ficam visíveis em cinza enquanto bloqueados. As recompensas vinculadas ao livro são definidas em `assets/js/avatar.js` (`rewardBooks`) e listadas como `rewards` no JSON do livro. Os IDs devem corresponder. A regra é verificada também ao carregar e importar perfis, não apenas na interface. O penteado especial de Rapunzel segue a mesma regra de conclusão e é compatível com as cores de cabelo existentes.
+Todo livro mantém um desafio antes da última página. As **48 recompensas** só ficam selecionáveis depois de **marcar todas as frases do desafio e chegar à página final** (`finished` + `medalEarnedAt` ou `challengeCompletedAt`). O livro de dígrafo NH desbloqueia apenas a medalha, como os livros originais de alfabetização. No livro das festas, **todos os presentes de cada data** são liberados juntos ao terminar a aventura completa. Os itens ficam visíveis em cinza enquanto bloqueados. As recompensas vinculadas ao livro são definidas em `assets/js/avatar.js` (`rewardBooks`) e listadas como `rewards` no JSON do livro. Os IDs devem corresponder. A regra é verificada também ao carregar e importar perfis, não apenas na interface. O penteado especial de Rapunzel segue a mesma regra de conclusão e é compatível com as cores de cabelo existentes.
 
-O coração é a 21ª pelúcia, exclusiva do Jardim dos Sentimentos, e o sol sorridente é a 22ª pelúcia, exclusiva da Dança do Tempo; as outras 20 continuam liberadas com duas medalhas. A cor do líquido da garrafinha é guardada separadamente em `waterColor` e incluída no backup SVG. Os **quatro livros de saúde** trazem bibliografia para os responsáveis, sem links clicáveis no leitor; os livros culturais e de astronomia também possuem fontes em texto puro. As explicações são educativas e não substituem a orientação da UBS ou dos profissionais de saúde.
+O coração é a 21ª pelúcia, exclusiva do Jardim dos Sentimentos, o sol sorridente é a 22ª pelúcia, exclusiva da Dança do Tempo, e o rouxinol cantor é a 23ª pelúcia, liberada pelo conto de Andersen; as outras 20 continuam liberadas com duas medalhas. A cor do líquido da garrafinha é guardada separadamente em `waterColor` e incluída no backup SVG. Os **quatro livros de saúde** trazem bibliografia para os responsáveis, sem links clicáveis no leitor; os livros culturais, de astronomia e os clássicos novos também possuem fontes em texto puro. As explicações são educativas e não substituem a orientação da UBS ou dos profissionais de saúde.
 
 Na fantasia do Saci, a perna direita e o respectivo sapato são ocultados na composição do avatar, sem afetar a aparência normal ao retirar a fantasia. A abóbora de Halloween tem uma vela **apenas ilustrada** com animação SVG; não representa uma chama real. Todas as bolas planetárias têm texturas vetoriais únicas e a de Saturno inclui anéis. O texto distingue o **Dia do Saci** (uma celebração cultural brasileira reconhecida, por exemplo, em São Paulo) do **Halloween**; ambos ocorrem em 31 de outubro, mas não são o mesmo evento. Alguns dias apresentados são feriados nacionais, e outros são festividades ou pontos facultativos conforme o local.
 
-**Ilustração individual por página:** os 18 livros usam um SVG diferente para cada página. As 47 cenas originais dos três livros TR/DR foram preservadas, junto de **181 cenas vetoriais geradas** para os demais livros. A arte é gerada de modo reprodutível por `node tools/illustrate-books.mjs` e conferida em `--check` no CI. Os novos dados são gerados por `node tools/build-new-books.mjs` e `node tools/build-escovacao-rapunzel.mjs`. O avatar da criança continua inserido via `#kid` nas histórias personalizadas. *Rapunzel* possui personagens fixos desenhados exclusivamente para o conto e seus SVGs não são processados pela personalização de avatares. Os arquivos são incluídos automaticamente no cache offline do PWA.
+**Ilustração individual por página:** os 22 livros usam um SVG diferente para cada página. As 47 cenas originais dos três livros TR/DR foram preservadas, junto de **239 cenas vetoriais geradas** para os demais livros. A arte é gerada de modo reprodutível por `node tools/illustrate-books.mjs` e conferida em `--check` no CI. Os dados são gerados por `node tools/build-new-books.mjs`, `node tools/build-escovacao-rapunzel.mjs` e `node tools/build-classicos-publicos.mjs`. O avatar da criança continua inserido via `#kid` nas histórias personalizadas. Os cinco contos clássicos possuem personagens fixos desenhados para suas narrativas e seus SVGs não são processados pela personalização de avatares. Os arquivos são incluídos automaticamente no cache offline do PWA.
 
 **Rapunzel — direitos e leitura acompanhada:** conto originalmente publicado pelos irmãos Grimm, transcrito integralmente da [edição em português adaptada por Sueli Maria de Regino (2016)](https://domainpublic.wordpress.com/wp-content/uploads/2022/03/rapunzel.pdf), pertencente à Biblioteca Bilíngue de Literatura Infantil e Juvenil – Libras/Português. O aviso de direitos no próprio PDF permite usar, reproduzir e divulgar os **textos** da adaptação com citação da fonte. As **ilustrações deste projeto são novas**; não utilizam as imagens do PDF. A íntegra do texto extraído está preservada em `books/rapunzel-fonte.txt`, conferida automaticamente em teste. Recomendamos leitura acompanhada por conta de acontecimentos delicados (separação familiar e ferimento do príncipe).
+
+**Novos clássicos — seleção e direitos:** os quatro títulos foram encontrados no [catálogo de domínio público](https://www.baixelivros.com.br/dominio-publico) ou na [literatura infantil](https://www.baixelivros.com.br/literatura-infantil) do Baixe Livros. O site mistura obras em domínio público com PDFs de distribuição somente **gratuita**; portanto, não se pode reutilizar automaticamente as traduções contemporâneas. As narrativas originais de **Hans Christian Andersen** (morto em 1875), das **fábulas tradicionalmente atribuídas a Esopo** (Antiguidade) e de **Beatrix Potter** (morta em 1943) já cumpriram o prazo patrimonial da lei brasileira. Todo texto destes quatro livros é um **reconto autoral novo em português brasileiro**, com ilustrações SVG próprias; não foram copiados PDFs, traduções, adaptações nem artes do site. Em particular, a edição portuguesa de *Pedro Coelho* publicada em 2026 é marcada **“Gratuita”** no site; apenas a história original de 1902 foi usada como base. As páginas de bibliografia registram o autor e o catálogo, exibidos como **texto não clicável** para a criança. O FAQ da landing adapta perguntas úteis com redação própria, sem copiar o texto do outro site.
 
 **Cuidados com a diversidade:** a história apresenta as categorias de autodeclaração do IBGE (branca, preta, parda, amarela, indígena), sem tratá-las como tipos biológicos ou tons literais de pele. O termo "vermelha" é contextualizado como inadequado para substituir os nomes dos povos indígenas. Em vez de um ranking impossível de sustentar ("o Brasil é o mais miscigenado"), apresenta as diversas ancestralidades e histórias da população brasileira; explica racismo e convida ao respeito. As fontes do IBGE e do genoma humano aparecem em uma página para responsáveis, **sem links clicáveis**.
 

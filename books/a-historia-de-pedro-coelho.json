@@ -1,0 +1,315 @@
+{
+  "schemaVersion": 1,
+  "language": "pt-BR",
+  "id": "a-historia-de-pedro-coelho",
+  "title": "A História de Pedro Coelho",
+  "subtitle": "Um coelhinho curioso encontra aventuras num jardim de verduras",
+  "subject": "Contos clássicos · natureza, escolhas e cuidado",
+  "ageRange": [
+    4,
+    8
+  ],
+  "color": "#8cb8de",
+  "medal": "🥕 Medalha do Jardim",
+  "originalAuthors": [
+    "Beatrix Potter"
+  ],
+  "originalPublicationYear": 1902,
+  "sourceDocument": "https://www.baixelivros.com.br/infantil/a-historia-de-pedro-coelho",
+  "sourceNotice": "O enredo original inglês (1902) é domínio público no Brasil. A edição portuguesa de 2026 no site está marcada Gratuita, não Domínio Público: seu texto e suas ilustrações NÃO foram usados.",
+  "rewards": [
+    {
+      "id": "garden_carrot",
+      "label": "Cenoura do jardim de Pedro Coelho"
+    }
+  ],
+  "exercises": [
+    {
+      "syllable": "🐰",
+      "text": "Pedro era um coelhinho curioso e tinha uma família que cuidava dele."
+    },
+    {
+      "syllable": "🥬",
+      "text": "Pedro entrou num jardim que não era dele sem pedir licença."
+    },
+    {
+      "syllable": "🥕",
+      "text": "O jardim tinha verduras e cenouras gostosas."
+    },
+    {
+      "syllable": "🧥",
+      "text": "Pedro perdeu seu casaquinho durante a correria."
+    },
+    {
+      "syllable": "💧",
+      "text": "Pedro encontrou um caminho de volta para casa."
+    },
+    {
+      "syllable": "💛",
+      "text": "É importante ouvir os cuidados de quem nos ama e respeitar o espaço dos outros."
+    }
+  ],
+  "pages": [
+    {
+      "type": "cover",
+      "sticker": "O COELHINHO CURIOSO",
+      "chapter": "Era uma vez...",
+      "title": "A História de Pedro Coelho",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Era uma vez quatro coelhinhos que moravam com a mãe numa toca aconchegante, sob as raízes de uma árvore. Um deles, Pedro, era tão curioso quanto suas orelhas eram compridas."
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/a-historia-de-pedro-coelho/01.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "HORA DE PASSEAR",
+      "chapter": "O conselho da mamãe",
+      "title": "O conselho da mamãe",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Numa manhã ensolarada, a mãe coelha entregou lanchinhos aos filhos."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Podem brincar no bosque, mas não entrem no jardim do senhor McGregor. Lá não é seguro para vocês."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Três irmãos seguiram juntos pela trilha. Pedro ficou olhando para uma cerca."
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/a-historia-de-pedro-coelho/02.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "UM BURACO NA CERCA",
+      "chapter": "Que cheiro gostoso!",
+      "title": "Que cheiro gostoso!",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Do outro lado da cerca havia alfaces fofinhas, rabanetes crocantes e cenouras cor de pôr do sol."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Pedro passou por uma pequena abertura para espiar. Só que logo entrou mais do que devia!"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/a-historia-de-pedro-coelho/03.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "UM BANQUETE VERDE",
+      "chapter": "Alface, rabanete e mais!",
+      "title": "Alface, rabanete e mais!",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Pedro beliscou uma folha, depois outra. Encheu a barriga e começou a sentir sede."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Será que encontro alguma água? — murmurou."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Foi então que ouviu passos pesados entre os canteiros."
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/a-historia-de-pedro-coelho/04.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "SOCORRO, O JARDINEIRO!",
+      "chapter": "Uma corrida atrapalhada",
+      "title": "Uma corrida atrapalhada",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "O dono do jardim apareceu carregando uma enxada. Ao ver Pedro, tentou enxotá-lo."
+        },
+        {
+          "kind": "paragraph",
+          "text": "O coelhinho disparou entre as couves, desviou de um regador e correu atrás de um vaso."
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/a-historia-de-pedro-coelho/05.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "CADÊ MEU CASAQUINHO?",
+      "chapter": "Um susto entre as batatas",
+      "title": "Um susto entre as batatas",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Na pressa, o casaquinho azul de Pedro ficou preso na rede que protegia algumas plantas."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Ele conseguiu escapar do tecido e correu com a pelagem toda bagunçada."
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/a-historia-de-pedro-coelho/06.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "O REGADOR GIGANTE",
+      "chapter": "Um esconderijo barulhento",
+      "title": "Um esconderijo barulhento",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Pedro se escondeu atrás de um regador cheio de água. O metal fez PLOM! quando ele esbarrou."
+        },
+        {
+          "kind": "paragraph",
+          "text": "O jardineiro olhou em volta, mas Pedro ficou quietinho até os passos se afastarem."
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/a-historia-de-pedro-coelho/07.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "O CAMINHO DE VOLTA",
+      "chapter": "Onde fica a cerca?",
+      "title": "Onde fica a cerca?",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Tudo parecia diferente quando se está com medo. Pedro passou por vasos, arbustos e canteiros até reconhecer um portão."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Com cuidado, encontrou a abertura por onde tinha entrado."
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/a-historia-de-pedro-coelho/08.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "A TOCA ACONCHEGANTE",
+      "chapter": "De volta para casa",
+      "title": "De volta para casa",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Pedro chegou cansado, com as orelhas caídas e sem o casaquinho."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Que susto, meu pequeno! — disse sua mãe. — Venha descansar."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Pedro contou o que aconteceu. E ela escutou com muito carinho."
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/a-historia-de-pedro-coelho/09.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "CHÁ E DESCANSO",
+      "chapter": "Depois do susto",
+      "title": "Depois do susto",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "A mãe cuidou de Pedro, ofereceu água e o deixou repousar na caminha quentinha."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Os irmãos trouxeram notícias do bosque e Pedro prometeu pensar melhor antes de entrar onde não conhecia."
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/a-historia-de-pedro-coelho/10.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "UM NOVO PASSEIO",
+      "chapter": "Curiosidade com cuidado",
+      "title": "Curiosidade com cuidado",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "No dia seguinte, Pedro foi passear novamente, desta vez junto com a família."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Descobriu que havia muitas aventuras bonitas do lado de fora da cerca — sem assustar ninguém!"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/a-historia-de-pedro-coelho/11.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "FONTES PARA FAMÍLIAS",
+      "chapter": "De onde veio este conto?",
+      "title": "De onde veio este conto?",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Esta história é uma nova versão infantil de uma obra clássica em domínio público. Escrevemos o texto em português e desenhamos todas as cenas especialmente para a Prateleira Mágica."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Os endereços são informações para os adultos: aparecem como texto e não abrem links durante a leitura. Traduções e ilustrações de edições recentes podem ter direitos próprios."
+        }
+      ],
+      "interactive": "bibliography",
+      "bibliography": [
+        {
+          "title": "A História de Pedro Coelho — ficha bibliográfica no Baixe Livros",
+          "url": "www.baixelivros.com.br/infantil/a-historia-de-pedro-coelho"
+        },
+        {
+          "title": "Baixe Livros — explicação sobre licenças de uso",
+          "url": "www.baixelivros.com.br/licencas"
+        },
+        {
+          "title": "Brasil — Lei de Direitos Autorais nº 9.610/1998 (artigo 41)",
+          "url": "www.planalto.gov.br/ccivil_03/leis/l9610.htm"
+        },
+        {
+          "title": "Project Gutenberg — The Tale of Peter Rabbit (original inglês, 1902)",
+          "url": "www.gutenberg.org/ebooks/14838"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/a-historia-de-pedro-coelho/12.svg"
+    },
+    {
+      "type": "challenge",
+      "sticker": "DESAFIO DO CONTO",
+      "chapter": "O que ficou da história?",
+      "title": "O que ficou da história?",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Que aventura! Agora recorde as passagens de Pedro Coelho, marcando as frases verdadeiras. Leia com alguém de casa, se quiser. Ao completar o desafio e chegar à última página, você ganha sua medalha e uma cenoura de brinquedo!"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/a-historia-de-pedro-coelho/13.svg"
+    },
+    {
+      "type": "finish",
+      "sticker": "MEDALHA DO JARDIM",
+      "chapter": "A curiosidade aprende a cuidar",
+      "title": "A curiosidade aprende a cuidar",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Pedro voltou para casa e aprendeu uma boa lição. Agora você ganhou sua medalha e pode brincar com a cenoura de seu avatar!"
+        }
+      ],
+      "medal": "🥕 Medalha do Jardim conquistada!",
+      "illustration": "assets/illustrations/capitulos/a-historia-de-pedro-coelho/14.svg"
+    }
+  ],
+  "protagonistMode": "fixed",
+  "adaptation": "Texto original da Prateleira Mágica, inspirado na narrativa em domínio público",
+  "cover": "assets/illustrations/capitulos/a-historia-de-pedro-coelho/01.svg"
+}

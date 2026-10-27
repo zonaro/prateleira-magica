@@ -38,11 +38,15 @@ const targets = {
   'a-aventura-do-abc': ['abc_blocks'],
   'o-jardim-das-diferencas': ['dna_helix'],
   'o-clube-dos-dentinhos': ['toothbrush'],
-  'rapunzel-contos-dos-grimm': ['rapunzel']
+  'rapunzel-contos-dos-grimm': ['rapunzel'],
+  'o-rouxinol-e-o-imperador': ['nightingale_plush'],
+  'a-roupa-nova-do-imperador': ['emperor_crown'],
+  'as-fabulas-de-esopo': ['wooden_tortoise'],
+  'a-historia-de-pedro-coelho': ['garden_carrot']
 };
-assert.equal(catalog.books.length, 18, 'Dezoito títulos infantis no catálogo');
+assert.equal(catalog.books.length, 22, 'Vinte e dois títulos infantis no catálogo');
 const allRewards = Object.values(targets).flat();
-assert.equal(allRewards.length, 44, 'Quarenta e quatro recompensas no total');
+assert.equal(allRewards.length, 48, 'Quarenta e oito recompensas no total');
 assert.equal(new Set(allRewards).size, allRewards.length);
 assert.equal(Object.keys(avatar.rewardBooks).length, allRewards.length);
 for (const bookEntry of catalog.books) {
@@ -84,6 +88,14 @@ assert(avatar.avatarSVG({ petId: 'heart_plush' }).includes('repeatCount="indefin
   'Pelúcia deve trocar de cor automaticamente');
 assert(avatar.avatarSVG({ petId: 'sun_plush' }).includes('data-source="assets/pets/sol-sorridente.svg"'),
   'Pelúcia do tempo precisa ter seu próprio desenho');
+assert(avatar.avatarSVG({ petId: 'nightingale_plush' }).includes('data-source="assets/pets/rouxinol-cantor.svg"'),
+  'Pelúcia do rouxinol precisa ter desenho original');
+assert(avatar.avatarSVG({ accessories: ['emperor_crown'] }).includes('data-detail="coroa-imperial"'),
+  'Coroa imperial precisa ser desenhada no avatar');
+assert(avatar.avatarSVG({ toys: ['wooden_tortoise'] }).includes('data-detail="tartaruguinha-madeira"'),
+  'A fábula precisa desbloquear a tartaruguinha');
+assert(avatar.avatarSVG({ toys: ['garden_carrot'] }).includes('data-detail="cenoura-pedro-coelho"'),
+  'Pedro Coelho precisa desbloquear a cenoura');
 const saci = avatar.avatarSVG({ toys: ['saci_costume'] });
 assert(saci.includes('data-saci-one-leg="true"'), 'A fantasia do Saci precisa esconder uma perna');
 assert(!saci.includes('data-layer="tenis-direito"'), 'A fantasia do Saci não deve desenhar a segunda perna');
@@ -113,7 +125,8 @@ assert.deepEqual([...restored.toys], ['water_bottle']);
 assert.equal(restored.waterColor, '#abcf86');
 const bibliography = ['o-escudo-das-vacinas', 'o-corpo-em-movimento', 'o-clube-dos-dentinhos',
   'o-calendario-das-festas', 'a-danca-do-tempo', 'a-turma-dos-alimentos', 'a-viagem-dos-oito-planetas',
-  'o-jardim-das-diferencas'];
+  'o-jardim-das-diferencas', 'o-rouxinol-e-o-imperador', 'a-roupa-nova-do-imperador',
+  'as-fabulas-de-esopo', 'a-historia-de-pedro-coelho'];
 for (const id of bibliography) {
   const book = JSON.parse(read(`books/${id}.json`));
   const references = book.pages.filter(({ bibliography }) => Array.isArray(bibliography));
@@ -128,5 +141,5 @@ assert.deepEqual(Array.from(window.LivrinhoMusicKeyboard.notes, (note) => note[1
 assert(JSON.parse(read('books/a-festa-das-notas.json')).pages.some((page) => page.interactive === 'music-keyboard'));
 const reader = read('assets/js/reader.js');
 assert(reader.includes("url.textContent = entry.url"), 'Endereços devem ser texto puro sem âncoras');
-console.log('✓ 18 livros e 44 recompensas, medalha + conclusão e bloqueio persistente');
+console.log('✓ 22 livros e 48 recompensas, medalha + conclusão e bloqueio persistente');
 console.log('✓ Coração, sol, vela animada, Saci de uma perna, oito planetas e fontes não clicáveis');

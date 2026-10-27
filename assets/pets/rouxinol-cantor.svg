@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title">
+  <title id="title">Pelúcia do rouxinol cantor, com nota musical animada</title>
+  <path d="M39 92Q3 92 7 65 23 73 41 63" fill="#9a78a5" stroke="#73567d" stroke-width="4"/>
+  <ellipse cx="64" cy="79" rx="48" ry="34" fill="#bd95ab" stroke="#755b82" stroke-width="4"/>
+  <path d="M42 55Q13 68 39 96q36 9 52-25" fill="#9379a8" stroke="#755b82" stroke-width="4"/>
+  <circle cx="90" cy="52" r="29" fill="#c7a0b4" stroke="#755b82" stroke-width="4"/>
+  <circle cx="100" cy="45" r="5" fill="#51485c"/><path d="M115 57l12 8-12 7Z" fill="#f3c572"/>
+  <path d="M54 106l-4 17m31-16 5 16" stroke="#a37b7b" stroke-width="5" stroke-linecap="round"/>
+  <text x="13" y="40" font-family="sans-serif" font-size="28" fill="#a67ec6">♫<animate attributeName="opacity" values=".4;1;.4" dur="3s" repeatCount="indefinite"/></text>
+</svg>

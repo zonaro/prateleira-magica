@@ -1,0 +1,328 @@
+{
+  "schemaVersion": 1,
+  "language": "pt-BR",
+  "id": "o-rouxinol-e-o-imperador",
+  "title": "O Rouxinol e o Imperador",
+  "subtitle": "Um passarinho de verdade e a canção mais bonita do palácio",
+  "subject": "Contos clássicos · música, natureza e amizade",
+  "ageRange": [
+    6,
+    9
+  ],
+  "color": "#80b6ad",
+  "medal": "🐦 Medalha do Canto",
+  "originalAuthors": [
+    "Hans Christian Andersen"
+  ],
+  "originalPublicationYear": 1843,
+  "sourceDocument": "https://www.baixelivros.com.br/infantil/o-rouxinol-e-o-imperador-pdf",
+  "sourceNotice": "Reconto original. A obra de Andersen está em domínio público; não foi reproduzido o texto de nenhuma tradução moderna.",
+  "rewards": [
+    {
+      "id": "nightingale_plush",
+      "label": "Pelúcia de rouxinol cantor"
+    }
+  ],
+  "exercises": [
+    {
+      "syllable": "🌳",
+      "text": "O rouxinol vivia livre na floresta e cantava lindamente."
+    },
+    {
+      "syllable": "🎵",
+      "text": "O imperador conheceu a voz do pássaro graças a outras pessoas."
+    },
+    {
+      "syllable": "🏰",
+      "text": "A gaiola e o palácio não eram o lar preferido do passarinho."
+    },
+    {
+      "syllable": "⚙️",
+      "text": "O pássaro de brinquedo tocava sempre a mesma música."
+    },
+    {
+      "syllable": "💚",
+      "text": "A canção do rouxinol ajudou o imperador em um momento difícil."
+    },
+    {
+      "syllable": "🕊️",
+      "text": "Cuidar de um amigo também é respeitar sua liberdade."
+    }
+  ],
+  "pages": [
+    {
+      "type": "cover",
+      "sticker": "A VOZ DA FLORESTA",
+      "chapter": "Era uma vez...",
+      "title": "O Rouxinol e o Imperador",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Muito longe daqui, num palácio de telhas brilhantes, morava um imperador que gostava de descobrir coisas maravilhosas. Mas ele ainda não conhecia a maior maravilha de seu próprio jardim..."
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/o-rouxinol-e-o-imperador/01.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "PALÁCIO DE PORCELANA",
+      "chapter": "Um reino muito bonito",
+      "title": "Um reino muito bonito",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "O palácio tinha janelas coloridas, pontes delicadas e jardins cheios de flores. Visitantes de muitos lugares passeavam por lá e escreviam sobre tudo o que viam."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Alguns diziam que a coisa mais linda daquele reino não era um tesouro: era uma canção."
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/o-rouxinol-e-o-imperador/02.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "UM CANTO DESCONHECIDO",
+      "chapter": "Quem está cantando?",
+      "title": "Quem está cantando?",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Uma cozinheira contou ao imperador sobre um pequeno rouxinol que morava perto do bosque."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Quando ele canta, até a minha pressa descansa!"
+        },
+        {
+          "kind": "paragraph",
+          "text": "O imperador ficou tão curioso que pediu ajuda para encontrar o passarinho."
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/o-rouxinol-e-o-imperador/03.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "NA FLORESTA VERDE",
+      "chapter": "A busca pela voz",
+      "title": "A busca pela voz",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Os convidados ouviram uma vaca mugindo, sapos coaxando e folhas dançando ao vento. Cada som parecia uma surpresa."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Escutem bem! — pediu a cozinheira. — Agora é o rouxinol!"
+        },
+        {
+          "kind": "paragraph",
+          "text": "De um galhinho veio uma melodia suave, como gotas de luar."
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/o-rouxinol-e-o-imperador/04.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "O PEQUENO ARTISTA",
+      "chapter": "Uma voz que emociona",
+      "title": "Uma voz que emociona",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "O rouxinol era miudinho, de penas discretas. No entanto, sua voz encheu o jardim de encanto."
+        },
+        {
+          "kind": "paragraph",
+          "text": "No palácio, o imperador escutou tão emocionado que seus olhos ficaram molhados de alegria."
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/o-rouxinol-e-o-imperador/05.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "SAUDADES DA FLORESTA",
+      "chapter": "Um amigo precisa de espaço",
+      "title": "Um amigo precisa de espaço",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "O rouxinol recebeu comida boa e atenção, mas sentia falta dos galhos, do vento e de voar sem hora marcada."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Minha canção fica mais bonita quando posso cantar livre — explicou o pássaro."
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/o-rouxinol-e-o-imperador/06.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "UM PRESENTE BRILHANTE",
+      "chapter": "A música de engrenagens",
+      "title": "A música de engrenagens",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Um dia chegou uma caixinha com um pássaro feito de ouro e pedras coloridas. Ao girar uma pequena chave, ele cantava uma linda música."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Era bonito de ver! Mas tocava a mesma melodia, sempre igualzinha."
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/o-rouxinol-e-o-imperador/07.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "O SILÊNCIO",
+      "chapter": "Onde está o rouxinol?",
+      "title": "Onde está o rouxinol?",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Todos prestaram tanta atenção ao pássaro mecânico que esqueceram o pequeno cantor da floresta."
+        },
+        {
+          "kind": "paragraph",
+          "text": "O rouxinol voou de volta para as árvores, onde podia encontrar outros pássaros e inventar novas melodias."
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/o-rouxinol-e-o-imperador/08.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "A ENGRENAGEM CANSOU",
+      "chapter": "Quando a música parou",
+      "title": "Quando a música parou",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Depois de muitos giros, o mecanismo começou a falhar: cric, crec... e silêncio!"
+        },
+        {
+          "kind": "paragraph",
+          "text": "O imperador sentiu falta de uma canção que nascesse de verdade, diferente a cada amanhecer."
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/o-rouxinol-e-o-imperador/09.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "UM MOMENTO DIFÍCIL",
+      "chapter": "A janela aberta",
+      "title": "A janela aberta",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Algum tempo depois, o imperador ficou muito doente. Estava cansado e com medo, e o palácio parecia silencioso demais."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Então uma sombra pousou na janela: era o rouxinol, que tinha ouvido a notícia."
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/o-rouxinol-e-o-imperador/10.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "UMA CANÇÃO DE CARINHO",
+      "chapter": "A música volta a florescer",
+      "title": "A música volta a florescer",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "O passarinho cantou baixinho. Sua melodia trouxe calma e esperança enquanto o imperador descansava."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Obrigado por voltar, meu amigo — sussurrou o imperador."
+        },
+        {
+          "kind": "paragraph",
+          "text": "O rouxinol prometeu visitar o palácio quando quisesse. E assim continuou: livre e querido."
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/o-rouxinol-e-o-imperador/11.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "UM PRESENTE ESPECIAL",
+      "chapter": "A canção da amizade",
+      "title": "A canção da amizade",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "O imperador aprendeu que nem toda beleza cabe numa caixa. Algumas maravilhas precisam de árvores, liberdade e carinho."
+        },
+        {
+          "kind": "paragraph",
+          "text": "E quando o rouxinol aparecia, todo o jardim parecia cantar junto."
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/o-rouxinol-e-o-imperador/12.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "FONTES PARA FAMÍLIAS",
+      "chapter": "De onde veio este conto?",
+      "title": "De onde veio este conto?",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Esta história é uma nova versão infantil de uma obra clássica em domínio público. Escrevemos o texto em português e desenhamos todas as cenas especialmente para a Prateleira Mágica."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Os endereços são informações para os adultos: aparecem como texto e não abrem links durante a leitura. Traduções e ilustrações de edições recentes podem ter direitos próprios."
+        }
+      ],
+      "interactive": "bibliography",
+      "bibliography": [
+        {
+          "title": "O Rouxinol e o Imperador — ficha bibliográfica no Baixe Livros",
+          "url": "www.baixelivros.com.br/infantil/o-rouxinol-e-o-imperador-pdf"
+        },
+        {
+          "title": "Baixe Livros — explicação sobre licenças de uso",
+          "url": "www.baixelivros.com.br/licencas"
+        },
+        {
+          "title": "Brasil — Lei de Direitos Autorais nº 9.610/1998 (artigo 41)",
+          "url": "www.planalto.gov.br/ccivil_03/leis/l9610.htm"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/o-rouxinol-e-o-imperador/13.svg"
+    },
+    {
+      "type": "challenge",
+      "sticker": "DESAFIO DO CONTO",
+      "chapter": "O que ficou da história?",
+      "title": "O que ficou da história?",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Que aventura! Agora recorde as passagens de O Rouxinol e o Imperador, marcando as frases verdadeiras. Leia com alguém de casa, se quiser. Ao completar o desafio e chegar à última página, você ganha sua medalha e uma pelúcia de rouxinol!"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/o-rouxinol-e-o-imperador/14.svg"
+    },
+    {
+      "type": "finish",
+      "sticker": "MEDALHA DO CANTO",
+      "chapter": "A música mora no coração",
+      "title": "A música mora no coração",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Você ouviu a história do pássaro que cantava livre! Sua pelúcia de rouxinol agora pode acompanhar o avatar."
+        }
+      ],
+      "medal": "🐦 Medalha do Canto conquistada!",
+      "illustration": "assets/illustrations/capitulos/o-rouxinol-e-o-imperador/15.svg"
+    }
+  ],
+  "protagonistMode": "fixed",
+  "adaptation": "Texto original da Prateleira Mágica, inspirado na narrativa em domínio público",
+  "cover": "assets/illustrations/capitulos/o-rouxinol-e-o-imperador/01.svg"
+}

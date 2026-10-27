@@ -30,12 +30,12 @@ assert.equal(hairStyles.length, 26);
 assert.equal(outfits.length, 26);
 assert.equal(new Set(hairStyles).size, 26);
 assert.equal(new Set(outfits).size, 26);
-assert.equal(renderer.petStyles.length, 22, '20 pets originais mais coração e sol exclusivos precisam existir');
+assert.equal(renderer.petStyles.length, 23, '20 pets originais mais coração, sol e rouxinol exclusivos precisam existir');
 assert.equal(renderer.bottomStyles.map(([key]) => key).join(','), 'pants,shorts,skirt,long_skirt,diaper');
 assert.equal(renderer.footwearStyles.map(([key]) => key).join(','), 'sneakers,flipflops,socks,barefoot,skates');
 assert.equal(renderer.sockPatterns.map(([key]) => key).join(','), 'plain,stripes,dots');
-assert.equal(renderer.accessoryStyles.length, 26);
-assert.equal(renderer.toyStyles.length, 45);
+assert.equal(renderer.accessoryStyles.length, 27);
+assert.equal(renderer.toyStyles.length, 47);
 
 const pictures = new Set();
 for (const avatarStyle of hairStyles) {
@@ -482,16 +482,16 @@ for (const file of downloaded) {
 }
 
 console.log(`✓ ${hairStyles.length} cabelos × ${outfits.length} roupas = ${pictures.size} combinações, incluindo Rapunzel`);
-console.log('✓ Careca, cabelos sem flores, boné maior e 26 acessórios desenhados em camadas');
+console.log('✓ Careca, cabelos sem flores, boné maior e 27 acessórios desenhados em camadas');
 console.log('✓ Tiara de gatinho e capuz cobrindo todos os penteados sem alterá-los no perfil');
 console.log('✓ Flor sempre acima da tiara, capas atrás do corpo e máscaras exclusivas com óculos');
-console.log('✓ 45 brinquedos: 8 planetas, 7 alimentos, blocos ABC, DNA, escova de dentes e instrumentos');
+console.log('✓ 47 brinquedos: planetas, alimentos, blocos ABC, DNA, escova, tartaruga, cenoura e instrumentos');
 console.log('✓ Patins liberados com 3 medalhas; itens bloqueados mais claros e em escala de cinza');
 console.log('✓ 5 partes de baixo, 5 calçados, 3 estampas de meias, boina com inicial e desbloqueio com 3 medalhas');
 console.log('✓ Camisas e moletons listrados, camiseta de time e cardigã alinhados ao corpo');
 console.log('✓ 73 personagens prontos renderizados inline, com pernas e backup compatível');
 console.log('✓ Tons de pele fantasia e cores independentes de cabelo, roupa, calça/shorts/saia e tênis espelhados');
-console.log('✓ 20 pets originais e 2 pelúcias educativas renderizados junto ao avatar');
+console.log('✓ 20 pets originais e 3 pelúcias educativas renderizados junto ao avatar');
 console.log('✓ Data de nascimento, páginas visitadas e pets preservados no backup SVG');
 console.log('✓ Preferências e backups antigos migram sem perder avatar, nome, pronúncia ou conquistas');
 console.log('✓ SVG ilustrado contém backup JSON inline e restaura nome, voz, gênero e conquistas dos livros');

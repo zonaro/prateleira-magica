@@ -41,7 +41,7 @@ for (const entry of catalog.books) {
     assert(raw.includes('<svg') && raw.includes('</svg>'), `SVG inválido: ${scene}`);
   }
 }
-assert.equal(catalog.books.length, 18);
+assert.equal(catalog.books.length, 22);
 assert.equal(catalog.books.filter((entry) => entry.id.startsWith('a-') || entry.id.startsWith('o-')).length >= 11, true);
 const dental = data('o-clube-dos-dentinhos');
 assert.equal(dental.rewards[0].id, 'toothbrush');
@@ -57,6 +57,30 @@ const pdfText = fs.readFileSync(path.join(root,'books/rapunzel-fonte.txt'),'utf8
 const sourceText = pdfText.slice(pdfText.indexOf('Era uma vez um casal'), pdfText.indexOf('Este texto é parte integrante')).replace(/\s+/g,' ').trim();
 const transcription = rapunzel.pages.slice(0,-3).flatMap((p) => p.blocks.map((b)=>b.text)).join(' ').replace(/\s+/g,' ').trim();
 assert.equal(transcription, sourceText, 'O texto adaptado do PDF deve estar completo e preservado');
+const publicDomainClassics = ['o-rouxinol-e-o-imperador', 'a-roupa-nova-do-imperador',
+  'as-fabulas-de-esopo', 'a-historia-de-pedro-coelho'];
+for (const id of publicDomainClassics) {
+  const story = data(id);
+  const entry = catalog.books.find((item) => item.id === id);
+  assert.equal(story.protagonistMode, 'fixed', `${id} deve ter protagonistas próprios`);
+  assert.equal(entry.protagonistMode, 'fixed');
+  assert(story.originalAuthors.length, 'O crédito ao autor original é obrigatório');
+  assert(story.sourceDocument.startsWith('https://www.baixelivros.com.br/'), 'Fonte Baixe Livros ausente');
+  assert(story.sourceNotice && /original|própri|reconto/i.test(story.sourceNotice), 'A origem do texto deve ser clara');
+  assert(story.pages.length >= 12, 'Os contos devem ter cenas suficientes para leitura acompanhada');
+  assert(story.pages.every(p => !JSON.stringify(p).includes('{{nome}}')), 'Nenhum conto usa avatar protagonista');
+  assert(story.pages.some(p => p.interactive === 'bibliography'), 'Famílias devem encontrar referências');
+  for (const page of story.pages) {
+    const svg = fs.readFileSync(path.join(root,page.illustration),'utf8');
+    assert(!svg.includes('<use href="#kid"'), 'Arte do conto não usa o avatar da criança');
+    assert(svg.includes('data-character=') || svg.includes('data-scene=') || svg.includes('data-motif=') || svg.includes('<path'),
+      'Cena ilustrada deve conter elementos desenhados');
+  }
+}
+assert(data('a-historia-de-pedro-coelho').sourceNotice.includes('Gratuita, não Domínio Público'),
+  'A tradução moderna de Pedro Coelho não pode ser confundida com a narrativa original');
+assert(fs.readFileSync(path.join(root,'index.html'),'utf8').includes('Se um PDF é grátis, significa que posso copiá-lo?'),
+  'FAQ deve explicar a diferença entre gratuito e domínio público');
 console.log('✓ ABC completo (26 letras), cinco sons do NH e diversidade com referências do IBGE');
 console.log('✓ Escovação e Rapunzel licenciada com transcrição integral, referências e desbloqueios');
-console.log('✓ 18 livros com cenas visuais distintas em cada página, sem repetição de ilustrações');
+console.log('✓ 22 livros, incluindo quatro clássicos recontados, com ilustração por página');

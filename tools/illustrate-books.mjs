@@ -218,8 +218,164 @@ function rapunzelScene(book, page, index) {
     </svg>\n`.replace(/[ \t]+$/gm,'');
 }
 
+// Recontos de domínio público: cenas autorais com personagens dos contos.
+// Nenhuma arte depende do avatar da criança ou de imagens dos PDFs originais.
+function classicScene(book, page, index) {
+  const titles = {
+    'o-rouxinol-e-o-imperador': [
+      'bosque','palacio','cozinheira','busca','canto','gaiola','mecanico','bosque','mecanico','cama','canto','bosque','fontes','perguntas','festa'],
+    'a-roupa-nova-do-imperador': [
+      'palacio','armario','alfaiates','teares','ministro','alfaiates','prova','desfile','crianca','surpresa','conversa','roupas','fontes','perguntas','festa'],
+    'as-fabulas-de-esopo': [
+      'animais','corrida','chegada','leao','rede','corvo','queijo','uvas','uvas','animais','historias','fontes','perguntas','festa'],
+    'a-historia-de-pedro-coelho': [
+      'toca','familia','horta','verduras','corrida','casaco','regador','cerca','toca','descanso','passeio','fontes','perguntas','festa']
+  };
+  const scene = titles[book.id]?.[index] || 'historias';
+  const [sky, meadow, pink, lilac] = palettes[(index * 2 + book.id.length) % palettes.length];
+  const palette = book.id === 'o-rouxinol-e-o-imperador' ? ['#2e6e73','#75ba9b','#b3e9ce']
+    : book.id === 'a-roupa-nova-do-imperador' ? ['#88609c','#edac8b','#f5d278']
+    : book.id === 'as-fabulas-de-esopo' ? ['#567c49','#9ccc84','#e6be6a']
+    : ['#6488b0','#97c9a2','#f6c06e'];
+  const [ink, green, gold] = palette;
+  const palace = ['palacio','cozinheira','gaiola','mecanico','cama','armario','alfaiates','teares','ministro','prova','desfile','crianca','surpresa','conversa','roupas'].includes(scene);
+  const walls = palace ? `<path d="M0 370V0h1000v370Z" fill="#f5e8de"/><path d="M0 180q75-140 150 0t150 0t150 0t150 0t150 0t150 0t100 0" fill="none" stroke="${lilac}" stroke-width="27" opacity=".5"/>${[126,498,872].map(x=>`<path d="M${x-69} 405V226q69-131 138 0v179Z" fill="#b6d6d4" stroke="#d4b4bb" stroke-width="12"/>`).join('')}` : '';
+  const forest = `<path d="M0 487Q175 394 389 477T1000 469V700H0Z" fill="${green}"/><path d="M0 575Q200 505 460 566t540-13V700H0Z" fill="${ink}" opacity=".16"/>
+    ${Array.from({length:8},(_,i)=>{
+      const x=66+i*136+(index%3)*10;
+      return `${rect(x-14,307+(i%2)*27,27,245,'#ac886b',8)}${circle(x,297+(i%2)*27,65,i%2?'#87bd97':'#6caa8a')}${circle(x-35,327+(i%2)*27,36,'#a1cda4')}`;
+    }).join('')}`;
+  const bg = `<rect width="1000" height="700" fill="${sky}"/>${palace ? walls : forest}
+    ${circle(874,99,62,'#ffe4a6')}${Array.from({length:13},(_,i)=>circle((i*143+index*35)%960,52+(i*39+index*8)%230,i%2+2,'#fff')).join('')}
+    <path d="M0 615q250-45 480 0t520-4v89H0Z" fill="${meadow}" opacity=".66"/>`;
+  const adult = (role,x,y,scale=1) => `<g data-character="${role}" transform="translate(${x} ${y}) scale(${scale})">
+    ${ellipse(0,174,93,13,'#45626b26')}
+    <path d="M-64 52Q-103 88-97 166h193Q106 84 63 52Z" fill="${role==='emperor'?'#ad5a93':role==='tailor'?'#6a9c9a':'#699cbc'}" stroke="${ink}" stroke-width="5"/>
+    ${line('M-57 89l-51 49M57 89l51 49','#e7b69b',17)}
+    <path d="M-47-21q-18-86 48-88 64 0 48 88Z" fill="${role==='emperor'?'#764a5a':'#665a55'}"/>
+    ${ellipse(0,-10,49,57,'#e7b69b')}${circle(-17,-17,5,'#564b62')}${circle(19,-17,5,'#564b62')}
+    ${line('M-17 16q17 16 34 0','#aa7280',5)}
+    ${role==='emperor'?`<path d="M-64-71 0-114 64-71l-12 32h-103Z" fill="#f3ce6b" stroke="#b58c67" stroke-width="6"/>${[-33,0,33].map(x=>circle(x,-69,9,'#a58bd9')).join('')}`:''}
+    ${role==='tailor'?`<path d="M-48-58h96" stroke="#fff4d2" stroke-width="8"/>`:''}
+    </g>`;
+  const bird = (x,y,scale=1,mechanical=false) => `<g data-character="${mechanical?'rouxinol-mecanico':'rouxinol'}" transform="translate(${x} ${y}) scale(${scale})">
+    ${ellipse(-4,78,62,9,'#4a687321')}
+    <path d="M-42 30q-56 25-67-28 38 5 76 4" fill="${mechanical?'#d1a548':'#7b6b75'}"/>
+    ${ellipse(0,0,67,45,mechanical?'#eacb66':'#98788c')}
+    <path d="M-15-26q-42 9-14 61 28 15 57-12" fill="${mechanical?'#b18cb4':'#bb98a2'}"/>
+    ${circle(38,-36,35,mechanical?'#f0d77b':'#957b88')}${circle(48,-45,6,'#39334a')}
+    <path d="M72-35 105-24 72-13Z" fill="#e7ad5c"/><path d="M15 47l-3 25m36-29 4 30" stroke="#806d68" stroke-width="6"/>
+    ${mechanical?'<circle cx="-7" cy="1" r="15" fill="none" stroke="#fff3c8" stroke-width="5"/><path d="M-7-22v47M-30 1h46" stroke="#f5e3a7" stroke-width="3"/>':''}</g>`;
+  const critter = (kind,x,y,scale=1) => {
+    const specs = { hare:['#ccaa85',43], turtle:['#89bd78',38], lion:['#dca767',59], mouse:['#b9b4bd',26],
+      crow:['#676982',38], fox:['#dd9664',46], rabbit:['#d5b89b',40] };
+    const [fur,r] = specs[kind] || specs.rabbit;
+    if (kind==='turtle') return `<g data-character="tartaruga" transform="translate(${x} ${y}) scale(${scale})">
+      ${ellipse(0,106,101,13,'#395b4b33')}${circle(-74,71,28,fur)}${circle(74,71,28,fur)}
+      ${ellipse(0,14,99,73,'#668f5b')}${ellipse(0,11,74,57,'#b4bd78')}
+      <path d="M-68-26 0 69 68-26M-83 13H83" stroke="#64804c" stroke-width="8" fill="none"/>
+      ${circle(90,-6,40,'#94bc79')}${circle(101,-12,6,'#4d5261')}${line('M94 9q13 10 25-2','#577260',4)}</g>`;
+    if (kind==='crow') return `<g data-character="corvo" transform="translate(${x} ${y}) scale(${scale})">
+      ${ellipse(0,33,86,15,'#44607826')}${ellipse(-3,-16,77,61,fur)}<path d="M-12-52Q-90-25-50 28q45 12 75-23" fill="#4b506d"/>
+      ${circle(42,-68,38,'#555b75')}${circle(50,-74,7,'#fff')}${circle(51,-74,3,'#2c354f')}
+      <path d="M71-59 106-40 71-35Z" fill="#e7b85f"/>${line('M-11 33l-7 59M26 34l8 58','#555066',8)}</g>`;
+    if (kind==='fox') return `<g data-character="raposa" transform="translate(${x} ${y}) scale(${scale})">
+      <path d="M-62 35q-147-61-142-14 5 73 142 58" fill="#e6ab74" stroke="#aa734f" stroke-width="7"/>
+      ${ellipse(0,45,87,66,fur)}<path d="M-69-4-80-103-18-52 43-52 92-103 74-6" fill="${fur}" stroke="#b77c56" stroke-width="8"/>
+      ${ellipse(3,-9,70,58,'#e6ac7b')}${circle(-29,-21,5,'#4b4753')}${circle(31,-21,5,'#4b4753')}
+      <path d="M-22 6 0 25 23 6Z" fill="#fff1d9"/>${circle(0,9,7,'#4b4753')}</g>`;
+    if (kind==='lion') return `<g data-character="leao" transform="translate(${x} ${y}) scale(${scale})">
+      ${ellipse(0,115,99,15,'#395b4b33')}${ellipse(0,65,90,66,fur)}${circle(0,-22,103,'#c78a53')}${circle(0,-22,71,'#edb972')}
+      ${circle(-27,-35,7,'#554658')}${circle(27,-35,7,'#554658')}${circle(0,-11,10,'#745362')}
+      ${line('M-12 8q12 14 24 0','#865864',6)}${circle(-88,-68,24,'#c78a53')}${circle(88,-68,24,'#c78a53')}</g>`;
+    return `<g data-character="${kind}" transform="translate(${x} ${y}) scale(${scale})">
+      ${ellipse(0,113,77,10,'#395b4b33')}${ellipse(0,70,73,61,fur)}
+      ${kind==='hare'||kind==='rabbit'?`${ellipse(-29,-120,21,90,fur)}${ellipse(36,-126,21,92,fur)}${ellipse(-29,-120,10,70,'#f1a8ad')}${ellipse(36,-126,10,70,'#f1a8ad')}`:`${circle(-45,-61,24,fur)}${circle(45,-61,24,fur)}`}
+      ${ellipse(0,-25,r+15,r+16,fur)}${circle(-20,-39,6,'#504957')}${circle(22,-39,6,'#504957')}
+      ${circle(2,-13,7,'#da8d90')}${line('M-16 4q16 14 32 0','#8c6478',5)}
+      ${kind==='rabbit'?`<path d="M-47 25q-16 76-12 104h120Q63 67 44 25Z" fill="#79a9d6" stroke="#6283b3" stroke-width="5"/><circle cx="0" cy="58" r="5" fill="#fff"/><circle cx="0" cy="84" r="5" fill="#fff"/>`:''}</g>`;
+  };
+  const scenery = {
+    bosques: '',
+    canto: `${bird(691,340,1.15)}${text('♪',830,257,93,'#d68ba9')}${text('♫',535,230,70,'#a07bc0')}`,
+    mecanico: `${bird(694,344,1.12,true)}<g transform="translate(847 392)">${circle(0,0,48,'#d4b56d')}${text('⚙',0,19,54,'#fff') }</g>`,
+    gaiola: `<path d="M550 475V207q142-135 287 0v268Z" fill="none" stroke="#d7ab66" stroke-width="13"/>${[586,636,686,736,786].map(x=>line(`M${x} 167v305`,'#d3a963',8)).join('')}${bird(687,351,1)}`,
+    bosque: `${bird(713,331,1.27)}${text('♫',867,210,83,'#9875ac')}`,
+    palacio: `${bird(718,362,1.04)}${text('★',822,207,55,'#e3bc71')}`,
+    busca: `${bird(684,343,1.2)}${text('?',845,270,76,'#a67bbd')}`,
+    cozinheira: `${bird(690,361,1.04)}`,
+    cama: `<path d="M564 431h310v103H564Z" fill="#ceadc6" stroke="#846e9d" stroke-width="9"/>${ellipse(640,424,68,31,'#fff4d9')}${circle(646,385,34,'#e7b69b')}${text('♫',797,330,59,'#ad87c6')}`,
+    fontes: `<g transform="translate(706 340) scale(1.32)">${motifShape('book','#ecb7a5')}</g>`,
+    perguntas: `<g transform="translate(706 340) scale(1.32)">${motifShape('book','#ecb7a5')}</g>${text('?',705,365,87,'#8f6ba1')}`,
+    festa: `${Array.from({length:17},(_,i)=>circle(484+i*24,171+i%3*37,6,['#f9bb70','#ca97cb','#82cbb2'][i%3])).join('')}`
+  };
+  const accessories = () => {
+    if (book.id==='o-rouxinol-e-o-imperador') {
+      const foreground = scenery[scene] || scenery.canto;
+      return `${index===0 ? '' : adult(index===2?'cook':'emperor',299,413,.9)}${foreground}${scene==='mecanico'?text('CRIC',707,196,60,'#b07479'):''}`;
+    }
+    if (book.id==='a-roupa-nova-do-imperador') {
+      const fabric = `<g transform="translate(687 346)">${rect(-120,-99,235,207,'#f1d0b5',14,'#b58e85',9)}${rect(-95,-80,185,154,'#fff4e9',12)}${line('M-68-56h123M-65-23h117M-61 9H65','#d1bdc3',8)}${text('?',0,54,70,'#b28bc2')}</g>`;
+      const loom = `${line('M561 480V208H836v272M562 235h275M584 452h242','#947264',19)}${text('?',699,355,87,'#d4a6b6')}`;
+      const child = `<g transform="translate(710 446) scale(.7)">${adult('child',0,0,.85)}</g>${text('!',755,227,90,'#e0a078')}`;
+      const clothes = `<path d="M581 267q120-84 240 0L783 474H615Z" fill="#9a7fbc" stroke="#6f6497" stroke-width="9"/><path d="M642 286 677 349l43-63" fill="none" stroke="#f3d5a2" stroke-width="15"/>`;
+      const crowd = Array.from({length:4},(_,i)=>`<g transform="translate(${570+i*107} ${515+(i%2)*20}) scale(.46)">${adult('visitor',0,0)}</g>`).join('');
+      return `${adult('emperor',300,420,scene==='prova'?.96:1)}${
+        ['armario','roupas'].includes(scene)?clothes:
+        ['alfaiates','prova'].includes(scene)?`${adult('tailor',699,428,.85)}${text('✦',799,264,69,'#e7b965')}`:
+        scene==='teares'?loom:
+        ['desfile','surpresa','crianca'].includes(scene)?`${crowd}${scene==='crianca'?child:text('♪',816,228,76,'#b48db5')}`:
+        scene==='conversa'?`${child}${text('♥',823,280,65,'#e894a6')}`:
+        scene==='fontes'||scene==='perguntas'?scenery[scene]:fabric
+      }`;
+    }
+    if (book.id==='as-fabulas-de-esopo') {
+      const pairs = {
+        animais: [['turtle',320,438,.93],['lion',692,422,.86]],
+        corrida: [['hare',298,470,.86],['turtle',680,452,1.06]],
+        chegada: [['turtle',365,449,1.07],['hare',690,479,.83]],
+        leao: [['lion',324,430,.95],['mouse',723,495,.82]],
+        rede: [['lion',385,434,.9],['mouse',737,501,.9]],
+        corvo: [['crow',361,360,.84],['fox',719,464,.92]],
+        queijo: [['crow',366,345,.85],['fox',724,468,.94]],
+        uvas: [['fox',350,455,1.03],['fox',735,481,.73]],
+        historias: [['turtle',325,466,.9],['crow',720,375,.86]],
+        fontes: [['turtle',322,466,.8]],
+        perguntas: [['hare',322,482,.79]],
+        festa: [['turtle',320,455,.98],['mouse',718,479,.9]]
+      };
+      const animals=(pairs[scene] || pairs.animais).map(([key,x,y,s])=>critter(key,x,y,s)).join('');
+      const details= ['corrida','chegada'].includes(scene)?`<path d="M537 515h5v100h-5" stroke="#fff" stroke-width="13" stroke-dasharray="14 11"/>${text('CHEGADA',725,210,53,'#fff4e8')}`:
+        ['corvo','queijo'].includes(scene)?`${rect(218,388,309,18,'#91755e',7)}${ellipse(483,449,28,14,'#edcb73')}`:
+        scene==='rede'?`${Array.from({length:8},(_,i)=>line(`M${195+i*33} 383l144 198M202 ${391+i*23}h259`,'#d7bd93',4)).join('')}`:
+        scene==='uvas'?`${Array.from({length:9},(_,i)=>circle(693+(i%3-1)*28,245+Math.floor(i/3)*30,20,'#9176b0')).join('')}${line('M683 191q8-43 43-58','#588a5b',8)}`:'';
+      return `${animals}${details}${scene==='perguntas'||scene==='fontes'?scenery[scene]:''}`;
+    }
+    // Pedro Coelho — seu casaco azul distingue o protagonista em todas as cenas.
+    const carrot = `<g transform="translate(703 382) rotate(16)"><path d="M0-18-40 101q40 37 73-3L0-18Z" fill="#ed9b5f" stroke="#b97a50" stroke-width="7"/><path d="M0-16q-48-62-62-33Q-21-7 0-16q47-71 64-39Q48-3 0-16Z" fill="#71ae7d"/></g>`;
+    const vegetables = Array.from({length:5},(_,i)=>`<g transform="translate(${600+i*67} ${462+(i%2)*26}) scale(.37)">${motifShape(i%2?'apple':'flowers','#b1d58b')}</g>`).join('');
+    const gardener = `<g transform="translate(731 360)">${adult('gardener',0,0,.98)}${line('M124 0 176 234','#98785e',12)}</g>`;
+    const home = `<path d="M546 488v-200q166-208 347 0v200Z" fill="#e5c09f" stroke="#ac8b73" stroke-width="12"/><path d="M634 489V345q86-88 169 0v144Z" fill="#725e75"/>`;
+    const props = ['toca','familia','descanso'].includes(scene)?home:
+      scene==='corrida'?`${gardener}${vegetables}`:
+      scene==='casaco'?`${line('M650 245l65 78','#6185a8',20)}${vegetables}`:
+      scene==='regador'?`${rect(610,321,207,130,'#a2cbd2',27,'#6f9da8',9)}${line('M803 350q145-20 102 73','#6398aa',12)}`:
+      scene==='cerca'?`${Array.from({length:6},(_,i)=>rect(552+i*67,293,27,212,'#c4a383',6)).join('')}${line('M548 331h370M548 462h370','#a98272',12)}`:
+      scene==='fontes'||scene==='perguntas'?scenery[scene]:`${vegetables}${carrot}`;
+    const siblings = scene==='familia'?`${critter('rabbit',684,450,.58)}${critter('rabbit',835,463,.53)}`:'';
+    return `${critter('rabbit',327,445,.93)}${props}${siblings}`;
+  };
+  const heading = (index===0 ? book.title.toUpperCase() : page.sticker || page.title).slice(0,29);
+  const start = `<rect x="55" y="39" width="890" height="93" rx="42" fill="#fffaf0" opacity=".95" stroke="${pink}" stroke-width="7"/>
+    ${text(heading,500,101,heading.length>23?34:heading.length>16?40:48,'#675173')}`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="700" viewBox="0 0 1000 700" role="img" aria-label="${xml(page.title)}">
+    <title>${xml(book.title)} — cena ${index+1}: ${xml(page.title)}</title>
+    ${bg}${accessories()}${start}</svg>\n`.replace(/[ \t]+$/gm,'');
+}
+
 function sceneArt(book,page,index,bookNo) {
-  if (book.protagonistMode==='fixed') return rapunzelScene(book,page,index);
+  if (book.id==='rapunzel-contos-dos-grimm') return rapunzelScene(book,page,index);
+  if (book.protagonistMode==='fixed') return classicScene(book,page,index);
   const isABC = book.id === 'a-aventura-do-abc';
   const isDiff = book.id === 'o-jardim-das-diferencas';
   const palette = palettes[(index + bookNo*2) % palettes.length];

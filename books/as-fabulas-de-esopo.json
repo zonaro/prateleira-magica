@@ -1,0 +1,314 @@
+{
+  "schemaVersion": 1,
+  "language": "pt-BR",
+  "id": "as-fabulas-de-esopo",
+  "title": "Fábulas de Esopo",
+  "subtitle": "Quatro bichos, quatro aventuras e boas ideias para conversar",
+  "subject": "Fábulas clássicas · persistência, amizade e convivência",
+  "ageRange": [
+    5,
+    9
+  ],
+  "color": "#86b57d",
+  "medal": "🐢 Medalha da Sabedoria",
+  "originalAuthors": [
+    "Esopo (fábulas tradicionalmente atribuídas)"
+  ],
+  "sourceDocument": "https://www.baixelivros.com.br/infantil/fabulas-de-esopo-pdf",
+  "sourceNotice": "Recontos próprios de quatro fábulas tradicionais antigas. O texto da coletânea contemporânea do site não foi reproduzido.",
+  "rewards": [
+    {
+      "id": "wooden_tortoise",
+      "label": "Tartaruguinha de madeira de brinquedo"
+    }
+  ],
+  "exercises": [
+    {
+      "syllable": "🐢",
+      "text": "A tartaruga chegou à linha de chegada sem desistir."
+    },
+    {
+      "syllable": "🐇",
+      "text": "A lebre ficou tão confiante que parou para descansar na corrida."
+    },
+    {
+      "syllable": "🦁",
+      "text": "O leão descobriu que o pequeno rato também podia ajudá-lo."
+    },
+    {
+      "syllable": "🧀",
+      "text": "A raposa elogiou o corvo para tentar pegar seu alimento."
+    },
+    {
+      "syllable": "🍇",
+      "text": "A raposa chamou as uvas de azedas porque não conseguiu alcançá-las."
+    },
+    {
+      "syllable": "✨",
+      "text": "Cada fábula apresenta uma situação para pensarmos sobre nossas escolhas."
+    }
+  ],
+  "pages": [
+    {
+      "type": "cover",
+      "sticker": "HISTÓRIAS DA FLORESTA",
+      "chapter": "Era uma vez...",
+      "title": "Fábulas de Esopo",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Num livro bem antigo moram muitos animais que falam. Eles correm, conversam, se enganam e aprendem. Você quer conhecer quatro historinhas curtinhas?"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/as-fabulas-de-esopo/01.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "A LEBRE E A TARTARUGA",
+      "chapter": "Uma corrida diferente",
+      "title": "Uma corrida diferente",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "A lebre adorava mostrar como corria depressa. Um dia, riu do passo lento da tartaruga."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Vamos disputar uma corrida? — propôs a tartaruga, com um sorriso tranquilo."
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/as-fabulas-de-esopo/02.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "PASSO APÓS PASSO",
+      "chapter": "Quem chega primeiro?",
+      "title": "Quem chega primeiro?",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "A lebre disparou e ficou tão certa da vitória que resolveu cochilar debaixo de uma árvore."
+        },
+        {
+          "kind": "paragraph",
+          "text": "A tartaruga continuou: passinho, passinho, passinho... Até cruzar a chegada!"
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Não foi a velocidade. Foi a vontade de continuar!"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/as-fabulas-de-esopo/03.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "O LEÃO E O RATO",
+      "chapter": "Um encontro inesperado",
+      "title": "Um encontro inesperado",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Um ratinho passou correndo sobre a pata de um leão adormecido. O leão acordou com um rugido."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Por favor, me deixe ir! Um dia eu posso ajudar você!"
+        },
+        {
+          "kind": "paragraph",
+          "text": "O leão riu, mas deixou o pequeno visitante escapar."
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/as-fabulas-de-esopo/04.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "UMA REDE EMBARALHADA",
+      "chapter": "O pequeno grande amigo",
+      "title": "O pequeno grande amigo",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Dias depois, o leão ficou preso numa rede. O ratinho ouviu seu chamado e chegou correndo."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Com dentinhos pacientes, roeu os nós até libertar o amigo."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Viu só? Pequeno não quer dizer incapaz!"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/as-fabulas-de-esopo/05.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "O CORVO E A RAPOSA",
+      "chapter": "O queijo na árvore",
+      "title": "O queijo na árvore",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Um corvo pousou num galho com um pedacinho de queijo no bico. Uma raposa, lá embaixo, quis comer o queijo."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Que penas lindas! Aposto que sua voz é maravilhosa! — disse ela."
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/as-fabulas-de-esopo/06.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "ELOGIO OU TRUQUE?",
+      "chapter": "O queijo escapou",
+      "title": "O queijo escapou",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "O corvo ficou vaidoso. Abriu o bico para cantar... e o queijo caiu!"
+        },
+        {
+          "kind": "paragraph",
+          "text": "A raposa o pegou e saiu andando. O corvo aprendeu a prestar atenção quando alguém elogia só para conseguir alguma coisa."
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/as-fabulas-de-esopo/07.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "A RAPOSA E AS UVAS",
+      "chapter": "Um cacho lá no alto",
+      "title": "Um cacho lá no alto",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Certa tarde, outra raposa viu uvas redondinhas penduradas numa parreira."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Saltou uma vez, duas, três... As uvas continuaram longe de suas patas."
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/as-fabulas-de-esopo/08.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "UMA DESCULPA ENGRAÇADA",
+      "chapter": "As uvas estão azedas?",
+      "title": "As uvas estão azedas?",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Cansada, a raposa virou as costas e resmungou:"
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Nem queria essas uvas! Devem estar azedas!"
+        },
+        {
+          "kind": "paragraph",
+          "text": "Mas será que estavam mesmo? Às vezes inventamos desculpas quando algo não dá certo."
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/as-fabulas-de-esopo/09.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "QUATRO APRENDIZADOS",
+      "chapter": "Cada bicho sabe uma coisa",
+      "title": "Cada bicho sabe uma coisa",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "A tartaruga ensina persistência. O rato mostra que todos podem ajudar. O corvo lembra que devemos pensar antes de agir. E a raposa nos faz refletir sobre nossas desculpas."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Uma fábula não precisa mandar em ninguém: ela abre espaço para boas conversas."
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/as-fabulas-de-esopo/10.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "CONTE UMA NOVA FÁBULA",
+      "chapter": "Agora é sua vez!",
+      "title": "Agora é sua vez!",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Se você inventasse uma história de animais, quem seriam os personagens? Um beija-flor? Uma capivara? Uma formiga astronauta?"
+        },
+        {
+          "kind": "paragraph",
+          "text": "Uma aventura inventada por você também pode ensinar algo sobre amizade e coragem."
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/as-fabulas-de-esopo/11.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "FONTES PARA FAMÍLIAS",
+      "chapter": "De onde veio este conto?",
+      "title": "De onde veio este conto?",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Esta história é uma nova versão infantil de uma obra clássica em domínio público. Escrevemos o texto em português e desenhamos todas as cenas especialmente para a Prateleira Mágica."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Os endereços são informações para os adultos: aparecem como texto e não abrem links durante a leitura. Traduções e ilustrações de edições recentes podem ter direitos próprios."
+        }
+      ],
+      "interactive": "bibliography",
+      "bibliography": [
+        {
+          "title": "Fábulas de Esopo — ficha bibliográfica no Baixe Livros",
+          "url": "www.baixelivros.com.br/infantil/fabulas-de-esopo-pdf"
+        },
+        {
+          "title": "Baixe Livros — explicação sobre licenças de uso",
+          "url": "www.baixelivros.com.br/licencas"
+        },
+        {
+          "title": "Brasil — Lei de Direitos Autorais nº 9.610/1998 (artigo 41)",
+          "url": "www.planalto.gov.br/ccivil_03/leis/l9610.htm"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/as-fabulas-de-esopo/12.svg"
+    },
+    {
+      "type": "challenge",
+      "sticker": "DESAFIO DO CONTO",
+      "chapter": "O que ficou da história?",
+      "title": "O que ficou da história?",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Que aventura! Agora recorde as passagens de as Fábulas de Esopo, marcando as frases verdadeiras. Leia com alguém de casa, se quiser. Ao completar o desafio e chegar à última página, você ganha sua medalha e uma tartaruguinha de madeira!"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/as-fabulas-de-esopo/13.svg"
+    },
+    {
+      "type": "finish",
+      "sticker": "MEDALHA DA SABEDORIA",
+      "chapter": "Quatro aventuras para guardar",
+      "title": "Quatro aventuras para guardar",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "A lebre, a tartaruga, o rato, o leão, o corvo e a raposa ensinaram muitas coisas! Sua tartaruguinha de madeira foi desbloqueada."
+        }
+      ],
+      "medal": "🐢 Medalha da Sabedoria conquistada!",
+      "illustration": "assets/illustrations/capitulos/as-fabulas-de-esopo/14.svg"
+    }
+  ],
+  "protagonistMode": "fixed",
+  "adaptation": "Texto original da Prateleira Mágica, inspirado na narrativa em domínio público",
+  "cover": "assets/illustrations/capitulos/as-fabulas-de-esopo/01.svg"
+}
