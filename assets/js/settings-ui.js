@@ -599,9 +599,14 @@
 
   // A análise não salva a foto: só transfere campos reconhecidos para o draft.
   // Reaproveitar edit() garante undo, auto-save e refresh de todos os SVGs.
+  // Photo changes are a real editor state transition, not a preview-only SVG.
+  // Discard the chosen preset's original SVG layers: their geometry/colors no
+  // longer match the modular options after changing several fields at once.
   avatarPhoto?.mount({
     onApply: (result) => {
       edit('avatar-photo', () => {
+        delete draft.sourceSvg;
+        delete draft.presetEdits;
         const next = {
           skinColor: result.skinColor,
           hairColor: result.hairColor,
@@ -609,19 +614,24 @@
           avatarStyle: result.avatarStyle
         };
         for (const [field, value] of Object.entries(next)) {
-          if (!value || draft[field] === value) continue;
-          markPresetEdit(field);
-          draft[field] = value;
+          if (value) draft[field] = value;
         }
-        // Se houver uma máscara ou outro acessório facial, não sobrescrevemos.
-        // Ausência de detecção não exclui óculos: falso negativo é comum.
         const current = Array.isArray(draft.accessories) ? draft.accessories : [];
-        if (result.glasses && !current.some((id) => accessoryGroups[id] === 'face')) {
+        const selectedFace = current.find((id) => accessoryGroups[id] === 'face');
+        // A mask / eye patch must never be silently replaced by glasses.
+        if (result.glasses && !selectedFace) {
           draft.accessories = [...current, 'glasses_round'];
         }
+        if (result.glasses && (!selectedFace || selectedFace.startsWith('glasses_'))
+            && result.accessoryColor) {
+          draft.accessoryColor = result.accessoryColor;
+        }
       });
-      $('#autoSaveStatus').textContent = '✨ Avatar criado! Confira o penteado e os óculos.';
-      if (result.warnings.length) $('#autoSaveStatus').title = result.warnings.join(' ');
+      // Synchronize all swatches, style buttons, color inputs, and preview
+      // with the normalized state that autosave actually persisted.
+      fillDialog(preferences.load());
+      $('#autoSaveStatus').textContent = '✨ Foto aplicada! Confira as escolhas destacadas.';
+      $('#autoSaveStatus').title = (result.warnings || []).join(' ');
     }
   });
 
