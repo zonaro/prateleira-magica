@@ -71,6 +71,16 @@ assert(await cache.match(`${scope}assets/js/pet-parts.js`), 'Pets para ilustraç
 assert(await cache.match(`${scope}assets/js/avatar.js`), 'Renderização dos avatares não foi salva offline');
 assert(await cache.match(`${scope}assets/js/avatar-photo-colors.js`), 'Helper de cores não foi salvo offline');
 assert(await cache.match(`${scope}assets/js/avatar-photo.js`), 'Interface de foto não foi salva offline');
+for (const file of [
+  'vision_bundle.mjs', 'wasm/vision_wasm_internal.js',
+  'wasm/vision_wasm_internal.wasm', 'wasm/vision_wasm_nosimd_internal.js',
+  'wasm/vision_wasm_nosimd_internal.wasm', 'models/face_landmarker.task',
+  'models/selfie_multiclass_256x256.tflite'
+]) {
+  assert(await cache.match(`${scope}assets/vendor/mediapipe/${file}`),
+    `Modelo MediaPipe não disponível offline: ${file}`);
+}
+
 assert(await cache.match(`${scope}assets/js/speech.js`), 'Narração e teste de pronúncia não foram salvos offline');
 assert(await cache.match(`${scope}assets/js/colors.js`), 'Integração de cores não foi salva offline');
 assert(await cache.match(`${scope}assets/js/color-explorer.js`), 'Laboratório de cores não foi salvo offline');
@@ -104,6 +114,11 @@ async function offlineRequest(pathname, mode) {
   return await responsePromise;
 }
 
+for (const file of ['vision_bundle.mjs', 'wasm/vision_wasm_internal.wasm', 'models/face_landmarker.task']) {
+  const asset = await offlineRequest('assets/vendor/mediapipe/' + file, 'cors');
+  assert(asset.ok, `MediaPipe não disponível offline: ${file}`);
+  assert((await asset.arrayBuffer()).byteLength > 100_000);
+}
 const shelf = await offlineRequest('index.html', 'navigate');
 assert((await shelf.text()).includes('Prateleira Mágica'));
 const reader = await offlineRequest('livro.html?livro=ellie-e-o-trem-travesso', 'navigate');
