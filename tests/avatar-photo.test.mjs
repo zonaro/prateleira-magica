@@ -35,11 +35,21 @@ assert(photo.includes('getImageData('));
 assert(photo.includes('result.close()'), 'Segmentador deve liberar máscaras');
 assert(photo.includes('frame.width = frame.height = 0'), 'Canvas temporário deve ser limpo');
 assert(photo.includes('stream.getTracks().forEach((track) => track.stop())'));
+assert(photo.includes("const MP_ROOT = new URL('./assets/vendor/mediapipe/', document.baseURI).href"));
+assert(!/https?:\\/\\//.test(photo), 'Não permitir URLs externas na página infantil');
 assert(!photo.includes('localStorage.') && !photo.includes('sessionStorage.'),
   'Não guardar imagem nem dados intermediários em storage');
 assert(!photo.includes('toDataURL(') && !photo.includes('fetch(file'),
   'Foto não pode ser serializada nem enviada');
 assert(sw.includes("'./assets/js/avatar-photo-colors.js'"));
 assert(sw.includes("'./assets/js/avatar-photo.js'"));
+assert(sw.includes('preCachePhotoModels(cache)'), 'Pré-cache dos modelos obrigatório');
+assert(sw.includes("relativePath.startsWith('assets/vendor/mediapipe/')"), 'O PWA deve servir modelos via cache-first');
+const pageCsp = page.match(/Content-Security-Policy[^>]*content="([^"]+)"/);
+assert(pageCsp && pageCsp[1].includes("connect-src 'self'"), 'CSP deve bloquear telemetria externa');
+const manifest = JSON.parse(read('tools/mediapipe-dependencies.json'));
+assert.equal(manifest.version, '0.10.21');
+assert.equal(manifest.models.length, 2);
+
 
 console.log('✓ Paletas, média aparada e conexão do criador por foto ao editor existente');
