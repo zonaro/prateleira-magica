@@ -1,5 +1,5 @@
 /* Offline-first, same-origin service worker for the static GitHub Pages app. */
-const CACHE_NAME = 'prateleira-magica-v32';
+const CACHE_NAME = 'prateleira-magica-v33';
 const APP_ROOT = new URL(self.registration.scope);
 const url = (path) => new URL(path, APP_ROOT).href;
 const APP_SHELL = [
@@ -61,7 +61,8 @@ const APP_SHELL = [
   './assets/pets/530198-fox.svg',
   './assets/pets/530199-cute-animals.svg',
   './assets/pets/530200-whale.svg',
-  './assets/pets/coracao-das-emocoes.svg'
+  './assets/pets/coracao-das-emocoes.svg',
+  './assets/pets/sol-sorridente.svg'
 ];
 // Binários baixados no CI para o mesmo domínio. Priorizamos cache offline, mas
 // um aparelho com pouco espaço não deve perder o resto do PWA se eles falharem.

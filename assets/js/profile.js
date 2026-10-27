@@ -24,9 +24,10 @@
     $('#profileBooksRead').textContent = String(Object.values(child.achievements.books).filter((p) => p.finished).length);
     const pet = window.LivrinhoAvatar.petStyles.find(([id]) => id === child.petId);
     const heartUnlocked = window.LivrinhoAvatar.rewardUnlocked(child, 'heart_plush');
-    $('#profilePetStatus').textContent = pet ? pet[1] : medals >= 2 || heartUnlocked ? '✨ Escolher' : '🔒';
-    $('#profileUnlockHint').textContent = heartUnlocked && !pet
-      ? 'Sua pelúcia de coração já está disponível em Personalizar! Ela muda de cor sozinha. 💗'
+    const sunUnlocked = window.LivrinhoAvatar.rewardUnlocked(child, 'sun_plush');
+    $('#profilePetStatus').textContent = pet ? pet[1] : medals >= 2 || heartUnlocked || sunUnlocked ? '✨ Escolher' : '🔒';
+    $('#profileUnlockHint').textContent = (heartUnlocked || sunUnlocked) && !pet
+      ? 'Você tem uma pelúcia exclusiva disponível em Personalizar! Escolha o coração colorido ou o sol sorridente. 💗🌞'
       : medals >= 2
       ? pet ? `${pet[1]} acompanha ${child.name}! Você pode trocar a pelúcia em Personalizar.`
         : 'Você já desbloqueou as pelúcias! Entre em Personalizar e escolha uma companheira.'

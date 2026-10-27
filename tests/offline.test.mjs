@@ -87,6 +87,7 @@ assert(await cache.match(`${scope}assets/js/colors.js`), 'Integração de cores 
 assert(await cache.match(`${scope}assets/js/color-explorer.js`), 'Laboratório de cores não foi salvo offline');
 assert(await cache.match(`${scope}assets/js/music-keyboard.js`), 'Teclado musical não foi salvo offline');
 assert(await cache.match(`${scope}assets/pets/coracao-das-emocoes.svg`), 'Pelúcia de coração não foi salva offline');
+assert(await cache.match(`${scope}assets/pets/sol-sorridente.svg`), 'Pelúcia de sol não foi salva offline');
 assert(await cache.match(`${scope}assets/vendor/NameToColor.js`), 'NameToColor original não foi salvo offline');
 assert(await cache.match(`${scope}assets/vendor/NameToColor.ptBR.js`), 'Traduções pt-BR não foram salvas offline');
 assert(await cache.match(`${scope}assets/vendor/page-flip.browser.js`), 'Motor da virada de páginas deve funcionar offline');

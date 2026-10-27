@@ -31,7 +31,8 @@
     ['collared', 'Camisa social'], ['shirt_stripes', 'Camisa listrada'], ['bib', 'Regata com lantejoula'],
     ['sleeveless', 'Blusa sem mangas'], ['patterned', 'Estampada de bolinhas'],
     ['necklace', 'Blusa com broche'], ['team_tee', 'Camiseta de time'],
-    ['cardigan', 'Cardigã'], ['polo', 'Polo'], ['doctor_coat', 'Jaleco de médico (livro das vacinas)']
+    ['cardigan', 'Cardigã'], ['polo', 'Polo'], ['doctor_coat', 'Jaleco de médico (livro das vacinas)'],
+    ['carnival_tank', 'Regata de Carnaval com glitter (livro das festas)']
   ];
   const bottomStyles = [['pants', 'Calça'], ['shorts', 'Shorts'], ['skirt', 'Saia'],
     ['long_skirt', 'Saia longa'], ['diaper', 'Fralda']];
@@ -42,14 +43,31 @@
   const heartPlush = { name: 'Coração das Emoções', source: 'assets/pets/coracao-das-emocoes.svg',
     originalViewBox: '0 0 128 128', viewBox: '0 0 128 128',
     body: `<path d="M64 113C45 95 8 71 8 42 8 10 45 4 64 29 83 4 120 10 120 42c0 29-37 53-56 71Z" stroke="#8c4c85" stroke-width="5" fill="#ff729a"><animate attributeName="fill" values="#ff729a;#ffc45e;#8de0d3;#aa96fa;#ff729a" dur="8s" repeatCount="indefinite"/></path><circle cx="45" cy="49" r="5" fill="#543b67"/><circle cx="82" cy="49" r="5" fill="#543b67"/><path d="M52 66q12 12 24 0" stroke="#543b67" stroke-width="4" stroke-linecap="round" fill="none"/><ellipse cx="30" cy="62" rx="9" ry="5" fill="#fff" opacity=".5"/><ellipse cx="96" cy="62" rx="9" ry="5" fill="#fff" opacity=".5"/>` };
-  const allPetParts = { ...petParts, heart_plush: heartPlush };
+  const sunPlush = { name: 'Sol Sorridente', source: 'assets/pets/sol-sorridente.svg',
+    originalViewBox: '0 0 128 128', viewBox: '0 0 128 128',
+    body: `<g fill="#f6ae40" stroke="#e28c38" stroke-width="4" stroke-linejoin="round"><path d="M64 4 76 24 96 12 96 36 121 34 107 53 124 66 103 76 113 100 88 97 77 121 62 104 46 121 39 98 14 100 25 76 4 65 24 53 9 34 34 37 32 12 52 25Z"/></g><circle cx="64" cy="65" r="40" fill="#ffdb67" stroke="#ecac37" stroke-width="4"/><ellipse cx="49" cy="60" rx="5" ry="7" fill="#60434a"/><ellipse cx="79" cy="60" rx="5" ry="7" fill="#60434a"/><path d="M49 79q15 15 30 0" fill="none" stroke="#60434a" stroke-width="5" stroke-linecap="round"/><circle cx="37" cy="73" r="7" fill="#f39b89" opacity=".65"/><circle cx="91" cy="73" r="7" fill="#f39b89" opacity=".65"/>` };
+  const allPetParts = { ...petParts, heart_plush: heartPlush, sun_plush: sunPlush };
   const petStyles = Object.entries(allPetParts).map(([id, part]) => [id, part.name, part.source]);
   const rewardBooks = Object.freeze({
     headphones: 'a-orquestra-dos-sons', speaker: 'a-orquestra-dos-sons',
     mini_keyboard: 'a-festa-das-notas', guitar: 'a-festa-das-notas', flute: 'a-festa-das-notas',
     heart_plush: 'o-jardim-dos-sentimentos', medical_kit: 'o-escudo-das-vacinas',
     doctor_coat: 'o-escudo-das-vacinas', dumbbells: 'o-corpo-em-movimento',
-    water_bottle: 'o-corpo-em-movimento'
+    water_bottle: 'o-corpo-em-movimento',
+    new_year_crown: 'o-calendario-das-festas', carnival_mask: 'o-calendario-das-festas',
+    carnival_tank: 'o-calendario-das-festas', bunny_headband: 'o-calendario-das-festas',
+    easter_eggs: 'o-calendario-das-festas', june_hat: 'o-calendario-das-festas',
+    brazil_flag: 'o-calendario-das-festas', wooden_top: 'o-calendario-das-festas',
+    saci_costume: 'o-calendario-das-festas', witch_hat: 'o-calendario-das-festas',
+    halloween_pumpkin: 'o-calendario-das-festas', santa_hat: 'o-calendario-das-festas',
+    calendar: 'a-danca-do-tempo', moon_ball: 'a-danca-do-tempo', sun_plush: 'a-danca-do-tempo',
+    apple: 'a-turma-dos-alimentos', pear: 'a-turma-dos-alimentos',
+    grapes: 'a-turma-dos-alimentos', yogurt: 'a-turma-dos-alimentos',
+    salad: 'a-turma-dos-alimentos', bread: 'a-turma-dos-alimentos', egg: 'a-turma-dos-alimentos',
+    mercury_ball: 'a-viagem-dos-oito-planetas', venus_ball: 'a-viagem-dos-oito-planetas',
+    earth_ball: 'a-viagem-dos-oito-planetas', mars_ball: 'a-viagem-dos-oito-planetas',
+    jupiter_ball: 'a-viagem-dos-oito-planetas', saturn_ball: 'a-viagem-dos-oito-planetas',
+    uranus_ball: 'a-viagem-dos-oito-planetas', neptune_ball: 'a-viagem-dos-oito-planetas'
   });
   function rewardUnlocked(settings, id) {
     const bookId = rewardBooks[id];
@@ -73,6 +91,12 @@
     ['sports_helmet', 'Capacete esportivo', 'hat'],
     ['headband', 'Tiara', 'hat'],
     ['cat_headband', 'Tiara de gatinho', 'hat'],
+    ['new_year_crown', 'Coroa de Ano-Novo (livro das festas)', 'hat'],
+    ['bunny_headband', 'Orelhas de coelho (livro das festas)', 'hat'],
+    ['june_hat', 'Chapéu de Festa Junina (livro das festas)', 'hat'],
+    ['witch_hat', 'Chapéu de bruxa (livro das festas)', 'hat'],
+    ['santa_hat', 'Gorro de Papai Noel (livro das festas)', 'hat'],
+    ['carnival_mask', 'Máscara de Carnaval (livro das festas)', 'face'],
     ['hooded_cape', 'Capa com capuz', 'cape'],
     ['hero_cape', 'Capa de super-herói', 'cape'],
     ['bow_hair', 'Laço', 'hair'],
@@ -100,7 +124,29 @@
     ['flute', 'Flauta (livro de música)', 'hand'],
     ['medical_kit', 'Kit médico (livro das vacinas)', 'hand'],
     ['dumbbells', 'Halteres (livro do movimento)', 'hand'],
-    ['water_bottle', 'Garrafinha de água (livro do movimento)', 'hand']
+    ['water_bottle', 'Garrafinha de água (livro do movimento)', 'hand'],
+    ['easter_eggs', 'Ovos de Páscoa (livro das festas)', 'hand'],
+    ['brazil_flag', 'Bandeirinha do Brasil (livro das festas)', 'hand'],
+    ['wooden_top', 'Pião de madeira (livro das festas)', 'hand'],
+    ['halloween_pumpkin', 'Abóbora com velinha animada (livro das festas)', 'hand'],
+    ['saci_costume', 'Fantasia de Saci, com uma perna (livro das festas)', 'costume'],
+    ['calendar', 'Calendário (livro do tempo)', 'hand'],
+    ['moon_ball', 'Bola com textura da Lua (livro do tempo)', 'hand'],
+    ['apple', 'Maçã (livro da alimentação)', 'hand'],
+    ['pear', 'Pera (livro da alimentação)', 'hand'],
+    ['grapes', 'Uvas (livro da alimentação)', 'hand'],
+    ['yogurt', 'Iogurte (livro da alimentação)', 'hand'],
+    ['salad', 'Salada (livro da alimentação)', 'hand'],
+    ['bread', 'Pão (livro da alimentação)', 'hand'],
+    ['egg', 'Ovo (livro da alimentação)', 'hand'],
+    ['mercury_ball', 'Bola de Mercúrio (livro do espaço)', 'hand'],
+    ['venus_ball', 'Bola de Vênus (livro do espaço)', 'hand'],
+    ['earth_ball', 'Bola da Terra (livro do espaço)', 'hand'],
+    ['mars_ball', 'Bola de Marte (livro do espaço)', 'hand'],
+    ['jupiter_ball', 'Bola de Júpiter (livro do espaço)', 'hand'],
+    ['saturn_ball', 'Bola de Saturno (livro do espaço)', 'hand'],
+    ['uranus_ball', 'Bola de Urano (livro do espaço)', 'hand'],
+    ['neptune_ball', 'Bola de Netuno (livro do espaço)', 'hand']
   ];
   const hairColors = [
     ['#493a55', 'Castanho escuro'], ['#7b4c35', 'Castanho'],
@@ -174,6 +220,16 @@
       <circle cx="233" cy="442" r="16" fill="#d8f0f0" stroke="#488a9a" stroke-width="6"/>
       <path d="M304 390h24m-12-12v24" stroke="#e76d85" stroke-width="8" stroke-linecap="round"/>
     </g>`;
+    if (style === 'carnival_tank') {
+      const glitter = Array.from({ length: 34 }, (_, i) => {
+        const x = 165 + (i * 47 % 136);
+        const y = 334 + (i * 31 % 112);
+        const sparkle = ['#f9d651', '#69dbe1', '#f18db7', '#d9c2ff', '#ffffff'][i % 5];
+        return `<circle cx="${x}" cy="${y}" r="${i % 3 + 2}" fill="${sparkle}"/>`;
+      }).join('');
+      return `<g data-detail="regata-carnaval-glitter">${tint(outfit.svg, colors)}
+        <g data-detail="glitter-colorido">${glitter}</g></g>`;
+    }
     const offset = style === 'team_tee' ? -24 : style === 'cardigan' ? 18 : 0;
     const stripes = style === 'shirt_stripes'
       ? `<g data-detail="listras-da-camisa" stroke="${colors.OUTFIT_DARK}" stroke-width="9" stroke-linecap="round" opacity=".75">
@@ -251,6 +307,12 @@
         <path d="M110 132Q126 27 232 27T354 132" fill="none" stroke="${decoration}" stroke-width="18" stroke-linecap="round"/>
         <path d="M112 78 108 6q57 19 86 73ZM352 78l4-72q-57 19-86 73Z" fill="${decoration}" stroke="${ink}" stroke-width="8" stroke-linejoin="round"/>
         <path d="M128 54 125 26l39 44ZM336 54l3-28-39 44Z" fill="${colors.ACCESSORY_LIGHT}"/>`,
+      new_year_crown: `<path d="M96 138 101 42l61 49 70-75 68 75 62-49 6 96Z" fill="${decoration}" stroke="${ink}" stroke-width="8" stroke-linejoin="round"/><path d="M96 137h272v26H96Z" fill="${colors.ACCESSORY_LIGHT}" stroke="${ink}" stroke-width="6"/><circle cx="232" cy="67" r="12" fill="#fff5ae"/>`,
+      bunny_headband: `<path d="M109 131Q126 26 232 26T355 131" fill="none" stroke="${ink}" stroke-width="25"/><path d="M109 131Q126 26 232 26T355 131" fill="none" stroke="${decoration}" stroke-width="16"/><path d="M151 69Q93-45 131-55q44-7 74 111Zm157 0q58-114 20-124-44-7-74 111Z" fill="#fff9fa" stroke="${ink}" stroke-width="8"/><path d="M165 43Q124-32 139-37q26 3 47 80Zm133 0q41-75 26-80-26 3-47 80Z" fill="#f5aabe"/>`,
+      june_hat: `<path d="M98 134 146 23h174l46 111Z" fill="#dfab60" stroke="#8c6239" stroke-width="8"/><path d="M84 126q148-26 296 0l-14 32q-134 19-268 0Z" fill="#edbf6e" stroke="#8c6239" stroke-width="7"/><path d="M143 79q90-17 179 0" fill="none" stroke="${decoration}" stroke-width="18"/><path d="m170 82 13-19 13 19m72 0 13-19 13 19" fill="${decoration}" stroke="${ink}" stroke-width="3"/>`,
+      witch_hat: `<path d="M149 137 238-49l90 186Z" fill="${colors.ACCESSORY_DEEP}" stroke="${ink}" stroke-width="9" stroke-linejoin="round"/><path d="M113 106q115 21 246 0l26 42q-147 49-302 0Z" fill="${decoration}" stroke="${ink}" stroke-width="8"/><path d="M153 105q76 20 158 0" fill="none" stroke="#ffd368" stroke-width="18"/><rect x="219" y="95" width="33" height="24" rx="4" fill="#ffe9a0" stroke="${ink}" stroke-width="5"/>`,
+      santa_hat: `<path d="M106 136Q109 19 252-25q68-21 109 28-32-4-52 48l16 89Z" fill="#d94353" stroke="#8c324b" stroke-width="9"/><path d="M95 130q137-29 275 0l-9 42q-128-14-256 0Z" fill="#fffbf0" stroke="#bccad5" stroke-width="7"/><circle cx="367" cy="5" r="29" fill="#fffef6" stroke="#bccad5" stroke-width="5"/>`,
+      carnival_mask: `<path d="M111 169q54-32 121-5 67-27 121 5l-23 57q-51 8-98-16-47 24-98 16Z" fill="${decoration}" stroke="${ink}" stroke-width="7"/><path d="M148 183q30-17 58 5-16 22-49 17Zm168 0q-30-17-58 5 16 22 49 17Z" fill="#fff" stroke="${ink}" stroke-width="4"/><path d="M111 169q-15-42 10-61m232 61q15-42-10-61" stroke="#f6d36b" stroke-width="10" fill="none"/><circle cx="232" cy="163" r="8" fill="#f6d36b"/>`,
       hooded_cape: `<g data-layer="capuz-sobre-o-cabelo">
           <path d="M79 174Q61 1 232 1q171 0 153 173l-38 94-39-29q22-31 22-85Q326 64 232 57q-94 7-98 97 0 54 22 85l-39 29Z"
             fill="${decoration}" stroke="${ink}" stroke-width="9" stroke-linejoin="round"/>
@@ -274,6 +336,27 @@
     return selected.filter((key) => Object.hasOwn(drawings, key))
       .sort((left, right) => (order[groupOf[left]] ?? 0) - (order[groupOf[right]] ?? 0))
       .map((key) => `<g data-accessory="${key}">${drawings[key]}</g>`).join('');
+  }
+
+  // Pequenos globos com texturas vetoriais próprias: não dependem de imagens externas.
+  function planetBallSVG(id) {
+    const planets = {
+      mercury_ball: ['#a5a2a0', '#555968', '<g fill="#6e6c70" opacity=".8"><circle cx="-11" cy="-8" r="5"/><circle cx="8" cy="11" r="7"/><circle cx="13" cy="-12" r="3"/></g>'],
+      venus_ball: ['#dfbb81', '#b86c42', '<g fill="none" stroke="#f9dfad" stroke-width="5" opacity=".9"><path d="M-21-10q20 9 40-3M-20 3q22-10 41 0M-15 17q14-9 27-5"/></g>'],
+      earth_ball: ['#378bd2', '#134c9f', '<g fill="#5ab96a" stroke="#25866b" stroke-width="1.3"><path d="M-13-23 3-17 0-7 11 0 6 10-4 8-8 19-17 12-13 2-23-4Z"/><path d="M12-17 23-11 17-2 11-5 6-10Z"/></g><path d="M-13-18q6-5 12-2" stroke="#fff" stroke-width="3" fill="none"/>'],
+      mars_ball: ['#dc805b', '#a5443d', '<g fill="#a64c37" opacity=".8"><ellipse cx="-9" cy="-8" rx="10" ry="5"/><circle cx="11" cy="11" r="6"/><path d="M0-22q10 7 21 4l-3 7-17-5Z"/></g><path d="M-14-19q9-3 19 1" stroke="#f4caaf" stroke-width="3" fill="none"/>'],
+      jupiter_ball: ['#e7bf9b', '#ae735e', '<g stroke-linecap="round" fill="none"><path d="M-21-15q22 8 42-2M-23-6q26-5 46 1M-23 5q25 8 46 0M-18 15q18-5 36 1" stroke="#af7363" stroke-width="5"/><path d="M-20-11q20 7 40-1M-19 11q16 3 37-1" stroke="#fff2d0" stroke-width="3"/><ellipse cx="9" cy="7" rx="8" ry="4" stroke="#b95f53" stroke-width="3"/></g>'],
+      saturn_ball: ['#e5cd98', '#9b8669', '<path d="M-22-6q23 8 45 0M-20 8q22 4 40-1" fill="none" stroke="#b9a374" stroke-width="4"/>'],
+      uranus_ball: ['#8ddbe0', '#3aabbc', '<g fill="none" stroke="#c6eff3" stroke-width="3"><path d="M-21-8q24-7 42 0M-22 3q24 4 44-1M-17 15q15-4 32-1"/></g>'],
+      neptune_ball: ['#426cdb', '#263e9e', '<g fill="none" stroke="#7da3ef" stroke-width="4"><path d="M-21-8q21-7 42 0M-21 6q19 9 42 0M-14 17q12-4 25-1"/></g>']
+    };
+    const details = planets[id];
+    if (!details) return '';
+    const ball = `<defs><radialGradient id="planet-${id}" cx="30%" cy="26%" r="78%"><stop stop-color="${details[0]}"/><stop offset="1" stop-color="${details[1]}"/></radialGradient><clipPath id="clip-${id}"><circle r="23"/></clipPath></defs>
+      <circle r="23" fill="url(#planet-${id})" stroke="#35455e" stroke-width="2.5"/><g clip-path="url(#clip-${id})">${details[2]}</g><ellipse cx="-9" cy="-13" rx="7" ry="4" fill="#fff" opacity=".27"/>`;
+    return id === 'saturn_ball'
+      ? `<g transform="rotate(-22)"><ellipse rx="33" ry="10" fill="none" stroke="#ae9269" stroke-width="7"/>${ball}<path d="M-31 4q31 17 62-8" fill="none" stroke="#e9d5ab" stroke-width="6"/></g>`
+      : ball;
   }
 
   function toysSVG(settings, colors, placement) {
@@ -304,6 +387,12 @@
           </g>` : '';
     }
     if (placement === 'costume') {
+      if (chosen.includes('saci_costume')) return `<g data-toy="saci_costume" data-placement="costume">
+        <path d="M70 177q35-16 70 0l8 94q-45 20-90 0Z" fill="#d9454b" stroke="#94393d" stroke-width="3"/>
+        <path d="M57 272q25 10 46 1l-5 37H68Z" fill="#d9454b" stroke="#94393d" stroke-width="2"/>
+        <path d="M57 205q4-12 13-13m69 0q10 5 14 14" stroke="#e96861" stroke-width="5" fill="none"/>
+        <g transform="translate(0 34) scale(.452586)"><path d="M135 112Q137-15 269-3q71 7 92 85l-48 59q-104-22-178-29Z" fill="#ce2b42" stroke="#823747" stroke-width="9"/><circle cx="335" cy="82" r="20" fill="#fff5e0"/><path d="M136 113q110-17 188 27" fill="none" stroke="#e65559" stroke-width="12"/></g>
+      </g>`;
       return chosen.includes('ghost_costume')
         ? `<g data-toy="ghost_costume" data-placement="costume" transform="translate(105 0) scale(1.24 1) translate(-105 0)">
             <path d="M105 19C147 19 168 50 172 95L181 313q5 19-7 26-9 5-20-4-12 12-25 1-13 12-24 1-15 10-28-1-13 10-25-1-12 9-21 4-12-7-7-26L38 95Q43 19 105 19Z
@@ -351,10 +440,30 @@
           <path d="M-20 19h19v-4h-2l-3-21 5-6-7-9-7 9 5 6-3 21h-7Z"/>
           <path d="M1 19h21v-4h-3l-2-22h4v-13H3v13h4l-2 22H1Z"/>
           <path d="M-8-27v11m-6-6h12M9-20v13" fill="none" stroke="${light}" stroke-width="3"/>
-        </g>`
+        </g>`,
+      easter_eggs: `<g stroke="${ink}" stroke-width="2"><ellipse cx="-12" cy="3" rx="13" ry="21" fill="#ef80a6"/><ellipse cx="13" cy="3" rx="13" ry="21" fill="#79c9d7"/><path d="M-24 6q12 8 24 0M1 6q12 8 24 0" stroke="#fff3ab" stroke-width="5" fill="none"/><path d="M-17-10h10M8-10h10" stroke="#fff" stroke-width="3"/></g>`,
+      brazil_flag: `<path d="M-2-28v58" stroke="#8d6b4f" stroke-width="4"/><path d="M0-27h39v27H0Z" fill="#399860" stroke="#285946" stroke-width="1.7"/><path d="m19-24 16 10-16 11-16-11Z" fill="#f8d460"/><circle cx="19" cy="-14" r="7" fill="#31549d"/><path d="M13-16q7 1 12 6" stroke="#fff" fill="none" stroke-width="1.5"/>`,
+      wooden_top: `<path d="M0-26v9m-19 8 19-10 19 10v10q-3 18-19 23Q-16 19-19 1Z" fill="#c7844c" stroke="#6c4b3f" stroke-width="3"/><path d="M-19-1h38M-15 10h30" stroke="#f1c47d" stroke-width="5"/><path d="M0 24v10" stroke="#6c4b3f" stroke-width="3"/>`,
+      halloween_pumpkin: `<g data-detail="abobora-vela-animada"><path d="M-24 5q-1-23 15-23 9 0 9 7 0-7 9-7 16 0 15 23 0 24-24 25Q-24 29-24 5Z" fill="#ea8d32" stroke="#a55333" stroke-width="3"/><path d="M0-14q-4-16 7-20" fill="none" stroke="#4e934f" stroke-width="5"/><path d="M-17 1-8-5l4 9Zm25-6 9 6-13 3Zm-18 18q10 11 20 0Z" fill="#603a3b"/><path d="M-11 13q11 9 22 0" fill="none" stroke="#f8ca55" stroke-width="2"/><rect x="-3" y="1" width="6" height="10" rx="2" fill="#fff0bf"/><path d="M0-1q-8-11 0-19 8 8 0 19Z" fill="#ffc94b"><animate attributeName="opacity" values=".65;1;.55;1;.65" dur="1.4s" repeatCount="indefinite"/><animateTransform attributeName="transform" type="scale" values="1 1;1.2 1;0.8 1.1;1 1" dur="1.4s" repeatCount="indefinite"/></path></g>`,
+      calendar: `<rect x="-24" y="-25" width="48" height="52" rx="5" fill="#fffef6" stroke="${ink}" stroke-width="3"/><path d="M-24-13h48" stroke="${tone}" stroke-width="14"/><path d="M-13-30v11m26-11v11" stroke="${ink}" stroke-width="4" stroke-linecap="round"/><g fill="${dark}"><circle cx="-12" cy="-2" r="3"/><circle cy="-2" r="3"/><circle cx="12" cy="-2" r="3"/><circle cx="-12" cy="10" r="3"/><circle cy="10" r="3"/></g><path d="m6 10 5 5 9-12" stroke="#45a789" stroke-width="3" fill="none"/>`,
+      moon_ball: `<circle r="23" fill="#c7cbd0" stroke="#7d8598" stroke-width="2.5"/><g fill="#929aa5" opacity=".82"><circle cx="-10" cy="-10" r="7"/><circle cx="11" cy="7" r="9"/><circle cx="9" cy="-13" r="4"/><circle cx="-14" cy="12" r="3"/></g><path d="M-21-7q7-12 17-14" stroke="#fff" stroke-width="3" fill="none" opacity=".6"/>`,
+      apple: `<path d="M0-18q-22-18-25 7-4 25 17 36Q0 29 8 25q21-11 17-36-3-25-25-7Z" fill="#e9555d" stroke="#a74449" stroke-width="3"/><path d="M0-18q-1-11 6-17" stroke="#745442" stroke-width="4" fill="none"/><path d="M1-26q9-12 19-6-1 13-19 12Z" fill="#6aaf6b"/>`,
+      pear: `<path d="M-12-10q6-12 3-20h18q-3 8 3 20 17 11 11 28-8 18-23 14-20 3-24-14-5-17 12-28Z" fill="#acd36d" stroke="#6c9652" stroke-width="3"/><path d="M0-29v-9" stroke="#765541" stroke-width="4"/><path d="M0-34q10-7 17-3-4 10-17 9Z" fill="#3d9c6a"/>`,
+      grapes: `<path d="M-2-24q-1-9 12-15" fill="none" stroke="#6a8552" stroke-width="4"/><path d="M-4-32q-13-7-20-1 4 11 20 9Z" fill="#5eac69"/><g fill="#8f72c6" stroke="#614e9c" stroke-width="2"><circle cx="-11" cy="-17" r="9"/><circle cx="9" cy="-17" r="9"/><circle cx="-20" cy="-2" r="9"/><circle r="10"/><circle cx="19" cy="-2" r="9"/><circle cx="-10" cy="14" r="9"/><circle cx="10" cy="14" r="9"/><circle cy="27" r="8"/></g>`,
+      yogurt: `<path d="M-19-20h38l-5 50h-28Z" fill="#fffdf8" stroke="${ink}" stroke-width="3"/><rect x="-21" y="-25" width="42" height="9" rx="3" fill="${tone}" stroke="${ink}" stroke-width="2"/><circle cy="5" r="10" fill="#e77fa3"/><path d="M-5 4q6-8 12 0" fill="none" stroke="#fff" stroke-width="3"/>`,
+      salad: `<path d="M-25 4h50q-2 26-25 27Q-23 30-25 4Z" fill="#eee9dc" stroke="${ink}" stroke-width="3"/><path d="M-20 5q-10-13 0-20 11-7 15 6 0-24 17-20 14 9 2 25Q25-24 29-9q-1 14-12 16Z" fill="#76bd74" stroke="#4e995f" stroke-width="2"/><circle cx="-8" cy="4" r="6" fill="#eb7465"/><circle cx="12" cy="1" r="6" fill="#f3b855"/>`,
+      bread: `<path d="M-21 26v-37q-7-19 10-23 11-7 20 3 16-4 16 17v40Z" fill="#db9b57" stroke="#985e41" stroke-width="3"/><path d="M-15 20v-32q-4-12 9-15 12-4 18 5 10 0 7 12v30Z" fill="#f6d397"/><path d="M-8-2h2m12 9h2" stroke="#cd9c60" stroke-width="4" stroke-linecap="round"/>`,
+      egg: `<ellipse cy="1" rx="19" ry="27" fill="#fff6df" stroke="#c6bfae" stroke-width="3"/><ellipse cx="-7" cy="-11" rx="7" ry="4" fill="#fff" opacity=".65"/>`
     };
+    for (const id of ['mercury_ball', 'venus_ball', 'earth_ball', 'mars_ball', 'jupiter_ball', 'saturn_ball', 'uranus_ball', 'neptune_ball']) {
+      items[id] = planetBallSVG(id);
+    }
+    // Instrumentos são mais largos que as bolas: a posição padrão (x=29)
+    // recortava as teclas do mini teclado e o corpo/braço do violão na borda
+    // esquerda do viewBox 210x340. Mantemos os outros brinquedos intactos.
+    const handPositions = { mini_keyboard: 85, guitar: 88, brazil_flag: 56, saturn_ball: 48 };
     return chosen.filter(key => Object.hasOwn(items, key))
-      .map(key => `<g data-toy="${key}" data-placement="hand" transform="translate(29 237)">${items[key]}</g>`).join('');
+      .map(key => `<g data-toy="${key}" data-placement="hand" transform="translate(${handPositions[key] ?? 29} 237)">${items[key]}</g>`).join('');
   }
 
   function plushViewBox(part) {
@@ -418,6 +527,13 @@
     const footwearY = settings.footwearStyle === 'skates' ? 297 : 304;
     const groundShadow = Array.isArray(settings.toys) && settings.toys.includes('skateboard') ? ''
       : '<ellipse cx="105" cy="327" rx="74" ry="9" fill="#243f59" opacity=".13"/>';
+    const oneLegSaci = Array.isArray(settings.toys) && settings.toys.includes('saci_costume');
+    if (oneLegSaci) return `<g data-layer="pernas-originais-do-app" data-saci-one-leg="true">
+      ${groundShadow}<path d="M70 229h72l-20 45H77Z" fill="#cc3e49"/>
+      <path d="M71 270h29l-5 46H73Z" fill="${skin}"/>
+      <path d="M72 303h24v12H72Z" fill="${skin}"/>
+      <g data-layer="tenis-esquerdo" data-footwear="${settings.footwearStyle || 'sneakers'}" transform="translate(60 ${footwearY})">${footwear}</g>
+    </g>`;
     return `<g data-layer="pernas-originais-do-app">
       ${groundShadow}
       ${legs}${clothing}
@@ -437,7 +553,8 @@
       : parts.hair[settings.avatarStyle] || parts.hair.puffs;
     const hairGeometry = (markup) => settings.avatarStyle === 'flower_heart'
       ? `<g transform="translate(464 0) scale(-1 1)">${markup}</g>` : markup;
-    const outfit = parts.outfit[settings.outfitStyle] || (settings.outfitStyle === 'doctor_coat' ? parts.outfit.coat : parts.outfit.hoodie);
+    const outfit = parts.outfit[settings.outfitStyle] || (settings.outfitStyle === 'doctor_coat'
+      ? parts.outfit.coat : settings.outfitStyle === 'carnival_tank' ? parts.outfit.tank : parts.outfit.hoodie);
     const source = (filename) => (filename || '').replace(/\.svg$/, '');
     const pet = settings.petId && allPetParts[settings.petId];
     // Fundo e pés compartilham a linha de chão y=331. xMidYMax evita que

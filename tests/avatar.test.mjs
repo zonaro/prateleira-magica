@@ -27,15 +27,15 @@ const prefs = window.LivrinhoPreferences;
 const hairStyles = renderer.hairStyles.map(([key]) => key);
 const outfits = renderer.outfitStyles.map(([key]) => key);
 assert.equal(hairStyles.length, 25);
-assert.equal(outfits.length, 25);
+assert.equal(outfits.length, 26);
 assert.equal(new Set(hairStyles).size, 25);
-assert.equal(new Set(outfits).size, 25);
-assert.equal(renderer.petStyles.length, 21, '20 pets originais e coração exclusivo precisam existir');
+assert.equal(new Set(outfits).size, 26);
+assert.equal(renderer.petStyles.length, 22, '20 pets originais mais coração e sol exclusivos precisam existir');
 assert.equal(renderer.bottomStyles.map(([key]) => key).join(','), 'pants,shorts,skirt,long_skirt,diaper');
 assert.equal(renderer.footwearStyles.map(([key]) => key).join(','), 'sneakers,flipflops,socks,barefoot,skates');
 assert.equal(renderer.sockPatterns.map(([key]) => key).join(','), 'plain,stripes,dots');
-assert.equal(renderer.accessoryStyles.length, 20);
-assert.equal(renderer.toyStyles.length, 20);
+assert.equal(renderer.accessoryStyles.length, 26);
+assert.equal(renderer.toyStyles.length, 42);
 
 const pictures = new Set();
 for (const avatarStyle of hairStyles) {
@@ -44,6 +44,8 @@ for (const avatarStyle of hairStyles) {
       name: 'Ariel', pronunciation: 'Ariel', gender: 'neutro',
       avatarStyle, outfitStyle,
       achievements: { books: { 'o-escudo-das-vacinas': {
+        finished: true, medalEarnedAt: '2026-10-27T10:00:00.000Z'
+      }, 'o-calendario-das-festas': {
         finished: true, medalEarnedAt: '2026-10-27T10:00:00.000Z'
       } } },
       skinColor: '#83dca5', hairColor: '#c47b43', outfitColor: '#639de8',
@@ -101,7 +103,7 @@ for (const hair of hairStyles) {
   if (hair !== 'bald') assert(newSources.hair[hair], `Penteado ${hair} sem mapeamento do SVG original`);
 }
 for (const outfit of outfits) {
-  if (outfit !== 'doctor_coat') assert(newSources.outfit[outfit], `Roupa ${outfit} sem mapeamento do SVG original`);
+  if (!['doctor_coat', 'carnival_tank'].includes(outfit)) assert(newSources.outfit[outfit], `Roupa ${outfit} sem mapeamento do SVG original`);
 }
 
 const oldStorageKey = 'prateleira-de-livrinhos:protagonista:v1';
@@ -147,6 +149,14 @@ for (const [id] of renderer.toyStyles) {
   assert(renderer.avatarSVG({ toys: [id] }).includes(`data-toy="${id}"`),
     `Brinquedo ${id} não tem desenho`);
 }
+for (const instrument of ['mini_keyboard', 'guitar']) {
+  const svg = renderer.avatarSVG({ toys: [instrument] });
+  const placement = svg.match(new RegExp(`data-toy="${instrument}" data-placement="hand" transform="translate\\((\\d+) 237\\)"`));
+  assert(placement && Number(placement[1]) >= 80,
+    `${instrument} precisa ficar inteiro dentro do SVG, longe da borda esquerda`);
+}
+assert(renderer.avatarSVG({ toys: ['soccer_ball'] }).includes('data-placement="hand" transform="translate(29 237)"'),
+  'Bolas e brinquedos pequenos devem manter a posição original');
 const mixedToys = renderer.avatarSVG({ toys: ['soccer_ball', 'fairy_wings', 'skateboard'], toyColor: '#9c80df' });
 assert(mixedToys.includes('data-toy="soccer_ball"') && mixedToys.includes('data-toy="fairy_wings"')
   && mixedToys.includes('data-toy="skateboard"'), 'Brinquedos de grupos distintos devem aparecer juntos');
@@ -469,17 +479,17 @@ for (const file of downloaded) {
   assert(svg.includes('<svg') && svg.includes('</svg>'), `SVG de referência inválido: ${file}`);
 }
 
-console.log('✓ 25 cabelos × 25 roupas = 625 combinações, incluindo jaleco médico personalizado');
-console.log('✓ Careca, cabelos sem flores, boné maior e 20 acessórios desenhados em camadas');
+console.log('✓ 25 cabelos × 26 roupas = 650 combinações, incluindo jaleco e regata de Carnaval');
+console.log('✓ Careca, cabelos sem flores, boné maior e 26 acessórios desenhados em camadas');
 console.log('✓ Tiara de gatinho e capuz cobrindo todos os penteados sem alterá-los no perfil');
 console.log('✓ Flor sempre acima da tiara, capas atrás do corpo e máscaras exclusivas com óculos');
-console.log('✓ 20 brinquedos com ioiô desbloqueável, fantasia de fantasma, instrumentos, asas e skate');
+console.log('✓ 42 brinquedos: 8 planetas, 7 alimentos, Saci, fantasias, instrumentos, asas e skate');
 console.log('✓ Patins liberados com 3 medalhas; itens bloqueados mais claros e em escala de cinza');
 console.log('✓ 5 partes de baixo, 5 calçados, 3 estampas de meias, boina com inicial e desbloqueio com 3 medalhas');
 console.log('✓ Camisas e moletons listrados, camiseta de time e cardigã alinhados ao corpo');
 console.log('✓ 73 personagens prontos renderizados inline, com pernas e backup compatível');
 console.log('✓ Tons de pele fantasia e cores independentes de cabelo, roupa, calça/shorts/saia e tênis espelhados');
-console.log('✓ 20 pets SVG originais desbloqueados após duas medalhas e renderizados junto ao avatar');
+console.log('✓ 20 pets originais e 2 pelúcias educativas renderizados junto ao avatar');
 console.log('✓ Data de nascimento, páginas visitadas e pets preservados no backup SVG');
 console.log('✓ Preferências e backups antigos migram sem perder avatar, nome, pronúncia ou conquistas');
 console.log('✓ SVG ilustrado contém backup JSON inline e restaura nome, voz, gênero e conquistas dos livros');

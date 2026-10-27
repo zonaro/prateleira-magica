@@ -376,14 +376,15 @@
     const medals = preferences.medalCount(draft);
     const unlocked = medals >= 2;
     const heartUnlocked = avatarCatalog.rewardUnlocked(draft, 'heart_plush');
-    $('#petUnlockStatus').textContent = heartUnlocked && !unlocked
-      ? `💗 O coração colorido já está liberado! As 20 pelúcias comuns pedem 2 medalhas (${medals}/2).`
+    const sunUnlocked = avatarCatalog.rewardUnlocked(draft, 'sun_plush');
+    $('#petUnlockStatus').textContent = (heartUnlocked || sunUnlocked) && !unlocked
+      ? `💗🌞 Sua pelúcia exclusiva já está disponível! As 20 pelúcias comuns pedem 2 medalhas (${medals}/2).`
       : unlocked
-      ? `✨ Você conquistou ${medals} medalhas! Escolha uma das 20 pelúcias ou conquiste o coração no livro dos sentimentos.`
-      : `🔒 As 20 pelúcias comuns pedem 2 medalhas (${medals}/2). O coração colorido é exclusivo do livro dos sentimentos.`;
+      ? `✨ ${medals} medalhas! Escolha uma das 20 pelúcias comuns ou conquiste o coração e o sol em seus livros.`
+      : `🔒 As 20 pelúcias comuns pedem 2 medalhas (${medals}/2). Coração e sol são exclusivos de seus livros.`;
     for (const option of $('#petStyles').querySelectorAll('button[data-pet]')) {
-      const locked = option.dataset.pet === 'heart_plush'
-        ? !avatarCatalog.rewardUnlocked(draft, 'heart_plush') : !unlocked;
+      const id = option.dataset.pet;
+      const locked = avatarCatalog.rewardBooks[id] ? !avatarCatalog.rewardUnlocked(draft, id) : !unlocked;
       option.disabled = locked;
       option.classList.toggle('locked', locked);
       option.classList.toggle('selected', draft.petId === option.dataset.pet);
@@ -556,7 +557,7 @@
       caption.textContent = name;
       option.append(img, caption);
       option.addEventListener('click', () => {
-        if (id === 'heart_plush' ? !avatarCatalog.rewardUnlocked(draft, id) : preferences.medalCount(draft) < 2) return;
+        if (avatarCatalog.rewardBooks[id] ? !avatarCatalog.rewardUnlocked(draft, id) : preferences.medalCount(draft) < 2) return;
         edit('', () => { draft.petId = id; });
       });
       container.append(option);

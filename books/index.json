@@ -95,6 +95,38 @@
       "medal": "🏃 Medalha do Movimento", "label": "💪 Mexa-se!",
       "subject": "Saúde · atividade física", "ageRange": [4, 8],
       "rewards": ["Halteres", "Garrafinha com água colorida"]
+    },
+    {
+      "id": "o-calendario-das-festas", "data": "books/o-calendario-das-festas.json",
+      "title": "{{nome}} e o Calendário das Festas", "subtitle": "Carnaval, Saci, Páscoa e outras festas do Brasil!",
+      "cover": "assets/illustrations/aprender/festas-brasileiras.svg", "color": "#e88a9e", "language": "pt-BR",
+      "medal": "🎉 Medalha das Festas", "label": "🎭 Festas brasileiras",
+      "subject": "Cultura · datas e tradições brasileiras", "ageRange": [5, 9],
+      "rewards": ["Coroa de Ano-Novo", "Máscara e regata de Carnaval", "Orelhas e ovos de Páscoa", "Chapéu junino", "Bandeira do Brasil", "Pião de madeira", "Fantasia de Saci", "Chapéu de bruxa", "Abóbora animada", "Gorro natalino"]
+    },
+    {
+      "id": "a-danca-do-tempo", "data": "books/a-danca-do-tempo.json",
+      "title": "{{nome}} e a Dança do Tempo", "subtitle": "Dias, semanas, meses, Lua e as voltas da Terra",
+      "cover": "assets/illustrations/aprender/tempo-lua.svg", "color": "#687fcf", "language": "pt-BR",
+      "medal": "🌙 Medalha do Tempo", "label": "🌞 Sol e Lua",
+      "subject": "Ciências · calendário e astronomia", "ageRange": [5, 9],
+      "rewards": ["Calendário", "Bola da Lua", "Pelúcia de sol sorridente"]
+    },
+    {
+      "id": "a-turma-dos-alimentos", "data": "books/a-turma-dos-alimentos.json",
+      "title": "{{nome}} e a Turma dos Alimentos", "subtitle": "A mesa colorida dos sabores e cuidados",
+      "cover": "assets/illustrations/aprender/alimentacao.svg", "color": "#81b875", "language": "pt-BR",
+      "medal": "🍎 Medalha dos Sabores", "label": "🍐 Sete alimentos de brincar",
+      "subject": "Saúde · alimentação e diversidade", "ageRange": [4, 8],
+      "rewards": ["Maçã", "Pera", "Uvas", "Iogurte", "Salada", "Pão", "Ovo"]
+    },
+    {
+      "id": "a-viagem-dos-oito-planetas", "data": "books/a-viagem-dos-oito-planetas.json",
+      "title": "{{nome}} e a Viagem dos Oito Planetas", "subtitle": "Do calor de Mercúrio ao azul de Netuno — e o mistério de Plutão",
+      "cover": "assets/illustrations/aprender/sistema-solar.svg", "color": "#6867b9", "language": "pt-BR",
+      "medal": "🪐 Medalha do Espaço", "label": "🪐 Oito bolas planetárias",
+      "subject": "Ciências · Sistema Solar e planetas", "ageRange": [5, 9],
+      "rewards": ["Bola de Mercúrio", "Bola de Vênus", "Bola da Terra", "Bola de Marte", "Bola de Júpiter", "Bola de Saturno", "Bola de Urano", "Bola de Netuno"]
     }
   ]
 }

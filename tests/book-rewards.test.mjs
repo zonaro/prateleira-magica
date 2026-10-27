@@ -28,12 +28,19 @@ const targets = {
   'a-festa-das-notas': ['mini_keyboard', 'guitar', 'flute'],
   'o-jardim-dos-sentimentos': ['heart_plush'],
   'o-escudo-das-vacinas': ['medical_kit', 'doctor_coat'],
-  'o-corpo-em-movimento': ['dumbbells', 'water_bottle']
+  'o-corpo-em-movimento': ['dumbbells', 'water_bottle'],
+  'o-calendario-das-festas': ['new_year_crown', 'carnival_mask', 'carnival_tank', 'bunny_headband',
+    'easter_eggs', 'june_hat', 'brazil_flag', 'wooden_top', 'saci_costume', 'witch_hat', 'halloween_pumpkin', 'santa_hat'],
+  'a-danca-do-tempo': ['calendar', 'moon_ball', 'sun_plush'],
+  'a-turma-dos-alimentos': ['apple', 'pear', 'grapes', 'yogurt', 'salad', 'bread', 'egg'],
+  'a-viagem-dos-oito-planetas': ['mercury_ball', 'venus_ball', 'earth_ball', 'mars_ball',
+    'jupiter_ball', 'saturn_ball', 'uranus_ball', 'neptune_ball']
 };
-assert.equal(catalog.books.length, 9, 'Quatro livros originais e cinco livros educativos');
+assert.equal(catalog.books.length, 13, 'Quatro originais e nove educativos');
 const allRewards = Object.values(targets).flat();
-assert.equal(allRewards.length, 10, 'Dez recompensas no total');
+assert.equal(allRewards.length, 40, 'Quarenta recompensas no total');
 assert.equal(new Set(allRewards).size, allRewards.length);
+assert.equal(Object.keys(avatar.rewardBooks).length, allRewards.length);
 for (const bookEntry of catalog.books) {
   assert(bookEntry.subject && /^[^·]+ · .+$/.test(bookEntry.subject), `Assunto ausente: ${bookEntry.id}`);
   assert(Array.isArray(bookEntry.ageRange) && bookEntry.ageRange.length === 2
@@ -58,11 +65,11 @@ for (const [bookId, rewards] of Object.entries(targets)) {
       finished: true, medalEarnedAt: '2026-10-27T10:00:00.000Z'
     } } } };
     assert.equal(avatar.rewardUnlocked(complete, id), true);
-    const equipped = id === 'heart_plush' ? { petId: id }
-      : id === 'doctor_coat' ? { outfitStyle: id }
-        : id === 'headphones' ? { accessories: [id] } : { toys: [id] };
-    const field = id === 'heart_plush' ? 'petId' : id === 'doctor_coat' ? 'outfitStyle'
-      : id === 'headphones' ? 'accessories' : 'toys';
+    const field = avatar.petStyles.some(([key]) => key === id) ? 'petId'
+      : avatar.outfitStyles.some(([key]) => key === id) ? 'outfitStyle'
+        : avatar.accessoryStyles.some(([key]) => key === id) ? 'accessories' : 'toys';
+    assert(field !== 'toys' || avatar.toyStyles.some(([key]) => key === id), `Item ${id} sem catálogo`);
+    const equipped = { [field]: ['toys', 'accessories'].includes(field) ? [id] : id };
     const contains = (state) => Array.isArray(state[field]) ? state[field].includes(id) : state[field] === id;
     assert(!contains(prefs.clean({ ...equipped, ...partial })), `Recompensa ${id} vazou antes do fim`);
     assert(contains(prefs.clean({ ...equipped, ...complete })), `Recompensa ${id} não liberada no perfil`);
@@ -70,6 +77,21 @@ for (const [bookId, rewards] of Object.entries(targets)) {
 }
 assert(avatar.avatarSVG({ petId: 'heart_plush' }).includes('repeatCount="indefinite"'),
   'Pelúcia deve trocar de cor automaticamente');
+assert(avatar.avatarSVG({ petId: 'sun_plush' }).includes('data-source="assets/pets/sol-sorridente.svg"'),
+  'Pelúcia do tempo precisa ter seu próprio desenho');
+const saci = avatar.avatarSVG({ toys: ['saci_costume'] });
+assert(saci.includes('data-saci-one-leg="true"'), 'A fantasia do Saci precisa esconder uma perna');
+assert(!saci.includes('data-layer="tenis-direito"'), 'A fantasia do Saci não deve desenhar a segunda perna');
+assert(avatar.avatarSVG({ toys: ['halloween_pumpkin'] }).includes('repeatCount="indefinite"'),
+  'A vela desenhada da abóbora deve piscar, sem fogo real');
+assert(avatar.avatarSVG({ outfitStyle: 'carnival_tank' }).includes('data-detail="glitter-colorido"'),
+  'A regata de Carnaval precisa de glitter colorido');
+for (const name of ['mercury', 'venus', 'earth', 'mars', 'jupiter', 'saturn', 'uranus', 'neptune']) {
+  assert(avatar.avatarSVG({ toys: [`${name}_ball`] }).includes(`id="planet-${name}_ball"`),
+    `Planeta ${name} precisa de textura própria`);
+}
+assert(avatar.avatarSVG({ toys: ['saturn_ball'] }).includes('rotate(-22)'),
+  'Os anéis de Saturno precisam ser visíveis');
 assert(avatar.avatarSVG({ toys: ['water_bottle'], waterColor: '#dba8ff' }).includes('fill="#dba8ff"'),
   'Água da garrafinha precisa de cor independente');
 assert(!prefs.clean({ waterColor: 'invalid' }).waterColor.includes('invalid'), 'Cor inválida recusada');
@@ -80,7 +102,8 @@ const restored = prefs.parseProfileSVG(prefs.exportProfileSVG(state));
 assert.equal(restored.petId, 'heart_plush');
 assert.deepEqual([...restored.toys], ['water_bottle']);
 assert.equal(restored.waterColor, '#abcf86');
-const bibliography = ['o-escudo-das-vacinas', 'o-corpo-em-movimento'];
+const bibliography = ['o-escudo-das-vacinas', 'o-corpo-em-movimento',
+  'o-calendario-das-festas', 'a-danca-do-tempo', 'a-turma-dos-alimentos', 'a-viagem-dos-oito-planetas'];
 for (const id of bibliography) {
   const book = JSON.parse(read(`books/${id}.json`));
   const references = book.pages.filter(({ bibliography }) => Array.isArray(bibliography));
@@ -95,5 +118,5 @@ assert.deepEqual(Array.from(window.LivrinhoMusicKeyboard.notes, (note) => note[1
 assert(JSON.parse(read('books/a-festa-das-notas.json')).pages.some((page) => page.interactive === 'music-keyboard'));
 const reader = read('assets/js/reader.js');
 assert(reader.includes("url.textContent = entry.url"), 'Endereços devem ser texto puro sem âncoras');
-console.log('✓ Cinco livros e dez recompensas, medalha + conclusão, bloqueio persistente e backup SVG');
-console.log('✓ Coração colorido, água personalizável, cifras C D E F G A B C e fontes não clicáveis');
+console.log('✓ Nove livros educativos e 40 recompensas, medalha + conclusão e bloqueio persistente');
+console.log('✓ Coração, sol, vela animada, Saci de uma perna, oito planetas e fontes não clicáveis');
