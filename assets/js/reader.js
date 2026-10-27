@@ -276,6 +276,13 @@
   function updateControls() {
     $('#progressBar').style.width = `${(page + 1) / book.pages.length * 100}%`;
     $('#progressLabel').textContent = `Página ${page + 1} de ${book.pages.length}`;
+    const exploring = Boolean(book.pages[page].interactive);
+    $('#book').setAttribute('aria-label', exploring
+      ? 'Páginas do livrinho. Nesta atividade, use os botões ou o teclado para virar a página.'
+      : 'Páginas do livrinho. Arraste um canto para virar a página.');
+    $('.bottom-note').textContent = exploring
+      ? 'Brinque à vontade com as cores! Para virar a página, use os botões Voltar ou Próxima. Teclado: ← anterior · → próxima · Espaço para ouvir ou pausar.'
+      : 'Toque nas palavras coloridas para ouvi-las. Arraste os cantos das páginas para virá-las. Teclado: ← anterior · → próxima · Espaço para ouvir ou pausar.';
     $('#prev').disabled = page === 0;
     const challengeLocked = book.pages[page].type === 'challenge' && !challengeComplete();
     $('#next').disabled = challengeLocked;

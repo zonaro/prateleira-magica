@@ -129,7 +129,7 @@
         <label for="themeMood">Qual o clima da sua prateleira?</label>
         <select id="themeMood"><option value="">💗 Original da Prateleira Mágica</option></select>
         <div id="themeMoodSwatches" class="theme-mood-swatches" aria-label="Prévia da paleta"></div>
-        <button id="applyThemeAvatar" type="button">✨ Vestir meu personagem com esta paleta</button>
+        <button id="applyThemeAvatar" type="button">🎨 Pintar meu personagem com estas cores</button>
         <p class="theme-avatar-hint">Só cabelo, roupa, calça/shorts/saia e sapatos mudam. <strong>A cor da pele continua como você escolheu.</strong></p>
       </section>
       <section class="profile-backup" aria-label="Guardar e recuperar perfil">
@@ -298,7 +298,6 @@
     const sameEdit = Boolean(group && group === lastEditGroup && now - lastEditAt < 900 && undoHistory.length);
     if (!sameEdit) {
       undoHistory.push(lastSaved);
-      if (undoHistory.length > 100) undoHistory.shift();
     }
     lastSaved = preferences.save(next);
     // Nunca compartilhe a mesma referência: o próximo clique altera `draft`
