@@ -2,11 +2,13 @@
   'use strict';
   const tabs = [
     { name: 'conquistas', tab: document.getElementById('tabConquistas'), panel: document.getElementById('profileOverview') },
+    { name: 'predefinidos', tab: document.getElementById('tabPresets'), panel: document.getElementById('profilePresets') },
     { name: 'personalizar', tab: document.getElementById('tabPersonalizar'), panel: document.getElementById('profileEditor') }
   ];
   if (tabs.some(({ tab, panel }) => !tab || !panel)) return;
   function selectTab() {
-    const selected = location.hash === '#personalizar' ? 'personalizar' : 'conquistas';
+    const hash = location.hash;
+    const selected = hash === '#personalizar' ? 'personalizar' : (hash === '#predefinidos' ? 'predefinidos' : 'conquistas');
     for (const { name, tab, panel } of tabs) {
       const active = name === selected;
       tab.classList.toggle('active', active);

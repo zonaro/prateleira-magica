@@ -35,6 +35,18 @@
   ];
   const bottomStyles = [['pants', 'Calça'], ['shorts', 'Shorts'], ['skirt', 'Saia']];
   const petStyles = Object.entries(petParts).map(([id, part]) => [id, part.name, part.source]);
+  const accessoryStyles = [
+    ['glasses_round', 'Óculos redondos', 'face'],
+    ['glasses_square', 'Óculos quadrados', 'face'],
+    ['glasses_sunglasses', 'Óculos escuros', 'face'],
+    ['earrings_stud', 'Brincos', 'ears'],
+    ['headphones', 'Fones de ouvido', 'hat'],
+    ['beanie', 'Touca', 'hat'],
+    ['headband', 'Tiara', 'hat'],
+    ['bow_hair', 'Laço', 'hair'],
+    ['flower_clip', 'Flor de cabelo', 'hair'],
+    ['star_clip', 'Estrela', 'hair']
+  ];
   const hairColors = [
     ['#493a55', 'Castanho escuro'], ['#7b4c35', 'Castanho'],
     ['#c47b43', 'Ruivo'], ['#f5c35b', 'Loiro'],
@@ -147,6 +159,6 @@
   function avatarSVG(settings) {
     return `<svg xmlns="http://www.w3.org/2000/svg" width="210" height="340" viewBox="0 0 210 340" role="img" aria-label="Avatar infantil personalizável">${avatarBody(settings)}</svg>`;
   }
-  window.LivrinhoAvatar = { hairStyles, outfitStyles, bottomStyles, petStyles, hairColors, outfitColors,
+  window.LivrinhoAvatar = { hairStyles, outfitStyles, bottomStyles, petStyles, accessoryStyles, hairColors, outfitColors,
     bottomColors, shoeColors, avatarBody, avatarSymbol, avatarSVG };
 })();

@@ -19,6 +19,7 @@
     bottomColor: '#5879b9',
     shoeColor: '#625a89',
     themeMood: '',
+    accessories: [],
     achievements: { books: {} }
   });
   const styles = avatar.hairStyles.map(([key]) => key);
@@ -85,6 +86,7 @@
     const pronunciation = String(input.pronunciation ?? DEFAULTS.pronunciation).trim().slice(0, 64) || name;
     const legacyShirtColor = input.gender === 'masculino' ? '#6e9beb' : input.gender === 'neutro' ? '#9b8ae5' : DEFAULTS.outfitColor;
     const achievements = cleanAchievements(input.achievements);
+    const accessories = Array.isArray(input.accessories) ? input.accessories.filter(a => typeof a === 'string' && a.length < 32).slice(0, 10) : [];
     return {
       name,
       pronunciation,
@@ -101,6 +103,7 @@
       shoeColor: /^#[0-9a-f]{6}$/i.test(input.shoeColor || '') ? input.shoeColor.toLowerCase() : DEFAULTS.shoeColor,
       themeMood: ['', 'Vibrant', 'Futuristic', 'Fun', 'Soft Pastel', 'Calm', 'Vintage',
         'Organic', 'Sophisticated', 'Dark', 'Corporate'].includes(input.themeMood) ? input.themeMood : '',
+      accessories,
       achievements
     };
   }

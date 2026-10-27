@@ -29,10 +29,11 @@
         <img src="./assets/icons/icon.svg" alt="" width="51" height="51">
         <span><strong>Prateleira Mágica ✨</strong><small>Histórias e conquistas</small></span>
       </a>
-      <div class="settings-header-actions"><a class="customize-action profile-action" href="./index.html">📚 Prateleira</a></div>
+      <div class="settings-header-actions"><a class="customize-action profile-action" href="./prateleira.html">📚 Prateleira</a></div>
     </header>
     <nav class="profile-tabs" aria-label="Seções do perfil">
       <a id="tabConquistas" class="profile-tab" href="#conquistas" role="tab" aria-controls="profileOverview">🏅 Meu perfil</a>
+      <a id="tabPresets" class="profile-tab" href="#predefinidos" role="tab" aria-controls="profilePresets">✨ Personagens prontos</a>
       <a id="tabPersonalizar" class="profile-tab" href="#personalizar" role="tab" aria-controls="profileEditor">🎨 Personalizar</a>
     </nav>
     <main class="profile-main" id="profileOverview" role="tabpanel" aria-labelledby="tabConquistas">
@@ -58,6 +59,18 @@
       </section>
       <p class="settings-privacy">🔒 Seu nome, suas histórias e medalhas ficam guardados neste aparelho. Quer levá-los para outro? Vá em Personalizar e toque em “Exportar perfil”.</p>
     </main>
+    <section id="profilePresets" class="profile-editor-pane settings-screen" role="tabpanel" aria-labelledby="tabPresets" hidden>
+      <div class="settings-layout">
+        <div class="preferences-form" style="grid-column: 1 / -1;">
+          <div class="preferences-heading">
+            <div><div class="section-kicker">ESCOLHA UM PERSONAGEM PRONTO</div><h2>Personagens prontos ✨</h2></div>
+            <a class="settings-close" href="#personalizar">🎨 Personalizar do zero</a>
+          </div>
+          <p class="settings-intro">Clique em um personagem para aplicar tudo automaticamente: nome, idade, cores, roupas, cabelo e acessórios!</p>
+          <div id="avatarPresetsGrid" class="avatar-style-grid" style="grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));"></div>
+        </div>
+      </div>
+    </section>
     <section id="profileEditor" class="profile-editor-pane settings-screen" role="tabpanel" aria-labelledby="tabPersonalizar" hidden>
       <div id="settingsApp" class="settings-app" aria-label="Editor de personagem"></div>
     </section>

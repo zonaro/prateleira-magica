@@ -35,6 +35,7 @@
   const outfitStyles = avatarCatalog.outfitStyles;
   const bottomStyles = avatarCatalog.bottomStyles;
   const petStyles = avatarCatalog.petStyles;
+  const accessoryStyles = avatarCatalog.accessoryStyles || [];
   let draft = preferences.load();
   let lastSaved = preferences.clean(draft);
   const undoHistory = [];
@@ -81,6 +82,10 @@
       <fieldset class="avatar-style-fieldset"><legend>Penteado</legend><div id="avatarStyles" class="avatar-style-grid"></div></fieldset>
       <fieldset class="avatar-style-fieldset"><legend>Roupa</legend><div id="outfitStyles" class="avatar-style-grid outfits-grid"></div></fieldset>
       <fieldset class="avatar-style-fieldset"><legend>Parte de baixo</legend><div id="bottomStyles" class="avatar-style-grid bottoms-grid"></div></fieldset>
+      <fieldset class="avatar-style-fieldset"><legend>Acessórios ✨</legend>
+        <p class="settings-intro" style="margin-bottom:8px;">Adicione acessórios ao seu personagem. Alguns tipos não podem ser combinados (apenas 1 chapéu/tiara/fones, apenas 1 óculos).</p>
+        <div id="accessoryStyles" class="avatar-style-grid"></div>
+      </fieldset>
       <fieldset class="avatar-style-fieldset pet-fieldset"><legend>Minha pelúcia companheira 🧸</legend>
         <p id="petUnlockStatus" class="pet-unlock-status" role="status"></p>
         <div id="petStyles" class="pet-style-grid"></div>
@@ -187,6 +192,31 @@
     $('#magicColorApply').disabled = !generatedColor;
   }
 
+  // Load and render presets
+  const presetsGrid = document.getElementById('avatarPresetsGrid');
+  if (presetsGrid) {
+    fetch('./assets/data/avatar-presets.json').then(r => r.json()).then(presets => {
+      for (const preset of presets) {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'avatar-style';
+        btn.innerHTML = '<span class="style-preview"></span><span class="style-label"></span>';
+        btn.querySelector('.style-label').textContent = preset.name;
+        try {
+          btn.querySelector('.style-preview').innerHTML = preferences.avatarSVG(preset.profile);
+        } catch(e) {}
+        btn.addEventListener('click', () => {
+          const next = preferences.clean({ ...preset.profile, achievements: draft.achievements });
+          preferences.save(next);
+          fillDialog(next);
+          location.hash = '#personalizar';
+          document.getElementById('profileBackupStatus')?.textContent && (document.getElementById('profileBackupStatus').textContent = `✨ Personagem "${preset.name}" aplicado!`);
+        });
+        presetsGrid.append(btn);
+      }
+    }).catch(()=>{});
+  }
+
   narrator.subscribe((status) => {
     const previewButton = $('#hearPronunciation');
     if (!previewButton) return;
@@ -232,6 +262,18 @@
       item.setAttribute('aria-pressed', String(selected));
       const thumb = item.querySelector('.style-preview');
       if (thumb) thumb.innerHTML = preferences.avatarSVG({ ...draft, bottomStyle: item.dataset.style });
+    }
+    if (document.getElementById('accessoryStyles')) {
+      const accs = Array.isArray(draft.accessories) ? draft.accessories : [];
+      for (const item of document.getElementById('accessoryStyles').querySelectorAll('button')) {
+        // find which accessory this button is
+        const label = item.querySelector('.style-label')?.textContent;
+        const map = {'Óculos redondos':'glasses_round','Óculos quadrados':'glasses_square','Óculos escuros':'glasses_sunglasses','Brincos':'earrings_stud','Fones de ouvido':'headphones','Touca':'beanie','Tiara':'headband','Laço':'bow_hair','Flor de cabelo':'flower_clip','Estrela':'star_clip'};
+        const aid = map[label];
+        const selected = aid && accs.includes(aid);
+        item.classList.toggle('selected', selected);
+        item.setAttribute('aria-pressed', String(selected));
+      }
     }
     for (const [containerId, key] of [['skinOptions', 'skinColor'], ['hairColorOptions', 'hairColor'],
       ['outfitColorOptions', 'outfitColor'], ['bottomColorOptions', 'bottomColor'], ['shoeColorOptions', 'shoeColor']]) {
@@ -340,6 +382,36 @@
   addStyles('avatarStyles', hairStyles, 'avatarStyle');
   addStyles('outfitStyles', outfitStyles, 'outfitStyle');
   addStyles('bottomStyles', bottomStyles, 'bottomStyle');
+  
+  // Accessories
+  const accContainer = document.getElementById('accessoryStyles');
+  if (accContainer && accessoryStyles.length) {
+    for (const [accId, accLabel, accType] of accessoryStyles) {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'avatar-style';
+      button.innerHTML = '<span class="style-preview"></span><span class="style-label"></span>';
+      button.querySelector('.style-label').textContent = accLabel;
+      button.addEventListener('click', () => {
+        if (!draft.accessories) draft.accessories = [];
+        const idx = draft.accessories.indexOf(accId);
+        if (idx >= 0) {
+          draft.accessories.splice(idx, 1);
+        } else {
+          // remove conflicting types
+          const conflicts = {hat:['headphones','beanie','headband'], hair:['bow_hair','flower_clip','star_clip'], face:['glasses_round','glasses_square','glasses_sunglasses'], ears:['earrings_stud']};
+          for (const [k,v] of Object.entries(conflicts)) {
+            if ((k===accType) || v.includes(accId)) {
+              draft.accessories = draft.accessories.filter(a => !(conflicts[k]||[]).includes(a));
+            }
+          }
+          draft.accessories.push(accId);
+        }
+        saveChange('accessories');
+      });
+      accContainer.append(button);
+    }
+  }
 
   function addPets() {
     const container = $('#petStyles');
