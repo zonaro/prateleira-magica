@@ -27,6 +27,8 @@
   let totalFrames = 0;
   let totalTime = 0;
   let delayedFrames = 0;
+  let memoryPreference = null;
+  let slowThisSession = false;
 
   function stored(key) {
     try { return window.localStorage?.getItem(key) || null; } catch { return null; }
@@ -38,16 +40,21 @@
     } catch { /* bloqueio de armazenamento não impede ler o livro */ }
   }
   function preference() {
-    const value = stored(PREFERENCE_KEY);
+    const value = memoryPreference || stored(PREFERENCE_KEY);
     return ['auto', 'light', 'animated'].includes(value) ? value : 'auto';
   }
   function setPreference(value) {
     if (!['auto', 'light', 'animated'].includes(value)) return false;
+    memoryPreference = value;
     save(PREFERENCE_KEY, value);
-    if (value === 'animated') save(SLOW_KEY, null); // a criança pede para tentar novamente
+    if (value === 'animated') {
+      slowThisSession = false;
+      save(SLOW_KEY, null); // a criança pede para tentar novamente
+    }
     return true;
   }
   function slowRecently() {
+    if (slowThisSession) return true;
     try {
       const timestamp = Number(stored(SLOW_KEY));
       return timestamp > 0 && Date.now() - timestamp < SLOW_TTL && Date.now() >= timestamp;
@@ -154,6 +161,8 @@
     if (window.document?.hidden) { stopWatch(); return; }
     // O primeiro engasgo de fato desliga a engine pesada pelo restante da sessão
     // (e por até 24h); usar "Tentar animação" permite repetir o teste.
+    slowThisSession = true;
+    memoryPreference = 'auto';
     save(SLOW_KEY, String(Date.now()));
     save(PREFERENCE_KEY, 'auto'); // volta a automático mesmo após tentativa manual
     const parent = bookRoot.parentNode, nextSibling = bookRoot.nextSibling;
