@@ -29,6 +29,15 @@
     <div id="readerError" class="reader-error" hidden role="alert"></div>
     <section id="readerApp" hidden aria-label="Leitor de livros">
       <div class="progress" aria-label="Progresso da leitura"><div class="progress-track"><div class="progress-bar" id="progressBar"></div></div><span class="progress-label" id="progressLabel"></span></div>
+      <div class="reader-motion-settings">
+        <label for="pageAnimationMode">📖 Animação das páginas</label>
+        <select id="pageAnimationMode" aria-describedby="pageAnimationStatus">
+          <option value="auto">Automática (recomendado)</option>
+          <option value="light">Desligada — leitura leve</option>
+          <option value="animated">Tentar animação novamente</option>
+        </select>
+        <span id="pageAnimationStatus" role="status" aria-live="polite"></span>
+      </div>
       <div class="book" id="book" aria-label="Páginas do livrinho. Arraste um canto para virar a página."></div>
       <div class="dots" id="dots" aria-label="Escolher página"></div>
       <p class="bottom-note">Toque nas palavras coloridas para ouvi-las. Arraste os cantos das páginas para virá-las. Teclado: ← anterior · → próxima · Espaço para ouvir ou pausar.</p>
