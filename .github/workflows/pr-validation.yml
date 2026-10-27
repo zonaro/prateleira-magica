@@ -1,0 +1,31 @@
+name: Validar Pull Request
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Preparar MediaPipe e modelos locais
+        run: node tools/vendor-mediapipe.mjs
+      - name: Conferir scripts e dados
+        run: |
+          python3 tools/extract-avatar-components.py --check
+          node tools/build-avatar-presets.mjs --check
+          node tools/build-pet-parts.mjs --check
+          node tests/verify.mjs
+          node tests/preferences.test.mjs
+          node tests/colors.test.mjs
+          node tests/avatar.test.mjs
+          node tests/avatar-photo.test.mjs
+          node tests/progression.test.mjs
+          node tests/page-turn.test.mjs
+          node tests/speech.test.mjs
+          node tests/offline.test.mjs

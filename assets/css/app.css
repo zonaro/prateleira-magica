@@ -953,3 +953,65 @@ html[data-color-theme] .profile-tabs{border-color:var(--outline);background:var(
   color: mix(var(--theme-text), #8a6d5a, 40%) !important;
   border: 1px solid var(--theme-border, #f2e0c8);
 }
+
+/* Modal acessível do criador de avatar por foto */
+.avatar-photo-start {
+  display: block;
+  width: min(100%, 340px);
+  margin: 12px auto 4px;
+  padding: 12px 18px;
+  border: 2px solid #8764b7;
+  border-radius: 16px;
+  background: #f4e9ff;
+  color: #493568;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+.avatar-photo-start:hover, .avatar-photo-start:focus-visible {
+  background: #e8d7ff;
+}
+.avatar-photo-modal {
+  width: min(calc(100% - 24px), 520px);
+  max-height: min(90dvh, 900px);
+  padding: 0;
+  border: 0;
+  border-radius: 22px;
+  box-shadow: 0 20px 65px rgba(24, 17, 42, .4);
+  color: #423459;
+}
+.avatar-photo-modal::backdrop { background: rgba(20, 15, 32, .75); }
+.avatar-photo-panel { padding: clamp(20px, 5vw, 32px); overflow-y: auto; }
+.avatar-photo-panel h2 { font-size: 1.45rem; margin: 0 0 8px; }
+.avatar-photo-panel p { line-height: 1.5; }
+.avatar-photo-video {
+  display: block;
+  width: min(100%, 320px);
+  max-height: 40dvh;
+  margin: 12px auto;
+  border-radius: 14px;
+  background: #272036;
+  object-fit: contain;
+  transform: scaleX(-1);
+}
+.avatar-photo-video[hidden] { display: none; }
+.avatar-photo-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin: 18px 0 6px;
+}
+.avatar-photo-buttons button {
+  border: 1px solid #bc9bd0;
+  border-radius: 12px;
+  padding: 10px 14px;
+  font: inherit;
+  font-weight: 700;
+  color: #493568;
+  background: #f3e8fb;
+  cursor: pointer;
+}
+.avatar-photo-buttons button:disabled { opacity: .5; cursor: wait; }
+.avatar-photo-status { min-height: 24px; font-weight: 700; }
+.avatar-photo-privacy { font-size: .83rem; opacity: .85; }

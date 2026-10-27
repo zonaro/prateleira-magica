@@ -1,5 +1,5 @@
 /* Offline-first, same-origin service worker for the static GitHub Pages app. */
-const CACHE_NAME = 'prateleira-magica-v23';
+const CACHE_NAME = 'prateleira-magica-v25';
 const APP_ROOT = new URL(self.registration.scope);
 const url = (path) => new URL(path, APP_ROOT).href;
 const APP_SHELL = [
@@ -26,6 +26,8 @@ const APP_SHELL = [
   './assets/vendor/NameToColor.ptBR.js',
   './assets/js/page-turn.js',
   './assets/js/preferences.js',
+  './assets/js/avatar-photo-colors.js',
+  './assets/js/avatar-photo.js',
   './assets/js/settings-ui.js',
   './assets/js/profile.js',
   './assets/js/profile-tabs.js',
@@ -57,6 +59,29 @@ const APP_SHELL = [
   './assets/pets/530199-cute-animals.svg',
   './assets/pets/530200-whale.svg'
 ];
+// Binários baixados no CI para o mesmo domínio. Priorizamos cache offline, mas
+// um aparelho com pouco espaço não deve perder o resto do PWA se eles falharem.
+const PHOTO_ASSETS = [
+  './assets/vendor/mediapipe/vision_bundle.mjs',
+  './assets/vendor/mediapipe/wasm/vision_wasm_internal.js',
+  './assets/vendor/mediapipe/wasm/vision_wasm_internal.wasm',
+  './assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js',
+  './assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.wasm',
+  './assets/vendor/mediapipe/models/face_landmarker.task',
+  './assets/vendor/mediapipe/models/selfie_multiclass_256x256.tflite'
+];
+
+async function preCachePhotoModels(cache) {
+  for (const asset of PHOTO_ASSETS) {
+    try {
+      const response = await fetch(url(asset), { cache: 'reload' });
+      if (!response.ok) throw new Error(`Modelo HTTP ${response.status}`);
+      await cache.put(url(asset), response);
+    } catch (error) {
+      console.warn('Arquivo de IA não pôde ser salvo offline:', asset, error);
+    }
+  }
+}
 
 async function preCacheBooks(cache) {
   const response = await fetch(url('./books/index.json'), { cache: 'reload' });
@@ -92,6 +117,7 @@ self.addEventListener('install', (event) => {
     await cache.addAll(APP_SHELL.map(url));
     try { await preCacheBooks(cache); }
     catch (error) { console.warn('Pré-cache de livros incompleto:', error); }
+    await preCachePhotoModels(cache);
     await self.skipWaiting();
   })());
 });
@@ -138,6 +164,8 @@ self.addEventListener('fetch', (event) => {
   // Cache-first em CSS/JS pode deixar instalada uma interface antiga mesmo após novos deploys.
   const relativePath = requestUrl.pathname.slice(APP_ROOT.pathname.length);
   const appCode = /\.(?:css|js|json)$/.test(relativePath);
-  event.respondWith(event.request.mode === 'navigate' || appCode
-    ? networkFirst(event.request) : cacheFirst(event.request));
+  const photoAsset = relativePath.startsWith('assets/vendor/mediapipe/');
+  event.respondWith(photoAsset ? cacheFirst(event.request)
+    : event.request.mode === 'navigate' || appCode
+      ? networkFirst(event.request) : cacheFirst(event.request));
 });
