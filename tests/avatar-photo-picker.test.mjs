@@ -80,6 +80,7 @@ assert.equal(cropPanel.hidden,false,'Galeria deve abrir etapa de crop');
 assert.equal(cameraArea.hidden,true,'Prévia da câmera deve desaparecer ao recortar');
 assert(status.textContent.includes('enquadramento'),'Avisar para ajustar o recorte');
 assert.equal(fileInput.value,'','O campo deve permitir reescolher o mesmo arquivo');
+location.hash = '#personalizar';
 events.hashchange();
 assert.equal(cropPanel.hidden,true,'Ao sair da aba, descartar a foto');
 console.log('✓ Picker nativo abre fluxo file → crop sem confundir com o input range de zoom');
