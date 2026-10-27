@@ -23,8 +23,11 @@
     $('#profileMedals').textContent = `${medals} 🏅`;
     $('#profileBooksRead').textContent = String(Object.values(child.achievements.books).filter((p) => p.finished).length);
     const pet = window.LivrinhoAvatar.petStyles.find(([id]) => id === child.petId);
-    $('#profilePetStatus').textContent = pet ? pet[1] : medals >= 2 ? '✨ Escolher' : '🔒';
-    $('#profileUnlockHint').textContent = medals >= 2
+    const heartUnlocked = window.LivrinhoAvatar.rewardUnlocked(child, 'heart_plush');
+    $('#profilePetStatus').textContent = pet ? pet[1] : medals >= 2 || heartUnlocked ? '✨ Escolher' : '🔒';
+    $('#profileUnlockHint').textContent = heartUnlocked && !pet
+      ? 'Sua pelúcia de coração já está disponível em Personalizar! Ela muda de cor sozinha. 💗'
+      : medals >= 2
       ? pet ? `${pet[1]} acompanha ${child.name}! Você pode trocar a pelúcia em Personalizar.`
         : 'Você já desbloqueou as pelúcias! Entre em Personalizar e escolha uma companheira.'
       : `Conquiste ${2 - medals} medalha${2 - medals === 1 ? '' : 's'} para desbloquear as 20 pelúcias da coleção.`;
@@ -52,6 +55,9 @@
     detail.className = 'profile-book-details';
     const title = document.createElement('h3');
     title.textContent = preferences.personalize(book.title);
+    const subject = document.createElement('p');
+    subject.className = 'profile-book-subject';
+    subject.textContent = `${book.subject || 'Leitura'} · ${book.ageRange?.join('–') || '?'} anos`;
     const status = document.createElement('p');
     status.className = 'profile-book-status';
     status.textContent = progress.finished ? '✅ História concluída' : '📖 Em leitura';
@@ -73,7 +79,7 @@
     const action = document.createElement('span');
     action.className = 'profile-continue';
     action.textContent = progress.finished ? 'Reler aventura →' : 'Continuar leitura →';
-    detail.append(title, status, medal, progressCopy, track, action);
+    detail.append(title, subject, status, medal, progressCopy, track, action);
     link.append(image, detail);
     return link;
   }

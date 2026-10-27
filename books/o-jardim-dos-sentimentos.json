@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1, "id": "o-jardim-dos-sentimentos", "title": "{{nome}} e o Jardim dos Sentimentos",
+  "subtitle": "Toda emoção pode visitar o nosso coração",
+  "subject": "Emoções · convivência", "ageRange": [3, 7], "language": "pt-BR",
+  "cover": "assets/illustrations/aprender/sentimentos.svg", "color": "#f08cba", "medal": "💗 Medalha do Coração",
+  "rewards": [{"id":"heart_plush","label":"Pelúcia exclusiva de coração que muda de cor"}],
+  "exercises": [
+    {"syllable":"😊","text":"A alegria pode chegar quando eu brinco."},
+    {"syllable":"😢","text":"A tristeza pode pedir um abraço ou companhia."},
+    {"syllable":"😠","text":"Sentir raiva é permitido; machucar os outros não."},
+    {"syllable":"😨","text":"Quando sinto medo, posso pedir ajuda."},
+    {"syllable":"😳","text":"A vergonha também pode visitar meu coração."},
+    {"syllable":"🥰","text":"O carinho pode ser demonstrado de muitas formas."}
+  ],
+  "pages": [
+    {"type":"cover","illustration":"assets/illustrations/aprender/sentimentos.svg","sticker":"TODOS PODEM ENTRAR!","chapter":"Um jardim especial 💗","title":"{{nome}} e o Jardim dos Sentimentos","blocks":[{"kind":"paragraph","text":"No jardim de {{nome}}, cada flor tinha uma cor e contava um sentimento diferente."},{"kind":"dialogue","text":"— Aqui ninguém precisa estar feliz o tempo todo. Todas as emoções são bem-vindas!"}]},
+    {"type":"story","illustration":"assets/illustrations/aprender/sentimentos.svg","sticker":"SOL AMARELINHO","chapter":"Capítulo 1 · Alegria","title":"A flor que dava risadinhas","blocks":[{"kind":"paragraph","text":"A flor Alegria saltou ao ouvir uma piada. {{nome}} sorriu e sentiu vontade de dançar!"},{"kind":"paragraph","text":"Alegria pode ser um sorriso enorme ou uma paz pequenininha. Cada pessoa sente de um jeito."}]},
+    {"type":"story","illustration":"assets/illustrations/aprender/sentimentos.svg","sticker":"NUVEM AZUL","chapter":"Capítulo 2 · Tristeza","title":"A flor que precisava de colo","blocks":[{"kind":"paragraph","text":"A flor Tristeza chorou porque sentia saudade de alguém. {{nome}} sentou pertinho dela."},{"kind":"dialogue","text":"— Tudo bem chorar. Você quer conversar, um abraço ou só companhia?"}]},
+    {"type":"story","illustration":"assets/illustrations/aprender/sentimentos.svg","sticker":"VULCÃO VERMELHO","chapter":"Capítulo 3 · Raiva","title":"A flor que ficou brava","blocks":[{"kind":"paragraph","text":"A flor Raiva ficou zangada quando alguém pisou em sua pétala. Ela respirou devagar e pediu espaço."},{"kind":"paragraph","text":"Sentir [[raiva]] não é feio nem errado! Podemos falar do que sentimos, pedir ajuda e escolher não machucar ninguém."}]},
+    {"type":"story","illustration":"assets/illustrations/aprender/sentimentos.svg","sticker":"BORBOLETAS NA BARRIGA","chapter":"Capítulo 4 · Medo","title":"A flor que teve medo do escuro","blocks":[{"kind":"paragraph","text":"A flor Medo encolheu as pétalas ao escutar um trovão. {{nome}} ofereceu uma lanterninha e ficou ao lado dela."},{"kind":"dialogue","text":"— O medo tenta nos avisar de perigos. Podemos buscar alguém de confiança quando precisamos."}]},
+    {"type":"story","illustration":"assets/illustrations/aprender/sentimentos.svg","sticker":"PÉTALAS CORADAS","chapter":"Capítulo 5 · Vergonha e surpresa","title":"Dois visitantes inesperados","blocks":[{"kind":"paragraph","text":"A flor Vergonha ficou tímida ao conhecer uma turma nova. A flor Surpresa abriu bem os olhos quando viu um bolo!"},{"kind":"paragraph","text":"Às vezes sentimos duas coisas ao mesmo tempo. Não precisamos dar conta de tudo sozinhos."}]},
+    {"type":"story","illustration":"assets/illustrations/aprender/sentimentos.svg","sticker":"PAUSA PARA RESPIRAR","chapter":"Capítulo 6 · Cuidar","title":"O banco dos sentimentos","blocks":[{"kind":"paragraph","text":"{{nome}} respirou devagar, contou o que sentia e escutou os amigos. Nenhuma emoção ficou de fora do jardim."},{"kind":"dialogue","text":"— Sentimentos chegam e passam. Todos merecem acolhimento; nossas atitudes podem ser cuidadosas."}]},
+    {"type":"challenge","illustration":"assets/illustrations/aprender/sentimentos.svg","sticker":"DESAFIO DO CORAÇÃO","chapter":"Missão das emoções 🎯","title":"Seis flores, seis sentimentos","blocks":[{"kind":"paragraph","text":"Leia ou ouça cada frase e pense em uma vez que sentiu algo parecido. Marque quando terminar."},{"kind":"dialogue","text":"— Seu coração tem espaço para todas as cores!"}]},
+    {"type":"finish","illustration":"assets/illustrations/aprender/sentimentos.svg","sticker":"CORAÇÃO COLORIDO","chapter":"Parabéns, {{nome}}!","title":"Seu jardim acolheu todo mundo!","blocks":[{"kind":"paragraph","text":"Você descobriu que sentir é humano e pedir ajuda é uma força. Uma pelúcia de coração agora muda de cor para lembrar de todas as emoções!"}],"medal":"💗 Medalha do Coração conquistada!"}
+  ]
+}

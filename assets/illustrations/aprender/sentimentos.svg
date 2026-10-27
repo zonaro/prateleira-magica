@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="700" viewBox="0 0 1000 700" role="img" aria-label="{{nome}} passeia em um jardim com flores de todas as emoções">
+  <title>O Jardim dos Sentimentos de {{nome}}</title>
+  <defs><linearGradient id="sky" x2="0" y2="1"><stop stop-color="#fbd5ed"/><stop offset="1" stop-color="#fff4cf"/></linearGradient>
+    <symbol id="kid" viewBox="0 0 210 340"><circle cx="105" cy="99" r="70" fill="#e9aa83"/><path d="M41 166h128v174H41Z" fill="#9b86de"/><circle cx="79" cy="89" r="6"/><circle cx="130" cy="89" r="6"/><path d="M78 122q25 21 54 0" stroke="#7b5868" stroke-width="6" fill="none"/></symbol></defs>
+  <rect width="1000" height="700" fill="url(#sky)"/><circle cx="814" cy="116" r="75" fill="#fff0a3"/>
+  <path d="M0 520Q240 445 500 530T1000 505V700H0" fill="#b8dcad"/><path d="M0 612Q400 520 1000 610V700H0" fill="#7fbc9b"/>
+  <g stroke="#428c77" stroke-width="11" stroke-linecap="round"><path d="M430 565V285M595 562V325M785 560V285"/></g>
+  <g fill="#fff7ed"><ellipse cx="433" cy="286" rx="70" ry="24"/><ellipse cx="594" cy="323" rx="70" ry="24"/><ellipse cx="782" cy="280" rx="70" ry="24"/></g>
+  <g fill="#ff8fb5" stroke="#d85d92" stroke-width="3"><ellipse cx="430" cy="220" rx="33" ry="63"/><ellipse cx="430" cy="352" rx="33" ry="63"/><ellipse cx="365" cy="287" rx="64" ry="33"/><ellipse cx="495" cy="287" rx="64" ry="33"/></g>
+  <g fill="#99a9e9" stroke="#727ec3" stroke-width="3"><ellipse cx="594" cy="257" rx="32" ry="63"/><ellipse cx="594" cy="391" rx="32" ry="63"/><ellipse cx="529" cy="324" rx="62" ry="30"/><ellipse cx="660" cy="324" rx="62" ry="30"/></g>
+  <g fill="#ffcb73" stroke="#dfa159" stroke-width="3"><ellipse cx="780" cy="213" rx="33" ry="63"/><ellipse cx="780" cy="347" rx="33" ry="63"/><ellipse cx="714" cy="280" rx="62" ry="30"/><ellipse cx="846" cy="280" rx="62" ry="30"/></g>
+  <g fill="#fff4ce" stroke="#ad7c9b" stroke-width="6"><circle cx="430" cy="287" r="52"/><circle cx="594" cy="324" r="52"/><circle cx="782" cy="280" r="52"/></g>
+  <g fill="#6a516e"><circle cx="411" cy="280" r="6"/><circle cx="449" cy="280" r="6"/><circle cx="576" cy="316" r="6"/><circle cx="613" cy="316" r="6"/><circle cx="762" cy="271" r="6"/><circle cx="800" cy="271" r="6"/></g>
+  <g fill="none" stroke="#9a688b" stroke-width="5" stroke-linecap="round"><path d="M410 306q20 23 40 0"/><path d="M580 353q14-17 28 0"/><path d="M763 299h38"/></g>
+  <g fill="#ef84a9"><path d="M675 125C641 78 586 127 675 190c89-63 34-112 0-65Z"/><path d="M305 130c-25-34-64 1 0 48 64-47 25-82 0-48Z"/></g>
+  <use href="#kid" x="126" y="314" width="210" height="340"/>
+</svg>

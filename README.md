@@ -37,6 +37,7 @@ assets/js/reader.js                Leitor e narração
 assets/js/page-turn.js             Adaptador da virada de páginas por toque
 assets/js/colors.js                Adaptador do NameToColor, paletas, nomes infantis e temas
 assets/js/color-explorer.js        Laboratório interativo de cores dentro do leitor
+assets/js/music-keyboard.js        Teclado das 8 notas (Web Audio, funciona offline)
 assets/vendor/NameToColor.js       Biblioteca original de zonaro/NameToColor
 assets/vendor/NameToColor.ptBR.js  Dados originais de tradução brasileira
 assets/vendor/page-flip.browser.js Motor StPageFlip 2.0.7, MIT, disponível offline
@@ -53,7 +54,7 @@ assets/js/pwa.js                   Instalação PWA e status de conexão
 assets/illustrations/<slug>/*.svg  Ilustrações por página
 assets/avatar-reference/svgrepo-kids/ SVGs de referência da coleção Kids Avatars
 assets/avatar-reference/component-map.json Seleção de caminhos e cores dos SVGs originais
-assets/pets/*.svg                   20 pelúcias da coleção Cute Animal Vectors sem alterações
+assets/pets/*.svg                   20 pelúcias CC0 originais + coração exclusivo animado
 assets/pets/catalog.json           Catálogo e fontes das pelúcias
 assets/icons/                     Ícones PWA
 manifest.webmanifest               Manifesto instalável
@@ -63,6 +64,7 @@ tests/preferences.test.mjs         Testes da personalização
 tests/offline.test.mjs             Teste completo do cache offline
 tests/colors.test.mjs              Gerador de cores, harmonias, moods e novo livro
 tests/progression.test.mjs         Desafio final e trava de páginas
+tests/book-rewards.test.mjs        Cinco livros novos, dez recompensas, requisitos e backup
 tests/page-turn.test.mjs           Virada de página desktop e mobile
 tools/generate-story-art.mjs       Geração dos SVGs dos livros de Draco
 tools/download-kids-avatars.mjs    Atualização dos SVGs de referência
@@ -81,7 +83,7 @@ Nenhum framework, empacotador, servidor PHP ou banco de dados é necessário.
 
 1. Crie um `books/<slug>.json` seguindo a estrutura do livro Ellie.
 2. Coloque as ilustrações SVG em `assets/illustrations/<slug>/`.
-3. Adicione um item ao array `books` de `books/index.json`, com `id`, `data`, `title`, `subtitle`, `cover`, `language` e `syllables`.
+3. Adicione um item ao array `books` de `books/index.json`, com `id`, `data`, `title`, `subtitle`, `cover`, `language`, `subject` e `ageRange: [idadeMinima, idadeMaxima]` (e `syllables`, quando necessário).
 4. Aumente a versão `CACHE_NAME` em `sw.js` para que o cache offline seja reconstruído.
 5. Execute `node tests/verify.mjs` e faça commit na `main`.
 
@@ -112,7 +114,27 @@ O catálogo gera automaticamente um card na prateleira (até três colunas no de
 }
 ```
 
-Nas páginas, coloque `[[palavra]]` para exibir uma palavra colorida que pode ser tocada para ouvi-la. `kind: "dialogue"` destaca o parágrafo como fala. Propriedades opcionais de página: `syllables`, `speech`, `tip`, `callout`, `medal`, `interactive`. `type: "challenge"` exibe os exercícios do livro; `type: "finish"` conclui a aventura. A página com `"interactive": "color-explorer"` mostra o laboratório de cores sem alterar as demais funções da leitura. **Nesta página os listeners de arraste do motor de folhas são desligados temporariamente** para permitir digitação, seleção de cores, audição e troca de clima. Os botões e as setas continuam virando as páginas com a animação; o arraste volta a funcionar ao sair da oficina. O item `exercises[].color`, quando informado como `#rrggbb`, mostra a cor da frase. O campo opcional `medal` no JSON do livro e no catálogo personaliza o nome/emoji da medalha exibida após o desafio.
+Nas páginas, coloque `[[palavra]]` para exibir uma palavra colorida que pode ser tocada para ouvi-la. `kind: "dialogue"` destaca o parágrafo como fala. Propriedades opcionais de página: `syllables`, `speech`, `tip`, `callout`, `medal`, `interactive`, `bibliography`. `type: "challenge"` exibe os exercícios do livro; `type: "finish"` conclui a aventura. `"interactive": "color-explorer"` mostra o laboratório de cores e `"interactive": "music-keyboard"` disponibiliza o teclado de Dó a Dó (C, D, E, F, G, A, B, C). **Nessas páginas o arraste do motor de folhas é desabilitado** para permitir interação; os botões e setas continuam funcionando. `bibliography: [{"title":"...","url":"..."}]` insere referências como texto não clicável, especialmente nos livros de saúde. O item `exercises[].color`, quando informado como `#rrggbb`, mostra a cor da frase. O campo opcional `medal` personaliza o nome/emoji da medalha.
+
+### Catálogo por assunto e idade recomendada
+
+A prateleira oferece busca por título/assunto, filtro por assunto e faixa etária recomendada. Essas faixas são **orientativas**: crianças aprendem em ritmos diferentes e podem ler com ajuda de responsáveis.
+
+| Livro | Assunto | Idade sugerida | Presentes ao concluir |
+|---|---|---|---|
+| Trem Travesso | Alfabetização (TR) | 5–8 anos | Medalha |
+| Drone Desaparecido | Alfabetização (DR) | 5–8 anos | Medalha |
+| Trem dos Dragões | Alfabetização e leitura | 6–9 anos | Medalha |
+| Reino das Cores | Artes e cores | 4–8 anos | Medalha |
+| Orquestra dos Sons | Ciências, sons e voz | 4–7 anos | Fones de ouvido + caixa de som |
+| Festa das Notas | Música, notas e cifras | 5–9 anos | Mini teclado + violão + flauta |
+| Jardim dos Sentimentos | Emoções e acolhimento | 3–7 anos | Pelúcia exclusiva de coração que muda de cor |
+| Escudo das Vacinas | Saúde e vacinação | 4–8 anos | Kit médico + jaleco |
+| Corpo em Movimento | Saúde, brincadeiras, água e descanso | 4–8 anos | Halteres de brinquedo + garrafinha com líquido colorível |
+
+Todo livro mantém um desafio antes da última página. Nos cinco livros educativos, as recompensas só ficam selecionáveis depois de **marcar todas as frases do desafio e chegar à página final** (`finished` + `medalEarnedAt` ou `challengeCompletedAt`). Os itens ficam visíveis em cinza enquanto bloqueados. As recompensas vinculadas ao livro são definidas em `assets/js/avatar.js` (`rewardBooks`) e listadas como `rewards` no JSON do livro. Os IDs devem corresponder. A regra é verificada também ao carregar e importar perfis, não apenas na interface.
+
+O coração é uma 21ª pelúcia, exclusiva do Jardim dos Sentimentos; as outras 20 continuam liberadas com duas medalhas. A cor do líquido da garrafinha é guardada separadamente em `waterColor` e incluída no backup SVG. Os dois livros de saúde trazem bibliografia para os responsáveis, sem links clicáveis no leitor. As explicações são educativas e não substituem a orientação da UBS ou dos profissionais de saúde.
 
 ### Novidades de personalização, capas e doações
 
@@ -159,15 +181,17 @@ O botão **Personalizar** (na prateleira e na aba Perfil) abre [`perfil.html#per
 - Nome da criança e escrita fonética separada para a narração.
 - Data de nascimento opcional para calcular a idade e preencher `{{idade}}` em roteiros futuros.
 - Gênero/pronomes: masculino (`ele/dele`), feminino (`ela/dela`) ou neutro (`elu/delu`).
-- **25 penteados e 24 roupas** da coleção Kids Avatars, combináveis livremente (600 combinações principais), incluindo Careca. As flores deixaram de fazer parte dos penteados e ficam entre os acessórios, com cor própria.
+- **25 penteados e 25 roupas** (24 da coleção Kids Avatars + jaleco médico), combináveis (625 combinações principais), incluindo Careca. O jaleco só fica selecionável após concluir o livro das vacinas.
 - Escolha independente da cor do cabelo, da roupa e **dos acessórios**, com paletas e seleção livre. Há boné ampliado, tapa-olho, óculos com nariz e bigode, máscara de raposa (kitsune), máscara de super-herói, capacete esportivo, **tiara de gatinho**, capa com capuz e capa de super-herói. A **boina de encanador com a inicial da criança** é desbloqueada ao conquistar **três medalhas**. Flores são desenhadas sobre as tiaras mesmo quando selecionadas primeiro. A capa com capuz **oculta temporariamente o cabelo** para impedir que ele apareça atravessando o tecido; ao tirar a capa, o penteado escolhido volta intacto.
 - **Brinquedos personalizáveis:** bolas de futebol, basquete, tênis, futebol americano, handebol e monstrinho de bolso (bola vermelha/branca), peteca, peças de xadrez, asas de fada ou morcego, skate e **fantasia de fantasma** (lençol sobre o personagem inteiro, com furos para os olhos). A criança pode combinar um brinquedo de mão, um das costas, um do chão e uma fantasia, com cor escolhida separadamente. **Skate desbloqueado com quatro medalhas**, desenhado embaixo dos pés, com o corpo posicionado sobre a prancha.
+- **Presentes educativos:** fones (antes disponíveis livremente), caixa de som, mini teclado, violão, flauta, kit médico, halteres leves de faz de conta, garrafinha e jaleco. A água da garrafinha usa seu próprio seletor de cor; os instrumentos e brinquedos de mão dividem o mesmo espaço visual.
 - **Calça, shorts, saia curta, saia longa ou fralda**, com cor independente. Para os pés: **tênis, chinelo, meias lisas/listradas/de bolinhas, descalço ou patins**, com escolha de cor quando aplicável. Os patins são liberados após **três medalhas**.
 - Cores de pele naturais ou fantasia (incluindo verde, azul, lilás e rosa), mantendo o seletor livre existente.
 - **Palavra mágica → cor:** escreva `vermelho`, `girassol`, `abraço` ou outra palavra. O NameToColor gera uma cor repetível, mostra um nome infantil aproximado, oferece leitura em voz alta e permite aplicá-la ao cabelo, roupa, acessórios, brinquedos, parte inferior, calçados/meias ou pele.
 - **Paleta do aplicativo por mood:** uma seleção entre os dez estilos oficiais do NameToColor (Vibrante, Futurista, Divertido, Pastel suave, Calmo, Retrô, Orgânico, Sofisticado, Escuro e Corporativo), mais o tema original. O tema muda as cores de navegação e da interface na prateleira, no leitor e no perfil, sem afetar as cores do livro, ilustrações ou pele.
 - O botão **Pintar meu personagem com estas cores** usa quatro tons da paleta para cabelo, roupa, parte inferior e tênis. **Não altera `skinColor`**. A criança pode seguir customizando cada parte depois.
 - Uma das **20 pelúcias originais** da coleção [Cute Animal Vectors](https://www.svgrepo.com/collection/cute-animal-vectors/), desbloqueada somente depois de conquistar **duas medalhas**. A pelúcia fica ao lado do avatar, apoiada no chão na altura dos tênis, nas ilustrações, no editor e no perfil.
+- A **pelúcia de coração das emoções**, adicional e exclusiva do livro dos sentimentos, muda suavemente de cor em SVG, sem conexão ou imagem externa.
 - **Gravação automática:** não há botão Salvar. Cada escolha é persistida imediatamente via `preferences.save` e refletida no perfil e nos próximos livros.
 - **Desfazer:** um histórico em memória registra as alterações desde que o editor foi carregado. Digitação contínua e arraste do seletor de cores são agrupados em um único passo. O histórico some ao sair/recarregar a página.
 - **Apagar meu perfil e começar de novo:** pede confirmação e redefine também as conquistas e os livros lidos (`achievements.books = {}`), além do avatar, pronúncia, nome, nascimento, tema e pelúcia. A ação pode ser desfeita durante a mesma visita ao editor.
@@ -176,7 +200,7 @@ O botão **Personalizar** (na prateleira e na aba Perfil) abre [`perfil.html#per
 
 Na página [`perfil.html`](perfil.html), a criança vê o nome, a idade (quando informada), o personagem, a pelúcia e os livros já iniciados ou concluídos. Cada livro exibe **percentual de páginas visitadas** e o emoji **🏅** caso a medalha do desafio tenha sido conquistada. Os cards permitem retomar a leitura.
 
-Todos os quatro livros têm um desafio de frases antes da última página. **A página seguinte e a medalha final ficam bloqueadas** até a criança marcar todas as frases. O bloqueio vale para botão, bolinhas, setas do teclado e deslize. Ao completar o desafio, uma medalha fica registrada em `achievements.books[id].medalEarnedAt` e não se perde ao fechar o app. O campo `visitedPages` registra as páginas efetivamente visitadas; livros marcados como concluídos em versões antigas continuam com 100% para preservar o histórico. O Reino das Cores usa sete frases com sete cores distintas e registra **🎨 Medalha das Cores** no perfil, além de contar para liberar a pelúcia.
+Todos os nove livros têm um desafio de frases antes da última página. **A página seguinte e a medalha final ficam bloqueadas** até a criança marcar todas as frases. O bloqueio vale para botão, bolinhas, setas do teclado e deslize. Ao completar o desafio, uma medalha fica registrada em `achievements.books[id].medalEarnedAt` e não se perde ao fechar o app. O campo `visitedPages` registra as páginas efetivamente visitadas; livros marcados como concluídos em versões antigas continuam com 100% para preservar o histórico. O Reino das Cores usa sete frases com sete cores distintas e registra **🎨 Medalha das Cores** no perfil, além de contar para liberar a pelúcia.
 
 O desbloqueio das pelúcias conta **medalhas de livros diferentes**, nunca frases isoladas. Sem duas medalhas, o catálogo aparece bloqueado. A escolha fica salva localmente e é incluída no SVG de backup.
 
@@ -186,7 +210,7 @@ Essas preferências ficam apenas no `localStorage` do navegador, sem conta ou se
 
 No editor, **Exportar perfil** oferece um arquivo `.svg` que funciona como uma ilustração vetorial comum. A extensão e os detalhes do formato **não são exibidos à criança**, mas permanecem como contrato técnico. O arquivo inclui um elemento `<metadata id="prateleira-magica-profile" data-format="application/json">` contendo um JSON inline com:
 
-- `profile`: `name`, `pronunciation`, `birthDate`, `gender`, `petId`, `avatarStyle`, `outfitStyle`, `skinColor`, `hairColor`, `outfitColor`, `bottomStyle`, `bottomColor`, `footwearStyle`, `sockPattern`, `shoeColor`, `accessories`, `accessoryColor`, `toys`, `toyColor`, `sourceSvg`, `presetEdits`, `themeMood` (campos de personagens prontos presentes quando usados);
+- `profile`: `name`, `pronunciation`, `birthDate`, `gender`, `petId`, `avatarStyle`, `outfitStyle`, `skinColor`, `hairColor`, `outfitColor`, `bottomStyle`, `bottomColor`, `footwearStyle`, `sockPattern`, `shoeColor`, `accessories`, `accessoryColor`, `toys`, `toyColor`, `waterColor`, `sourceSvg`, `presetEdits`, `themeMood` (campos de personagens prontos presentes quando usados);
 - `achievements.books`: cada ID de livro com frases marcadas (`completedExercises`), páginas visitadas (`visitedPages`), conclusão da história (`finished`, `finishedAt`) e medalha (`medalEarnedAt`, `challengeCompletedAt` legado);
 - `app`, `schemaVersion` e `exportedAt` para identificar a origem, versão e data do backup.
 

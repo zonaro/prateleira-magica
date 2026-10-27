@@ -25,6 +25,7 @@
     accessories: [],
     toys: [],
     toyColor: '#ed4d56',
+    waterColor: '#64c9ed',
     achievements: { books: {}, pageReturn: false }
   });
   const styles = avatar.hairStyles.map(([key]) => key);
@@ -99,7 +100,7 @@
     const accessories = [];
     for (const id of Array.isArray(input.accessories) ? input.accessories : []) {
       const group = accessoryGroups[id];
-      if (group && (id !== 'plumber_beret' || medals >= 3)
+      if (group && avatar.rewardUnlocked({ achievements }, id) && (id !== 'plumber_beret' || medals >= 3)
           && !accessories.some((chosen) => accessoryGroups[chosen] === group)) accessories.push(id);
     }
     // Perfis antigos podiam guardar o boné como penteado. Agora ele é um
@@ -111,7 +112,8 @@
     const toys = [];
     for (const id of Array.isArray(input.toys) ? input.toys : []) {
       const group = toyGroups[id];
-      if (group && (id !== 'skateboard' || medals >= 4) && (id !== 'yoyo' || achievements.pageReturn)
+      if (group && avatar.rewardUnlocked({ achievements }, id)
+          && (id !== 'skateboard' || medals >= 4) && (id !== 'yoyo' || achievements.pageReturn)
           && !toys.some(chosen => toyGroups[chosen] === group)) toys.push(id);
     }
     const result = {
@@ -119,9 +121,11 @@
       pronunciation,
       birthDate: validBirthDate(input.birthDate),
       gender: Object.hasOwn(genders, input.gender) ? input.gender : DEFAULTS.gender,
-      petId: medals >= 2 && pets.includes(input.petId) ? input.petId : null,
+      petId: pets.includes(input.petId) && (input.petId === 'heart_plush'
+        ? avatar.rewardUnlocked({ achievements }, 'heart_plush') : medals >= 2) ? input.petId : null,
       avatarStyle: input.avatarStyle === 'cap' ? 'short' : styles.includes(input.avatarStyle) ? input.avatarStyle : DEFAULTS.avatarStyle,
-      outfitStyle: outfits.includes(input.outfitStyle) ? input.outfitStyle : DEFAULTS.outfitStyle,
+      outfitStyle: outfits.includes(input.outfitStyle) && avatar.rewardUnlocked({ achievements }, input.outfitStyle)
+        ? input.outfitStyle : DEFAULTS.outfitStyle,
       bottomStyle: bottoms.includes(input.bottomStyle) ? input.bottomStyle : DEFAULTS.bottomStyle,
       footwearStyle: footwear.includes(input.footwearStyle) && (input.footwearStyle !== 'skates' || medals >= 3)
         ? input.footwearStyle : DEFAULTS.footwearStyle,
@@ -137,6 +141,7 @@
       accessories,
       toys,
       toyColor: /^#[0-9a-f]{6}$/i.test(input.toyColor || '') ? input.toyColor.toLowerCase() : DEFAULTS.toyColor,
+      waterColor: /^#[0-9a-f]{6}$/i.test(input.waterColor || '') ? input.waterColor.toLowerCase() : DEFAULTS.waterColor,
       achievements
     };
     if (typeof input.sourceSvg === 'string' && Object.hasOwn(window.LivrinhoAvatarPresetParts || {}, input.sourceSvg)) {

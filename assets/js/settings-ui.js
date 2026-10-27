@@ -96,9 +96,10 @@
         <div id="accessoryStyles" class="avatar-style-grid"></div>
       </fieldset>
       <fieldset class="avatar-style-fieldset"><legend>Brinquedos 🪀</legend>
-        <p class="settings-intro" style="margin-bottom:8px;">Escolha algo para segurar, asas ou um skate! Você pode combinar um de cada tipo. 🏅 Skate: 4 medalhas. 🪀 Ioiô: volte uma página em qualquer livro!</p>
+        <p class="settings-intro" style="margin-bottom:8px;">Escolha algo para segurar, asas ou um skate! Alguns presentes aparecem ao terminar o desafio e a leitura dos livros. 🏅 Skate: 4 medalhas. 🪀 Ioiô: volte uma página!</p>
         <div id="toyStyles" class="avatar-style-grid"></div>
       </fieldset>
+      <label class="custom-color"><span>💧 Cor do líquido da garrafinha</span><input id="customWaterColor" type="color" aria-label="Escolher a cor do líquido da garrafinha"></label>
       <fieldset class="avatar-style-fieldset pet-fieldset"><legend>Minha pelúcia companheira 🧸</legend>
         <p id="petUnlockStatus" class="pet-unlock-status" role="status"></p>
         <div id="petStyles" class="pet-style-grid"></div>
@@ -279,11 +280,17 @@
     }
     for (const item of $('#outfitStyles').querySelectorAll('button')) {
       const selected = item.dataset.style === draft.outfitStyle;
+      const locked = !avatarCatalog.rewardUnlocked(draft, item.dataset.style);
       item.classList.toggle('selected', selected);
+      item.classList.toggle('locked', locked);
+      item.disabled = locked;
       item.setAttribute('aria-pressed', String(selected));
       const thumb = item.querySelector('.style-preview');
-      if (thumb) thumb.innerHTML = preferences.avatarSVG({ ...draft, outfitStyle: item.dataset.style,
-        presetEdits: [...new Set([...(draft.presetEdits || []), 'outfitStyle'])] });
+      if (thumb) {
+        const preview = { ...draft, outfitStyle: item.dataset.style,
+          presetEdits: [...new Set([...(draft.presetEdits || []), 'outfitStyle'])] };
+        thumb.innerHTML = locked ? avatarCatalog.avatarSVG(preview) : preferences.avatarSVG(preview);
+      }
     }
     for (const item of $('#bottomStyles').querySelectorAll('button')) {
       const selected = item.dataset.style === draft.bottomStyle;
@@ -315,7 +322,8 @@
       for (const item of document.getElementById('accessoryStyles').querySelectorAll('button')) {
         const aid = item.dataset.accessory;
         const selected = accs.includes(aid);
-        const locked = aid === 'plumber_beret' && preferences.medalCount(draft) < 3;
+        const locked = !avatarCatalog.rewardUnlocked(draft, aid)
+          || aid === 'plumber_beret' && preferences.medalCount(draft) < 3;
         item.disabled = locked;
         item.classList.toggle('locked', locked);
         item.classList.toggle('selected', selected);
@@ -333,7 +341,8 @@
     for (const item of $('#toyStyles').querySelectorAll('button[data-toy]')) {
       const id = item.dataset.toy;
       const selected = selectedToys.includes(id);
-      const locked = (id === 'skateboard' && preferences.medalCount(draft) < 4)
+      const locked = !avatarCatalog.rewardUnlocked(draft, id)
+        || (id === 'skateboard' && preferences.medalCount(draft) < 4)
         || (id === 'yoyo' && !draft.achievements?.pageReturn);
       item.disabled = locked;
       item.classList.toggle('locked', locked);
@@ -360,17 +369,23 @@
     $('#customOutfitColor').value = draft.outfitColor;
     $('#customAccessoryColor').value = draft.accessoryColor;
     $('#customToyColor').value = draft.toyColor;
+    $('#customWaterColor').value = draft.waterColor;
     $('#customBottomColor').value = draft.bottomColor;
     $('#customShoeColor').value = draft.shoeColor;
     drawThemePalette();
     const medals = preferences.medalCount(draft);
     const unlocked = medals >= 2;
-    $('#petUnlockStatus').textContent = unlocked
-      ? `✨ Você conquistou ${medals} medalhas! Escolha uma das 20 pelúcias para acompanhar suas aventuras.`
-      : `🔒 Pelúcias desbloqueadas com 2 medalhas. Você tem ${medals}/2 — faltam ${2 - medals}.`;
+    const heartUnlocked = avatarCatalog.rewardUnlocked(draft, 'heart_plush');
+    $('#petUnlockStatus').textContent = heartUnlocked && !unlocked
+      ? `💗 O coração colorido já está liberado! As 20 pelúcias comuns pedem 2 medalhas (${medals}/2).`
+      : unlocked
+      ? `✨ Você conquistou ${medals} medalhas! Escolha uma das 20 pelúcias ou conquiste o coração no livro dos sentimentos.`
+      : `🔒 As 20 pelúcias comuns pedem 2 medalhas (${medals}/2). O coração colorido é exclusivo do livro dos sentimentos.`;
     for (const option of $('#petStyles').querySelectorAll('button[data-pet]')) {
-      option.disabled = !unlocked;
-      option.classList.toggle('locked', !unlocked);
+      const locked = option.dataset.pet === 'heart_plush'
+        ? !avatarCatalog.rewardUnlocked(draft, 'heart_plush') : !unlocked;
+      option.disabled = locked;
+      option.classList.toggle('locked', locked);
       option.classList.toggle('selected', draft.petId === option.dataset.pet);
       option.setAttribute('aria-pressed', String(draft.petId === option.dataset.pet));
     }
@@ -454,6 +469,7 @@
       button.innerHTML = '<span class="style-preview"></span><span class="style-label"></span>';
       button.querySelector('.style-label').textContent = label;
       button.addEventListener('click', () => edit('', () => {
+        if (!avatarCatalog.rewardUnlocked(draft, style)) return;
         if (field === 'footwearStyle' && style === 'skates' && preferences.medalCount(draft) < 3) return;
         if (field === 'avatarStyle' || field === 'outfitStyle') markPresetEdit(field);
         draft[field] = style;
@@ -479,6 +495,7 @@
       button.innerHTML = '<span class="style-preview"></span><span class="style-label"></span>';
       button.querySelector('.style-label').textContent = accLabel;
       button.addEventListener('click', () => {
+        if (!avatarCatalog.rewardUnlocked(draft, accId)) return;
         if (accId === 'plumber_beret' && preferences.medalCount(draft) < 3) return;
         if (!draft.accessories) draft.accessories = [];
         const idx = draft.accessories.indexOf(accId);
@@ -504,6 +521,7 @@
     button.innerHTML = '<span class="style-preview"></span><span class="style-label"></span>';
     button.querySelector('.style-label').textContent = label;
     button.addEventListener('click', () => {
+      if (!avatarCatalog.rewardUnlocked(draft, id)) return;
       if (id === 'skateboard' && preferences.medalCount(draft) < 4) return;
       if (id === 'yoyo' && !draft.achievements?.pageReturn) return;
       edit('toys', () => {
@@ -538,7 +556,7 @@
       caption.textContent = name;
       option.append(img, caption);
       option.addEventListener('click', () => {
-        if (preferences.medalCount(draft) < 2) return;
+        if (id === 'heart_plush' ? !avatarCatalog.rewardUnlocked(draft, id) : preferences.medalCount(draft) < 2) return;
         edit('', () => { draft.petId = id; });
       });
       container.append(option);
@@ -666,6 +684,7 @@
   }
   for (const [inputId, field] of [['customSkinColor', 'skinColor'], ['customHairColor', 'hairColor'],
     ['customOutfitColor', 'outfitColor'], ['customAccessoryColor', 'accessoryColor'], ['customToyColor', 'toyColor'],
+    ['customWaterColor', 'waterColor'],
     ['customBottomColor', 'bottomColor'], ['customShoeColor', 'shoeColor']]) {
     $(`#${inputId}`).addEventListener('input', (event) => edit(field, () => {
       if (['skinColor', 'hairColor', 'outfitColor'].includes(field)) markPresetEdit(field);

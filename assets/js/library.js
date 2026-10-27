@@ -4,6 +4,8 @@
   const searchInput = document.getElementById('bookSearch');
   const sortSelect = document.getElementById('bookSort');
   const sortDirBtn = document.getElementById('sortDir');
+  const topicFilter = document.getElementById('bookTopic');
+  const ageFilter = document.getElementById('bookAge');
   const root = new URL('./', document.baseURI);
   const asset = (path) => new URL(path, root).href;
   const preferences = window.LivrinhoPreferences;
@@ -23,7 +25,7 @@
     const card = document.createElement('a');
     card.className = 'book-spine';
     card.href = `./livro.html?livro=${encodeURIComponent(book.id)}`;
-    card.setAttribute('aria-label', `Abrir ${label(book.title)}`);
+    card.setAttribute('aria-label', `Abrir ${label(book.title)}. ${book.subject || ''}. Idade recomendada: ${book.ageRange?.join(' a ') || 'não informada'} anos.`);
 
     const stand = document.createElement('div');
     stand.className = 'book-stand';
@@ -55,6 +57,12 @@
     subtitle.className = 'book-bubble-subtitle';
     subtitle.textContent = label(book.subtitle || '');
     copy.append(title, subtitle);
+    if (book.subject && Array.isArray(book.ageRange)) {
+      const metadata = document.createElement('small');
+      metadata.className = 'book-bubble-meta';
+      metadata.textContent = `${book.subject} · ${book.ageRange[0]}–${book.ageRange[1]} anos`;
+      copy.append(metadata);
+    }
     bubble.append(copy);
 
     card.append(stand, bubble);
@@ -68,8 +76,15 @@
       result = result.filter((book) => {
         const title = label(book.title).toLowerCase();
         const subtitle = label(book.subtitle || '').toLowerCase();
-        return title.includes(query) || subtitle.includes(query);
+        return title.includes(query) || subtitle.includes(query) || (book.subject || '').toLowerCase().includes(query);
       });
+    }
+    if (topicFilter?.value) {
+      result = result.filter((book) => book.subject?.split(' · ')[0] === topicFilter.value);
+    }
+    if (ageFilter?.value) {
+      const age = Number(ageFilter.value);
+      result = result.filter((book) => book.ageRange?.[0] <= age && book.ageRange?.[1] >= age);
     }
 
     const sort = sortSelect?.value || 'default';
@@ -128,6 +143,14 @@
       const manifest = await response.json();
       if (manifest.schemaVersion !== 1 || !Array.isArray(manifest.books)) throw new Error('Catálogo inválido');
       books = manifest.books;
+      if (topicFilter) {
+        for (const topic of [...new Set(books.map((book) => book.subject?.split(' · ')[0]).filter(Boolean))].sort()) {
+          const option = document.createElement('option');
+          option.value = topic;
+          option.textContent = topic;
+          topicFilter.append(option);
+        }
+      }
       filtered = [...books];
       if (shelf) shelf.replaceChildren();
       if (!manifest.books.length) {
@@ -151,6 +174,8 @@
   }
 
   if (searchInput) searchInput.addEventListener('input', applyFilters);
+  if (topicFilter) topicFilter.addEventListener('change', applyFilters);
+  if (ageFilter) ageFilter.addEventListener('change', applyFilters);
   if (sortSelect) sortSelect.addEventListener('change', applyFilters);
   if (sortDirBtn) {
     sortDirBtn.addEventListener('click', () => {

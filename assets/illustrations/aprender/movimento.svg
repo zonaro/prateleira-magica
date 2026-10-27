@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="700" viewBox="0 0 1000 700" role="img" aria-label="{{nome}} brinca ao ar livre com água e movimento">
+  <title>O Corpo em Movimento de {{nome}}</title>
+  <defs><linearGradient id="sky" x2="0" y2="1"><stop stop-color="#afe5ed"/><stop offset="1" stop-color="#ffefb4"/></linearGradient>
+    <symbol id="kid" viewBox="0 0 210 340"><circle cx="105" cy="99" r="70" fill="#e9aa83"/><path d="M41 166h128v174H41Z" fill="#f39a66"/><circle cx="80" cy="90" r="6"/><circle cx="129" cy="90" r="6"/><path d="M79 124q26 23 52 0" stroke="#7d5869" stroke-width="6" fill="none"/></symbol></defs>
+  <rect width="1000" height="700" fill="url(#sky)"/><circle cx="835" cy="130" r="87" fill="#ffe183"/>
+  <g fill="#fff" opacity=".85"><ellipse cx="233" cy="130" rx="125" ry="38"/><ellipse cx="680" cy="210" rx="100" ry="34"/></g>
+  <path d="M0 495Q240 420 480 503T1000 478V700H0Z" fill="#b8df9f"/><path d="M0 600Q370 520 1000 600V700H0Z" fill="#65b78e"/>
+  <g transform="translate(420 355)" stroke="#6a84a0" stroke-width="7"><path d="M0 66h182"/><rect x="0" y="17" width="35" height="100" rx="12" fill="#f7b56b"/><rect x="147" y="17" width="35" height="100" rx="12" fill="#f7b56b"/><rect x="-17" y="35" width="18" height="65" rx="7" fill="#f7b56b"/><rect x="181" y="35" width="18" height="65" rx="7" fill="#f7b56b"/></g>
+  <g transform="translate(720 325)"><rect x="24" y="5" width="115" height="195" rx="37" fill="#e1fbff" stroke="#6aaac0" stroke-width="9"/><path d="M34 102h95v59q0 30-33 30H68q-34 0-34-30Z" fill="#70cde0"/><rect x="50" y="-17" width="65" height="35" rx="9" fill="#faa17c"/><path d="M61 55h45" stroke="#fff" stroke-width="10" stroke-linecap="round"/></g>
+  <g fill="#fff8d1"><path d="m365 228 12 25 28 4-20 20 5 27-25-13-25 13 5-27-20-20 28-4Z"/><path d="m674 103 8 18 20 3-14 14 3 20-17-10-18 10 3-20-14-14 20-3Z"/></g>
+  <g font-family="system-ui,sans-serif" fill="#fff" font-size="50"><text x="526" y="290">★</text><text x="615" y="305">♪</text></g>
+  <use href="#kid" x="135" y="285" width="215" height="340"/>
+</svg>

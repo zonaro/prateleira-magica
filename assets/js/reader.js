@@ -191,11 +191,39 @@
     if (current.interactive === 'color-explorer' && window.LivrinhoColorExplorer) {
       story.append(window.LivrinhoColorExplorer.create());
     }
+    if (current.interactive === 'music-keyboard' && window.LivrinhoMusicKeyboard) {
+      story.append(window.LivrinhoMusicKeyboard.create());
+    }
+    if (Array.isArray(current.bibliography)) {
+      const sources = document.createElement('section');
+      sources.className = 'book-bibliography';
+      sources.setAttribute('aria-label', 'Referências para responsáveis');
+      const heading = document.createElement('h2');
+      heading.textContent = 'Para quem cuida de mim 📚';
+      sources.append(heading);
+      for (const entry of current.bibliography) {
+        const source = document.createElement('p');
+        const name = document.createElement('strong');
+        name.textContent = entry.title;
+        const url = document.createElement('span');
+        url.className = 'reference-address';
+        url.textContent = entry.url;
+        source.append(name, url);
+        sources.append(source);
+      }
+      story.append(sources);
+    }
     if (current.medal) {
       const medal = document.createElement('div');
       medal.className = 'medal';
       medal.textContent = label(current.medal);
       story.append(medal);
+    }
+    if (current.type === 'finish' && book.rewards?.length) {
+      const prize = document.createElement('div');
+      prize.className = 'book-prizes';
+      prize.textContent = `🎁 Novos presentes desbloqueados: ${book.rewards.map((reward) => reward.label).join(', ')}! Veja em Personalizar.`;
+      story.append(prize);
     }
     panel.append(chapter, title, story);
     if (current.syllables?.length) {
@@ -293,7 +321,7 @@
       : (light ? 'Páginas do livrinho em modo leve. Deslize horizontalmente ou use os botões.' :
         'Páginas do livrinho. Arraste um canto para virar a página.'));
     $('.bottom-note').textContent = exploring
-      ? 'Brinque à vontade com as cores! Para virar a página, use os botões Voltar ou Próxima. Teclado: ← anterior · → próxima · Espaço para ouvir ou pausar.'
+      ? 'Explore os controles desta página! Para virar, use Voltar ou Próxima. Teclado: ← anterior · → próxima · Espaço para ouvir ou pausar.'
       : 'Toque nas palavras coloridas para ouvi-las. ' + guidance;
     $('#pageAnimationMode').value = pageTurn.preference();
     $('#pageAnimationStatus').textContent = light ? '📖 Leitura leve ativa' : '✨ Virada animada';
@@ -337,6 +365,7 @@
     rememberPage();
     if (book.pages[page]?.type === 'finish') {
       preferences?.recordBookProgress(book.id, { finished: true }, book.exercises?.length || 0);
+      if (book.rewards?.length) notify('🎁 Medalha e presentes liberados! Visite Personalizar.');
     }
     updateControls();
   }

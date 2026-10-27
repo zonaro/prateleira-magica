@@ -31,14 +31,32 @@
     ['collared', 'Camisa social'], ['shirt_stripes', 'Camisa listrada'], ['bib', 'Regata com lantejoula'],
     ['sleeveless', 'Blusa sem mangas'], ['patterned', 'Estampada de bolinhas'],
     ['necklace', 'Blusa com broche'], ['team_tee', 'Camiseta de time'],
-    ['cardigan', 'Cardigã'], ['polo', 'Polo']
+    ['cardigan', 'Cardigã'], ['polo', 'Polo'], ['doctor_coat', 'Jaleco de médico (livro das vacinas)']
   ];
   const bottomStyles = [['pants', 'Calça'], ['shorts', 'Shorts'], ['skirt', 'Saia'],
     ['long_skirt', 'Saia longa'], ['diaper', 'Fralda']];
   const footwearStyles = [['sneakers', 'Tênis'], ['flipflops', 'Chinelo'],
     ['socks', 'De meias'], ['barefoot', 'Descalço'], ['skates', 'Patins (3 medalhas)']];
   const sockPatterns = [['plain', 'Lisas'], ['stripes', 'Listradas'], ['dots', 'De bolinhas']];
-  const petStyles = Object.entries(petParts).map(([id, part]) => [id, part.name, part.source]);
+  // A pelúcia de coração é desenhada no mesmo SVG do avatar, com animação de cor.
+  const heartPlush = { name: 'Coração das Emoções', source: 'assets/pets/coracao-das-emocoes.svg',
+    originalViewBox: '0 0 128 128', viewBox: '0 0 128 128',
+    body: `<path d="M64 113C45 95 8 71 8 42 8 10 45 4 64 29 83 4 120 10 120 42c0 29-37 53-56 71Z" stroke="#8c4c85" stroke-width="5" fill="#ff729a"><animate attributeName="fill" values="#ff729a;#ffc45e;#8de0d3;#aa96fa;#ff729a" dur="8s" repeatCount="indefinite"/></path><circle cx="45" cy="49" r="5" fill="#543b67"/><circle cx="82" cy="49" r="5" fill="#543b67"/><path d="M52 66q12 12 24 0" stroke="#543b67" stroke-width="4" stroke-linecap="round" fill="none"/><ellipse cx="30" cy="62" rx="9" ry="5" fill="#fff" opacity=".5"/><ellipse cx="96" cy="62" rx="9" ry="5" fill="#fff" opacity=".5"/>` };
+  const allPetParts = { ...petParts, heart_plush: heartPlush };
+  const petStyles = Object.entries(allPetParts).map(([id, part]) => [id, part.name, part.source]);
+  const rewardBooks = Object.freeze({
+    headphones: 'a-orquestra-dos-sons', speaker: 'a-orquestra-dos-sons',
+    mini_keyboard: 'a-festa-das-notas', guitar: 'a-festa-das-notas', flute: 'a-festa-das-notas',
+    heart_plush: 'o-jardim-dos-sentimentos', medical_kit: 'o-escudo-das-vacinas',
+    doctor_coat: 'o-escudo-das-vacinas', dumbbells: 'o-corpo-em-movimento',
+    water_bottle: 'o-corpo-em-movimento'
+  });
+  function rewardUnlocked(settings, id) {
+    const bookId = rewardBooks[id];
+    if (!bookId) return true;
+    const progress = settings?.achievements?.books?.[bookId];
+    return Boolean(progress?.finished && (progress.medalEarnedAt || progress.challengeCompletedAt));
+  }
   const accessoryStyles = [
     ['glasses_round', 'Óculos redondos', 'face'],
     ['glasses_square', 'Óculos quadrados', 'face'],
@@ -75,7 +93,14 @@
     ['yoyo', 'Ioiô (volte uma página para liberar)', 'hand'],
     ['fairy_wings', 'Asas de fada', 'back'],
     ['bat_wings', 'Asas de morcego', 'back'],
-    ['ghost_costume', 'Fantasia de fantasma', 'costume']
+    ['ghost_costume', 'Fantasia de fantasma', 'costume'],
+    ['speaker', 'Caixa de som (livro dos sons)', 'hand'],
+    ['mini_keyboard', 'Mini teclado (livro de música)', 'hand'],
+    ['guitar', 'Violão (livro de música)', 'hand'],
+    ['flute', 'Flauta (livro de música)', 'hand'],
+    ['medical_kit', 'Kit médico (livro das vacinas)', 'hand'],
+    ['dumbbells', 'Halteres (livro do movimento)', 'hand'],
+    ['water_bottle', 'Garrafinha de água (livro do movimento)', 'hand']
   ];
   const hairColors = [
     ['#493a55', 'Castanho escuro'], ['#7b4c35', 'Castanho'],
@@ -141,6 +166,14 @@
     return original.replace(/\{\{([A-Z_]+)\}\}/g, (_, key) => colors[key] || '#000000');
   }
   function outfitSVG(style, outfit, colors) {
+    if (style === 'doctor_coat') return `<g data-detail="jaleco-medico">
+      ${tint(parts.outfit.coat.svg, { ...colors, OUTFIT: '#fffefa', OUTFIT_DARK: '#d1e3ed', OUTFIT_DEEP: '#9ac2d3', OUTFIT_LIGHT: '#ffffff' })}
+      <path d="M189 324 232 373 276 324l-14 101h-60Z" fill="#b6e7e5"/>
+      <path d="M189 324 232 373l-32 39-30-77Zm87 0-44 49 33 39 29-77Z" fill="#fffefa" stroke="#9ac2d3" stroke-width="5"/>
+      <path d="M190 353v48q0 42 37 42m49-90v48q0 42-37 42" fill="none" stroke="#488a9a" stroke-width="7"/>
+      <circle cx="233" cy="442" r="16" fill="#d8f0f0" stroke="#488a9a" stroke-width="6"/>
+      <path d="M304 390h24m-12-12v24" stroke="#e76d85" stroke-width="8" stroke-linecap="round"/>
+    </g>`;
     const offset = style === 'team_tee' ? -24 : style === 'cardigan' ? 18 : 0;
     const stripes = style === 'shirt_stripes'
       ? `<g data-detail="listras-da-camisa" stroke="${colors.OUTFIT_DARK}" stroke-width="9" stroke-linecap="round" opacity=".75">
@@ -307,6 +340,13 @@
       shuttlecock: `<path d="M-9 6-22-21l17 10 5-18 5 18 17-10L9 6Z" fill="${light}" stroke="${dark}" stroke-width="2.8"/>
         <path d="M-16-13 0 7m16-20L0 7M0-25V7" stroke="${dark}" stroke-width="2"/>
         <path d="M-10 6h20l6 13q-16 11-32 0Z" fill="${tone}" stroke="${ink}" stroke-width="3"/>`,
+      speaker: `<rect x="-26" y="-33" width="52" height="65" rx="9" fill="${tone}" stroke="${ink}" stroke-width="3"/><circle cy="9" r="17" fill="${dark}" stroke="${ink}" stroke-width="3"/><circle cy="9" r="9" fill="${light}"/><circle cy="-22" r="5" fill="${light}"/>`,
+      mini_keyboard: `<rect x="-37" y="-19" width="74" height="39" rx="5" fill="${tone}" stroke="${ink}" stroke-width="3"/><g fill="#fff"><rect x="-31" y="-12" width="9" height="26"/><rect x="-19" y="-12" width="9" height="26"/><rect x="-7" y="-12" width="9" height="26"/><rect x="5" y="-12" width="9" height="26"/><rect x="17" y="-12" width="9" height="26"/></g><g fill="${ink}"><rect x="-25" y="-12" width="6" height="15"/><rect x="-13" y="-12" width="6" height="15"/><rect x="11" y="-12" width="6" height="15"/></g>`,
+      guitar: `<g transform="rotate(-30)"><path d="M-13 8q-27-21-8-42 12-11 22-2 10-9 22 2 19 21-8 42Z" fill="${tone}" stroke="${ink}" stroke-width="3"/><circle cy="-14" r="8" fill="${ink}"/><rect x="-5" y="-69" width="10" height="50" rx="3" fill="${dark}"/><path d="M-2-69v66m4-66v66" stroke="${light}" stroke-width="1.5"/><path d="M-11-69h22" stroke="${ink}" stroke-width="5"/></g>`,
+      flute: `<g transform="rotate(-35)"><rect x="-7" y="-43" width="14" height="88" rx="6" fill="${tone}" stroke="${ink}" stroke-width="3"/><path d="M-7-30H7M-7 30H7" stroke="${light}" stroke-width="3"/><g fill="${ink}"><circle cy="-15" r="2.5"/><circle cy="-2" r="2.5"/><circle cy="11" r="2.5"/><circle cy="24" r="2.5"/></g></g>`,
+      medical_kit: `<rect x="-31" y="-22" width="62" height="48" rx="7" fill="${tone}" stroke="${ink}" stroke-width="3"/><path d="M-14-22v-9h28v9" fill="none" stroke="${ink}" stroke-width="5"/><path d="M-12 2h24M0-10v24" stroke="#fff" stroke-width="7" stroke-linecap="round"/>`,
+      dumbbells: `<g stroke="${ink}" stroke-width="3"><path d="M-29-4h58" stroke-width="6"/><rect x="-32" y="-18" width="11" height="28" rx="4" fill="${dark}"/><rect x="21" y="-18" width="11" height="28" rx="4" fill="${dark}"/><rect x="-39" y="-13" width="7" height="18" rx="3" fill="${tone}"/><rect x="32" y="-13" width="7" height="18" rx="3" fill="${tone}"/></g>`,
+      water_bottle: `<g data-detail="agua-colorida"><rect x="-16" y="-28" width="32" height="60" rx="10" fill="#f3fcff" stroke="${ink}" stroke-width="3"/><path d="M-12-2h24v22q0 7-9 8H-3q-9-1-9-8Z" fill="${safeColor(settings.waterColor, '#64c9ed')}" opacity=".83"/><rect x="-10" y="-36" width="20" height="11" rx="3" fill="${tone}"/><path d="M-8-19h16" stroke="#fff" stroke-width="3"/></g>`,
       chess_pieces: `<g fill="${tone}" stroke="${ink}" stroke-width="2.5" stroke-linejoin="round">
           <path d="M-20 19h19v-4h-2l-3-21 5-6-7-9-7 9 5 6-3 21h-7Z"/>
           <path d="M1 19h21v-4h-3l-2-22h4v-13H3v13h4l-2 22H1Z"/>
@@ -397,9 +437,9 @@
       : parts.hair[settings.avatarStyle] || parts.hair.puffs;
     const hairGeometry = (markup) => settings.avatarStyle === 'flower_heart'
       ? `<g transform="translate(464 0) scale(-1 1)">${markup}</g>` : markup;
-    const outfit = parts.outfit[settings.outfitStyle] || parts.outfit.hoodie;
+    const outfit = parts.outfit[settings.outfitStyle] || (settings.outfitStyle === 'doctor_coat' ? parts.outfit.coat : parts.outfit.hoodie);
     const source = (filename) => (filename || '').replace(/\.svg$/, '');
-    const pet = settings.petId && petParts[settings.petId];
+    const pet = settings.petId && allPetParts[settings.petId];
     // Fundo e pés compartilham a linha de chão y=331. xMidYMax evita que
     // pelúcias de proporções diferentes flutuem dentro da caixa SVG.
     const plushShadow = pet ? '<ellipse data-layer="pelucia-sombra" cx="166" cy="328" rx="34" ry="5" fill="#243f59" opacity=".12"/>' : '';
@@ -477,6 +517,6 @@
     return `<svg xmlns="http://www.w3.org/2000/svg" width="210" height="340" viewBox="0 0 210 340" role="img" aria-label="Avatar infantil personalizável">${avatarBody(settings)}</svg>`;
   }
   window.LivrinhoAvatar = { hairStyles, outfitStyles, bottomStyles, footwearStyles, sockPatterns, petStyles,
-    accessoryStyles, toyStyles, hairColors, outfitColors, bottomColors, shoeColors, accessoryColors, toyColors,
+    accessoryStyles, toyStyles, rewardBooks, rewardUnlocked, hairColors, outfitColors, bottomColors, shoeColors, accessoryColors, toyColors,
     avatarBody, avatarSymbol, avatarSVG };
 })();

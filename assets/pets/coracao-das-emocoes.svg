@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Pelúcia de coração que muda de cor">
+  <title>Coração das Emoções</title>
+  <path d="M64 113C45 95 8 71 8 42 8 10 45 4 64 29 83 4 120 10 120 42c0 29-37 53-56 71Z" stroke="#8c4c85" stroke-width="5" fill="#ff729a">
+    <animate attributeName="fill" values="#ff729a;#ffc45e;#8de0d3;#aa96fa;#ff729a" dur="8s" repeatCount="indefinite"/>
+  </path>
+  <circle cx="45" cy="49" r="5" fill="#543b67"/><circle cx="82" cy="49" r="5" fill="#543b67"/>
+  <path d="M52 66q12 12 24 0" stroke="#543b67" stroke-width="4" stroke-linecap="round" fill="none"/>
+  <ellipse cx="30" cy="62" rx="9" ry="5" fill="#fff" opacity=".5"/>
+  <ellipse cx="96" cy="62" rx="9" ry="5" fill="#fff" opacity=".5"/>
+</svg>

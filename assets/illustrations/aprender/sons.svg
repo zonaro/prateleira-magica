@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="700" viewBox="0 0 1000 700" role="img" aria-label="{{nome}} escuta a floresta, a chuva e os bichos">
+  <title>A Orquestra dos Sons de {{nome}}</title>
+  <defs>
+    <linearGradient id="sky" x2="0" y2="1"><stop stop-color="#b0e9de"/><stop offset="1" stop-color="#f9f2bb"/></linearGradient>
+    <symbol id="kid" viewBox="0 0 210 340"><circle cx="105" cy="100" r="70" fill="#e9aa83"/><path d="M40 171h130v169H40Z" fill="#ffa5a3"/><circle cx="80" cy="90" r="6"/><circle cx="130" cy="90" r="6"/><path d="M80 125q25 20 50 0" stroke="#6f5367" fill="none" stroke-width="6"/></symbol>
+  </defs>
+  <rect width="1000" height="700" fill="url(#sky)"/><circle cx="835" cy="125" r="85" fill="#fff2a1"/>
+  <path d="M0 455Q160 305 320 450T650 440T1000 425V700H0Z" fill="#b3dca3"/>
+  <path d="M0 570Q240 470 490 550T1000 535V700H0Z" fill="#60bd94"/>
+  <path d="M0 630Q380 565 700 620T1000 608V700H0Z" fill="#378d82"/>
+  <g stroke="#397f66" stroke-width="13" stroke-linecap="round"><path d="M145 470V210M845 476V215"/></g>
+  <g fill="#60ae74"><circle cx="145" cy="211" r="100"/><circle cx="78" cy="234" r="71"/><circle cx="216" cy="249" r="73"/><circle cx="846" cy="214" r="102"/><circle cx="774" cy="248" r="71"/><circle cx="920" cy="248" r="71"/></g>
+  <g fill="#f7fff2" stroke="#377d89" stroke-width="5"><path d="M598 167q30-54 64 0 39-52 73 0" fill="none"/><path d="M561 242q20-40 46 0 21-35 44 0" fill="none"/></g>
+  <g fill="#428f7f"><path d="M580 325q65-32 120 0l-5 70q-55 42-110 0Z"/><ellipse cx="640" cy="322" rx="70" ry="23"/></g>
+  <g fill="#b0eaf4"><path d="M465 390q-42 60-20 108M504 383q-25 85-8 130M541 398q-10 56 8 103" stroke="#72bad9" stroke-width="13" stroke-linecap="round"/></g>
+  <g fill="#ffdc80"><circle cx="360" cy="215" r="34"/><path d="M341 236q23 17 43 0" stroke="#ad804e" stroke-width="5" fill="none"/></g>
+  <path d="M380 214l25-9-25-9Z" fill="#ec9674"/>
+  <g fill="#fffaf4" opacity=".95"><circle cx="380" cy="317" r="22"/><circle cx="419" cy="289" r="14"/><circle cx="746" cy="336" r="18"/><circle cx="783" cy="309" r="12"/></g>
+  <g font-family="system-ui,sans-serif" font-size="35" font-weight="900" fill="#327e86"><text x="350" y="160">♪</text><text x="420" y="250">♫</text><text x="726" y="273">♪</text><text x="535" y="315">♬</text></g>
+  <use href="#kid" x="165" y="327" width="215" height="340"/>
+</svg>

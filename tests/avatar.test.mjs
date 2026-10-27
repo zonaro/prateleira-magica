@@ -27,15 +27,15 @@ const prefs = window.LivrinhoPreferences;
 const hairStyles = renderer.hairStyles.map(([key]) => key);
 const outfits = renderer.outfitStyles.map(([key]) => key);
 assert.equal(hairStyles.length, 25);
-assert.equal(outfits.length, 24);
+assert.equal(outfits.length, 25);
 assert.equal(new Set(hairStyles).size, 25);
-assert.equal(new Set(outfits).size, 24);
-assert.equal(renderer.petStyles.length, 20, 'Catálogo completo de pets original ausente');
+assert.equal(new Set(outfits).size, 25);
+assert.equal(renderer.petStyles.length, 21, '20 pets originais e coração exclusivo precisam existir');
 assert.equal(renderer.bottomStyles.map(([key]) => key).join(','), 'pants,shorts,skirt,long_skirt,diaper');
 assert.equal(renderer.footwearStyles.map(([key]) => key).join(','), 'sneakers,flipflops,socks,barefoot,skates');
 assert.equal(renderer.sockPatterns.map(([key]) => key).join(','), 'plain,stripes,dots');
 assert.equal(renderer.accessoryStyles.length, 20);
-assert.equal(renderer.toyStyles.length, 13);
+assert.equal(renderer.toyStyles.length, 20);
 
 const pictures = new Set();
 for (const avatarStyle of hairStyles) {
@@ -43,6 +43,9 @@ for (const avatarStyle of hairStyles) {
     const input = prefs.clean({
       name: 'Ariel', pronunciation: 'Ariel', gender: 'neutro',
       avatarStyle, outfitStyle,
+      achievements: { books: { 'o-escudo-das-vacinas': {
+        finished: true, medalEarnedAt: '2026-10-27T10:00:00.000Z'
+      } } },
       skinColor: '#83dca5', hairColor: '#c47b43', outfitColor: '#639de8',
       bottomStyle: 'shorts', bottomColor: '#d1834b', shoeColor: '#7147c3'
     });
@@ -52,7 +55,11 @@ for (const avatarStyle of hairStyles) {
     assert(svg.startsWith('<svg'));
     assert(svg.includes('viewBox="0 0 210 340"'));
     assert(svg.includes('#83dca5'), `Pele fantasia não aplicada a ${avatarStyle}/${outfitStyle}`);
-    assert(svg.includes('#639de8'), `Cor da roupa não aplicada a ${avatarStyle}/${outfitStyle}`);
+    if (outfitStyle !== 'doctor_coat') {
+      assert(svg.includes('#639de8'), `Cor da roupa não aplicada a ${avatarStyle}/${outfitStyle}`);
+    } else {
+      assert(svg.includes('data-detail="jaleco-medico"'), 'Jaleco médico precisa de desenho próprio');
+    }
     assert(svg.includes('#d1834b'), 'Cor do shorts não foi aplicada');
     assert(svg.includes('#7147c3'), 'Cor dos sapatos não foi aplicada');
     assert(svg.includes('data-source="'), 'As peças devem registrar o SVG de origem');
@@ -94,7 +101,7 @@ for (const hair of hairStyles) {
   if (hair !== 'bald') assert(newSources.hair[hair], `Penteado ${hair} sem mapeamento do SVG original`);
 }
 for (const outfit of outfits) {
-  assert(newSources.outfit[outfit], `Roupa ${outfit} sem mapeamento do SVG original`);
+  if (outfit !== 'doctor_coat') assert(newSources.outfit[outfit], `Roupa ${outfit} sem mapeamento do SVG original`);
 }
 
 const oldStorageKey = 'prateleira-de-livrinhos:protagonista:v1';
@@ -462,11 +469,11 @@ for (const file of downloaded) {
   assert(svg.includes('<svg') && svg.includes('</svg>'), `SVG de referência inválido: ${file}`);
 }
 
-console.log('✓ 25 cabelos × 24 roupas = 600 combinações com vetores originais do SVG Repo');
+console.log('✓ 25 cabelos × 25 roupas = 625 combinações, incluindo jaleco médico personalizado');
 console.log('✓ Careca, cabelos sem flores, boné maior e 20 acessórios desenhados em camadas');
 console.log('✓ Tiara de gatinho e capuz cobrindo todos os penteados sem alterá-los no perfil');
 console.log('✓ Flor sempre acima da tiara, capas atrás do corpo e máscaras exclusivas com óculos');
-console.log('✓ 13 brinquedos com ioiô desbloqueável, fantasia de fantasma, asas e skate');
+console.log('✓ 20 brinquedos com ioiô desbloqueável, fantasia de fantasma, instrumentos, asas e skate');
 console.log('✓ Patins liberados com 3 medalhas; itens bloqueados mais claros e em escala de cinza');
 console.log('✓ 5 partes de baixo, 5 calçados, 3 estampas de meias, boina com inicial e desbloqueio com 3 medalhas');
 console.log('✓ Camisas e moletons listrados, camiseta de time e cardigã alinhados ao corpo');

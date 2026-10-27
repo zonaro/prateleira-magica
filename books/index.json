@@ -10,6 +10,7 @@
       "color": "#f96b91",
       "language": "pt-BR",
       "label": "Disponível agora",
+      "subject": "Alfabetização · sílabas TR", "ageRange": [5, 8],
       "syllables": [
         "TRA",
         "TRE",
@@ -27,6 +28,7 @@
       "color": "#8b79dd",
       "language": "pt-BR",
       "label": "5 sílabas novas",
+      "subject": "Alfabetização · sílabas DR", "ageRange": [5, 8],
       "syllables": ["DRA", "DRE", "DRI", "DRO", "DRU"]
     },
     {
@@ -38,6 +40,7 @@
       "color": "#4c9fbe",
       "language": "pt-BR",
       "label": "10 sílabas juntas",
+      "subject": "Alfabetização · leitura", "ageRange": [6, 9],
       "syllables": ["TRA", "TRE", "TRI", "TRO", "TRU", "DRA", "DRE", "DRI", "DRO", "DRU"]
     },
     {
@@ -50,7 +53,48 @@
       "medal": "🎨 Medalha das Cores",
       "language": "pt-BR",
       "label": "Novo! 🎨",
+      "subject": "Artes · cores", "ageRange": [4, 8],
       "syllables": ["VERMELHO", "AZUL", "AMARELO", "VERDE", "ROXO"]
+    },
+    {
+      "id": "a-orquestra-dos-sons", "data": "books/a-orquestra-dos-sons.json",
+      "title": "{{nome}} e a Orquestra dos Sons", "subtitle": "Da natureza à nossa voz: escute o mundo!",
+      "cover": "assets/illustrations/aprender/sons.svg", "color": "#5fbb9e", "language": "pt-BR",
+      "medal": "🎧 Medalha dos Sons", "label": "🎁 2 presentes",
+      "subject": "Ciências · sons e comunicação", "ageRange": [4, 7],
+      "rewards": ["Fones de ouvido", "Caixa de som"]
+    },
+    {
+      "id": "a-festa-das-notas", "data": "books/a-festa-das-notas.json",
+      "title": "{{nome}} e a Festa das Notas", "subtitle": "Toque Dó, Ré, Mi e descubra as cifras!",
+      "cover": "assets/illustrations/aprender/musica.svg", "color": "#9b86e7", "language": "pt-BR",
+      "medal": "🎼 Medalha da Música", "label": "🎹 Teclado interativo",
+      "subject": "Música · notas e cifras", "ageRange": [5, 9],
+      "rewards": ["Mini teclado", "Violão", "Flauta"]
+    },
+    {
+      "id": "o-jardim-dos-sentimentos", "data": "books/o-jardim-dos-sentimentos.json",
+      "title": "{{nome}} e o Jardim dos Sentimentos", "subtitle": "Alegria, tristeza, medo: todo sentimento tem lugar!",
+      "cover": "assets/illustrations/aprender/sentimentos.svg", "color": "#f08cba", "language": "pt-BR",
+      "medal": "💗 Medalha do Coração", "label": "💗 Pelúcia especial",
+      "subject": "Emoções · convivência", "ageRange": [3, 7],
+      "rewards": ["Pelúcia de coração mágico"]
+    },
+    {
+      "id": "o-escudo-das-vacinas", "data": "books/o-escudo-das-vacinas.json",
+      "title": "{{nome}} e o Escudo das Vacinas", "subtitle": "Cuidar de mim é uma aventura corajosa",
+      "cover": "assets/illustrations/aprender/vacinas.svg", "color": "#67b9d8", "language": "pt-BR",
+      "medal": "🛡️ Medalha do Cuidado", "label": "🩺 Cuidar é coragem",
+      "subject": "Saúde · vacinação", "ageRange": [4, 8],
+      "rewards": ["Kit médico", "Jaleco de médico"]
+    },
+    {
+      "id": "o-corpo-em-movimento", "data": "books/o-corpo-em-movimento.json",
+      "title": "{{nome}} e o Corpo em Movimento", "subtitle": "Mexa, brinque, descanse e beba água!",
+      "cover": "assets/illustrations/aprender/movimento.svg", "color": "#f5b763", "language": "pt-BR",
+      "medal": "🏃 Medalha do Movimento", "label": "💪 Mexa-se!",
+      "subject": "Saúde · atividade física", "ageRange": [4, 8],
+      "rewards": ["Halteres", "Garrafinha com água colorida"]
     }
   ]
 }

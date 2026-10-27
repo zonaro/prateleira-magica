@@ -45,8 +45,19 @@
         <div class="shelf-controls">
           <div class="shelf-search">
             <label for="bookSearch" class="visually-hidden">Buscar livro</label>
-            <input type="search" id="bookSearch" class="shelf-search-input" placeholder="🔍 Buscar por título..." autocomplete="off">
+            <input type="search" id="bookSearch" class="shelf-search-input" placeholder="🔍 Buscar por título ou assunto..." autocomplete="off">
           </div>
+          <label class="shelf-filter-label" for="bookTopic">Assunto
+            <select id="bookTopic" class="shelf-select"><option value="">Todos os assuntos</option></select>
+          </label>
+          <label class="shelf-filter-label" for="bookAge">Idade recomendada
+            <select id="bookAge" class="shelf-select">
+              <option value="">Todas as idades</option>
+              <option value="3">3 anos</option><option value="4">4 anos</option><option value="5">5 anos</option>
+              <option value="6">6 anos</option><option value="7">7 anos</option><option value="8">8 anos</option>
+              <option value="9">9 anos</option>
+            </select>
+          </label>
           <div class="shelf-sort">
             <label for="bookSort" class="visually-hidden">Ordenar por</label>
             <select id="bookSort" class="shelf-select">

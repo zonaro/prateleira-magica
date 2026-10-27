@@ -19,7 +19,7 @@ const required = [
   'assets/css/app.css', 'assets/images/pix-qrcode.png', 'assets/js/library.js', 'assets/js/reader.js', 'assets/js/avatar-parts.js', 'assets/js/avatar-presets.js', 'assets/js/avatar.js',
   'assets/data/avatar-presets.json',
   'assets/js/preferences.js', 'assets/js/avatar-photo-colors.js', 'assets/js/avatar-photo.js', 'assets/js/settings-ui.js', 'assets/js/profile.js', 'assets/js/page-turn.js',
-  'assets/js/colors.js', 'assets/js/color-explorer.js', 'assets/vendor/NameToColor.js', 'assets/vendor/NameToColor.ptBR.js',
+  'assets/js/colors.js', 'assets/js/color-explorer.js', 'assets/js/music-keyboard.js', 'assets/vendor/NameToColor.js', 'assets/vendor/NameToColor.ptBR.js',
   'assets/js/pet-parts.js', 'assets/pets/catalog.json',
   'tools/vendor-mediapipe.mjs', 'tools/mediapipe-dependencies.json',
   'assets/js/pwa.js', 'books/index.json', 'assets/icons/icon.svg'
@@ -28,7 +28,7 @@ required.forEach(reference);
 
 for (const scriptFile of ['assets/js/avatar.js', 'assets/js/library.js', 'assets/js/reader.js', 'assets/js/preferences.js',
   'assets/js/settings-ui.js', 'assets/js/avatar-photo-colors.js', 'assets/js/avatar-photo.js', 'assets/js/profile.js', 'assets/js/page-turn.js', 'assets/js/colors.js',
-  'assets/js/color-explorer.js', 'assets/js/avatar-presets.js', 'assets/js/pet-parts.js', 'assets/js/pwa.js', 'sw.js']) {
+  'assets/js/color-explorer.js', 'assets/js/music-keyboard.js', 'assets/js/avatar-presets.js', 'assets/js/pet-parts.js', 'assets/js/pwa.js', 'sw.js']) {
   new Script(read(scriptFile), { filename: scriptFile });
 }
 
@@ -52,6 +52,8 @@ for (const entry of index.books) {
   assert.equal(book.schemaVersion, 1);
   assert.equal(book.id, entry.id);
   assert(book.language && book.title && Array.isArray(book.pages) && book.pages.length, `Livro inválido: ${entry.id}`);
+  assert(entry.subject === book.subject, `Assunto inconsistente em ${entry.id}`);
+  assert(JSON.stringify(entry.ageRange) === JSON.stringify(book.ageRange), `Faixa etária inconsistente em ${entry.id}`);
   assert(book.title.includes('{{nome}}'), `Livro não herda o nome da criança: ${entry.id}`);
   assert(!/\b(?:Ellie|ELLIE)\b/.test(JSON.stringify(book)), `Nome fixo da protagonista encontrado em ${entry.id}`);
   const coverSvg = read(entry.cover);

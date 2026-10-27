@@ -635,6 +635,8 @@ html[data-color-theme] .profile-tabs{border-color:var(--outline);background:var(
 .shelf-search-input:focus{outline:3px solid #f3d6e3;border-color:#f76e96}
 .shelf-sort{display:flex;align-items:center;gap:10px}
 .shelf-select{height:52px;padding:10px 16px;border:2px solid #e7dbe3;background:#fff;border-radius:16px;font-size:15px;font-weight:800;color:#4f556f}
+.shelf-filter-label{display:flex;flex-direction:column;gap:4px;font-size:12px;font-weight:900;color:#645d78}
+.shelf-filter-label .shelf-select{height:43px;padding:7px 10px;max-width:230px}
 .shelf-sort-dir{width:52px;height:52px;border:2px solid #e7dbe3;background:#fff;border-radius:16px;font-size:20px;cursor:pointer}
 
 /* Prateleira: cada item é um link com a capa em pé sobre o ripão da
@@ -747,6 +749,21 @@ html[data-color-theme] .profile-tabs{border-color:var(--outline);background:var(
   color:#a63a63;
   line-height:1.3
 }
+.book-bubble-meta{display:block;color:#625c80;font-size:9px;line-height:1.3;font-weight:900;margin-top:4px}
+.profile-book-subject{font-size:12px;font-weight:900;color:#8c679a;margin:3px 0 8px}
+.book-bibliography{font-size:13px;line-height:1.45;border:2px dashed #c9d9e6;border-radius:14px;padding:12px;margin:12px 0;overflow-wrap:anywhere}
+.book-bibliography h2{font-size:17px;margin:0 0 8px;color:#486d82}
+.book-bibliography p{margin:8px 0;display:flex;flex-direction:column;gap:3px}
+.reference-address{color:#647b88;user-select:text;font-size:11px;overflow-wrap:anywhere}
+.book-prizes{background:#e4f7e5;border:2px dashed #90cfa2;color:#316d4a;padding:12px;border-radius:14px;font-weight:900;font-size:16px;margin-top:12px}
+.music-keyboard{background:#f3ecff;border:2px solid #c6adee;border-radius:16px;padding:12px;color:#54446c;font-size:13px;margin:12px 0}
+.music-keyboard p{margin:0 0 10px;font-size:13px}
+.music-keys{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:3px}
+.music-key{display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:8px;min-width:0;min-height:90px;padding:9px 1px;background:#fff;border:2px solid #ae96d6;border-radius:5px 5px 10px 10px;color:#554c81;cursor:pointer;box-shadow:0 4px 0 #b7a4d1}
+.music-key:nth-child(even){background:#fcefff}.music-key strong{font-size:clamp(10px,1.3vw,16px)}.music-key span{font-weight:900;font-size:14px}
+.music-key:focus-visible{outline:3px solid #7762ad;outline-offset:2px}.music-key:active,.music-key.playing{background:#dec8ff;transform:translateY(3px);box-shadow:0 1px 0 #b7a4d1}
+.music-status{font-weight:900;color:#684c9b;margin:10px 0 0!important}
+@media(max-width:700px){.shelf-filter-label .shelf-select{max-width:none;width:100%}.music-keys{grid-template-columns:repeat(4,minmax(0,1fr))}.music-key{min-height:72px}.music-key strong{font-size:11px}.music-key span{font-size:12px}}
 
 @media(max-width:1000px){
   .landing-hero{grid-template-columns:1fr;gap:30px}

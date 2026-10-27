@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="700" viewBox="0 0 1000 700" role="img" aria-label="{{nome}} encontra um escudo protetor e uma equipe acolhedora na UBS">
+  <title>O Escudo das Vacinas de {{nome}}</title>
+  <defs><linearGradient id="sky" x2="0" y2="1"><stop stop-color="#b1e4f5"/><stop offset="1" stop-color="#e8faf5"/></linearGradient>
+    <symbol id="kid" viewBox="0 0 210 340"><circle cx="105" cy="98" r="70" fill="#e9aa83"/><path d="M42 166h126v174H42Z" fill="#ef97aa"/><circle cx="79" cy="91" r="6"/><circle cx="131" cy="91" r="6"/><path d="M80 126q25 19 50 0" stroke="#7e5870" stroke-width="6" fill="none"/></symbol></defs>
+  <rect width="1000" height="700" fill="url(#sky)"/>
+  <g fill="#fff" opacity=".85"><ellipse cx="192" cy="126" rx="130" ry="42"/><ellipse cx="760" cy="155" rx="165" ry="45"/></g>
+  <path d="M0 545Q280 470 500 550T1000 540V700H0Z" fill="#afe2c1"/><path d="M0 630Q350 575 1000 625V700H0Z" fill="#79c3ad"/>
+  <g transform="translate(520 124)"><path d="M155 0q87 63 157 62v147q-11 122-157 198Q11 331 0 209V62Q72 62 155 0Z" fill="#fff" stroke="#4b96b8" stroke-width="13"/>
+    <path d="M155 23q70 50 131 52v130q-12 102-131 169Q35 307 27 205V75q61-2 128-52Z" fill="#78d3b7"/>
+    <path d="M155 83v200M54 183h202" stroke="#fff" stroke-width="45" stroke-linecap="round"/><path d="M155 83v200M54 183h202" stroke="#67b1ce" stroke-width="14" stroke-linecap="round"/></g>
+  <g transform="translate(390 370)"><rect width="164" height="115" rx="26" fill="#fff9f3" stroke="#81afc4" stroke-width="7"/><path d="M80 26v63M50 57h61" stroke="#eb7b98" stroke-width="15" stroke-linecap="round"/></g>
+  <g fill="#fff3aa"><path d="m335 150 12 28 29 5-21 18 5 29-25-14-26 14 6-29-22-18 30-5Z"/><path d="m872 367 11 22 25 3-18 18 4 24-22-11-22 11 4-24-18-18 25-3Z"/></g>
+  <use href="#kid" x="118" y="310" width="215" height="340"/>
+</svg>

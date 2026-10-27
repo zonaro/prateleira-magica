@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="700" viewBox="0 0 1000 700" role="img" aria-label="{{nome}} toca notas coloridas em um palco musical">
+  <title>A Festa das Notas de {{nome}}</title>
+  <defs><linearGradient id="back" x2="1" y2="1"><stop stop-color="#b6a4f5"/><stop offset="1" stop-color="#ffccda"/></linearGradient>
+    <symbol id="kid" viewBox="0 0 210 340"><circle cx="105" cy="99" r="67" fill="#e9aa83"/><path d="M42 169h126v171H42Z" fill="#77b5e2"/><circle cx="80" cy="92" r="6"/><circle cx="130" cy="92" r="6"/><path d="M82 126q23 17 46 0" stroke="#5c4e70" stroke-width="6" fill="none"/></symbol></defs>
+  <rect width="1000" height="700" fill="url(#back)"/><circle cx="510" cy="310" r="280" fill="#fff8ec" opacity=".62"/>
+  <path d="M0 0q120 165 0 320M1000 0q-120 165 0 320" fill="none" stroke="#8c6ad0" stroke-width="95"/>
+  <rect x="0" y="573" width="1000" height="127" fill="#8e75d2"/><rect x="0" y="573" width="1000" height="16" fill="#fff2b7"/>
+  <g fill="#fff2a7"><path d="m214 80 12 29 31 4-23 20 6 30-26-15-26 15 6-30-23-20 31-4Z"/><path d="m800 65 10 25 27 3-19 19 5 25-23-12-23 12 5-25-19-19 27-3Z"/></g>
+  <g fill="none" stroke="#7a63b7" stroke-width="8" opacity=".5"><path d="M310 236q180-45 375 0M310 269q180-45 375 0M310 302q180-45 375 0M310 335q180-45 375 0M310 368q180-45 375 0"/></g>
+  <g fill="#fb708f" stroke="#764fa3" stroke-width="5"><ellipse cx="368" cy="336" rx="19" ry="13"/><path d="M386 334V249"/><ellipse cx="487" cy="286" rx="19" ry="13"/><path d="M505 284V209"/><ellipse cx="604" cy="366" rx="19" ry="13"/><path d="M622 363V278"/></g>
+  <g transform="translate(395 442)"><rect width="420" height="116" rx="21" fill="#635a96"/><rect x="14" y="16" width="392" height="87" rx="7" fill="#fff"/>
+    <g fill="#202c4c"><rect x="52" y="16" width="28" height="53" rx="4"/><rect x="107" y="16" width="28" height="53" rx="4"/><rect x="217" y="16" width="28" height="53" rx="4"/><rect x="270" y="16" width="28" height="53" rx="4"/><rect x="322" y="16" width="28" height="53" rx="4"/></g>
+    <g stroke="#aaa2ba" stroke-width="3"><path d="M70 73v29M125 73v29M179 16v87M233 72v30M288 72v30M344 72v30"/></g></g>
+  <g font-family="system-ui,sans-serif" font-size="38" font-weight="900" fill="#6854a8"><text x="407" y="423">C</text><text x="457" y="423">D</text><text x="508" y="423">E</text><text x="562" y="423">F</text><text x="616" y="423">G</text><text x="674" y="423">A</text><text x="728" y="423">B</text></g>
+  <use href="#kid" x="125" y="280" width="205" height="335"/>
+</svg>

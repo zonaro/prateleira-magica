@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1, "id": "o-corpo-em-movimento", "title": "{{nome}} e o Corpo em Movimento",
+  "subtitle": "Pule, dance, descanse e cuide de você",
+  "subject": "Saúde · atividade física", "ageRange": [4, 8], "language": "pt-BR",
+  "cover": "assets/illustrations/aprender/movimento.svg", "color": "#f5b763", "medal": "🏃 Medalha do Movimento",
+  "rewards": [{"id":"dumbbells","label":"Halteres de brinquedo"},{"id":"water_bottle","label":"Garrafinha de água com líquido personalizável"}],
+  "exercises": [
+    {"syllable":"🕺","text":"Dançar também é mexer o corpo."},
+    {"syllable":"🤸","text":"Pular e brincar podem ser divertidos."},
+    {"syllable":"💧","text":"Beber água ajuda meu corpo a funcionar bem."},
+    {"syllable":"😴","text":"Descansar e dormir fazem parte do cuidado."},
+    {"syllable":"💚","text":"Cada corpo tem seu ritmo e seu jeito."},
+    {"syllable":"🤝","text":"Brincar com segurança e pedir ajuda é importante."}
+  ],
+  "pages": [
+    {"type":"cover","illustration":"assets/illustrations/aprender/movimento.svg","sticker":"MEXE, MEXE!","chapter":"A praça das brincadeiras 🌈","title":"{{nome}} e o Corpo em Movimento","blocks":[{"kind":"paragraph","text":"{{nome}} encontrou uma praça cheia de desafios divertidos. O primeiro era bem simples: esticar os braços como uma estrela!"},{"kind":"dialogue","text":"— Nosso corpo adora descobrir jeitos diferentes de se mexer!"}]},
+    {"type":"story","illustration":"assets/illustrations/aprender/movimento.svg","sticker":"DANÇA DA ALEGRIA","chapter":"Capítulo 1 · Movimento","title":"Um, dois, três... mexeu!","blocks":[{"kind":"paragraph","text":"Correr, andar, dançar, rolar, pedalar e brincar são maneiras de mover o corpo. A turma inventou uma dança maluca!"},{"kind":"paragraph","text":"O movimento nos ajuda a aprender habilidades, brincar e cuidar da saúde."}]},
+    {"type":"story","illustration":"assets/illustrations/aprender/movimento.svg","sticker":"CADA UM DO SEU JEITO","chapter":"Capítulo 2 · Inclusão","title":"Não existe um corpo só","blocks":[{"kind":"paragraph","text":"Cada criança brinca no seu ritmo. Algumas pulam, outras movem os braços, dançam sentadas ou usam apoios."},{"kind":"dialogue","text":"— Toda forma segura e gostosa de brincar merece espaço!"}]},
+    {"type":"story","illustration":"assets/illustrations/aprender/movimento.svg","sticker":"GOTINHAS DE ENERGIA","chapter":"Capítulo 3 · Água","title":"A garrafinha amiga","blocks":[{"kind":"paragraph","text":"Depois de brincar, {{nome}} sentiu sede e bebeu [[água]]. Nos dias quentes e nas brincadeiras, vale fazer pausas para beber água."},{"kind":"paragraph","text":"A água ajuda o corpo a funcionar. Ela não precisa ter cor para ser uma delícia! No avatar, a garrafinha de brinquedo pode ter líquido colorido de fantasia."}]},
+    {"type":"story","illustration":"assets/illustrations/aprender/movimento.svg","sticker":"PAUSA TAMBÉM É CUIDADO","chapter":"Capítulo 4 · Descanso","title":"O banco das nuvens","blocks":[{"kind":"paragraph","text":"{{nome}} se sentou depois da dança. Respirou, descansou e sentiu o corpo recuperar o fôlego."},{"kind":"paragraph","text":"Dormir bem, fazer pausas e contar a um adulto quando algo dói são jeitos importantes de se cuidar."}]},
+    {"type":"story","illustration":"assets/illustrations/aprender/movimento.svg","sticker":"FORÇA DE BRINCADEIRA","chapter":"Capítulo 5 · Força","title":"Halteres de faz de conta","blocks":[{"kind":"paragraph","text":"A turma brincou de super-heróis usando halteres de brinquedo bem levinhos. Força não é competição nem precisa de peso de verdade."},{"kind":"dialogue","text":"— Vamos empurrar o ar, equilibrar e inventar poses com cuidado!"}],"tip":"Atividades com pesos reais exigem orientação adequada de um adulto qualificado."},
+    {"type":"story","illustration":"assets/illustrations/aprender/movimento.svg","sticker":"EQUIPE DO BEM-ESTAR","chapter":"Capítulo 6 · Hábitos","title":"A receita da praça","blocks":[{"kind":"paragraph","text":"Um pouquinho de movimento ao longo do dia, brincadeiras variadas, água, comida e sono: que equipe fantástica!"},{"kind":"paragraph","text":"Se o corpo reclamar, pare e conte para alguém de confiança. O mais legal é encontrar movimentos de que você gosta."}]},
+    {"type":"story","interactive":"bibliography","illustration":"assets/illustrations/aprender/movimento.svg","sticker":"PARA ADULTOS 📚","chapter":"Fontes para a família","title":"De onde vem essa história?","blocks":[{"kind":"paragraph","text":"Esta página é para quem cuida de você. Os endereços abaixo são referências escritas, não links nem botões."}],
+      "bibliography":[
+        {"title":"CDC — Recomendações de atividade física para crianças","url":"portugues.cdc.gov/physical-activity-basics/guidelines/children.html"},
+        {"title":"CDC — Hábitos saudáveis para crianças e adolescentes","url":"portugues.cdc.gov/healthy-weight-growth/tips-parents-caregivers/"},
+        {"title":"Ministério da Saúde — Saúde da Criança","url":"www.gov.br/saude/pt-br/assuntos/saude-de-a-a-z/s/saude-da-crianca"}
+      ],"tip":"Fontes para responsáveis. Ajuste atividades às necessidades e condições de cada criança."},
+    {"type":"challenge","illustration":"assets/illustrations/aprender/movimento.svg","sticker":"DESAFIO DO MOVIMENTO","chapter":"Missão bem-estar 🎯","title":"Seis hábitos para lembrar","blocks":[{"kind":"paragraph","text":"Leia ou escute as frases e marque depois de tentar. Se quiser, faça uma dancinha entre uma frase e outra!"}]},
+    {"type":"finish","illustration":"assets/illustrations/aprender/movimento.svg","sticker":"MEDALHA DO MOVIMENTO","chapter":"Mandou bem, {{nome}}!","title":"Seu corpo é seu companheiro!","blocks":[{"kind":"paragraph","text":"Você descobriu que brincar, beber água e descansar fazem parte da saúde. Halteres de brinquedo e uma garrafinha com cor mágica agora esperam seu avatar!"}],"medal":"🏃 Medalha do Movimento conquistada!"}
+  ]
+}
