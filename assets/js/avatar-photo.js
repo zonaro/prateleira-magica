@@ -149,28 +149,38 @@
     return rough > .17 ? 'curly' : 'short';
   }
 
-  function estimateGlasses(mask, mx, my, width, height, points, bounds) {
+  function estimateGlasses(pixels, mask, mx, my, width, height, points, bounds) {
     const faceW = bounds.right - bounds.left;
     const faceH = bounds.bottom - bounds.top;
     const eyePairs = [[33, 133], [362, 263]];
+    const frameSamples = [];
     const sides = eyePairs.map(([first, last]) => {
       const a = points[first], b = points[last];
       if (!a || !b) return { ratio: 0 };
-      const cx = (a.x + b.x) * width / 2;
-      const cy = (a.y + b.y) * height / 2;
-      return occupancy(mask, mx, my, width, height,
-        boundedRect(cx - faceW * .14, cy - faceH * .065,
-          cx + faceW * .14, cy + faceH * .075, width, height), LABEL.accessory);
+      const cx = (a.x + b.x) * width / 2, cy = (a.y + b.y) * height / 2;
+      const region = boundedRect(cx - faceW * .14, cy - faceH * .09,
+        cx + faceW * .14, cy + faceH * .09, width, height);
+      // A máscara de acessórios seleciona pixels da armação, não da pele ao redor.
+      frameSamples.push(...samplePixels(pixels, mask, mx, my, width, height, region, LABEL.accessory));
+      return occupancy(mask, mx, my, width, height, region, LABEL.accessory);
     });
     const bridge = points[168];
-    const bridgeScore = bridge ? occupancy(mask, mx, my, width, height,
-      boundedRect(bridge.x * width - faceW * .055, bridge.y * height - faceH * .04,
-        bridge.x * width + faceW * .055, bridge.y * height + faceH * .075,
-        width, height), LABEL.accessory).ratio : 0;
-    // Modelo multiclasse não é classificador de óculos; só sugerir quando há
-    // sinais dos dois lados E na ponte. Não apagar óculos em um falso negativo.
-    const positive = sides.every((side) => side.ratio > .16) && bridgeScore > .08;
-    return { value: Boolean(positive), confidence: positive ? 'estimativa' : 'baixa' };
+    let bridgeScore = 0;
+    if (bridge) {
+      const region = boundedRect(bridge.x * width - faceW * .065, bridge.y * height - faceH * .06,
+        bridge.x * width + faceW * .065, bridge.y * height + faceH * .09, width, height);
+      bridgeScore = occupancy(mask, mx, my, width, height, region, LABEL.accessory).ratio;
+      frameSamples.push(...samplePixels(pixels, mask, mx, my, width, height, region, LABEL.accessory));
+    }
+    // A categoria "acessórios" NÃO identifica especificamente óculos.
+    // Exigir sinais bilaterais e ponte reduz falsos positivos.
+    const positive = sides.every((side) => side.count > 3 && side.ratio > .12)
+      && bridgeScore > .05;
+    return {
+      value: Boolean(positive),
+      color: positive && frameSamples.length >= 9 ? color.trimmedColor(frameSamples, .12) : null,
+      confidence: positive ? 'estimativa' : 'baixa'
+    };
   }
 
   /** Input: canvas local efêmero. Output: apenas opções de personalização. */
@@ -226,17 +236,18 @@
       const outfitSamples = samplePixels(pixels, mask, mw, mh, width, height,
         torsoRect, LABEL.outfit);
       const catalog = window.LivrinhoAvatar;
-      const readHair = hairSamples.length > 20 ? color.trimmedColor(hairSamples) : null;
-      const readOutfit = outfitSamples.length > 25 ? color.trimmedColor(outfitSamples) : null;
-      const glasses = estimateGlasses(mask, mw, mh, width, height, landmarks, bounds);
+      const readHair = hairSamples.length > 20 ? color.dominantHairColor(hairSamples) : null;
+      const readOutfit = outfitSamples.length > 25 ? color.dominantHairColor(outfitSamples) : null;
+      const glasses = estimateGlasses(pixels, mask, mw, mh, width, height, landmarks, bounds);
       return {
         skinColor: color.nearestColor(skinRaw, NATURAL_SKIN),
-        hairColor: readHair ? color.nearestColor(readHair, catalog.hairColors.slice(0, 5)) : null,
+        hairColor: readHair ? color.nearestColor(readHair, catalog.hairColors) : null,
         outfitColor: readOutfit ? color.nearestColor(readOutfit, catalog.outfitColors) : null,
         avatarStyle: readHair ? estimateHair(mask, mw, mh, width, height, bounds) : null,
         glasses: glasses.value,
+        accessoryColor: glasses.color ? color.nearestColor(glasses.color, catalog.accessoryColors) : null,
         glassesConfidence: glasses.confidence,
-        raw: { skin: skinRaw, hair: readHair, outfit: readOutfit },
+        raw: { skin: skinRaw, hair: readHair, outfit: readOutfit, glasses: glasses.color },
         warnings: [
           ...(!readHair ? ['Cabelo não identificado; mantivemos a escolha anterior.'] : []),
           ...(!readOutfit ? ['Roupa não identificada; mantivemos a cor anterior.'] : []),
