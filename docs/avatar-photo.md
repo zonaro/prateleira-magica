@@ -1,83 +1,127 @@
-# Avatar automático por foto (MediaPipe no navegador)
+# Avatar automático por foto — modelo local e privacidade infantil
 
-## Visão geral
+## Arquitetura
 
-O app é estático (HTML, CSS e JavaScript vanilla, sem React ou build). O botão
-**📷 Criar pela minha foto** aparece no editor de `perfil.html#personalizar`.
-A interface é injetada pelo módulo `assets/js/avatar-photo.js`, que abre um
-`<dialog>` nativo com câmera (MediaDevices) e escolha de JPG/PNG/WebP.
+O projeto é estático e usa **HTML + JavaScript vanilla**, sem React, bundler
+ou backend. A opção **📷 Criar pela minha foto** aparece em
+`perfil.html#personalizar`, na interface gerada por `assets/js/settings-ui.js`.
 
-1. O usuário abre a câmera ou escolhe arquivo (até 10 MB).
-2. A foto é decodificada em memória e reduzida a até 768 px no maior lado.
-3. O MediaPipe `FaceLandmarker` encontra pontos do rosto, com validação de
-   tamanho, posição e iluminação.
-4. O `ImageSegmenter` usando `SelfieMulticlass` separa rosto (3), cabelo (1),
-   roupas (4) e acessórios (5). O Canvas lê pixels só dessas classes e regiões.
-5. Uma média aparada por canal reduz efeitos de sombras e reflexos. A função
-   `nearestColor` usa a menor distância euclidiana RGB para buscar cores das
-   paletas reais de `LivrinhoAvatar` / editor (pele: seis cores naturais).
-6. É gerada uma sugestão de `skinColor`, `hairColor`, `outfitColor`,
-   `avatarStyle` e `glasses`. Campos com amostras insuficientes são ignorados.
-7. O editor chama `edit('avatar-photo', ...)`, atualizando SVG,
-   `presetEdits`, undo e salvamento local de **configurações**. A foto não entra
-   nesse estado nem nos backups.
-8. O Canvas temporário é zerado, ImageBitmap é fechado, `input[type=file]` é
-   limpo, tracks da câmera são interrompidas e máscaras MediaPipe são liberadas.
+O processo é inteiramente client-side:
 
-## Limites e revisão pela criança / responsável
+1. Ao escolher imagem ou usar `navigator.mediaDevices.getUserMedia`, a
+   foto fica somente na memória da aba e é reduzida a, no máximo, 768 px no
+   maior lado, usando um Canvas temporário.
+2. O **FaceLandmarker** identifica 1 rosto (rejeita zero ou mais de um).
+3. O **ImageSegmenter / SelfieMulticlass** identifica cabelo, face, roupa e
+   acessórios. O Canvas extrai pixels das regiões relevantes; média aparada
+   descarta parte dos extremos e a distância euclidiana RGB aproxima a cor às
+   paletas do avatar existentes. Não extrapola gênero, etnia, idade ou identidade.
+4. Os campos `skinColor`, `hairColor`, `outfitColor` e `avatarStyle` são
+   propostos. Um sinal positivo de possível armação ao redor dos olhos pode
+   sugerir `glasses_round`. Valores incertos não alteram a escolha atual.
+5. `settings-ui.js` aplica as sugestões usando `edit('avatar-photo', ...)`,
+   preservando `presetEdits`, undo, atualização SVG, medalhas e outros dados.
+6. A foto não é passada ao módulo de preferências nem salva. Bitmap, máscara,
+   Canvas e câmera são liberados após aplicação, erro ou cancelamento.
 
-- **Penteado**: usa alcance vertical e irregularidade aproximada da máscara de
-  cabelo; não é um classificador confiável de liso/cacheado. O avatar tem 25
-  estilos que não correspondem um-a-um aos cabelos do mundo real.
-- **Óculos**: sinal heurístico de "acessórios" ao redor dos dois olhos e da
-  ponte nasal. Não detecta armações com confiabilidade clínica; só adiciona
-  `glasses_round` quando o sinal positivo é suficiente e não há outro
-  acessório facial. Um falso negativo não remove um acessório existente.
-- **Luz**: pele fotografada não é a cor real absoluta; balanço de branco,
-  sombras e filtros afetam o resultado. A criança pode ajustar manualmente
-  cada campo depois de aplicar.
-- Foto ideal: **uma única pessoa**, rosto frontal nítido e torso visível,
-  sem filtros, iluminação suave. O modelo pode errar mesmo nessas condições.
-- Nunca inferir etnia, gênero, idade ou identidade a partir da foto.
+**Atenção:** cor da pele e cabelo estimados dependem da luz, do balanço de
+branco e da qualidade da segmentação. Textura de cabelo e óculos são heurísticas
+de baixa confiabilidade; sempre é possível corrigir pelo editor manual.
 
-## Privacidade infantil e dependências
+## Hospedagem 100% na mesma origem
 
-A foto **não** é enviada à aplicação, logada, colocada em IndexedDB,
-localStorage, Cache Storage, backups ou metadados do perfil. Captura e inferência
-ocorrem no cliente. A remoção de referências, limpeza de Canvas e parada da
-câmera permitem que o navegador libere a memória, mas não constituem garantia
-de sobrescrita física instantânea em todos os navegadores/dispositivos.
+Os scripts, WASM e modelos de ML são **servidos pelo próprio GitHub Pages**,
+na mesma origem da aplicação. Nenhuma foto é enviada a terceiros e o runtime
+não carrega JS nem modelos de CDNs. O `perfil.html` ainda aplica uma política
+de segurança bloqueando conexões `fetch`/beacon e imagens de outras origens.
 
-**Importante:** esta primeira versão baixa o pacote MediaPipe `0.10.22`
-pelo jsDelivr e dois modelos do Google Cloud Storage **somente quando o recurso
-é acionado**. Esses pedidos de download revelam aos fornecedores informações
-usuais de rede (por exemplo IP). A documentação do MediaPipe declara que os
-dados de imagem são processados no dispositivo, mas sua política informa que
-a biblioteca pode enviar métricas de uso/performance. Obtenha a autorização
-adequada de responsável antes de usar fotos de crianças.
+O código do navegador referencia:
 
-Para modo **integralmente offline, sem conexões com terceiros**: hospedar
-`vision_bundle.mjs` e `wasm/*` da mesma versão de MediaPipe e os arquivos
-`face_landmarker.task`, `selfie_multiclass_256x256.tflite` dentro de
-`assets/vendor/mediapipe/`; alterar as constantes `MP_ROOT`, `FACE_MODEL`
-e `MULTICLASS_MODEL` em `assets/js/avatar-photo.js`; atualizar o
-`APP_SHELL` em `sw.js` e incrementar a versão do cache. Não misture versões
-diferentes do pacote e WASM. A primeira ativação do PWA deverá pré-carregar
-esses binários. A versão atual **exige internet na primeira análise**; não
-promete uso offline dos modelos.
+```
+assets/vendor/mediapipe/vision_bundle.mjs
+assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+assets/vendor/mediapipe/wasm/vision_wasm_internal.wasm
+assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.wasm
+assets/vendor/mediapipe/models/face_landmarker.task
+assets/vendor/mediapipe/models/selfie_multiclass_256x256.tflite
+```
 
-## Executar e testar
+Esses binários são grandes e **não são versionados no Git**. O arquivo
+`tools/mediapipe-dependencies.json` fixa a versão do pacote npm
+`@mediapipe/tasks-vision@0.10.21` e os endereços de origem dos modelos.
+O script `tools/vendor-mediapipe.mjs` extrai os arquivos do pacote npm,
+baixa os modelos no ambiente de build e registra tamanhos/hashes SHA-256 em
+`BUILD-INFO.json`. A publicação copia todos para `_site/assets/vendor/`.
+Há cópia dos avisos de licença do pacote, quando distribuídos.
+
+Na rede do **usuário final** só existe o domínio do Prateleira Mágica:
+`zonaro.github.io`. Conexões com npm/Google são exclusivamente do ambiente
+de desenvolvimento/CI, **antes** da publicação.
+
+### Preparar ambiente de desenvolvimento
+
+Requisitos de desenvolvimento: Node.js 20+, npm, tar e rede na etapa de setup.
 
 ```sh
+node tools/vendor-mediapipe.mjs
 python3 -m http.server 8000
+```
+
+Abra `http://localhost:8000/perfil.html#personalizar`. A câmera exige
+HTTPS ou localhost e permissão explícita. Abrir arquivos `file://` não serve.
+
+### Testar
+
+```sh
+node tools/vendor-mediapipe.mjs
 node tests/avatar-photo.test.mjs
 node tests/verify.mjs
 node tests/offline.test.mjs
 ```
 
-Abra `http://localhost:8000/perfil.html#personalizar` ou o GitHub Pages
-(HTTPS). Webcam exige contexto seguro e permissão explícita. Testes manuais:
-fotografia clara, rosto pequeno, ausência de rosto, múltiplas pessoas, webcam
-negada, cancelar no meio do carregamento, trocar de aba durante câmera ativa,
-upload inválido, desempenho no Android e desfazer após aplicar. Verifique a aba
-**Network** do DevTools: nenhum pedido deve conter bytes da foto.
+O CI de PR e o workflow de deploy fazem o setup **antes** de validar ou
+publicar. O deploy principal continua estático, sem dependências npm em
+produção.
+
+### Offline
+
+O Service Worker do PWA baixa os arquivos do MediaPipe para o Cache Storage
+durante a instalação/atualização, separadamente do núcleo do app. Assim, um
+erro/quota insuficiente para ~dezenas de MB de modelos **não impede a
+prateleira e os livros de funcionar offline**; porém o reconhecimento por
+foto só ficará disponível offline quando **todos** os recursos de IA tiverem
+sido salvos. A primeira instalação/atualização precisa estar online para
+popular o cache. Em caso de erro, abra a página online novamente.
+
+As rotas `assets/vendor/mediapipe/*` são cache-first, inclusive WASM,
+JS e modelos, reduzindo tráfego e tempo ao retornar à função. O cache é
+renovado quando `CACHE_NAME` muda.
+
+## Revisão e segurança
+
+- Navegador bloqueando câmera: recurso de arquivo continua disponível.
+- Mesmo que o consentimento da câmera seja negado, o aplicativo não perde o
+  avatar, progresso nem medalhas.
+- Foto só existe na memória volátil do navegador; a limpeza evita
+  persistência do nosso código, mas não promete sobrescrita de RAM física.
+- A biblioteca MediaPipe possui um **aviso próprio** de métricas de uso e
+  desempenho (https://developers.google.com/edge/mediapipe/solutions/tasks).
+  A política `connect-src 'self'` foi adicionada à página infantil para
+  impedir conexões de telemetria externas convencionais; isso não equivale
+  a uma auditoria completa do binário de terceiros. Reavaliar as políticas e
+  consentimentos pertinentes antes de uso público por crianças.
+- Não usar fotos infantis reais no CI, em logs, Issues nem capturas públicas.
+- Teste manual em Android/iOS/desktop: câmera autorizada/negada, selfie
+  frontal, roupa visível, rosto pequeno, vários rostos, pouca luz, sem rede
+  após instalação, troca de aba, cancelar, upload inválido e desfazer.
+- Verifique a aba **Rede** do DevTools: carregamentos de modelos devem apontar
+  apenas para a origem da aplicação; nenhuma foto deve aparecer em requisições.
+
+## Atualizar modelos
+
+Modificar `tools/mediapipe-dependencies.json` conscientemente, repetir
+`node tools/vendor-mediapipe.mjs` e validar licenças, peso dos arquivos,
+versão dos WASM, algoritmo das categorias e hashes do modelo. Aumentar
+`CACHE_NAME` em `sw.js` e validar no mobile. Não usar modelos com URL
+mutável sem checagem de integridade.
