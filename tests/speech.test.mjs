@@ -38,6 +38,8 @@ controller.hearCurrentPage();
 assert.equal(spoken.length, 1);
 assert.equal(controller.getState(), 'playing');
 assert.equal(listen.attributes['aria-label'], 'Pausar leitura');
+// A síntese pode ainda estar na fila: não reiniciar enquanto speaking=false.
+synthesis.speaking = false;
 controller.hearCurrentPage();
 assert.equal(pauses, 1, 'Segundo clique deve pausar');
 assert.equal(spoken.length, 1, 'Pausar não deve gerar outra fala');

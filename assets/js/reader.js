@@ -108,11 +108,13 @@
     const current = book.pages[page];
     const words = current.blocks.map((block) => plainText(label(block.text))).join(' ');
     const synth = window.speechSynthesis;
-    if (currentSpeech && synth?.speaking && !synth.paused) {
+    // Alguns navegadores demoram para marcar `speaking=true` enquanto a fala
+    // já está na fila. Use o estado do botão para não reiniciar a narração.
+    if (currentSpeech && voiceState === 'playing') {
       synth.pause();
       voiceState = 'paused';
       updateListenButton();
-    } else if (currentSpeech && synth?.paused) {
+    } else if (currentSpeech && voiceState === 'paused') {
       synth.resume();
       voiceState = 'playing';
       updateListenButton();
