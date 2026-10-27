@@ -31,7 +31,10 @@ assert.equal(outfits.length, 24);
 assert.equal(new Set(hairStyles).size, 25);
 assert.equal(new Set(outfits).size, 24);
 assert.equal(renderer.petStyles.length, 20, 'Catálogo completo de pets original ausente');
-assert.deepEqual(renderer.bottomStyles.map(([key]) => key).join(','), 'pants,shorts,skirt');
+assert.equal(renderer.bottomStyles.map(([key]) => key).join(','), 'pants,shorts,skirt,long_skirt,diaper');
+assert.equal(renderer.footwearStyles.map(([key]) => key).join(','), 'sneakers,flipflops,socks,barefoot');
+assert.equal(renderer.sockPatterns.map(([key]) => key).join(','), 'plain,stripes,dots');
+assert.equal(renderer.accessoryStyles.length, 13);
 
 const pictures = new Set();
 for (const avatarStyle of hairStyles) {
@@ -55,15 +58,30 @@ for (const avatarStyle of hairStyles) {
     pictures.add(svg);
   }
 }
-// 'hoodie_patch' e 'hoodie_stripes' compartilham a mesma arte (mesmo SVG de
-// origem em avatar.js), então a unicidade vale para os demais pares.
-assert.equal(pictures.size, hairStyles.length * (outfits.length - 1), 'Cada combinação cabelo + roupa deve criar uma ilustração única');
+assert.equal(pictures.size, hairStyles.length * outfits.length, 'Cada combinação cabelo + roupa deve criar uma ilustração única');
 assert.notEqual(prefs.avatarSVG({ bottomStyle: 'pants' }), prefs.avatarSVG({ bottomStyle: 'shorts' }));
 assert.notEqual(prefs.avatarSVG({ bottomStyle: 'skirt' }), prefs.avatarSVG({ bottomStyle: 'shorts' }));
 assert(prefs.avatarSVG({ bottomStyle: 'skirt' }).includes('data-layer="tenis-esquerdo"'));
 assert(prefs.avatarSVG({ bottomStyle: 'skirt' }).includes('data-layer="tenis-direito"'));
 assert(prefs.avatarSVG({ bottomStyle: 'skirt' }).includes('translate(150 304) scale(-1 1)'), 'Os tênis devem ser espelhados com o mesmo alinhamento vertical');
 assert.equal(prefs.clean({ bottomStyle: 'skirt' }).bottomStyle, 'skirt');
+for (const [bottomStyle] of renderer.bottomStyles) {
+  assert.equal(prefs.clean({ bottomStyle }).bottomStyle, bottomStyle);
+  assert(prefs.avatarSVG({ bottomStyle }).includes('data-layer="pernas-originais-do-app"'));
+}
+for (const [footwearStyle] of renderer.footwearStyles) {
+  assert.equal(prefs.clean({ footwearStyle }).footwearStyle, footwearStyle);
+  const footwearSvg = prefs.avatarSVG({ footwearStyle });
+  assert.equal((footwearSvg.match(new RegExp(`data-footwear="${footwearStyle}"`, 'g')) || []).length, 2);
+}
+for (const [sockPattern] of renderer.sockPatterns) {
+  assert.equal(prefs.clean({ sockPattern }).sockPattern, sockPattern);
+  assert(prefs.avatarSVG({ footwearStyle: 'socks', sockPattern }).includes('data-footwear="socks"'));
+}
+assert.notEqual(prefs.avatarSVG({ footwearStyle: 'socks', sockPattern: 'stripes' }),
+  prefs.avatarSVG({ footwearStyle: 'socks', sockPattern: 'dots' }), 'Meias estampadas devem ser diferentes');
+assert.notEqual(prefs.avatarSVG({ bottomStyle: 'long_skirt' }), prefs.avatarSVG({ bottomStyle: 'skirt' }));
+assert.notEqual(prefs.avatarSVG({ bottomStyle: 'diaper' }), prefs.avatarSVG({ bottomStyle: 'shorts' }));
 const sourceAfro = fs.readFileSync(path.join(root, 'assets/avatar-reference/svgrepo-kids/38246-girl.svg'), 'utf8');
 const sourceHoodie = fs.readFileSync(path.join(root, 'assets/avatar-reference/svgrepo-kids/3852-boy.svg'), 'utf8');
 assert(sourceAfro.includes('M405.237,172') && prefs.avatarSVG({ avatarStyle: 'afro' }).includes('M405.237,172'),
@@ -92,6 +110,9 @@ assert.equal(migrated.bottomColor, '#5879b9');
 assert.equal(migrated.shoeColor, '#625a89');
 assert.equal(prefs.clean({ gender: 'masculino' }).outfitColor, '#6e9beb');
 assert.equal(prefs.clean({ gender: 'neutro' }).outfitColor, '#9b8ae5');
+assert.equal(prefs.clean({}).accessoryColor, '#fa7195');
+assert.equal(prefs.clean({}).footwearStyle, 'sneakers');
+assert.equal(prefs.clean({}).sockPattern, 'plain');
 assert(!prefs.avatarSVG({ avatarStyle: 'bald' }).includes('data-source="31423-girl"'), 'Careca não deve desenhar o cabelo padrão');
 assert(prefs.avatarSVG({ avatarStyle: 'bald' }).includes('M120 161v-28'), 'Careca precisa de cabeça arredondada');
 assert(!hairStyles.includes('cap'), 'Boné não deve aparecer na lista de penteados');
@@ -100,9 +121,48 @@ const capSvg = prefs.avatarSVG({ avatarStyle: 'bald', accessories: ['cap', 'glas
 assert(capSvg.includes('data-accessory="cap"') && capSvg.includes('data-accessory="glasses_round"'),
   'Boné e óculos devem ser desenhados simultaneamente');
 for (const [id] of renderer.accessoryStyles) {
-  assert(prefs.avatarSVG({ accessories: [id] }).includes(`data-accessory="${id}"`),
+  assert(renderer.avatarSVG({ accessories: [id] }).includes(`data-accessory="${id}"`),
     `Acessório ${id} não tem desenho`);
 }
+assert(renderer.avatarSVG({ name: 'Gabriel', accessories: ['plumber_beret'], accessoryColor: '#9c80df' }).includes('>G</text>'),
+  'Boina deve usar a primeira letra do nome');
+assert(renderer.avatarSVG({ name: 'Éllie', accessories: ['plumber_beret'] }).includes('>E</text>'),
+  'Boina precisa aceitar nomes acentuados');
+assert(prefs.avatarSVG({ accessories: ['flower_clip'], accessoryColor: '#8c6bd0' }).includes('fill="#8c6bd0"'),
+  'Flores acessórias devem aceitar a cor escolhida');
+assert(prefs.avatarSVG({ accessories: ['cap'] }).includes('scale(1.2)'), 'Boné precisa ser maior');
+const threeMedals = { books: Object.fromEntries(['um', 'dois', 'tres'].map(id => [id,
+  { challengeCompletedAt: '2026-10-27T10:00:00.000Z' }])) };
+assert(!prefs.clean({ accessories: ['plumber_beret'] }).accessories.includes('plumber_beret'),
+  'Boina deve ser bloqueada antes de 3 medalhas');
+assert(prefs.clean({ accessories: ['plumber_beret'], achievements: threeMedals }).accessories.includes('plumber_beret'),
+  'Boina deve ser liberada com 3 medalhas');
+const unlockedProfile = prefs.clean({ name: 'Gabriel', accessories: ['plumber_beret'],
+  accessoryColor: '#ed805d', achievements: threeMedals });
+const unlockedBackup = prefs.parseProfileSVG(prefs.exportProfileSVG(unlockedProfile));
+assert(unlockedBackup.accessories.includes('plumber_beret'), 'Boina deve sobreviver ao backup com três medalhas');
+assert.equal(unlockedBackup.accessoryColor, '#ed805d', 'Backup deve guardar a cor dos acessórios');
+for (const [id, expected] of [['hoodie', 'Moletom com capuz'], ['hoodie_zip', 'Moletom'],
+  ['hoodie_patch', 'Moletom com zíper'], ['necklace', 'Blusa com broche'],
+  ['bib', 'Regata com lantejoula'], ['flower_long', 'Longo liso']]) {
+  const found = [...renderer.hairStyles, ...renderer.outfitStyles].find(([style]) => style === id);
+  assert.equal(found?.[1], expected, `Nome incorreto para ${id}`);
+}
+for (const id of ['flower_braids', 'flower_bob', 'flower_heart', 'flower_long']) {
+  const piece = window.LivrinhoAvatarParts.hair[id];
+  assert(!/#BD445A|#FF6473|#F05467|#FFF2CE|#FFE095/.test(piece.front),
+    `Penteado ${id} ainda possui a flor original`);
+}
+for (const [outfitStyle, detail] of [['hoodie_stripes', 'listras-do-moletom'],
+  ['shirt_stripes', 'listras-da-camisa']]) {
+  assert(prefs.avatarSVG({ outfitStyle }).includes(`data-detail="${detail}"`),
+    `${outfitStyle} está sem as listras`);
+}
+for (const style of ['team_tee', 'cardigan']) {
+  assert(prefs.avatarSVG({ outfitStyle: style }).includes(`data-align="${style}"`),
+    `${style} não foi centralizado no corpo`);
+}
+assert(renderer.petStyles.some(([id, name]) => id === 'cute-animals' && name === 'Zebra'));
 const oldCapProfile = prefs.clean({ avatarStyle: 'cap', accessories: ['headphones', 'glasses_square'] });
 assert.equal(oldCapProfile.avatarStyle, 'short', 'Penteado boné antigo precisa migrar para cabelo curtinho');
 assert(oldCapProfile.accessories.includes('cap') && oldCapProfile.accessories.includes('glasses_square'));
@@ -178,7 +238,8 @@ const custom = prefs.save({
   name: backupName, pronunciation: 'Mia e Lua', gender: 'neutro',
   avatarStyle: 'braids', outfitStyle: 'overalls', skinColor: '#83dca5',
   hairColor: '#c47b43', outfitColor: '#639de8',
-  bottomStyle: 'shorts', bottomColor: '#7a5cd9', shoeColor: '#f4a85c'
+  bottomStyle: 'shorts', bottomColor: '#7a5cd9', shoeColor: '#f4a85c',
+  footwearStyle: 'socks', sockPattern: 'dots', accessoryColor: '#8c6bd0'
 });
 assert.deepEqual(Object.keys(custom.achievements.books), []);
 const bookId = 'ellie-e-o-trem-travesso';
@@ -209,6 +270,9 @@ assert.equal(restored.outfitColor, '#639de8');
 assert.equal(restored.bottomStyle, 'shorts');
 assert.equal(restored.bottomColor, '#7a5cd9');
 assert.equal(restored.shoeColor, '#f4a85c');
+assert.equal(restored.footwearStyle, 'socks');
+assert.equal(restored.sockPattern, 'dots');
+assert.equal(restored.accessoryColor, '#8c6bd0');
 const oldBackup = svgBackup
   .replace('&quot;bottomStyle&quot;:&quot;shorts&quot;,', '')
   .replace('&quot;bottomColor&quot;:&quot;#7a5cd9&quot;,', '')
@@ -217,6 +281,8 @@ const restoredOldBackup = prefs.parseProfileSVG(oldBackup);
 assert.equal(restoredOldBackup.bottomStyle, 'pants', 'Backups anteriores recebem calça padrão');
 assert.equal(restoredOldBackup.bottomColor, '#5879b9');
 assert.equal(restoredOldBackup.shoeColor, '#625a89');
+assert.equal(prefs.clean({ footwearStyle: 'none', sockPattern: 'invalid', accessoryColor: 'red' }).footwearStyle,
+  'sneakers', 'Opções inválidas de calçados devem voltar ao padrão');
 const backupWithSkirt = prefs.exportProfileSVG({ ...saved, bottomStyle: 'skirt' });
 assert.equal(prefs.parseProfileSVG(backupWithSkirt).bottomStyle, 'skirt', 'Saia deve sobreviver à exportação e importação SVG');
 assert.deepEqual([...restored.achievements.books[bookId].completedExercises], [0, 1, 2]);
@@ -264,6 +330,7 @@ assert.equal(prefs.load().name, backupName, 'Um arquivo inválido não altera o 
 const ui = fs.readFileSync(path.join(root, 'assets/js/settings-ui.js'), 'utf8');
 for (const marker of ['outfitStyles', 'hairColorOptions', 'outfitColorOptions', 'bottomStyles',
   'bottomColorOptions', 'shoeColorOptions', 'customHairColor', 'customOutfitColor',
+  'footwearStyles', 'sockPatterns', 'accessoryColorOptions', 'customAccessoryColor',
   'downloadProfile', 'importProfile', 'profileFile', 'parseProfileSVG']) {
   assert(ui.includes(marker), `Editor sem o controle ${marker}`);
 }
@@ -277,7 +344,9 @@ for (const file of downloaded) {
 }
 
 console.log('✓ 25 cabelos × 24 roupas = 600 combinações com vetores originais do SVG Repo');
-console.log('✓ Careca real, boné como acessório e 11 acessórios desenhados');
+console.log('✓ Careca, cabelos sem flores, boné maior, tapa-olho e 13 acessórios desenhados');
+console.log('✓ 5 partes de baixo, 4 calçados, 3 estampas de meias, boina com inicial e desbloqueio com 3 medalhas');
+console.log('✓ Camisas e moletons listrados, camiseta de time e cardigã alinhados ao corpo');
 console.log('✓ 73 personagens prontos renderizados inline, com pernas e backup compatível');
 console.log('✓ Tons de pele fantasia e cores independentes de cabelo, roupa, calça/shorts/saia e tênis espelhados');
 console.log('✓ 20 pets SVG originais desbloqueados após duas medalhas e renderizados junto ao avatar');

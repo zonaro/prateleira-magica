@@ -34,6 +34,8 @@
   const hairStyles = avatarCatalog.hairStyles;
   const outfitStyles = avatarCatalog.outfitStyles;
   const bottomStyles = avatarCatalog.bottomStyles;
+  const footwearStyles = avatarCatalog.footwearStyles;
+  const sockPatterns = avatarCatalog.sockPatterns;
   const petStyles = avatarCatalog.petStyles;
   const accessoryStyles = avatarCatalog.accessoryStyles || [];
   const accessoryGroups = Object.fromEntries(accessoryStyles.map(([id, , group]) => [id, group]));
@@ -84,8 +86,10 @@
       <fieldset class="avatar-style-fieldset"><legend>Penteado</legend><div id="avatarStyles" class="avatar-style-grid"></div></fieldset>
       <fieldset class="avatar-style-fieldset"><legend>Roupa</legend><div id="outfitStyles" class="avatar-style-grid outfits-grid"></div></fieldset>
       <fieldset class="avatar-style-fieldset"><legend>Parte de baixo</legend><div id="bottomStyles" class="avatar-style-grid bottoms-grid"></div></fieldset>
+      <fieldset class="avatar-style-fieldset"><legend>Nos pés 👣</legend><div id="footwearStyles" class="avatar-style-grid"></div></fieldset>
+      <fieldset class="avatar-style-fieldset" id="sockPatternFieldset"><legend>Minhas meias</legend><div id="sockPatterns" class="avatar-style-grid"></div></fieldset>
       <fieldset class="avatar-style-fieldset"><legend>Acessórios ✨</legend>
-        <p class="settings-intro" style="margin-bottom:8px;">Adicione acessórios ao seu personagem. Alguns tipos não podem ser combinados (apenas 1 chapéu/tiara/fones, apenas 1 óculos).</p>
+        <p class="settings-intro" style="margin-bottom:8px;">Escolha acessórios para seu personagem. Alguns usam o mesmo lugar e não podem ser usados juntos. A boina especial aparece depois de 3 medalhas! 🏅</p>
         <div id="accessoryStyles" class="avatar-style-grid"></div>
       </fieldset>
       <fieldset class="avatar-style-fieldset pet-fieldset"><legend>Minha pelúcia companheira 🧸</legend>
@@ -102,13 +106,16 @@
         <fieldset class="skin-fieldset"><legend>Cor da roupa</legend><div id="outfitColorOptions" class="skin-options"></div>
           <label class="custom-color"><span>Outra cor</span><input id="customOutfitColor" type="color" aria-label="Selecionar outra cor de roupa"></label>
         </fieldset>
+        <fieldset class="skin-fieldset"><legend>Cor dos acessórios</legend><div id="accessoryColorOptions" class="skin-options"></div>
+          <label class="custom-color"><span>Outra cor</span><input id="customAccessoryColor" type="color" aria-label="Selecionar outra cor de acessórios"></label>
+        </fieldset>
       </div>
       <div class="avatar-color-fields">
         <fieldset class="skin-fieldset"><legend>Cor da calça, shorts ou saia</legend><div id="bottomColorOptions" class="skin-options"></div>
           <label class="custom-color"><span>Outra cor</span><input id="customBottomColor" type="color" aria-label="Selecionar outra cor de calça, shorts ou saia"></label>
         </fieldset>
-        <fieldset class="skin-fieldset"><legend>Cor dos sapatos</legend><div id="shoeColorOptions" class="skin-options"></div>
-          <label class="custom-color"><span>Outra cor</span><input id="customShoeColor" type="color" aria-label="Selecionar outra cor dos sapatos"></label>
+        <fieldset class="skin-fieldset"><legend>Cor dos sapatos, chinelos ou meias</legend><div id="shoeColorOptions" class="skin-options"></div>
+          <label class="custom-color"><span>Outra cor</span><input id="customShoeColor" type="color" aria-label="Selecionar outra cor dos pés"></label>
         </fieldset>
       </div>
       <section class="magic-color-maker" aria-labelledby="magicColorTitle">
@@ -126,6 +133,7 @@
             <option value="hairColor">Cabelo</option><option value="outfitColor">Roupa</option>
             <option value="bottomColor">Calça, shorts ou saia</option><option value="shoeColor">Sapatos</option>
             <option value="skinColor">Pele (inclusive fantasia)</option>
+            <option value="accessoryColor">Acessórios</option>
           </select>
           <button id="magicColorApply" type="button" disabled>🎨 Usar esta cor</button>
         </div>
@@ -273,11 +281,27 @@
       const thumb = item.querySelector('.style-preview');
       if (thumb) thumb.innerHTML = preferences.avatarSVG({ ...draft, bottomStyle: item.dataset.style });
     }
+    for (const [container, field] of [['#footwearStyles', 'footwearStyle'], ['#sockPatterns', 'sockPattern']]) {
+      for (const item of $(container).querySelectorAll('button')) {
+        const selected = item.dataset.style === draft[field];
+        item.classList.toggle('selected', selected);
+        item.setAttribute('aria-pressed', String(selected));
+        item.disabled = field === 'sockPattern' && draft.footwearStyle !== 'socks';
+        const thumb = item.querySelector('.style-preview');
+        if (thumb) thumb.innerHTML = preferences.avatarSVG({ ...draft,
+          [field]: item.dataset.style,
+          ...(field === 'sockPattern' ? { footwearStyle: 'socks' } : {}) });
+      }
+    }
+    $('#sockPatternFieldset').classList.toggle('locked', draft.footwearStyle !== 'socks');
     if (document.getElementById('accessoryStyles')) {
       const accs = Array.isArray(draft.accessories) ? draft.accessories : [];
       for (const item of document.getElementById('accessoryStyles').querySelectorAll('button')) {
         const aid = item.dataset.accessory;
         const selected = accs.includes(aid);
+        const locked = aid === 'plumber_beret' && preferences.medalCount(draft) < 3;
+        item.disabled = locked;
+        item.classList.toggle('locked', locked);
         item.classList.toggle('selected', selected);
         item.setAttribute('aria-pressed', String(selected));
         const thumb = item.querySelector('.style-preview');
@@ -286,7 +310,8 @@
       }
     }
     for (const [containerId, key] of [['skinOptions', 'skinColor'], ['hairColorOptions', 'hairColor'],
-      ['outfitColorOptions', 'outfitColor'], ['bottomColorOptions', 'bottomColor'], ['shoeColorOptions', 'shoeColor']]) {
+      ['outfitColorOptions', 'outfitColor'], ['accessoryColorOptions', 'accessoryColor'],
+      ['bottomColorOptions', 'bottomColor'], ['shoeColorOptions', 'shoeColor']]) {
       for (const swatch of $(`#${containerId}`).querySelectorAll('button')) {
         const selected = swatch.dataset.color === draft[key];
         swatch.classList.toggle('selected', selected);
@@ -296,6 +321,7 @@
     $('#customSkinColor').value = draft.skinColor;
     $('#customHairColor').value = draft.hairColor;
     $('#customOutfitColor').value = draft.outfitColor;
+    $('#customAccessoryColor').value = draft.accessoryColor;
     $('#customBottomColor').value = draft.bottomColor;
     $('#customShoeColor').value = draft.shoeColor;
     drawThemePalette();
@@ -390,7 +416,7 @@
       button.innerHTML = '<span class="style-preview"></span><span class="style-label"></span>';
       button.querySelector('.style-label').textContent = label;
       button.addEventListener('click', () => edit('', () => {
-        if (field !== 'bottomStyle') markPresetEdit(field);
+        if (field === 'avatarStyle' || field === 'outfitStyle') markPresetEdit(field);
         draft[field] = style;
       }));
       container.append(button);
@@ -399,6 +425,8 @@
   addStyles('avatarStyles', hairStyles, 'avatarStyle');
   addStyles('outfitStyles', outfitStyles, 'outfitStyle');
   addStyles('bottomStyles', bottomStyles, 'bottomStyle');
+  addStyles('footwearStyles', footwearStyles, 'footwearStyle');
+  addStyles('sockPatterns', sockPatterns, 'sockPattern');
   
   // Accessories
   const accContainer = document.getElementById('accessoryStyles');
@@ -412,6 +440,7 @@
       button.innerHTML = '<span class="style-preview"></span><span class="style-label"></span>';
       button.querySelector('.style-label').textContent = accLabel;
       button.addEventListener('click', () => {
+        if (accId === 'plumber_beret' && preferences.medalCount(draft) < 3) return;
         if (!draft.accessories) draft.accessories = [];
         const idx = draft.accessories.indexOf(accId);
         if (idx >= 0) {
@@ -477,6 +506,7 @@
   addColors('skinOptions', skinColors, 'skinColor');
   addColors('hairColorOptions', avatarCatalog.hairColors, 'hairColor');
   addColors('outfitColorOptions', avatarCatalog.outfitColors, 'outfitColor');
+  addColors('accessoryColorOptions', avatarCatalog.accessoryColors, 'accessoryColor');
   addColors('bottomColorOptions', avatarCatalog.bottomColors, 'bottomColor');
   addColors('shoeColorOptions', avatarCatalog.shoeColors, 'shoeColor');
 
@@ -487,7 +517,7 @@
   $('#magicColorApply').addEventListener('click', () => {
     if (!generatedColor) return;
     const target = $('#magicColorTarget').value;
-    if (!['skinColor', 'hairColor', 'outfitColor', 'bottomColor', 'shoeColor'].includes(target)) return;
+    if (!['skinColor', 'hairColor', 'outfitColor', 'bottomColor', 'shoeColor', 'accessoryColor'].includes(target)) return;
     edit('', () => {
       if (['skinColor', 'hairColor', 'outfitColor'].includes(target)) markPresetEdit(target);
       draft[target] = generatedColor;
@@ -516,6 +546,13 @@
       }
       $('#previewName').textContent = nameInput.value.trim() || 'Meu personagem';
     }, false);
+    // O nome é digitado sem reconstruir as dezenas de miniaturas a cada tecla.
+    // Atualizamos só a letra da boina no personagem em destaque.
+    const letter = nameInput.value.trim().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .toLocaleUpperCase('pt-BR').match(/[A-Z]/)?.[0] || 'A';
+    for (const text of $('#avatarStage').querySelectorAll('[data-layer="boina-de-encanador"] text')) {
+      text.textContent = letter;
+    }
   });
   pronunciationInput.addEventListener('input', () => {
     edit('pronunciation', () => {
@@ -528,7 +565,8 @@
     option.addEventListener('change', () => edit('', () => { draft.gender = option.value; }));
   }
   for (const [inputId, field] of [['customSkinColor', 'skinColor'], ['customHairColor', 'hairColor'],
-    ['customOutfitColor', 'outfitColor'], ['customBottomColor', 'bottomColor'], ['customShoeColor', 'shoeColor']]) {
+    ['customOutfitColor', 'outfitColor'], ['customAccessoryColor', 'accessoryColor'],
+    ['customBottomColor', 'bottomColor'], ['customShoeColor', 'shoeColor']]) {
     $(`#${inputId}`).addEventListener('input', (event) => edit(field, () => {
       if (['skinColor', 'hairColor', 'outfitColor'].includes(field)) markPresetEdit(field);
       draft[field] = event.target.value;

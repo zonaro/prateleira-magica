@@ -23,13 +23,13 @@ As páginas individuais relacionadas abaixo foram consultadas e indicam **licen�
 | Chanel | [Girl #38251](https://www.svgrepo.com/svg/38251/girl) | `38251-girl.svg` |
 | Chanel loiro | [Girl #3914](https://www.svgrepo.com/svg/3914/girl) | `3914-girl.svg` |
 | Ondulado | [Girl #65066](https://www.svgrepo.com/svg/65066/girl) | `65066-girl.svg` |
-| Flor lateral | [Girl #31122](https://www.svgrepo.com/svg/31122/girl) | `31122-girl.svg` |
+| Lateral esquerdo (sem flor) | [Girl #31122](https://www.svgrepo.com/svg/31122/girl) | `31122-girl.svg` |
 | Moicano | [Boy #38239](https://www.svgrepo.com/svg/38239/boy) | `38239-boy.svg` |
 | Topete lateral | [Boy #38252](https://www.svgrepo.com/svg/38252/boy) | `38252-boy.svg` |
 | Laços laterais | [Girl #38256](https://www.svgrepo.com/svg/38256/girl) | `38256-girl.svg` |
 | Topete alto | [Boy #38261](https://www.svgrepo.com/svg/38261/boy) | `38261-boy.svg` |
-| Chanel com flor | [Girl #42225](https://www.svgrepo.com/svg/42225/girl) | `42225-girl.svg` |
-| Longo com flor | [Girl #66793](https://www.svgrepo.com/svg/66793/girl) | `66793-girl.svg` |
+| Chanel arredondado (sem flor) | [Girl #42225](https://www.svgrepo.com/svg/42225/girl) | `42225-girl.svg` |
+| Longo liso (sem flor) | [Girl #66793](https://www.svgrepo.com/svg/66793/girl) | `66793-girl.svg` |
 | Ondas médias | [Girl #66815](https://www.svgrepo.com/svg/66815/girl) | `66815-girl.svg` |
 | Franja longa | [Girl #41010](https://www.svgrepo.com/svg/41010/girl) | `41010-girl.svg` |
 | Cachos curtinhos | [Boy #3869](https://www.svgrepo.com/svg/3869/boy) | `3869-boy.svg` |
@@ -56,14 +56,15 @@ As páginas individuais relacionadas abaixo foram consultadas e indicam **licen�
 
 1. `assets/avatar-reference/component-map.json` associa os nomes usados na interface a cada arquivo SVG original, aos índices das formas e às cores que devem ser personalizáveis. Os índices referenciam a ordem de `ElementTree.iter()` no arquivo original **congelado no repositório**.
 2. `python3 tools/extract-avatar-components.py` lê esses SVGs e copia as primitivas (curvas, polígonos etc.) para `assets/js/avatar-parts.js`. O arquivo gerado contém o caminho e o identificador de origem de cada componente. Não interpola nem recalcula nenhuma geometria dos cabelos ou das roupas.
-3. `assets/js/avatar.js` compõe **25 opções de cabelo (incluindo Careca), 24 roupas e 11 acessórios** numa proporção compatível com os símbolos dos livros (`viewBox="0 0 210 340"`), substituindo apenas os tokens de cor. O boné não é mais um penteado: pode ser colocado sobre o cabelo. Só a parte das pernas para baixo e os acessórios adicionais têm desenho próprio, oferecendo calça, shorts ou saia e dois tênis espelhados.
-4. `assets/js/preferences.js` salva/restaura todos os campos, incluindo `bottomStyle`, `bottomColor` e `shoeColor` no JSON incorporado ao SVG de backup. O editor fica em **Perfil → Personalizar** (`perfil.html#personalizar`), com prévia fixa durante a rolagem também em telas pequenas.
+3. `assets/js/avatar.js` compõe **25 opções de cabelo (incluindo Careca), 24 roupas e 13 acessórios** numa proporção compatível com os símbolos dos livros (`viewBox="0 0 210 340"`), substituindo apenas os tokens de cor. O boné é um acessório ampliado; a boina especial exibe a inicial do nome; o tapa-olho compartilha o espaço dos óculos. Os quatro penteados antes chamados “com flor” mantêm apenas os caminhos capilares do SVG original; a flor pode ser colocada novamente como acessório de qualquer cor. Duas variações laterais são espelhadas para não oferecer dois penteados iguais. As listras nos moletons e camisas são camadas próprias e os deslocamentos de 24px (camiseta de time) e 18px (cardigã) compensam o centro da arte vetorial original.
+4. `assets/js/preferences.js` salva/restaura `bottomStyle`, `bottomColor`, `footwearStyle`, `sockPattern`, `shoeColor`, `accessories` e `accessoryColor` no JSON incorporado ao SVG de backup. O compositor oferece cinco partes inferiores (incluindo saia longa e fralda) e quatro calçados (incluindo meias de três estampas e pés descalços). A boina de encanador somente é mantida em perfis com três medalhas, inclusive ao importar um backup. O editor fica em **Perfil → Personalizar** (`perfil.html#personalizar`), com prévia fixa durante a rolagem também em telas pequenas.
 5. `assets/avatar-reference/preset-layer-map.json` identifica rosto, cabelo de trás, cabelo da frente e roupa de cada personagem pronto, sem alterar a arte SVG de origem. `tools/build-avatar-presets.mjs` gera camadas e trechos na ordem original para permitir a substituição **apenas da peça escolhida**. `tools/analyze-avatar-layers.mjs` pode produzir um mapa inicial para novas fontes (requer `sharp` no ambiente de desenvolvimento), que deve passar por revisão visual.
 
 ## Compatibilidade
 
 - As IDs antigas de `avatarStyle` e `outfitStyle` continuam válidas, mas agora representam as peças originais. Um backup antigo importa normalmente e ganha cor das calças e dos sapatos padrão.
 - Os novos penteados e roupas são adicionados sem remover as opções históricas.
+- Os IDs dos quatro cabelos antes adornados, das roupas renomeadas e da pelúcia `cute-animals` continuam idênticos para manter a compatibilidade; a pelúcia aparece como **Zebra** na interface.
 - Perfis antigos que tinham `avatarStyle: "cap"` são migrados automaticamente para cabelo curto com o acessório `cap`, preservando o boné. A opção `bald` não produz nenhum caminho de cabelo.
 - Os **73 personagens prontos** continuam usando a arte integral original, com pernas e sapatos compostos abaixo do tronco. `node tools/build-avatar-presets.mjs` extrai o conteúdo dos arquivos de referência para `assets/js/avatar-presets.js`, que é carregado antes do compositor, inclusive offline. O SVG completo pode ser exportado, importado e incorporado nas ilustrações dos livros sem depender de URLs de imagens externas.
 - Ao escolher um personagem pronto, o perfil armazena `sourceSvg` e `presetEdits: []`. Cada mudança adiciona **somente o campo editado** a `presetEdits`: trocar o cabelo mantém a roupa original; trocar a roupa mantém o cabelo original; mudar calça, sapato ou acessórios também preserva o tronco original. Trocar o penteado requer compor uma nova base de rosto para eliminar completamente o cabelo antigo. O desenho completo permanece intacto enquanto não houver edições da parte superior.

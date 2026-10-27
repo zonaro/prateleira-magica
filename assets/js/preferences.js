@@ -18,6 +18,9 @@
     bottomStyle: 'pants',
     bottomColor: '#5879b9',
     shoeColor: '#625a89',
+    footwearStyle: 'sneakers',
+    sockPattern: 'plain',
+    accessoryColor: '#fa7195',
     themeMood: '',
     accessories: [],
     achievements: { books: {} }
@@ -25,6 +28,8 @@
   const styles = avatar.hairStyles.map(([key]) => key);
   const outfits = avatar.outfitStyles.map(([key]) => key);
   const bottoms = avatar.bottomStyles.map(([key]) => key);
+  const footwear = avatar.footwearStyles.map(([key]) => key);
+  const sockPatterns = avatar.sockPatterns.map(([key]) => key);
   const pets = avatar.petStyles.map(([key]) => key);
   const accessoryGroups = Object.fromEntries(avatar.accessoryStyles.map(([id, , group]) => [id, group]));
   const genders = {
@@ -87,10 +92,12 @@
     const pronunciation = String(input.pronunciation ?? DEFAULTS.pronunciation).trim().slice(0, 64) || name;
     const legacyShirtColor = input.gender === 'masculino' ? '#6e9beb' : input.gender === 'neutro' ? '#9b8ae5' : DEFAULTS.outfitColor;
     const achievements = cleanAchievements(input.achievements);
+    const medals = medalCount({ achievements });
     const accessories = [];
     for (const id of Array.isArray(input.accessories) ? input.accessories : []) {
       const group = accessoryGroups[id];
-      if (group && !accessories.some((chosen) => accessoryGroups[chosen] === group)) accessories.push(id);
+      if (group && (id !== 'plumber_beret' || medals >= 3)
+          && !accessories.some((chosen) => accessoryGroups[chosen] === group)) accessories.push(id);
     }
     // Perfis antigos podiam guardar o boné como penteado. Agora ele é um
     // acessório combinável com cabelos, inclusive depois de importar backups.
@@ -103,15 +110,18 @@
       pronunciation,
       birthDate: validBirthDate(input.birthDate),
       gender: Object.hasOwn(genders, input.gender) ? input.gender : DEFAULTS.gender,
-      petId: medalCount({ achievements }) >= 2 && pets.includes(input.petId) ? input.petId : null,
+      petId: medals >= 2 && pets.includes(input.petId) ? input.petId : null,
       avatarStyle: input.avatarStyle === 'cap' ? 'short' : styles.includes(input.avatarStyle) ? input.avatarStyle : DEFAULTS.avatarStyle,
       outfitStyle: outfits.includes(input.outfitStyle) ? input.outfitStyle : DEFAULTS.outfitStyle,
       bottomStyle: bottoms.includes(input.bottomStyle) ? input.bottomStyle : DEFAULTS.bottomStyle,
+      footwearStyle: footwear.includes(input.footwearStyle) ? input.footwearStyle : DEFAULTS.footwearStyle,
+      sockPattern: sockPatterns.includes(input.sockPattern) ? input.sockPattern : DEFAULTS.sockPattern,
       skinColor: /^#[0-9a-f]{6}$/i.test(input.skinColor || '') ? input.skinColor.toLowerCase() : DEFAULTS.skinColor,
       hairColor: /^#[0-9a-f]{6}$/i.test(input.hairColor || '') ? input.hairColor.toLowerCase() : DEFAULTS.hairColor,
       outfitColor: /^#[0-9a-f]{6}$/i.test(input.outfitColor || '') ? input.outfitColor.toLowerCase() : legacyShirtColor,
       bottomColor: /^#[0-9a-f]{6}$/i.test(input.bottomColor || '') ? input.bottomColor.toLowerCase() : DEFAULTS.bottomColor,
       shoeColor: /^#[0-9a-f]{6}$/i.test(input.shoeColor || '') ? input.shoeColor.toLowerCase() : DEFAULTS.shoeColor,
+      accessoryColor: /^#[0-9a-f]{6}$/i.test(input.accessoryColor || '') ? input.accessoryColor.toLowerCase() : DEFAULTS.accessoryColor,
       themeMood: ['', 'Vibrant', 'Futuristic', 'Fun', 'Soft Pastel', 'Calm', 'Vintage',
         'Organic', 'Sophisticated', 'Dark', 'Corporate'].includes(input.themeMood) ? input.themeMood : '',
       accessories,
