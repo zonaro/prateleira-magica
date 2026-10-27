@@ -1015,7 +1015,7 @@ html[data-color-theme] .profile-tabs{border-color:var(--outline);background:var(
   gap: 10px;
   margin: 18px 0 6px;
 }
-.avatar-photo-buttons button {
+.avatar-photo-buttons button, .avatar-photo-buttons .avatar-photo-file-control {
   border: 1px solid #bc9bd0;
   border-radius: 12px;
   padding: 10px 14px;
@@ -1025,7 +1025,31 @@ html[data-color-theme] .profile-tabs{border-color:var(--outline);background:var(
   background: #f3e8fb;
   cursor: pointer;
 }
-.avatar-photo-buttons button:disabled { opacity: .5; cursor: wait; }
+.avatar-photo-buttons button:disabled, .avatar-photo-file-control.disabled { opacity: .5; cursor: wait; }
+.avatar-photo-file-control {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.avatar-photo-file-control:focus-within {
+  outline: 3px solid #8753b9;
+  outline-offset: 3px;
+}
+/* O input file nativo ocupa todo o botão: clique e toque chegam diretamente
+   no seletor do navegador (inclusive Safari/iOS), sem .click() programático. */
+.avatar-photo-file-control .avatar-photo-input {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  font-size: 100px;
+  cursor: pointer;
+}
+.avatar-photo-file-control.disabled .avatar-photo-input { cursor: wait; }
 .avatar-photo-status { min-height: 24px; font-weight: 700; }
 .avatar-photo-privacy { font-size: .83rem; opacity: .85; }
 
