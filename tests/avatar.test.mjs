@@ -34,7 +34,7 @@ assert.equal(renderer.petStyles.length, 20, 'Catálogo completo de pets original
 assert.equal(renderer.bottomStyles.map(([key]) => key).join(','), 'pants,shorts,skirt,long_skirt,diaper');
 assert.equal(renderer.footwearStyles.map(([key]) => key).join(','), 'sneakers,flipflops,socks,barefoot,skates');
 assert.equal(renderer.sockPatterns.map(([key]) => key).join(','), 'plain,stripes,dots');
-assert.equal(renderer.accessoryStyles.length, 19);
+assert.equal(renderer.accessoryStyles.length, 20);
 assert.equal(renderer.toyStyles.length, 12);
 
 const pictures = new Set();
@@ -127,6 +127,15 @@ for (const [id] of renderer.accessoryStyles) {
   assert(renderer.avatarSVG({ accessories: [id] }).includes(`data-accessory="${id}"`),
     `Acessório ${id} não tem desenho`);
 }
+assert(renderer.accessoryStyles.some(([id, label, group]) => id === 'cat_headband'
+  && label === 'Tiara de gatinho' && group === 'hat'), 'Tiara de gatinho deve ser um acessório de cabeça');
+assert(renderer.avatarSVG({ accessories: ['cat_headband'], accessoryColor: '#8c6bd0' }).includes('fill="#8c6bd0"'),
+  'Tiara de gatinho deve acompanhar a cor dos acessórios');
+const hoodedAfro = renderer.avatarSVG({ avatarStyle: 'afro', accessories: ['hooded_cape'] });
+assert(hoodedAfro.includes('data-layer="capuz-sobre-o-cabelo"'), 'Capuz não foi colocado sobre a cabeça');
+assert(!hoodedAfro.includes('M405.237,172'), 'O cabelo volumoso não pode vazar do capuz');
+assert(renderer.avatarSVG({ avatarStyle: 'afro' }).includes('M405.237,172'),
+  'O penteado deve reaparecer ao retirar o capuz');
 for (const [id] of renderer.toyStyles) {
   assert(renderer.avatarSVG({ toys: [id] }).includes(`data-toy="${id}"`),
     `Brinquedo ${id} não tem desenho`);
@@ -247,6 +256,13 @@ for (const preset of readyPresets) {
   assert(svg.includes(inlinePresets[preset.sourceSvg].body.slice(0, 35)),
     `O desenho original de ${preset.sourceSvg} não foi incorporado`);
   assert(!svg.includes('<image'), `Personagem ${preset.sourceSvg} exige imagem externa`);
+  const capedProfile = prefs.clean({ ...profile, accessories: ['hooded_cape'] });
+  const hoodSvg = prefs.avatarSVG(capedProfile);
+  assert(hoodSvg.includes('data-layer="capuz-sobre-o-cabelo"')
+    && hoodSvg.includes('data-layer="roupa-original"'),
+  `Capuz não cobre o cabelo preservando a roupa original: ${preset.sourceSvg}`);
+  assert.equal(prefs.avatarSVG({ ...capedProfile, accessories: [] }), svg,
+    `Remover o capuz deve restaurar integralmente o personagem ${preset.sourceSvg}`);
   assert.equal((svg.match(/<svg\b/g) || []).length, (svg.match(/<\/svg>/g) || []).length,
     `SVG de ${preset.sourceSvg} com tags desequilibradas`);
   const backup = prefs.exportProfileSVG(profile);
@@ -411,7 +427,8 @@ for (const file of downloaded) {
 }
 
 console.log('✓ 25 cabelos × 24 roupas = 600 combinações com vetores originais do SVG Repo');
-console.log('✓ Careca, cabelos sem flores, boné maior e 19 acessórios desenhados em camadas');
+console.log('✓ Careca, cabelos sem flores, boné maior e 20 acessórios desenhados em camadas');
+console.log('✓ Tiara de gatinho e capuz cobrindo todos os penteados sem alterá-los no perfil');
 console.log('✓ Flor sempre acima da tiara, capas atrás do corpo e máscaras exclusivas com óculos');
 console.log('✓ 12 brinquedos com cor independente, fantasia de fantasma, asas atrás e skate sob os pés');
 console.log('✓ Patins liberados com 3 medalhas; itens bloqueados mais claros e em escala de cinza');

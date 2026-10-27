@@ -54,6 +54,7 @@
     ['beanie', 'Touca', 'hat'],
     ['sports_helmet', 'Capacete esportivo', 'hat'],
     ['headband', 'Tiara', 'hat'],
+    ['cat_headband', 'Tiara de gatinho', 'hat'],
     ['hooded_cape', 'Capa com capuz', 'cape'],
     ['hero_cape', 'Capa de super-herói', 'cape'],
     ['bow_hair', 'Laço', 'hair'],
@@ -210,8 +211,20 @@
         <path d="M232 25v131" stroke="${colors.ACCESSORY_LIGHT}" stroke-width="15"/><path d="M117 157h250q-8 29-40 35H138q-22-7-21-35Z" fill="${colors.ACCESSORY_DEEP}"/>
         <path d="M119 180q-31 27-9 57l36-5m198-52q31 27 9 57l-36-5" fill="none" stroke="${ink}" stroke-width="12" stroke-linecap="round"/>`,
       headband: `<path d="M109 122Q125 25 232 25T355 122" fill="none" stroke="${decoration}" stroke-width="22" stroke-linecap="round"/>`,
-      hooded_cape: `<path d="M123 147Q102 35 232 25q130 10 109 122" fill="none" stroke="${colors.ACCESSORY_DARK}" stroke-width="26" stroke-linecap="round"/>
-        <path d="M179 294q53 35 106 0" fill="none" stroke="${decoration}" stroke-width="13" stroke-linecap="round"/>`,
+      cat_headband: `<path d="M110 132Q126 27 232 27T354 132" fill="none" stroke="${ink}" stroke-width="26" stroke-linecap="round"/>
+        <path d="M110 132Q126 27 232 27T354 132" fill="none" stroke="${decoration}" stroke-width="18" stroke-linecap="round"/>
+        <path d="M112 78 108 6q57 19 86 73ZM352 78l4-72q-57 19-86 73Z" fill="${decoration}" stroke="${ink}" stroke-width="8" stroke-linejoin="round"/>
+        <path d="M128 54 125 26l39 44ZM336 54l3-28-39 44Z" fill="${colors.ACCESSORY_LIGHT}"/>`,
+      hooded_cape: `<g data-layer="capuz-sobre-o-cabelo">
+          <path d="M79 174Q61 1 232 1q171 0 153 173l-38 94-39-29q22-31 22-85Q326 64 232 57q-94 7-98 97 0 54 22 85l-39 29Z"
+            fill="${decoration}" stroke="${ink}" stroke-width="9" stroke-linejoin="round"/>
+          <path d="M135 157Q163 66 232 57q69 9 97 100-49-34-97-34t-97 34Z"
+            fill="${colors.ACCESSORY_DARK}"/>
+          <path d="M105 213q-2 133-61 251h108q-11-132-5-242ZM359 213q2 133 61 251H312q11-132 5-242Z"
+            fill="${decoration}" stroke="${ink}" stroke-width="6"/>
+          <path d="M93 255q1 126-33 198m311-198q-1 126 33 198" fill="none" stroke="${colors.ACCESSORY_LIGHT}" stroke-width="9" opacity=".75"/>
+          <path d="M181 297q51 35 102 0" fill="none" stroke="${colors.ACCESSORY_LIGHT}" stroke-width="12" stroke-linecap="round"/>
+        </g>`,
       hero_cape: `<circle cx="173" cy="322" r="12" fill="${colors.ACCESSORY_LIGHT}" stroke="${ink}" stroke-width="5"/>
         <circle cx="292" cy="322" r="12" fill="${colors.ACCESSORY_LIGHT}" stroke="${ink}" stroke-width="5"/>`,
       bow_hair: `<g transform="translate(342 85)" stroke="${colors.ACCESSORY_DARK}" stroke-width="5"><path d="M0 0Q-85-59-62 23L0 10Q75 66 73-25Z" fill="${decoration}"/><circle cx="0" cy="6" r="17" fill="${colors.ACCESSORY_LIGHT}"/></g>`,
@@ -368,7 +381,10 @@
 
   function avatarBody(settings = {}) {
     const colors = palette(settings);
-    const hair = settings.avatarStyle === 'bald'
+    const hoodCoversHair = Array.isArray(settings.accessories) && settings.accessories.includes('hooded_cape');
+    const hair = hoodCoversHair
+      ? { source: '', back: '', front: '' }
+      : settings.avatarStyle === 'bald'
       ? { source: '', back: '<path d="M120 161v-28c0-57 46-89 112-89s112 32 112 89v28Z" fill="{{SKIN_LIGHT}}"/>', front: '' }
       : parts.hair[settings.avatarStyle] || parts.hair.puffs;
     const hairGeometry = (markup) => settings.avatarStyle === 'flower_heart'
@@ -404,9 +420,9 @@
       }
       return preset.segments.map(piece => originalLayer(piece.role, piece.svg)).join('');
     };
-    const upperBody = preset && edits.length === 0
+    const upperBody = preset && edits.length === 0 && !hoodCoversHair
       ? `<svg data-layer="avatar-pronto" data-source="${source(settings.sourceSvg)}" width="464" height="464" viewBox="${preset.viewBox}" preserveAspectRatio="xMidYMax meet">${preset.body}</svg>`
-      : preset && edits.includes('avatarStyle')
+      : preset && (edits.includes('avatarStyle') || hoodCoversHair)
         ? `<g data-layer="cabelo-atras">${tint(hairGeometry(hair.back), colors)}</g>
           <g data-layer="rosto-original">${tint(parts.face.svg, colors)}</g>
           <g data-layer="roupa-original">${edits.includes('outfitStyle') ? selectedOutfit : originalLayer('outfit', preset.layers.outfit)}</g>
