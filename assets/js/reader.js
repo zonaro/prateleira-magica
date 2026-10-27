@@ -339,7 +339,7 @@
     error.replaceChildren();
     error.append(document.createTextNode(`${message} `));
     const link = document.createElement('a');
-    link.href = './index.html';
+    link.href = './prateleira.html';
     link.textContent = 'Voltar à prateleira';
     error.append(link);
     error.hidden = false;

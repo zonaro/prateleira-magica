@@ -691,48 +691,37 @@ html[data-color-theme] .profile-tabs{border-color:var(--outline);background:var(
   z-index:2
 }
 
-/* Balão em nuvem: contorno irregular com círculos sobrepostos nos
-   pseudo-elementos, rabinho apontando para o livro, sombra suave e
-   cores da paleta (creme #fffaf3, tinta #3d4268, rosa #c05a7e). */
+/* Nuvem do balão da prateleira (arte fornecida): contorno em tinta
+   #3d4268 e miolo creme #fffaf3, aplicada como fundo do balão. */
+:root{
+  --cloud-bubble:url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 741.83 542.75"%3E%3Cpath d="M346.271 0.04C296.945 0.058 249.824 31.984 230.581 77.102C198.089 53.675 152.587 55.259 118.121 73.597C84.513 90.096 55.915 121.789 52.116 160.227C51.338 170.44 53.303 180.62 55.866 190.446C15.031 211.166 -9.825 261.915 3.715 306.686C10.047 327.104 25.039 344.27 43.616 354.384C28.039 379.942 18.051 412.435 28.503 441.818C39.943 471.309 72.769 487.657 103.428 486.321C120.2 486.253 136.765 482.431 152.49 476.79C186.686 528.933 256.42 554.954 316.41 537.172C340.035 529.469 361.291 514.278 375.583 493.946C422.218 525.678 486.323 525.096 535.493 499.321C569.163 481.072 595.303 445.882 596.731 406.791C595.437 402.417 600.727 405.278 602.961 404.102C664.592 397.306 714.951 338.689 712.461 276.632C712.844 271.023 709.344 263.32 715.555 260.07C743.501 234.955 750.042 189.631 730.899 157.38C713.715 124.983 678.472 103.418 641.961 101.88C639.321 55.854 603.051 15.83 558.911 4.747C515.051 -7.533 464.321 4.98 433.031 38.2C412.131 12.866 378.951 -0.876 346.281 0.043L346.271 0.04Z" fill="%233d4268"/%3E%3Cpath transform="matrix(1 0 0 1 12.001 12.02)" d="M336.689 0.002C289.417 -0.216 239.671 29.415 224.219 86.19C157.481 13.369 17.239 104.937 59.939 184.44C-11.028 211.678 -24.425 310.95 49.377 336.91C-17.754 434.633 60.673 488.31 145.44 449.57C181.203 520.822 310.01 554.7 360.28 464.132C424.992 523.596 577.11 494.012 573.16 380.538C636.264 384.722 700.12 322.979 686.63 246.098C753.83 198.178 704.06 96.388 617.78 102.278C623.05 4.571 486.85 -40.272 419.94 45.719C401.96 15.094 369.95 0.153 336.69 0L336.689 0.002Z" fill="%23fffaf3"/%3E%3C/svg%3E')
+}
+
+/* Balão em nuvem: a arte da nuvem é o próprio fundo do elemento (data URI
+   com contorno #3d4268 e miolo #fffaf3). O balão sobe sobre a base da capa,
+   como se o livro estivesse saindo de dentro da nuvem. */
 .book-bubble{
   position:relative;
+  z-index:3;
   display:flex;
   flex-direction:column;
   align-items:center;
-  max-width:180px;
-  padding:10px 12px 14px;
-  background:#fffaf3;
-  border:2px solid #3d4268;
-  border-radius:26px;
-  box-shadow:0 8px 18px #5a4a5a30;
-  filter:drop-shadow(0 6px 14px #5a4a5a38);
+  justify-content:center;
+  width:205px;
+  max-width:100%;
+  aspect-ratio:741.83/542.75;
+  margin-top:-32px;
+  padding:20px 34px 18px;
+  background:var(--cloud-bubble) center/100% 100% no-repeat;
+  border:0;
+  border-radius:0;
+  box-shadow:none;
+  filter:drop-shadow(0 6px 12px #5a4a5a30);
   color:#3d4268;
   font-weight:900;
-  font-size:15px;
-  line-height:1.3;
+  font-size:14px;
+  line-height:1.25;
   text-align:center
-}
-.book-bubble::before,.book-bubble::after{
-  content:'';
-  position:absolute;
-  background:#fffaf3;
-  border-radius:50%;
-  z-index:0
-}
-.book-bubble::before{top:-11px;left:-5px;width:30px;height:30px}
-.book-bubble::after{top:-15px;right:-7px;width:38px;height:38px}
-.book-bubble-tail{
-  position:absolute;
-  top:-13px;
-  left:50%;
-  transform:translateX(-50%);
-  width:0;
-  height:0;
-  border-left:10px solid transparent;
-  border-right:10px solid transparent;
-  border-bottom:16px solid #3d4268;
-  z-index:2;
-  filter:drop-shadow(0 4px 6px #4a3a4a50)
 }
 .book-bubble-copy{position:relative;z-index:1;width:100%}
 .book-bubble-title{
@@ -740,14 +729,18 @@ html[data-color-theme] .profile-tabs{border-color:var(--outline);background:var(
   -webkit-box-orient:vertical;
   -webkit-line-clamp:3;
   overflow:hidden;
-  margin:0 0 5px;
+  margin:0 0 4px;
   font-size:inherit
 }
 .book-bubble-subtitle{
-  font-size:11px;
+  display:-webkit-box;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:3;
+  overflow:hidden;
+  font-size:10px;
   font-weight:700;
   color:#a63a63;
-  line-height:1.35
+  line-height:1.3
 }
 
 @media(max-width:1000px){
@@ -766,25 +759,31 @@ html[data-color-theme] .profile-tabs{border-color:var(--outline);background:var(
   .shelf-select{flex:1}
 }
 
-/* Prateleira em ripas: colunas a partir de 600px. O balão fica abaixo
-   da capa, dentro da folga entre ripas, então as ripas são mais altas
-   que a capa e o espaço entre fileiras acomoda o balão sem colidir. */
+/* Prateleira em ripas: colunas a partir de 600px. A capa fica em pé sobre
+   a ripa e o balão de nuvem sobe por cima da base do livro, pendurado no
+   vão entre as fileiras. */
 @media(min-width:600px){
+  /* A ripa de cada fileira fica no pé da linha da grade, então a tábua
+     acompanha cada fileira mesmo com fileiras múltiplas. O período do
+     fundo é linha + vão, para as ripas não saírem de sincronia. */
   .bookshelf{
+    --shelf-row:205px;
+    --shelf-gap:100px;
+    --shelf-plank-lip:#c4a484;
+    --shelf-plank-edge:#b89470;
     display:grid;
     grid-template-columns:repeat(2,minmax(0,1fr));
-    grid-auto-rows:205px;
-    gap:100px 40px;
-    background:repeating-linear-gradient(
+    grid-auto-rows:var(--shelf-row);
+    gap:var(--shelf-gap) 40px;
+    background-image:linear-gradient(
       to bottom,
-      #c4a484 0px,
-      #c4a484 10px,
-      #b89470 10px,
-      #b89470 14px,
-      transparent 14px,
-      transparent 205px
+      transparent 0 calc(var(--shelf-row) - 14px),
+      var(--shelf-plank-lip) calc(var(--shelf-row) - 14px) calc(var(--shelf-row) - 4px),
+      var(--shelf-plank-edge) calc(var(--shelf-row) - 4px) var(--shelf-row),
+      transparent var(--shelf-row) calc(var(--shelf-row) + var(--shelf-gap))
     );
-    background-size:100% 205px;
+    background-size:100% calc(var(--shelf-row) + var(--shelf-gap));
+    background-origin:content-box;
     border-radius:20px;
     padding:clamp(20px,3vw,32px);
     box-shadow:inset 0 4px 12px #8b735520, 0 12px 32px #7a6a7c18;
@@ -812,27 +811,29 @@ html[data-color-theme] .profile-tabs{border-color:var(--outline);background:var(
   .book-cover-img{width:85px;height:115px}
   .book-bubble{
     position:absolute;
-    top:100%;
+    top:calc(100% - 34px);
     left:50%;
     transform:translateX(-50%);
-    max-width:170px
+    width:200px;
+    max-width:200px;
+    margin-top:0
   }
 }
 @media(min-width:900px){
   .bookshelf{
+    --shelf-row:195px;
+    --shelf-gap:90px;
     grid-template-columns:repeat(3,minmax(0,1fr));
-    grid-auto-rows:195px;
-    background-size:100% 195px;
-    gap:90px 50px
+    gap:var(--shelf-gap) 50px
   }
   .book-cover-img{width:90px;height:120px}
 }
 @media(min-width:1200px){
   .bookshelf{
+    --shelf-row:190px;
+    --shelf-gap:85px;
     grid-template-columns:repeat(4,minmax(0,1fr));
-    grid-auto-rows:190px;
-    background-size:100% 190px;
-    gap:85px 60px
+    gap:var(--shelf-gap) 60px
   }
 }
 
@@ -941,16 +942,8 @@ html[data-color-theme] .profile-tabs{border-color:var(--outline);background:var(
 }
 
 .theme-enhanced .bookshelf {
-  background:
-    repeating-linear-gradient(
-      to bottom,
-      var(--theme-border, #c4a484) 0px,
-      var(--theme-border, #c4a484) 8px,
-      mix(var(--theme-border), #000, 10%) 8px,
-      mix(var(--theme-border), #000, 10%) 12px,
-      transparent 12px,
-      transparent 150px
-    ) !important;
+  --shelf-plank-lip: var(--theme-border, #c4a484);
+  --shelf-plank-edge: color-mix(in srgb, var(--theme-border, #c4a484) 86%, #000);
   border-color: var(--theme-border, #a0825c) !important;
 }
 

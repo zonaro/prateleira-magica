@@ -46,8 +46,6 @@
 
     const bubble = document.createElement('div');
     bubble.className = 'book-bubble';
-    const tail = document.createElement('div');
-    tail.className = 'book-bubble-tail';
     const copy = document.createElement('div');
     copy.className = 'book-bubble-copy';
     const title = document.createElement('strong');
@@ -57,7 +55,7 @@
     subtitle.className = 'book-bubble-subtitle';
     subtitle.textContent = label(book.subtitle || '');
     copy.append(title, subtitle);
-    bubble.append(tail, copy);
+    bubble.append(copy);
 
     card.append(stand, bubble);
     return card;

@@ -1,0 +1,56 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>diag</title>
+<style>html,body{margin:0;font:12px/1.45 monospace}pre{white-space:pre-wrap;padding:8px;margin:0}iframe{width:100%;height:1200px;border:0;display:block}</style>
+<pre id="out">loading…</pre>
+<iframe id="f" src="./prateleira.html"></iframe>
+<script>
+  const f = document.getElementById('f');
+  const out = document.getElementById('out');
+  const W = Number(new URLSearchParams(location.search).get('w')) || 900;
+  f.style.width = W + 'px';
+  f.addEventListener('load', () => {
+    setTimeout(() => {
+      const d = f.contentDocument;
+      const doc = d.documentElement;
+      const r = (el) => el.getBoundingClientRect();
+      const lines = [];
+      const cards = [...d.querySelectorAll('.book-spine')];
+      lines.push('shelf y=' + r(d.querySelector('.bookshelf')).top.toFixed(0) + '..' + r(d.querySelector('.bookshelf')).bottom.toFixed(0) + ' rows=' + getComputedStyle(d.querySelector('.bookshelf')).gridAutoRows + ' bgSize=' + getComputedStyle(d.querySelector('.bookshelf')).backgroundSize);
+      cards.forEach((c,i)=>{const cv=c.querySelector('.book-cover-img'); if(cv){const q=r(cv); lines.push('cover#'+i+' y='+q.top.toFixed(0)+'..'+q.bottom.toFixed(0));}});
+      lines.push('iframeW=' + W + ' clientW=' + doc.clientWidth + ' scrollW=' + doc.scrollWidth);
+      const bubbles = cards.map((c) => r(c.querySelector('.book-bubble')));
+      cards.forEach((card, i) => {
+        const cover = card.querySelector('.book-cover-img');
+        const bubble = card.querySelector('.book-bubble');
+        const copy = card.querySelector('.book-bubble-copy');
+        if (!cover || !bubble || !copy) { lines.push('#' + i + ' MISSING'); return; }
+        const cb = r(cover), bb = r(bubble), cp = r(copy);
+        const title = card.querySelector('.book-bubble-title');
+        const sub = card.querySelector('.book-bubble-subtitle');
+        const overlap = +(cb.bottom - bb.top).toFixed(1);
+        const inX = +(Math.min(cp.left - bb.left, bb.right - cp.right)).toFixed(1);
+        const inY = +(Math.min(cp.top - bb.top, bb.bottom - cp.bottom)).toFixed(1);
+        let nearest = null;
+        bubbles.forEach((ob, j) => {
+          if (j === i || ob.top <= bb.top) return;
+          const gap = +(ob.top - bb.bottom).toFixed(1);
+          if (nearest === null || gap < nearest) nearest = gap;
+        });
+        lines.push('#' + i + ' "' + (title?.textContent || '').slice(0, 26) + '": coverToBubbleOverlap=' + overlap
+          + ' bubble=' + bb.width.toFixed(0) + 'x' + bb.height.toFixed(0)
+          + ' textInsetX=' + inX + ' textInsetY=' + inY
+          + ' titleLines=' + Math.round((title?.scrollHeight || 0) / (parseFloat(getComputedStyle(title).lineHeight) || 1))
+          + ' titleClipped=' + (title ? title.scrollHeight > title.clientHeight + 1 : '?')
+          + ' subClipped=' + (sub ? sub.scrollHeight > sub.clientHeight + 1 : '?')
+          + ' nextBubbleGap=' + nearest);
+      });
+      const first = cards[0];
+      if (first) {
+        const b = r(first.querySelector('.book-bubble'));
+        lines.push('pageScrollW=' + d.body.scrollWidth + ' bubbleRight=' + b.right.toFixed(1) + ' viewportW=' + doc.clientWidth);
+      }
+      out.textContent = lines.join('\n');
+    }, 900);
+  });
+</script>

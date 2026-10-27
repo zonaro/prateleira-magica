@@ -90,7 +90,7 @@
     if (!started.length) {
       const empty = document.createElement('div');
       empty.className = 'profile-empty';
-      empty.innerHTML = '<strong>📚 Sua primeira aventura está esperando!</strong><p>Escolha um livro na prateleira, leia e ganhe sua primeira medalha.</p><a href="./index.html">Explorar livrinhos →</a>';
+      empty.innerHTML = '<strong>📚 Sua primeira aventura está esperando!</strong><p>Escolha um livro na prateleira, leia e ganhe sua primeira medalha.</p><a href="./prateleira.html">Explorar livrinhos →</a>';
       container.append(empty);
       return;
     }
