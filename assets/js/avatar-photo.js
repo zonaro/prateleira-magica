@@ -20,7 +20,7 @@
     if (!modelPromise) {
       modelPromise = (async () => {
         const mediapipe = await import(MP_ROOT + '/vision_bundle.mjs');
-        const wasm = await mediapipe.FilesetResolver.forVisionTasks(MP_ROOT + '/wasm');
+        const wasm = await mediapipe.FilesetResolver.forVisionTasks(MP_ROOT + 'wasm');
         const face = await mediapipe.FaceLandmarker.createFromOptions(wasm, {
           baseOptions: { modelAssetPath: FACE_MODEL, delegate: 'CPU' },
           runningMode: 'IMAGE', numFaces: 2,
