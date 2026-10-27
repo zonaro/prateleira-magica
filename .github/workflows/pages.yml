@@ -47,7 +47,7 @@ jobs:
           mkdir -p _site/assets
           cp index.html livro.html personagem.html perfil.html prateleira.html manifest.webmanifest sw.js .nojekyll _site/
           cp -R books _site/books
-          cp -R assets/css assets/js assets/data assets/icons assets/illustrations _site/assets/
+          cp -R assets/css assets/js assets/data assets/icons assets/images assets/illustrations _site/assets/
           cp -R assets/pets _site/assets/
           cp -R assets/vendor _site/assets/
       - name: Empacotar site estático
