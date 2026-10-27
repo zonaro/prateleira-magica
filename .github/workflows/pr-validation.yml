@@ -24,6 +24,7 @@ jobs:
           node tests/preferences.test.mjs
           node tests/colors.test.mjs
           node tests/avatar.test.mjs
+          node tests/pix-landing.test.mjs
           node tests/avatar-photo.test.mjs
           node tests/avatar-photo-availability.test.mjs
           node tests/progression.test.mjs
