@@ -25,9 +25,9 @@
     const pet = window.LivrinhoAvatar.petStyles.find(([id]) => id === child.petId);
     $('#profilePetStatus').textContent = pet ? pet[1] : medals >= 2 ? '✨ Escolher' : '🔒';
     $('#profileUnlockHint').textContent = medals >= 2
-      ? pet ? `${pet[1]} acompanha ${child.name}! Você pode trocar o pet em Personalizar.`
-        : 'Você já desbloqueou os pets! Entre em Personalizar e escolha um companheiro.'
-      : `Conquiste ${2 - medals} medalha${2 - medals === 1 ? '' : 's'} para desbloquear os 20 pets da coleção.`;
+      ? pet ? `${pet[1]} acompanha ${child.name}! Você pode trocar a pelúcia em Personalizar.`
+        : 'Você já desbloqueou as pelúcias! Entre em Personalizar e escolha uma companheira.'
+      : `Conquiste ${2 - medals} medalha${2 - medals === 1 ? '' : 's'} para desbloquear as 20 pelúcias da coleção.`;
   }
 
   function bookCard(book) {

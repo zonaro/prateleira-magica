@@ -159,6 +159,17 @@ assert.equal(petProfile.petId, 'fox');
 assert.equal(petProfile.birthDate, '2020-02-29');
 assert(prefs.avatarSVG().includes('data-layer="pet-original"'), 'O pet precisa aparecer junto ao avatar');
 assert(prefs.avatarSVG().includes('M541.970732 633.791063'), 'O pet deve reutilizar os vetores originais do SVG Repo');
+for (const [id] of renderer.petStyles) {
+  const svg = renderer.avatarSVG({ ...petProfile, petId: id });
+  assert(svg.includes('x="117" y="227" width="90" height="104"'), `Pelúcia ${id} fora da linha de chão y=331`);
+  assert(svg.includes('preserveAspectRatio="xMidYMax meet"'), `Pelúcia ${id} não está ancorada por baixo`);
+  assert(svg.includes('data-layer="pelucia-sombra"'), `Pelúcia ${id} sem sombra de contato`);
+}
+const profileUi = fs.readFileSync(path.join(root, 'assets/js/profile.js'), 'utf8');
+assert(profileUi.includes('as 20 pelúcias'), 'Perfil deve chamar os companheiros de pelúcias');
+const settingsUi = fs.readFileSync(path.join(root, 'assets/js/settings-ui.js'), 'utf8');
+assert(settingsUi.includes('Minha pelúcia companheira') && settingsUi.includes('Sem pelúcia'),
+  'O editor deve usar o nome pelúcia em todos os controles');
 const svgPetBackup = prefs.exportProfileSVG(petProfile);
 const recoveredPet = prefs.parseProfileSVG(svgPetBackup);
 assert.equal(recoveredPet.petId, 'fox', 'O SVG deve guardar o pet escolhido');

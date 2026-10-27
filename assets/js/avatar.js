@@ -80,6 +80,16 @@
     return original.replace(/\{\{([A-Z_]+)\}\}/g, (_, key) => colors[key] || '#000000');
   }
 
+  function plushViewBox(part) {
+    // Os dados gerados têm 22px de margem em todos os lados (base 512px).
+    // Remova somente 19px da margem inferior do contêiner, deixando 3px de
+    // segurança antialias. Isso não altera os caminhos dos SVGs originais.
+    const frame = part.viewBox.split(/\s+/).map(Number);
+    const originalHeight = Number(part.originalViewBox.split(/\s+/)[3]);
+    frame[3] = Math.round((frame[3] - 19 / 512 * originalHeight) * 100) / 100;
+    return frame.join(' ');
+  }
+
   // Apenas a parte inferior é desenhada para o aplicativo. A roupa superior
   // é integralmente formada pelos caminhos vetoriais dos SVGs do SVG Repo.
   function lowerBody(settings, skin) {
@@ -115,10 +125,11 @@
     const outfit = parts.outfit[settings.outfitStyle] || parts.outfit.hoodie;
     const source = (filename) => filename.replace(/\.svg$/, '');
     const pet = settings.petId && petParts[settings.petId];
-    // O corpo do bichinho contém as primitivas vetoriais intactas do SVG Repo.
-    // Só o elemento SVG externo determina tamanho e posição junto à criança.
-    const companion = pet ? `<svg data-layer="pet-original" data-source="${pet.source}" x="117" y="225" width="90" height="104" viewBox="${pet.viewBox}" preserveAspectRatio="xMidYMid meet">${pet.body}</svg>` : '';
-    return `${lowerBody(settings, colors.SKIN)}
+    // Fundo e pés compartilham a linha de chão y=331. xMidYMax evita que
+    // pelúcias de proporções diferentes flutuem dentro da caixa SVG.
+    const plushShadow = pet ? '<ellipse data-layer="pelucia-sombra" cx="166" cy="328" rx="34" ry="5" fill="#243f59" opacity=".12"/>' : '';
+    const companion = pet ? `<svg data-layer="pet-original" data-source="${pet.source}" x="117" y="227" width="90" height="104" viewBox="${plushViewBox(pet)}" preserveAspectRatio="xMidYMax meet">${pet.body}</svg>` : '';
+    return `${plushShadow}${lowerBody(settings, colors.SKIN)}
       <g transform="translate(0 34) scale(0.452586)">
         <g data-layer="cabelo-atras" data-source="${source(hair.source)}">${tint(hair.back, colors)}</g>
         <g data-layer="rosto-original" data-source="${source(parts.face.source)}">${tint(parts.face.svg, colors)}</g>

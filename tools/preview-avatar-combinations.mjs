@@ -28,7 +28,8 @@ for (const [bottom] of renderer.bottomStyles) {
   fs.writeFileSync(path.join(target, `bottom-${bottom}.svg`),
     renderer.avatarSVG({ ...settings, avatarStyle: 'bob', outfitStyle: 'blouse', bottomStyle: bottom }));
 }
-for (const id of ['fox', 'turtle', 'rabbit', 'penguin']) {
+// Revisar as 20 pelúcias, inclusive as que têm proporções bem diferentes.
+for (const [id] of renderer.petStyles) {
   fs.writeFileSync(path.join(target, `pet-${id}.svg`),
     renderer.avatarSVG({ ...settings, avatarStyle: 'long', outfitStyle: 'dress', bottomStyle: 'skirt', petId: id }));
 }

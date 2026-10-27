@@ -75,7 +75,7 @@
       <fieldset class="avatar-style-fieldset"><legend>Penteado</legend><div id="avatarStyles" class="avatar-style-grid"></div></fieldset>
       <fieldset class="avatar-style-fieldset"><legend>Roupa</legend><div id="outfitStyles" class="avatar-style-grid outfits-grid"></div></fieldset>
       <fieldset class="avatar-style-fieldset"><legend>Parte de baixo</legend><div id="bottomStyles" class="avatar-style-grid bottoms-grid"></div></fieldset>
-      <fieldset class="avatar-style-fieldset pet-fieldset"><legend>Meu pet companheiro 🐾</legend>
+      <fieldset class="avatar-style-fieldset pet-fieldset"><legend>Minha pelúcia companheira 🧸</legend>
         <p id="petUnlockStatus" class="pet-unlock-status" role="status"></p>
         <div id="petStyles" class="pet-style-grid"></div>
       </fieldset>
@@ -100,7 +100,7 @@
       </div>
       <section class="profile-backup" aria-label="Backup do personagem">
         <h3>💾 Guarde seu personagem</h3>
-        <p>Baixe o personagem como uma imagem SVG. Ela também guarda nome, pronúncia, nascimento, pronomes, pet e conquistas dos livros para recuperar tudo depois.</p>
+        <p>Baixe o personagem como uma imagem SVG. Ela também guarda nome, pronúncia, nascimento, pronomes, pelúcia e conquistas dos livros para recuperar tudo depois.</p>
         <div class="profile-backup-actions">
           <button id="downloadProfile" type="button">↓ Baixar personagem SVG</button>
           <button id="importProfile" type="button">↑ Importar personagem SVG</button>
@@ -180,8 +180,8 @@
     const medals = preferences.medalCount(draft);
     const unlocked = medals >= 2;
     $('#petUnlockStatus').textContent = unlocked
-      ? `✨ Você conquistou ${medals} medalhas! Escolha um dos 20 pets para acompanhar suas aventuras.`
-      : `🔒 Pets desbloqueados com 2 medalhas. Você tem ${medals}/2 — faltam ${2 - medals}.`;
+      ? `✨ Você conquistou ${medals} medalhas! Escolha uma das 20 pelúcias para acompanhar suas aventuras.`
+      : `🔒 Pelúcias desbloqueadas com 2 medalhas. Você tem ${medals}/2 — faltam ${2 - medals}.`;
     for (const option of $('#petStyles').querySelectorAll('button[data-pet]')) {
       option.disabled = !unlocked;
       option.classList.toggle('locked', !unlocked);
@@ -232,7 +232,7 @@
     none.type = 'button';
     none.id = 'noPet';
     none.className = 'pet-choice';
-    none.innerHTML = '<span class="pet-image pet-none">💜</span><span>Sem pet</span>';
+    none.innerHTML = '<span class="pet-image pet-none">💜</span><span>Sem pelúcia</span>';
     none.addEventListener('click', () => { draft.petId = null; drawPreview(); });
     container.append(none);
     for (const [id, name, source] of petStyles) {
