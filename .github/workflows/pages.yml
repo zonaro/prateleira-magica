@@ -25,6 +25,8 @@ jobs:
         uses: actions/checkout@v4
       - name: Preparar MediaPipe e modelos locais
         run: node tools/vendor-mediapipe.mjs
+      - name: Conferir existência dos sete arquivos de IA antes do deploy
+        run: node tools/check-photo-deployment.mjs --local
       - name: Validar dados e estrutura
         run: |
           python3 tools/extract-avatar-components.py --check
@@ -58,3 +60,7 @@ jobs:
       - name: Publicar
         id: deployment
         uses: actions/deploy-pages@v4
+      - name: Verificar IA no endereço público (não aceitar 404 após publicação)
+        env:
+          PAGES_URL: ${{ steps.deployment.outputs.page_url }}
+        run: node tools/check-photo-deployment.mjs --public
