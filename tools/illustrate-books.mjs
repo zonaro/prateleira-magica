@@ -83,6 +83,17 @@ function motifShape(key, primary='#ee8e9e', secondary='#77c4b1') {
     case 'volcano': return `<path d="M-110 98-52-39h94l71 137Z" fill="#aa8d86"/><path d="M-52-39Q-11-58 42-39l-21 32-52-1Z" fill="#f19569"/>${line('M-18-53-37-93m46 35 29-53','#df6b79',13)}`;
     case 'breath': case 'wave': case 'wind': return `${line('M-134-47Q-40-114 50-47T132-47M-134 0q94-67 184 0T132 0M-134 47q94-67 184 0T132 47',primary,14)}${circle(64,-62,9,'#f4bc69')}`;
     case 'music': case 'notes': case 'melody': return `${line('M-21-74v132m0-132 105-26v134','#685a9f',13)}${ellipse(-49,60,36,21,primary)}${ellipse(54,32,36,21,secondary)}`;
+    case 'abc_blocks': return `<g stroke="#71617b" stroke-width="5" stroke-linejoin="round">
+      ${rect(-104,-50,96,99,'#f8cf70',14)}${rect(-2,-96,103,104,'#93cfba',14)}${rect(3,14,104,96,'#f2a1b8',14)}
+      ${text('A',-57,23,76,'#79566e')}${text('B',48,-20,77,'#477e78')}${text('C',55,84,74,'#885f85')}
+      </g>${circle(-114,-99,11,'#facf70')}${circle(113,-62,10,'#b5a4df')}`;
+    case 'nh_syllables': return `<g data-alfabetizacao="nh">
+      ${rect(-117,-81,234,157,'#fff9ee',18,'#9783bb',8)}
+      ${rect(-92,-57,184,113,'#e2d8f6',13)}
+      ${text('NH',0,24,100,'#735ea4')}
+      ${text('NHA',-75,-102,26,'#a273c4')}${text('NHO',80,111,26,'#8a709d')}
+      ${circle(-122,73,15,'#f4c36e')}${circle(120,-81,13,'#eeb3bb')}
+      </g>`;
     case 'keyboard': case 'instruments': case 'letters': case 'xylophone': return `${rect(-115,-64,230,132,'#f7f5ef',12,'#64577f',7)}${Array.from({length:8},(_,i)=>rect(-106+i*27,-50,22,104,'#fff',3,'#747287',2)).join('')}${Array.from({length:5},(_,i)=>rect(-87+i*40,-49,13,61,'#51495a',2)).join('')}`;
     case 'spectrum': case 'rainbow': case 'palette': return `<path d="M-115 69a116 116 0 0 1 230 0" fill="none" stroke="#dc718c" stroke-width="29"/><path d="M-90 69a91 91 0 0 1 180 0" fill="none" stroke="#f7cc72" stroke-width="29"/><path d="M-63 69a64 64 0 0 1 126 0" fill="none" stroke="#76c3af" stroke-width="29"/><path d="M-38 69a39 39 0 0 1 76 0" fill="none" stroke="#8aa9ea" stroke-width="22"/>`;
     case 'shield': case 'guardians': return `<path d="M0-108Q64-74 107-71v72q-9 86-107 127Q-98 87-107 1v-72Q-64-74 0-108Z" fill="#8bbed3" stroke="#528eac" stroke-width="8"/><path d="M-42 9 0 50l57-79" fill="none" stroke="#fff" stroke-width="17" stroke-linecap="round"/>`;
@@ -377,6 +388,7 @@ function sceneArt(book,page,index,bookNo) {
   if (book.id==='rapunzel-contos-dos-grimm') return rapunzelScene(book,page,index);
   if (book.protagonistMode==='fixed') return classicScene(book,page,index);
   const isABC = book.id === 'a-aventura-do-abc';
+  const isNH = book.id === 'a-trilha-do-nha-nhe-nhi-nho-nhu';
   const isDiff = book.id === 'o-jardim-das-diferencas';
   const palette = palettes[(index + bookNo*2) % palettes.length];
   const [sky,land,primary,secondary] = palette;
@@ -387,8 +399,9 @@ function sceneArt(book,page,index,bookNo) {
     <path d="M0 490Q245 ${400+index%4*15} 505 473T1000 ${456+index%5*12}V700H0Z" fill="${night?'#4c6599':land}"/>
     <path d="M0 599Q280 ${541+index%4*9} 527 589T1000 563V700H0Z" fill="${night?'#354f83':secondary}" opacity=".38"/>
     ${Array.from({length:11},(_,i)=>circle(43+(i*139+index*17)%934,47+(i*79+index*13)%295,i%3+3,night?'#f6f3d6':'#fff', 'none')).join('')}`;
-  const key = isABC ? (index>0&&index<=26 ? alphabetSymbols[index-1] : index===0 ? 'letters':'party')
-    : themes[book.id]?.[index] || 'star';
+  const baseKey = themes[book.id]?.[index] || 'star';
+  const key = isABC ? (index>0&&index<=26 ? alphabetSymbols[index-1] : index===0 ? 'abc_blocks':'party')
+    : isNH && baseKey === 'letters' ? 'nh_syllables' : baseKey;
   const shouldShowGroup = isDiff && (index<=6 || index===8 || index===11);
   const people = shouldShowGroup ? [
     ['#f4c69f','#52404e','#ee8394'],['#724c3f','#302d46','#6cb9a4'],
@@ -399,7 +412,9 @@ function sceneArt(book,page,index,bookNo) {
   const motiveX = shouldShowGroup ? 776 : 670+(index%3)*21;
   const motiveY = shouldShowGroup ? 410 : 341+((index*7)%5)*7;
   const prominent = `<g data-motif="${xml(key)}" transform="translate(${motiveX} ${motiveY}) rotate(${(index%5-2)*4}) scale(${shouldShowGroup ? 0.65 : 1.38})">${motif}</g>`;
-  const supporting = `<g transform="translate(${index%2?810:431} ${index%2?534:541}) scale(.42)">${motifShape(isABC?'star':(themes[book.id]||[])[(index+2)%(themes[book.id]?.length||1)]||'flower',secondary,primary)}</g>`;
+  const secondaryKey = isABC ? 'star' : isNH && index === 0 ? 'spider'
+    : (themes[book.id]||[])[(index+2)%(themes[book.id]?.length||1)]||'flower';
+  const supporting = `<g transform="translate(${index%2?810:431} ${index%2?534:541}) scale(.42)">${motifShape(isNH && secondaryKey==='letters'?'nh_syllables':secondaryKey,secondary,primary)}</g>`;
   const oneLetter = isABC && index>=1 && index<=26 ? 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'[index-1] : null;
   const label = (oneLetter ? `${oneLetter} de ${['ABELHA','BOLA','CASA','DADO','ESTRELA','FLOR','GATO','HIPOPÓTAMO','ILHA','JACARÉ','KIWI','LUA','MACACO','NAVIO','OVO','PATO','QUEIJO','RELÓGIO','SOL','TARTARUGA','UVA','VIOLÃO','WAFFLE','XÍCARA','YAKISOBA','ZEBRA'][index-1]}` : page.sticker||page.title).slice(0,34);
   const heading = `<rect x="305" y="50" width="655" height="93" rx="44" fill="${night?'#efedf9':'#fffdf4'}" opacity=".94" stroke="${primary}" stroke-width="7"/>

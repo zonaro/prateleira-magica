@@ -13,6 +13,8 @@ assert(abc.pages.every((page, i) => fs.existsSync(path.join(root, page.illustrat
 assert(abc.pages[26].blocks.some((item) => item.text.includes('Zebra') || item.text.includes('zebra')));
 assert.equal(abc.pages.at(-2).type, 'challenge');
 assert.equal(abc.rewards[0].id, 'abc_blocks');
+assert(fs.readFileSync(path.join(root,abc.pages[0].illustration),'utf8').includes('data-motif="abc_blocks"'),
+  'A capa do ABC deve mostrar letras de alfabetização, não teclado musical');
 
 const nh = data('a-trilha-do-nha-nhe-nhi-nho-nhu');
 assert.deepEqual(nh.exercises.map((item) => item.syllable), ['NHA','NHE','NHI','NHO','NHU']);
@@ -20,6 +22,8 @@ for (const token of ['aranha', 'conhecer', 'companhia', 'ninho', 'nenhuma']) {
   assert(JSON.stringify(nh.pages).toLocaleLowerCase('pt-BR').includes(token), `O livro do NH precisa do exemplo ${token}`);
 }
 assert.equal(nh.pages.at(-1).type, 'finish');
+assert(fs.readFileSync(path.join(root,nh.pages[0].illustration),'utf8').includes('data-motif="nh_syllables"'),
+  'A capa do NH deve mostrar o dígrafo, não teclado musical');
 
 const diversity = data('o-jardim-das-diferencas');
 const text = diversity.pages.flatMap((p) => p.blocks.map((b) => b.text)).join(' ').toLocaleLowerCase('pt-BR');
