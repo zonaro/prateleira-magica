@@ -13,6 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Preparar MediaPipe e modelos locais
+        run: node tools/vendor-mediapipe.mjs
       - name: Conferir scripts e dados
         run: |
           python3 tools/extract-avatar-components.py --check
