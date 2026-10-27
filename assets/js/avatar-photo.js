@@ -1,16 +1,16 @@
 /* Avatar por foto: MediaPipe executado sob demanda, 100% vanilla JS.
  * Nenhuma imagem é enviada, persistida, serializada ou incluída no histórico.
- * Os arquivos dos modelos/biblioteca são baixados no primeiro uso (ver docs).
+ * Todos os binários são servidos na mesma origem, preparados no build e cacheados pelo PWA.
  */
 (() => {
   'use strict';
   const color = window.LivrinhoAvatarPhotoColors;
   if (!color) return;
 
-  const MP_VERSION = '0.10.22';
-  const MP_ROOT = 'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@' + MP_VERSION;
-  const FACE_MODEL = 'https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task';
-  const MULTICLASS_MODEL = 'https://storage.googleapis.com/mediapipe-models/image_segmenter/selfie_multiclass_256x256/float32/latest/selfie_multiclass_256x256.tflite';
+  // URLs absolutas same-origin funcionam no GitHub Pages (subpasta) e localhost.
+  const MP_ROOT = new URL('./assets/vendor/mediapipe/', document.baseURI).href;
+  const FACE_MODEL = MP_ROOT + 'models/face_landmarker.task';
+  const MULTICLASS_MODEL = MP_ROOT + 'models/selfie_multiclass_256x256.tflite';
   // Classe: 0 fundo, 1 cabelo, 2 pele do corpo, 3 rosto, 4 roupa, 5 acessórios.
   const LABEL = Object.freeze({ hair: 1, face: 3, outfit: 4, accessory: 5 });
   const NATURAL_SKIN = ['#f5d4b3', '#e9aa83', '#c98760', '#a66846', '#75472f', '#4a2c28'];
@@ -37,7 +37,10 @@
           throw error;
         }
       })().catch((error) => {
-        modelPromise = null; // permitir nova tentativa caso não haja rede
+        modelPromise = null; // permitir nova tentativa se cache/modelos estiverem indisponíveis
+        if (error instanceof TypeError && /fetch|import|module|load/i.test(error.message)) {
+          throw new Error('Arquivos de IA indisponíveis. Reabra o app com internet para completar o cache.');
+        }
         throw error;
       });
     }
@@ -241,7 +244,7 @@
       '<input class="avatar-photo-input" type="file" accept="image/jpeg,image/png,image/webp" hidden>' +
       '<p class="avatar-photo-status" role="status" aria-live="polite"></p>' +
       '<p class="avatar-photo-privacy">🔒 A foto é analisada no aparelho, não é salva nem enviada pelo aplicativo. ' +
-      'Na primeira utilização, os modelos são baixados da internet. Peça ajuda a um responsável.</p>' +
+      'Os modelos vêm do próprio aplicativo e podem funcionar offline após o cache inicial. Peça ajuda a um responsável.</p>' +
       '</div>';
     editor.append(modal);
     const find = (selector) => modal.querySelector(selector);
