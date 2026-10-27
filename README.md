@@ -114,6 +114,15 @@ O catálogo gera automaticamente um card na prateleira (até três colunas no de
 
 Nas páginas, coloque `[[palavra]]` para exibir uma palavra colorida que pode ser tocada para ouvi-la. `kind: "dialogue"` destaca o parágrafo como fala. Propriedades opcionais de página: `syllables`, `speech`, `tip`, `callout`, `medal`, `interactive`. `type: "challenge"` exibe os exercícios do livro; `type: "finish"` conclui a aventura. A página com `"interactive": "color-explorer"` mostra o laboratório de cores sem alterar as demais funções da leitura. **Nesta página os listeners de arraste do motor de folhas são desligados temporariamente** para permitir digitação, seleção de cores, audição e troca de clima. Os botões e as setas continuam virando as páginas com a animação; o arraste volta a funcionar ao sair da oficina. O item `exercises[].color`, quando informado como `#rrggbb`, mostra a cor da frase. O campo opcional `medal` no JSON do livro e no catálogo personaliza o nome/emoji da medalha exibida após o desafio.
 
+### Avatar por foto — aba opcional 📷
+
+No perfil, a aba **📷 Minha foto** aparece apenas quando todos os arquivos
+locais do MediaPipe estão disponíveis via site ou cache offline. Nessa aba,
+a criança é convidada a **pedir ajuda a uma pessoa adulta** para abrir a
+câmera ou escolher uma foto. A imagem é analisada somente no aparelho,
+descartada ao final e não entra nos backups; o avatar gerado pode ser revisado
+na aba **Personalizar**, sem perder as medalhas. O recurso não abre pop-up.
+
 ### Protagonista personalizável
 
 O botão **Personalizar** (na prateleira e na aba Perfil) abre [`perfil.html#personalizar`](perfil.html#personalizar). O histórico de leitura e o editor agora são **abas da mesma página Perfil**. O endereço antigo `personagem.html` redireciona para essa aba. A prévia do personagem fica **fixa durante a rolagem**: em coluna lateral no computador e em uma faixa compacta no topo do celular. Nessa tela, é possível configurar:
