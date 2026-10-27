@@ -72,6 +72,7 @@
     ['pocket_ball', 'Bola de monstrinho de bolso', 'hand'],
     ['shuttlecock', 'Peteca', 'hand'],
     ['chess_pieces', 'Peças de xadrez', 'hand'],
+    ['yoyo', 'Ioiô (volte uma página para liberar)', 'hand'],
     ['fairy_wings', 'Asas de fada', 'back'],
     ['bat_wings', 'Asas de morcego', 'back'],
     ['ghost_costume', 'Fantasia de fantasma', 'costume']
@@ -286,6 +287,11 @@
         <path d="M0-11v-10m11 17 9-8M7 9l8 12M-7 9l-8 12M-11-4l-9-8" stroke="${ink}" stroke-width="2" fill="none"/>`,
       basketball: `<circle r="22" fill="${tone}" stroke="${ink}" stroke-width="3"/>
         <path d="M-22 0h44M0-22v44M-15-16Q4 0-15 16M15-16Q-4 0 15 16" fill="none" stroke="${ink}" stroke-width="2.7"/>`,
+      yoyo: `<g data-detail="ioio"><path d="M-1-8Q-9 4 3 17t5 27" fill="none" stroke="${ink}" stroke-width="2.7" stroke-linecap="round"/>
+        <circle cx="8" cy="49" r="16" fill="${dark}" stroke="${ink}" stroke-width="2.8"/>
+        <circle cx="8" cy="49" r="12" fill="${tone}"/>
+        <circle cx="8" cy="49" r="6" fill="${light}" stroke="${ink}" stroke-width="2"/>
+        <path d="M-6 39q-5 11 0 20" stroke="${light}" stroke-width="2" fill="none"/></g>`,
       tennis_ball: `<circle r="20" fill="${tone}" stroke="${ink}" stroke-width="2.5"/>
         <path d="M-9-17Q13 0-9 17M9-17Q-13 0 9 17" fill="none" stroke="#fff" stroke-width="4"/>`,
       american_football: `<path d="M-26 0Q0-31 26 0 0 31-26 0Z" fill="${tone}" stroke="${ink}" stroke-width="3"/>
@@ -399,6 +405,16 @@
     const skating = Array.isArray(settings.toys) && settings.toys.includes('skateboard');
     const preset = Object.hasOwn(presetParts, settings.sourceSvg) ? presetParts[settings.sourceSvg] : null;
     const edits = Array.isArray(settings.presetEdits) ? settings.presetEdits : [];
+    // Dois SVGs originais têm silhuetas de base que exigem centralização
+    // consistente para trocar a roupa sem deixar ombros e mangas deslocados.
+    // Bruno vem com eixo x=256 (24 unidades à direita do padrão x=232).
+    // Gabriel já possui eixo x=232, mas passa pelo mesmo compositor de
+    // camadas para garantir roupa nova à frente do tronco original.
+    const fittedPreset = settings.sourceSvg === '132848-boy.svg' || settings.sourceSvg === '66797-boy.svg';
+    const presetShift = settings.sourceSvg === '66797-boy.svg' ? -24 : 0;
+    const alignPreset = (markup) => fittedPreset
+      ? `<g data-align-preset="${source(settings.sourceSvg)}" transform="translate(${presetShift} 0)">${markup}</g>`
+      : markup;
     const originalLayer = (role, raw) => {
       const colorKey = role === 'face' ? 'skinColor'
         : role === 'outfit' ? 'outfitColor' : 'hairColor';
@@ -416,16 +432,19 @@
           .map(piece => originalLayer(piece.role, piece.svg)).join('');
         const hairFront = preset.segments.filter(piece => piece.role === 'hairFront')
           .map(piece => originalLayer(piece.role, piece.svg)).join('');
-        return `${body}${selectedOutfit}${hairFront}`;
+        // Centralizar as peças originais (inclusive pele/cabelo) juntas.
+        // Roupa modular usa o eixo padrão e deve ficar fora desse deslocamento.
+        return fittedPreset ? `${alignPreset(body)}${selectedOutfit}${alignPreset(hairFront)}`
+          : `${body}${selectedOutfit}${hairFront}`;
       }
-      return preset.segments.map(piece => originalLayer(piece.role, piece.svg)).join('');
+      return alignPreset(preset.segments.map(piece => originalLayer(piece.role, piece.svg)).join(''));
     };
     const upperBody = preset && edits.length === 0 && !hoodCoversHair
-      ? `<svg data-layer="avatar-pronto" data-source="${source(settings.sourceSvg)}" width="464" height="464" viewBox="${preset.viewBox}" preserveAspectRatio="xMidYMax meet">${preset.body}</svg>`
+      ? `${alignPreset(`<svg data-layer="avatar-pronto" data-source="${source(settings.sourceSvg)}" width="464" height="464" viewBox="${preset.viewBox}" preserveAspectRatio="xMidYMax meet">${preset.body}</svg>`)}`
       : preset && (edits.includes('avatarStyle') || hoodCoversHair)
         ? `<g data-layer="cabelo-atras">${tint(hairGeometry(hair.back), colors)}</g>
           <g data-layer="rosto-original">${tint(parts.face.svg, colors)}</g>
-          <g data-layer="roupa-original">${edits.includes('outfitStyle') ? selectedOutfit : originalLayer('outfit', preset.layers.outfit)}</g>
+          <g data-layer="roupa-original">${edits.includes('outfitStyle') ? selectedOutfit : alignPreset(originalLayer('outfit', preset.layers.outfit))}</g>
           <g data-layer="cabelo-frente">${tint(hairGeometry(hair.front), colors)}</g>`
       : preset
         ? `<g data-layer="avatar-pronto-em-edicao">${presetPieces()}</g>`
