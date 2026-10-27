@@ -34,7 +34,8 @@ assert.equal(renderer.petStyles.length, 20, 'Catálogo completo de pets original
 assert.equal(renderer.bottomStyles.map(([key]) => key).join(','), 'pants,shorts,skirt,long_skirt,diaper');
 assert.equal(renderer.footwearStyles.map(([key]) => key).join(','), 'sneakers,flipflops,socks,barefoot');
 assert.equal(renderer.sockPatterns.map(([key]) => key).join(','), 'plain,stripes,dots');
-assert.equal(renderer.accessoryStyles.length, 13);
+assert.equal(renderer.accessoryStyles.length, 19);
+assert.equal(renderer.toyStyles.length, 11);
 
 const pictures = new Set();
 for (const avatarStyle of hairStyles) {
@@ -113,6 +114,8 @@ assert.equal(prefs.clean({ gender: 'neutro' }).outfitColor, '#9b8ae5');
 assert.equal(prefs.clean({}).accessoryColor, '#fa7195');
 assert.equal(prefs.clean({}).footwearStyle, 'sneakers');
 assert.equal(prefs.clean({}).sockPattern, 'plain');
+assert.equal(prefs.clean({}).toyColor, '#ed4d56');
+assert.equal(prefs.clean({}).toys.join(','), '');
 assert(!prefs.avatarSVG({ avatarStyle: 'bald' }).includes('data-source="31423-girl"'), 'Careca não deve desenhar o cabelo padrão');
 assert(prefs.avatarSVG({ avatarStyle: 'bald' }).includes('M120 161v-28'), 'Careca precisa de cabeça arredondada');
 assert(!hairStyles.includes('cap'), 'Boné não deve aparecer na lista de penteados');
@@ -124,6 +127,36 @@ for (const [id] of renderer.accessoryStyles) {
   assert(renderer.avatarSVG({ accessories: [id] }).includes(`data-accessory="${id}"`),
     `Acessório ${id} não tem desenho`);
 }
+for (const [id] of renderer.toyStyles) {
+  assert(renderer.avatarSVG({ toys: [id] }).includes(`data-toy="${id}"`),
+    `Brinquedo ${id} não tem desenho`);
+}
+const mixedToys = renderer.avatarSVG({ toys: ['soccer_ball', 'fairy_wings', 'skateboard'], toyColor: '#9c80df' });
+assert(mixedToys.includes('data-toy="soccer_ball"') && mixedToys.includes('data-toy="fairy_wings"')
+  && mixedToys.includes('data-toy="skateboard"'), 'Brinquedos de grupos distintos devem aparecer juntos');
+assert(mixedToys.includes('translate(0 -14)'), 'O personagem precisa subir para ficar em cima do skate');
+assert(mixedToys.indexOf('data-placement="floor"') > mixedToys.indexOf('data-layer="tenis-direito"'),
+  'O skate deve ser desenhado sob os pés do avatar');
+assert(renderer.avatarSVG({ toys: ['pocket_ball'] }).includes('data-toy="pocket_ball"'),
+  'Bola de monstrinho de bolso não foi desenhada');
+const layeredAccessories = renderer.avatarSVG({ accessories: ['flower_clip', 'headband'] });
+const reversedAccessories = renderer.avatarSVG({ accessories: ['headband', 'flower_clip'] });
+for (const svg of [layeredAccessories, reversedAccessories]) {
+  assert(svg.indexOf('data-accessory="flower_clip"') > svg.indexOf('data-accessory="headband"'),
+    'A flor precisa ficar por cima da tiara, em qualquer ordem de seleção');
+}
+for (const cape of ['hooded_cape', 'hero_cape']) {
+  const svg = renderer.avatarSVG({ accessories: [cape] });
+  assert(svg.indexOf(`data-accessory="${cape}" data-placement="back"`) < svg.indexOf('data-layer="rosto-original"'),
+    `${cape} precisa ter uma camada atrás do personagem`);
+}
+for (const toy of ['fairy_wings', 'bat_wings']) {
+  const svg = renderer.avatarSVG({ toys: [toy] });
+  assert(svg.indexOf(`data-toy="${toy}" data-placement="back"`) < svg.indexOf('data-layer="rosto-original"'),
+    `Asas ${toy} devem ficar atrás do corpo`);
+}
+assert.equal(prefs.clean({ accessories: ['kitsune_mask', 'glasses_round'] }).accessories.join(','),
+  'kitsune_mask', 'Máscara kitsune precisa ocupar o mesmo lugar dos óculos');
 assert(renderer.avatarSVG({ name: 'Gabriel', accessories: ['plumber_beret'], accessoryColor: '#9c80df' }).includes('>G</text>'),
   'Boina deve usar a primeira letra do nome');
 assert(renderer.avatarSVG({ name: 'Éllie', accessories: ['plumber_beret'] }).includes('>E</text>'),
@@ -133,6 +166,16 @@ assert(prefs.avatarSVG({ accessories: ['flower_clip'], accessoryColor: '#8c6bd0'
 assert(prefs.avatarSVG({ accessories: ['cap'] }).includes('scale(1.2)'), 'Boné precisa ser maior');
 const threeMedals = { books: Object.fromEntries(['um', 'dois', 'tres'].map(id => [id,
   { challengeCompletedAt: '2026-10-27T10:00:00.000Z' }])) };
+const fourMedals = { books: { ...threeMedals.books,
+  quatro: { challengeCompletedAt: '2026-10-27T10:00:00.000Z' } } };
+assert(!prefs.clean({ toys: ['skateboard'] }).toys.includes('skateboard'),
+  'Skate deve ser bloqueado antes de 4 medalhas');
+assert(!prefs.clean({ toys: ['skateboard'], achievements: threeMedals }).toys.includes('skateboard'),
+  'Três medalhas ainda não podem liberar o skate');
+assert(prefs.clean({ toys: ['skateboard'], achievements: fourMedals }).toys.includes('skateboard'),
+  'Skate deve ser liberado com 4 medalhas');
+assert.equal(prefs.clean({ toys: ['soccer_ball', 'basketball', 'fairy_wings', 'bat_wings', 'unknown'] }).toys.join(','),
+  'soccer_ball,fairy_wings', 'Brinquedos do mesmo grupo devem ser exclusivos');
 assert(!prefs.clean({ accessories: ['plumber_beret'] }).accessories.includes('plumber_beret'),
   'Boina deve ser bloqueada antes de 3 medalhas');
 assert(prefs.clean({ accessories: ['plumber_beret'], achievements: threeMedals }).accessories.includes('plumber_beret'),
@@ -142,6 +185,12 @@ const unlockedProfile = prefs.clean({ name: 'Gabriel', accessories: ['plumber_be
 const unlockedBackup = prefs.parseProfileSVG(prefs.exportProfileSVG(unlockedProfile));
 assert(unlockedBackup.accessories.includes('plumber_beret'), 'Boina deve sobreviver ao backup com três medalhas');
 assert.equal(unlockedBackup.accessoryColor, '#ed805d', 'Backup deve guardar a cor dos acessórios');
+const toyProfile = prefs.clean({ toys: ['skateboard', 'pocket_ball', 'bat_wings'],
+  toyColor: '#9c80df', achievements: fourMedals });
+const toyBackup = prefs.parseProfileSVG(prefs.exportProfileSVG(toyProfile));
+assert.equal(toyBackup.toys.join(','), 'skateboard,pocket_ball,bat_wings',
+  'Backup deve preservar brinquedos combinados e desbloqueados');
+assert.equal(toyBackup.toyColor, '#9c80df', 'Backup deve preservar a cor dos brinquedos');
 for (const [id, expected] of [['hoodie', 'Moletom com capuz'], ['hoodie_zip', 'Moletom'],
   ['hoodie_patch', 'Moletom com zíper'], ['necklace', 'Blusa com broche'],
   ['bib', 'Regata com lantejoula'], ['flower_long', 'Longo liso']]) {
@@ -331,6 +380,7 @@ const ui = fs.readFileSync(path.join(root, 'assets/js/settings-ui.js'), 'utf8');
 for (const marker of ['outfitStyles', 'hairColorOptions', 'outfitColorOptions', 'bottomStyles',
   'bottomColorOptions', 'shoeColorOptions', 'customHairColor', 'customOutfitColor',
   'footwearStyles', 'sockPatterns', 'accessoryColorOptions', 'customAccessoryColor',
+  'toyStyles', 'toyColorOptions', 'customToyColor',
   'downloadProfile', 'importProfile', 'profileFile', 'parseProfileSVG']) {
   assert(ui.includes(marker), `Editor sem o controle ${marker}`);
 }
@@ -344,7 +394,9 @@ for (const file of downloaded) {
 }
 
 console.log('✓ 25 cabelos × 24 roupas = 600 combinações com vetores originais do SVG Repo');
-console.log('✓ Careca, cabelos sem flores, boné maior, tapa-olho e 13 acessórios desenhados');
+console.log('✓ Careca, cabelos sem flores, boné maior e 19 acessórios desenhados em camadas');
+console.log('✓ Flor sempre acima da tiara, capas atrás do corpo e máscaras exclusivas com óculos');
+console.log('✓ 11 brinquedos com cor independente, asas atrás, skate sob os pés e desbloqueio com 4 medalhas');
 console.log('✓ 5 partes de baixo, 4 calçados, 3 estampas de meias, boina com inicial e desbloqueio com 3 medalhas');
 console.log('✓ Camisas e moletons listrados, camiseta de time e cardigã alinhados ao corpo');
 console.log('✓ 73 personagens prontos renderizados inline, com pernas e backup compatível');

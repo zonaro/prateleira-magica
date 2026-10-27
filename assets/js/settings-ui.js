@@ -39,6 +39,8 @@
   const petStyles = avatarCatalog.petStyles;
   const accessoryStyles = avatarCatalog.accessoryStyles || [];
   const accessoryGroups = Object.fromEntries(accessoryStyles.map(([id, , group]) => [id, group]));
+  const toyStyles = avatarCatalog.toyStyles || [];
+  const toyGroups = Object.fromEntries(toyStyles.map(([id, , group]) => [id, group]));
   const presetParts = window.LivrinhoAvatarPresetParts || {};
   let draft = preferences.load();
   let lastSaved = preferences.clean(draft);
@@ -92,6 +94,10 @@
         <p class="settings-intro" style="margin-bottom:8px;">Escolha acessórios para seu personagem. Alguns usam o mesmo lugar e não podem ser usados juntos. A boina especial aparece depois de 3 medalhas! 🏅</p>
         <div id="accessoryStyles" class="avatar-style-grid"></div>
       </fieldset>
+      <fieldset class="avatar-style-fieldset"><legend>Brinquedos 🪀</legend>
+        <p class="settings-intro" style="margin-bottom:8px;">Escolha algo para segurar, asas ou um skate! Você pode combinar um de cada tipo. O skate é liberado com 4 medalhas. 🏅</p>
+        <div id="toyStyles" class="avatar-style-grid"></div>
+      </fieldset>
       <fieldset class="avatar-style-fieldset pet-fieldset"><legend>Minha pelúcia companheira 🧸</legend>
         <p id="petUnlockStatus" class="pet-unlock-status" role="status"></p>
         <div id="petStyles" class="pet-style-grid"></div>
@@ -108,6 +114,9 @@
         </fieldset>
         <fieldset class="skin-fieldset"><legend>Cor dos acessórios</legend><div id="accessoryColorOptions" class="skin-options"></div>
           <label class="custom-color"><span>Outra cor</span><input id="customAccessoryColor" type="color" aria-label="Selecionar outra cor de acessórios"></label>
+        </fieldset>
+        <fieldset class="skin-fieldset"><legend>Cor dos brinquedos</legend><div id="toyColorOptions" class="skin-options"></div>
+          <label class="custom-color"><span>Outra cor</span><input id="customToyColor" type="color" aria-label="Selecionar outra cor de brinquedos"></label>
         </fieldset>
       </div>
       <div class="avatar-color-fields">
@@ -134,6 +143,7 @@
             <option value="bottomColor">Calça, shorts ou saia</option><option value="shoeColor">Sapatos</option>
             <option value="skinColor">Pele (inclusive fantasia)</option>
             <option value="accessoryColor">Acessórios</option>
+            <option value="toyColor">Brinquedos</option>
           </select>
           <button id="magicColorApply" type="button" disabled>🎨 Usar esta cor</button>
         </div>
@@ -305,12 +315,32 @@
         item.classList.toggle('selected', selected);
         item.setAttribute('aria-pressed', String(selected));
         const thumb = item.querySelector('.style-preview');
-        if (thumb) thumb.innerHTML = preferences.avatarSVG({ ...draft, accessories: selected
-          ? accs : [...accs.filter((id) => accessoryGroups[id] !== accessoryGroups[aid]), aid] });
+        if (thumb) {
+          const preview = { ...draft, accessories: selected
+            ? accs : [...accs.filter((id) => accessoryGroups[id] !== accessoryGroups[aid]), aid] };
+          // Mostramos o prêmio bloqueado na miniatura sem permitir salvá-lo.
+          thumb.innerHTML = locked ? avatarCatalog.avatarSVG(preview) : preferences.avatarSVG(preview);
+        }
+      }
+    }
+    const selectedToys = Array.isArray(draft.toys) ? draft.toys : [];
+    for (const item of $('#toyStyles').querySelectorAll('button[data-toy]')) {
+      const id = item.dataset.toy;
+      const selected = selectedToys.includes(id);
+      const locked = id === 'skateboard' && preferences.medalCount(draft) < 4;
+      item.disabled = locked;
+      item.classList.toggle('locked', locked);
+      item.classList.toggle('selected', selected);
+      item.setAttribute('aria-pressed', String(selected));
+      const thumb = item.querySelector('.style-preview');
+      if (thumb) {
+        const preview = { ...draft, toys: selected
+          ? selectedToys : [...selectedToys.filter(toy => toyGroups[toy] !== toyGroups[id]), id] };
+        thumb.innerHTML = locked ? avatarCatalog.avatarSVG(preview) : preferences.avatarSVG(preview);
       }
     }
     for (const [containerId, key] of [['skinOptions', 'skinColor'], ['hairColorOptions', 'hairColor'],
-      ['outfitColorOptions', 'outfitColor'], ['accessoryColorOptions', 'accessoryColor'],
+      ['outfitColorOptions', 'outfitColor'], ['accessoryColorOptions', 'accessoryColor'], ['toyColorOptions', 'toyColor'],
       ['bottomColorOptions', 'bottomColor'], ['shoeColorOptions', 'shoeColor']]) {
       for (const swatch of $(`#${containerId}`).querySelectorAll('button')) {
         const selected = swatch.dataset.color === draft[key];
@@ -322,6 +352,7 @@
     $('#customHairColor').value = draft.hairColor;
     $('#customOutfitColor').value = draft.outfitColor;
     $('#customAccessoryColor').value = draft.accessoryColor;
+    $('#customToyColor').value = draft.toyColor;
     $('#customBottomColor').value = draft.bottomColor;
     $('#customShoeColor').value = draft.shoeColor;
     drawThemePalette();
@@ -455,6 +486,26 @@
     }
   }
 
+  const toyContainer = $('#toyStyles');
+  for (const [id, label, group] of toyStyles) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'avatar-style';
+    button.dataset.toy = id;
+    button.setAttribute('aria-label', label);
+    button.innerHTML = '<span class="style-preview"></span><span class="style-label"></span>';
+    button.querySelector('.style-label').textContent = label;
+    button.addEventListener('click', () => {
+      if (id === 'skateboard' && preferences.medalCount(draft) < 4) return;
+      edit('toys', () => {
+        const current = Array.isArray(draft.toys) ? draft.toys : [];
+        draft.toys = current.includes(id) ? current.filter(toy => toy !== id)
+          : [...current.filter(toy => toyGroups[toy] !== group), id];
+      });
+    });
+    toyContainer.append(button);
+  }
+
   function addPets() {
     const container = $('#petStyles');
     const none = document.createElement('button');
@@ -507,6 +558,7 @@
   addColors('hairColorOptions', avatarCatalog.hairColors, 'hairColor');
   addColors('outfitColorOptions', avatarCatalog.outfitColors, 'outfitColor');
   addColors('accessoryColorOptions', avatarCatalog.accessoryColors, 'accessoryColor');
+  addColors('toyColorOptions', avatarCatalog.toyColors, 'toyColor');
   addColors('bottomColorOptions', avatarCatalog.bottomColors, 'bottomColor');
   addColors('shoeColorOptions', avatarCatalog.shoeColors, 'shoeColor');
 
@@ -517,7 +569,7 @@
   $('#magicColorApply').addEventListener('click', () => {
     if (!generatedColor) return;
     const target = $('#magicColorTarget').value;
-    if (!['skinColor', 'hairColor', 'outfitColor', 'bottomColor', 'shoeColor', 'accessoryColor'].includes(target)) return;
+    if (!['skinColor', 'hairColor', 'outfitColor', 'bottomColor', 'shoeColor', 'accessoryColor', 'toyColor'].includes(target)) return;
     edit('', () => {
       if (['skinColor', 'hairColor', 'outfitColor'].includes(target)) markPresetEdit(target);
       draft[target] = generatedColor;
@@ -565,7 +617,7 @@
     option.addEventListener('change', () => edit('', () => { draft.gender = option.value; }));
   }
   for (const [inputId, field] of [['customSkinColor', 'skinColor'], ['customHairColor', 'hairColor'],
-    ['customOutfitColor', 'outfitColor'], ['customAccessoryColor', 'accessoryColor'],
+    ['customOutfitColor', 'outfitColor'], ['customAccessoryColor', 'accessoryColor'], ['customToyColor', 'toyColor'],
     ['customBottomColor', 'bottomColor'], ['customShoeColor', 'shoeColor']]) {
     $(`#${inputId}`).addEventListener('input', (event) => edit(field, () => {
       if (['skinColor', 'hairColor', 'outfitColor'].includes(field)) markPresetEdit(field);

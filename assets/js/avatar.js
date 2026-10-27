@@ -43,16 +43,36 @@
     ['glasses_round', 'Óculos redondos', 'face'],
     ['glasses_square', 'Óculos quadrados', 'face'],
     ['glasses_sunglasses', 'Óculos escuros', 'face'],
+    ['glasses_disguise', 'Óculos com nariz e bigode', 'face'],
+    ['kitsune_mask', 'Máscara de raposa', 'face'],
+    ['hero_mask', 'Máscara de super-herói', 'face'],
     ['eye_patch', 'Tapa-olho', 'face'],
     ['earrings_stud', 'Brincos', 'ears'],
     ['headphones', 'Fones de ouvido', 'hat'],
     ['cap', 'Boné', 'hat'],
     ['plumber_beret', 'Boina de encanador (3 medalhas)', 'hat'],
     ['beanie', 'Touca', 'hat'],
+    ['sports_helmet', 'Capacete esportivo', 'hat'],
     ['headband', 'Tiara', 'hat'],
+    ['hooded_cape', 'Capa com capuz', 'cape'],
+    ['hero_cape', 'Capa de super-herói', 'cape'],
     ['bow_hair', 'Laço', 'hair'],
     ['flower_clip', 'Flor de cabelo', 'hair'],
     ['star_clip', 'Estrela', 'hair']
+  ];
+  // Brinquedos do mesmo grupo se substituem; os grupos podem conviver.
+  const toyStyles = [
+    ['skateboard', 'Skate (4 medalhas)', 'floor'],
+    ['soccer_ball', 'Bola de futebol', 'hand'],
+    ['basketball', 'Bola de basquete', 'hand'],
+    ['tennis_ball', 'Bola de tênis', 'hand'],
+    ['american_football', 'Bola de futebol americano', 'hand'],
+    ['handball', 'Bola de handebol', 'hand'],
+    ['pocket_ball', 'Bola de monstrinho de bolso', 'hand'],
+    ['shuttlecock', 'Peteca', 'hand'],
+    ['chess_pieces', 'Peças de xadrez', 'hand'],
+    ['fairy_wings', 'Asas de fada', 'back'],
+    ['bat_wings', 'Asas de morcego', 'back']
   ];
   const hairColors = [
     ['#493a55', 'Castanho escuro'], ['#7b4c35', 'Castanho'],
@@ -80,6 +100,11 @@
     ['#9c80df', 'Lilás'], ['#efb857', 'Amarelo'], ['#ed805d', 'Vermelho coral'],
     ['#303448', 'Preto'], ['#ffffff', 'Branco']
   ];
+  const toyColors = [
+    ['#ed4d56', 'Vermelho'], ['#639de8', 'Azul'], ['#79bc8d', 'Verde'],
+    ['#9c80df', 'Lilás'], ['#efb857', 'Amarelo'], ['#ed805d', 'Coral'],
+    ['#303448', 'Preto'], ['#ffffff', 'Branco']
+  ];
 
   function safeColor(color, fallback) {
     return /^#[0-9a-f]{6}$/i.test(color || '') ? color.toLowerCase() : fallback;
@@ -97,12 +122,14 @@
     const hair = safeColor(settings.hairColor, '#493a55');
     const outfit = safeColor(settings.outfitColor, '#fa7195');
     const accessory = safeColor(settings.accessoryColor, '#fa7195');
+    const toy = safeColor(settings.toyColor, '#ed4d56');
     return {
       SKIN: skin, SKIN_LIGHT: shade(skin, .15), SKIN_DARK: shade(skin, -.12), SKIN_DEEP: shade(skin, -.25),
       HAIR: hair, HAIR_LIGHT: shade(hair, .25), HAIR_DARK: shade(hair, -.16), HAIR_DEEP: shade(hair, -.3),
       OUTFIT: outfit, OUTFIT_LIGHT: shade(outfit, .25), OUTFIT_DARK: shade(outfit, -.13), OUTFIT_DEEP: shade(outfit, -.25),
       ACCESSORY: accessory, ACCESSORY_LIGHT: shade(accessory, .25),
-      ACCESSORY_DARK: shade(accessory, -.2), ACCESSORY_DEEP: shade(accessory, -.38)
+      ACCESSORY_DARK: shade(accessory, -.2), ACCESSORY_DEEP: shade(accessory, -.38),
+      TOY: toy, TOY_LIGHT: shade(toy, .27), TOY_DARK: shade(toy, -.22), TOY_DEEP: shade(toy, -.45)
     };
   }
   function tint(original, colors) {
@@ -138,16 +165,37 @@
 
   // Acessórios independentes do penteado, no mesmo plano de coordenadas
   // 464x464 dos componentes originais (olhos em x=176/288, y=184).
-  function accessoriesSVG(settings, colors) {
+  function accessoriesSVG(settings, colors, placement = 'front') {
     const selected = Array.isArray(settings.accessories) ? settings.accessories : [];
     const ink = colors.ACCESSORY_DARK;
     const decoration = colors.ACCESSORY;
     const firstLetter = String(settings.name || 'A').trim().normalize('NFD')
       .replace(/[\u0300-\u036f]/g, '').toLocaleUpperCase('pt-BR').match(/[A-Z]/)?.[0] || 'A';
+    const rearDrawings = {
+      hooded_cape: `<path d="M147 270Q73 279 48 360L9 464h446l-42-111Q391 277 318 270Z" fill="${colors.ACCESSORY_DARK}"/>
+        <path d="M159 284Q79 343 67 464h332Q392 347 308 284Z" fill="${decoration}"/>
+        <path d="M101 172Q70 21 232 6q162 15 131 166l-44-24Q315 62 232 60q-83 2-87 88Z" fill="${decoration}" stroke="${ink}" stroke-width="8"/>`,
+      hero_cape: `<path d="M163 287Q94 303 23 462q110 24 209-24 95 44 208 24Q365 299 301 287Z" fill="${decoration}" stroke="${ink}" stroke-width="7"/>
+        <path d="M171 303 94 444q69-15 116-29m95-112 71 141q-65-16-116-29" fill="${colors.ACCESSORY_LIGHT}" opacity=".65"/>`
+    };
+    if (placement === 'back') {
+      return selected.filter(key => Object.hasOwn(rearDrawings, key))
+        .map(key => `<g data-accessory="${key}" data-placement="back">${rearDrawings[key]}</g>`).join('');
+    }
     const drawings = {
       glasses_round: `<g fill="none" stroke="${ink}" stroke-width="9"><circle cx="176" cy="183" r="31"/><circle cx="288" cy="183" r="31"/><path d="M207 179q25-15 50 0M145 178h-25m199 0h25"/></g>`,
       glasses_square: `<g fill="none" stroke="${ink}" stroke-width="9" stroke-linejoin="round"><rect x="143" y="150" width="67" height="65" rx="10"/><rect x="254" y="150" width="67" height="65" rx="10"/><path d="M210 178q22-12 44 0M143 178h-23m201 0h23"/></g>`,
       glasses_sunglasses: `<g fill="${colors.ACCESSORY_DEEP}" fill-opacity=".86" stroke="${ink}" stroke-width="8"><rect x="142" y="152" width="68" height="62" rx="15"/><rect x="254" y="152" width="68" height="62" rx="15"/><path d="M210 178q22-12 44 0M142 178h-22m202 0h22" fill="none"/></g>`,
+      glasses_disguise: `<g stroke="${ink}" stroke-width="7" fill="none"><circle cx="176" cy="182" r="29"/><circle cx="288" cy="182" r="29"/><path d="M205 177q27-14 54 0m-113 0h-23m196 0h23"/></g>
+        <path d="M232 183q-23 32-12 43h27q12-12-15-43Z" fill="${colors.SKIN_DARK}" stroke="${ink}" stroke-width="4"/>
+        <path d="M230 230q-36-25-63 8 22 14 64-1 42 15 64 1-28-33-63-8Z" fill="${decoration}" stroke="${ink}" stroke-width="5"/>`,
+      kitsune_mask: `<path d="M122 169 121 98l54 43q56-21 113 0l55-43v70q-8 63-110 70-103-7-111-69Z" fill="#fffaf0" stroke="${ink}" stroke-width="8"/>
+        <path d="M137 119l31 34-28 18ZM328 119l-31 34 28 18Z" fill="${decoration}"/>
+        <path d="M146 180q27-25 61 0l-11 14q-25-8-41 5Zm171 0q-28-25-61 0l11 14q25-8 41 5Z" fill="${colors.ACCESSORY_DARK}"/>
+        <path d="M221 204l11-8 11 8-11 9Z" fill="${decoration}"/><path d="M213 213q19 20 38 0" fill="none" stroke="${ink}" stroke-width="5"/>
+        <path d="M170 210l-34 10m34 1-34 17m158-28 34 10m-34 1 34 17" stroke="${decoration}" stroke-width="7" stroke-linecap="round"/>`,
+      hero_mask: `<path d="M116 161q40-23 116-13 76-10 116 13l-14 63q-44 13-102-7-58 20-102 7Z" fill="${decoration}" stroke="${ink}" stroke-width="7"/>
+        <path d="M149 179q32-16 58 10-9 22-44 16Zm166 0q-32-16-58 10 9 22 44 16Z" fill="#fff" stroke="${ink}" stroke-width="5"/>`,
       eye_patch: `<path d="M110 175Q232 143 356 175" fill="none" stroke="${ink}" stroke-width="9"/><path d="M138 155q38-13 76 1l-7 53q-30 25-56-3Z" fill="${decoration}" stroke="${ink}" stroke-width="6"/>`,
       earrings_stud: `<g fill="${decoration}" stroke="${ink}" stroke-width="4"><circle cx="119" cy="226" r="11"/><circle cx="345" cy="226" r="11"/></g>`,
       headphones: `<path d="M78 184V145C78 45 137 6 232 6s154 39 154 139v39" fill="none" stroke="${ink}" stroke-width="19"/><rect x="61" y="149" width="49" height="91" rx="22" fill="${decoration}" stroke="${ink}" stroke-width="7"/><rect x="354" y="149" width="49" height="91" rx="22" fill="${decoration}" stroke="${ink}" stroke-width="7"/>`,
@@ -157,13 +205,82 @@
           HAIR_DEEP: colors.ACCESSORY_DEEP, HAIR_LIGHT: colors.ACCESSORY_LIGHT })}</g>`,
       plumber_beret: `<g data-layer="boina-de-encanador"><path d="M84 133C84 58 131 11 228 11c91 0 151 46 151 122v19H84Z" fill="${decoration}" stroke="${ink}" stroke-width="8"/><path d="M87 127q135-30 291 0v38q-144 20-291 0Z" fill="${colors.ACCESSORY_LIGHT}" stroke="${ink}" stroke-width="6"/><path d="M107 152q100 25 261 0l-22 34q-113 23-226-4Z" fill="${colors.ACCESSORY_DARK}"/><circle cx="233" cy="95" r="49" fill="#fffdf7" stroke="${ink}" stroke-width="7"/><text x="233" y="115" font-family="system-ui,sans-serif" font-size="57" font-weight="900" text-anchor="middle" fill="${ink}">${firstLetter}</text></g>`,
       beanie: `<path d="M93 151V123C93 41 145 6 232 6S371 41 371 123v28Z" fill="${decoration}" stroke="${colors.ACCESSORY_DARK}" stroke-width="7"/><rect x="87" y="130" width="290" height="39" rx="15" fill="${colors.ACCESSORY_LIGHT}" stroke="${colors.ACCESSORY_DARK}" stroke-width="6"/><circle cx="232" cy="7" r="16" fill="${colors.ACCESSORY_LIGHT}"/>`,
+      sports_helmet: `<path d="M92 157Q78 20 232 16q151 3 143 141l-25 24H116Z" fill="${decoration}" stroke="${ink}" stroke-width="9"/>
+        <path d="M232 25v131" stroke="${colors.ACCESSORY_LIGHT}" stroke-width="15"/><path d="M117 157h250q-8 29-40 35H138q-22-7-21-35Z" fill="${colors.ACCESSORY_DEEP}"/>
+        <path d="M119 180q-31 27-9 57l36-5m198-52q31 27 9 57l-36-5" fill="none" stroke="${ink}" stroke-width="12" stroke-linecap="round"/>`,
       headband: `<path d="M109 122Q125 25 232 25T355 122" fill="none" stroke="${decoration}" stroke-width="22" stroke-linecap="round"/>`,
+      hooded_cape: `<path d="M123 147Q102 35 232 25q130 10 109 122" fill="none" stroke="${colors.ACCESSORY_DARK}" stroke-width="26" stroke-linecap="round"/>
+        <path d="M179 294q53 35 106 0" fill="none" stroke="${decoration}" stroke-width="13" stroke-linecap="round"/>`,
+      hero_cape: `<circle cx="173" cy="322" r="12" fill="${colors.ACCESSORY_LIGHT}" stroke="${ink}" stroke-width="5"/>
+        <circle cx="292" cy="322" r="12" fill="${colors.ACCESSORY_LIGHT}" stroke="${ink}" stroke-width="5"/>`,
       bow_hair: `<g transform="translate(342 85)" stroke="${colors.ACCESSORY_DARK}" stroke-width="5"><path d="M0 0Q-85-59-62 23L0 10Q75 66 73-25Z" fill="${decoration}"/><circle cx="0" cy="6" r="17" fill="${colors.ACCESSORY_LIGHT}"/></g>`,
       flower_clip: `<g transform="translate(349 105)" fill="${decoration}" stroke="${colors.ACCESSORY_DARK}" stroke-width="3"><circle cy="-20" r="16"/><circle cx="19" cy="-7" r="16"/><circle cx="12" cy="16" r="16"/><circle cx="-12" cy="16" r="16"/><circle cx="-19" cy="-7" r="16"/><circle r="12" fill="${colors.ACCESSORY_LIGHT}" stroke="none"/></g>`,
       star_clip: `<path d="M350 68l13 27 30 4-22 21 5 30-26-14-27 14 5-30-22-21 31-4Z" fill="${decoration}" stroke="${colors.ACCESSORY_DARK}" stroke-width="5" stroke-linejoin="round"/>`
     };
+    // Desenhamos acessórios de cabelo por último: a flor cobre sempre a tiara,
+    // independentemente da ordem dos cliques ou do perfil importado.
+    const order = { cape: 0, hat: 1, ears: 2, face: 3, hair: 4 };
+    const groupOf = Object.fromEntries(accessoryStyles.map(([id, , group]) => [id, group]));
     return selected.filter((key) => Object.hasOwn(drawings, key))
+      .sort((left, right) => (order[groupOf[left]] ?? 0) - (order[groupOf[right]] ?? 0))
       .map((key) => `<g data-accessory="${key}">${drawings[key]}</g>`).join('');
+  }
+
+  function toysSVG(settings, colors, placement) {
+    const chosen = Array.isArray(settings.toys) ? settings.toys : [];
+    const tone = colors.TOY;
+    const light = colors.TOY_LIGHT;
+    const dark = colors.TOY_DARK;
+    const ink = colors.TOY_DEEP;
+    if (placement === 'back') {
+      const fairy = `<path d="M209 254Q132 85 40 127q-42 68 95 136Q-2 258 31 377q90 47 181-93Z" fill="${light}" fill-opacity=".82" stroke="${dark}" stroke-width="9"/>
+        <path d="M190 249Q97 180 51 157m141 115Q103 329 56 347" stroke="#fff" stroke-opacity=".7" stroke-width="9" fill="none"/>`;
+      const bat = `<path d="M207 261Q141 166 23 156q46 56-8 102 77-12 71 62 65-32 120-35Z" fill="${tone}" stroke="${ink}" stroke-width="9"/>
+        <path d="M202 270 35 187m167 84-105 26" stroke="${dark}" stroke-width="9" fill="none"/>`;
+      return chosen.filter(key => key === 'fairy_wings' || key === 'bat_wings')
+        .map(key => {
+          const oneWing = key === 'fairy_wings' ? fairy : bat;
+          return `<g data-toy="${key}" data-placement="back">${oneWing}<g transform="translate(464 0) scale(-1 1)">${oneWing}</g></g>`;
+        }).join('');
+    }
+    if (placement === 'floor') {
+      return chosen.includes('skateboard')
+        ? `<g data-toy="skateboard" data-placement="floor">
+            <ellipse cx="105" cy="338" rx="77" ry="3" fill="#243f59" opacity=".15"/>
+            <circle cx="59" cy="330" r="7" fill="${ink}"/><circle cx="151" cy="330" r="7" fill="${ink}"/>
+            <circle cx="59" cy="330" r="3" fill="${light}"/><circle cx="151" cy="330" r="3" fill="${light}"/>
+            <path d="M28 315q77 11 154 0-5 13-22 13H50q-17 0-22-13Z" fill="${tone}" stroke="${ink}" stroke-width="2"/>
+            <path d="M33 317q72 8 144 0" fill="none" stroke="${light}" stroke-width="4" stroke-linecap="round"/>
+          </g>` : '';
+    }
+    if (placement !== 'hand') return '';
+    const items = {
+      soccer_ball: `<circle r="22" fill="#fffdf5" stroke="${ink}" stroke-width="2.5"/>
+        <path d="M0-11 11-4 7 9-7 9-11-4Z" fill="${tone}" stroke="${ink}" stroke-width="2"/>
+        <path d="M0-11v-10m11 17 9-8M7 9l8 12M-7 9l-8 12M-11-4l-9-8" stroke="${ink}" stroke-width="2" fill="none"/>`,
+      basketball: `<circle r="22" fill="${tone}" stroke="${ink}" stroke-width="3"/>
+        <path d="M-22 0h44M0-22v44M-15-16Q4 0-15 16M15-16Q-4 0 15 16" fill="none" stroke="${ink}" stroke-width="2.7"/>`,
+      tennis_ball: `<circle r="20" fill="${tone}" stroke="${ink}" stroke-width="2.5"/>
+        <path d="M-9-17Q13 0-9 17M9-17Q-13 0 9 17" fill="none" stroke="#fff" stroke-width="4"/>`,
+      american_football: `<path d="M-26 0Q0-31 26 0 0 31-26 0Z" fill="${tone}" stroke="${ink}" stroke-width="3"/>
+        <path d="M-16-7v14M16-7v14M-11 0h22M-7-6v12M0-7v14M7-6v12" fill="none" stroke="#fff" stroke-width="3"/>`,
+      handball: `<circle r="21" fill="${tone}" stroke="${ink}" stroke-width="3"/>
+        <path d="M-15-11Q0 0 15-11M-18 7Q0-5 18 7M-4-20Q14 1-4 20" stroke="${light}" stroke-width="3" fill="none"/>`,
+      pocket_ball: `<circle r="22" fill="#fff" stroke="#282833" stroke-width="3.5"/>
+        <path d="M-21 0a21 21 0 0 1 42 0Z" fill="${tone}"/>
+        <path d="M-21 0h42" stroke="#282833" stroke-width="7"/>
+        <circle r="8" fill="#fff" stroke="#282833" stroke-width="4"/><circle r="3" fill="#fff"/>`,
+      shuttlecock: `<path d="M-9 6-22-21l17 10 5-18 5 18 17-10L9 6Z" fill="${light}" stroke="${dark}" stroke-width="2.8"/>
+        <path d="M-16-13 0 7m16-20L0 7M0-25V7" stroke="${dark}" stroke-width="2"/>
+        <path d="M-10 6h20l6 13q-16 11-32 0Z" fill="${tone}" stroke="${ink}" stroke-width="3"/>`,
+      chess_pieces: `<g fill="${tone}" stroke="${ink}" stroke-width="2.5" stroke-linejoin="round">
+          <path d="M-20 19h19v-4h-2l-3-21 5-6-7-9-7 9 5 6-3 21h-7Z"/>
+          <path d="M1 19h21v-4h-3l-2-22h4v-13H3v13h4l-2 22H1Z"/>
+          <path d="M-8-27v11m-6-6h12M9-20v13" fill="none" stroke="${light}" stroke-width="3"/>
+        </g>`
+    };
+    return chosen.filter(key => Object.hasOwn(items, key))
+      .map(key => `<g data-toy="${key}" data-placement="hand" transform="translate(29 237)">${items[key]}</g>`).join('');
   }
 
   function plushViewBox(part) {
@@ -218,8 +335,10 @@
     const footwear = settings.footwearStyle === 'flipflops' ? flipflop
       : settings.footwearStyle === 'barefoot' ? barefoot
         : settings.footwearStyle === 'socks' ? socks + sockPattern : sneaker;
+    const groundShadow = Array.isArray(settings.toys) && settings.toys.includes('skateboard') ? ''
+      : '<ellipse cx="105" cy="327" rx="74" ry="9" fill="#243f59" opacity=".13"/>';
     return `<g data-layer="pernas-originais-do-app">
-      <ellipse cx="105" cy="327" rx="74" ry="9" fill="#243f59" opacity=".13"/>
+      ${groundShadow}
       ${legs}${clothing}
       <path d="M72 303h24v12H72Zm41 0h24v12h-24Z" fill="${shorts || skirt || diaper || settings.footwearStyle === 'barefoot' || settings.footwearStyle === 'flipflops' ? skin : shade(bottoms, -.08)}"/>
       <g data-layer="tenis-esquerdo" data-footwear="${settings.footwearStyle || 'sneakers'}" transform="translate(60 304)">${footwear}</g>
@@ -241,6 +360,7 @@
     // pelúcias de proporções diferentes flutuem dentro da caixa SVG.
     const plushShadow = pet ? '<ellipse data-layer="pelucia-sombra" cx="166" cy="328" rx="34" ry="5" fill="#243f59" opacity=".12"/>' : '';
     const companion = pet ? `<svg data-layer="pet-original" data-source="${pet.source}" x="117" y="227" width="90" height="104" viewBox="${plushViewBox(pet)}" preserveAspectRatio="xMidYMax meet">${pet.body}</svg>` : '';
+    const skating = Array.isArray(settings.toys) && settings.toys.includes('skateboard');
     const preset = Object.hasOwn(presetParts, settings.sourceSvg) ? presetParts[settings.sourceSvg] : null;
     const edits = Array.isArray(settings.presetEdits) ? settings.presetEdits : [];
     const originalLayer = (role, raw) => {
@@ -277,11 +397,18 @@
         <g data-layer="rosto-original" data-source="${source(parts.face.source)}">${tint(parts.face.svg, colors)}</g>
         <g data-layer="roupa-original" data-source="${source(outfit.source)}">${outfitSVG(settings.outfitStyle, outfit, colors)}</g>
         <g data-layer="cabelo-frente" data-source="${source(hair.source)}">${tint(hairGeometry(hair.front), colors)}</g>`;
-    return `${plushShadow}${lowerBody(settings, colors.SKIN)}
-      <g data-layer="tronco" transform="translate(0 34) scale(0.452586)">
-        ${upperBody}
-        ${accessoriesSVG(settings, colors)}
-      </g>${companion}`;
+    return `${plushShadow}
+      <g data-layer="avatar-completo"${skating ? ' transform="translate(0 -14)"' : ''}>
+        ${lowerBody(settings, colors.SKIN)}
+        <g data-layer="tronco" transform="translate(0 34) scale(0.452586)">
+          ${toysSVG(settings, colors, 'back')}
+          ${accessoriesSVG(settings, colors, 'back')}
+          ${upperBody}
+          ${accessoriesSVG(settings, colors)}
+        </g>
+        ${toysSVG(settings, colors, 'hand')}
+      </g>
+      ${toysSVG(settings, colors, 'floor')}${companion}`;
   }
 
   function avatarSymbol(id, settings) {
@@ -292,6 +419,6 @@
     return `<svg xmlns="http://www.w3.org/2000/svg" width="210" height="340" viewBox="0 0 210 340" role="img" aria-label="Avatar infantil personalizável">${avatarBody(settings)}</svg>`;
   }
   window.LivrinhoAvatar = { hairStyles, outfitStyles, bottomStyles, footwearStyles, sockPatterns, petStyles,
-    accessoryStyles, hairColors, outfitColors, bottomColors, shoeColors, accessoryColors,
+    accessoryStyles, toyStyles, hairColors, outfitColors, bottomColors, shoeColors, accessoryColors, toyColors,
     avatarBody, avatarSymbol, avatarSVG };
 })();

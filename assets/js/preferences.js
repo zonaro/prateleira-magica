@@ -23,6 +23,8 @@
     accessoryColor: '#fa7195',
     themeMood: '',
     accessories: [],
+    toys: [],
+    toyColor: '#ed4d56',
     achievements: { books: {} }
   });
   const styles = avatar.hairStyles.map(([key]) => key);
@@ -32,6 +34,7 @@
   const sockPatterns = avatar.sockPatterns.map(([key]) => key);
   const pets = avatar.petStyles.map(([key]) => key);
   const accessoryGroups = Object.fromEntries(avatar.accessoryStyles.map(([id, , group]) => [id, group]));
+  const toyGroups = Object.fromEntries(avatar.toyStyles.map(([id, , group]) => [id, group]));
   const genders = {
     masculino: { pronome: 'ele', possessivo: 'dele' },
     feminino: { pronome: 'ela', possessivo: 'dela' },
@@ -105,6 +108,12 @@
       accessories.splice(0, accessories.length, ...accessories.filter((id) => accessoryGroups[id] !== 'hat'));
       accessories.push('cap');
     }
+    const toys = [];
+    for (const id of Array.isArray(input.toys) ? input.toys : []) {
+      const group = toyGroups[id];
+      if (group && (id !== 'skateboard' || medals >= 4)
+          && !toys.some(chosen => toyGroups[chosen] === group)) toys.push(id);
+    }
     const result = {
       name,
       pronunciation,
@@ -125,6 +134,8 @@
       themeMood: ['', 'Vibrant', 'Futuristic', 'Fun', 'Soft Pastel', 'Calm', 'Vintage',
         'Organic', 'Sophisticated', 'Dark', 'Corporate'].includes(input.themeMood) ? input.themeMood : '',
       accessories,
+      toys,
+      toyColor: /^#[0-9a-f]{6}$/i.test(input.toyColor || '') ? input.toyColor.toLowerCase() : DEFAULTS.toyColor,
       achievements
     };
     if (typeof input.sourceSvg === 'string' && Object.hasOwn(window.LivrinhoAvatarPresetParts || {}, input.sourceSvg)) {
