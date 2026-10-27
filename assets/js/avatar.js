@@ -94,6 +94,21 @@
   function tint(original, colors) {
     return original.replace(/\{\{([A-Z_]+)\}\}/g, (_, key) => colors[key] || '#000000');
   }
+  function recolorOriginal(svg, targetColor, referenceColor, skinOnly = false) {
+    const reference = safeColor(referenceColor, '#e9aa83');
+    const target = safeColor(targetColor, reference);
+    const channels = (value) => [1, 3, 5].map((at) => parseInt(value.slice(at, at + 2), 16));
+    const sourceChannels = channels(reference);
+    const sourceLight = sourceChannels.reduce((sum, value) => sum + value, 0) / 3;
+    return svg.replace(/(fill:\s*)#([0-9a-f]{6})/gi, (match, prefix, original) => {
+      const values = channels(`#${original}`);
+      const distance = Math.sqrt(values.reduce((sum, value, i) => sum + (value - sourceChannels[i]) ** 2, 0));
+      if (skinOnly && distance > 96) return match; // olhos, boca e detalhes permanecem
+      const lightness = values.reduce((sum, value) => sum + value, 0) / 3;
+      const shift = Math.max(-.35, Math.min(.35, (lightness - sourceLight) / 255));
+      return `${prefix}${shade(target, shift)}`;
+    });
+  }
 
   // Acessórios independentes do penteado, no mesmo plano de coordenadas
   // 464x464 dos componentes originais (olhos em x=176/288, y=184).
@@ -171,8 +186,37 @@
     const plushShadow = pet ? '<ellipse data-layer="pelucia-sombra" cx="166" cy="328" rx="34" ry="5" fill="#243f59" opacity=".12"/>' : '';
     const companion = pet ? `<svg data-layer="pet-original" data-source="${pet.source}" x="117" y="227" width="90" height="104" viewBox="${plushViewBox(pet)}" preserveAspectRatio="xMidYMax meet">${pet.body}</svg>` : '';
     const preset = Object.hasOwn(presetParts, settings.sourceSvg) ? presetParts[settings.sourceSvg] : null;
-    const upperBody = preset
+    const edits = Array.isArray(settings.presetEdits) ? settings.presetEdits : [];
+    const originalLayer = (role, raw) => {
+      const colorKey = role === 'face' ? 'skinColor'
+        : role === 'outfit' ? 'outfitColor' : 'hairColor';
+      const art = edits.includes(colorKey)
+        ? recolorOriginal(raw, settings[colorKey], preset.colors[colorKey], role === 'face')
+        : raw;
+      return `<svg data-layer="original-${role}" width="464" height="464" viewBox="${preset.viewBox}" preserveAspectRatio="xMidYMax meet">${art}</svg>`;
+    };
+    const selectedOutfit = `<g data-layer="roupa-alterada">${tint(outfit.svg, colors)}</g>`;
+    const presetPieces = () => {
+      if (edits.includes('outfitStyle')) {
+        // A pele/roupa-base de alguns prontos é desenhada depois da camiseta.
+        // A nova roupa precisa ficar sobre todo o tronco, mas sob cabelos longos.
+        const body = preset.segments.filter(piece => piece.role !== 'outfit' && piece.role !== 'hairFront')
+          .map(piece => originalLayer(piece.role, piece.svg)).join('');
+        const hairFront = preset.segments.filter(piece => piece.role === 'hairFront')
+          .map(piece => originalLayer(piece.role, piece.svg)).join('');
+        return `${body}${selectedOutfit}${hairFront}`;
+      }
+      return preset.segments.map(piece => originalLayer(piece.role, piece.svg)).join('');
+    };
+    const upperBody = preset && edits.length === 0
       ? `<svg data-layer="avatar-pronto" data-source="${source(settings.sourceSvg)}" width="464" height="464" viewBox="${preset.viewBox}" preserveAspectRatio="xMidYMax meet">${preset.body}</svg>`
+      : preset && edits.includes('avatarStyle')
+        ? `<g data-layer="cabelo-atras">${tint(hair.back, colors)}</g>
+          <g data-layer="rosto-original">${tint(parts.face.svg, colors)}</g>
+          <g data-layer="roupa-original">${edits.includes('outfitStyle') ? selectedOutfit : originalLayer('outfit', preset.layers.outfit)}</g>
+          <g data-layer="cabelo-frente">${tint(hair.front, colors)}</g>`
+      : preset
+        ? `<g data-layer="avatar-pronto-em-edicao">${presetPieces()}</g>`
       : `<g data-layer="cabelo-atras" data-source="${source(hair.source)}">${tint(hair.back, colors)}</g>
         <g data-layer="rosto-original" data-source="${source(parts.face.source)}">${tint(parts.face.svg, colors)}</g>
         <g data-layer="roupa-original" data-source="${source(outfit.source)}">${tint(outfit.svg, colors)}</g>

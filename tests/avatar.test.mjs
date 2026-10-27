@@ -116,6 +116,7 @@ assert.equal(readyPresets.length, 73);
 for (const preset of readyPresets) {
   const profile = prefs.clean({ ...preset.profile, sourceSvg: preset.sourceSvg });
   assert.equal(profile.sourceSvg, preset.sourceSvg);
+  assert.equal(profile.presetEdits.join(','), '', 'Personagem pronto não pode começar com edições implícitas');
   const svg = prefs.avatarSVG(profile);
   assert(svg.includes('viewBox="0 0 210 340"'));
   assert(svg.includes('data-layer="pernas-originais-do-app"'), `Pernas ausentes no pronto ${preset.sourceSvg}`);
@@ -128,7 +129,42 @@ for (const preset of readyPresets) {
   const backup = prefs.exportProfileSVG(profile);
   assert.equal(prefs.parseProfileSVG(backup).sourceSvg, preset.sourceSvg,
     `Backup perdeu personagem pronto ${preset.sourceSvg}`);
+
+  const original = inlinePresets[preset.sourceSvg];
+  const outfitPiece = original.segments.find((piece) => piece.role === 'outfit')?.svg;
+  const hairPiece = original.segments.find((piece) => piece.role === 'hairBack' || piece.role === 'hairFront')?.svg;
+  assert(outfitPiece && hairPiece, `Personagem ${preset.sourceSvg} sem peças separadas`);
+  const withNewHair = prefs.clean({ ...profile, avatarStyle: 'bald', presetEdits: ['avatarStyle'] });
+  const hairSwapSvg = prefs.avatarSVG(withNewHair);
+  assert(hairSwapSvg.includes('data-layer="roupa-original"'), `Roupa original perdida após trocar o cabelo: ${preset.sourceSvg}`);
+  assert(hairSwapSvg.includes(outfitPiece), `Caminhos da roupa alterados junto com o cabelo: ${preset.sourceSvg}`);
+  assert(hairSwapSvg.includes('M120 161v-28'), `Careca não substituiu o penteado: ${preset.sourceSvg}`);
+  assert(!hairSwapSvg.includes('data-layer="avatar-pronto"'), `Personagem ${preset.sourceSvg} não saiu do desenho fechado`);
+
+  const withNewOutfit = prefs.clean({ ...profile, outfitStyle: 'hoodie', presetEdits: ['outfitStyle'] });
+  const outfitSwapSvg = prefs.avatarSVG(withNewOutfit);
+  assert(outfitSwapSvg.includes(hairPiece), `Cabelo original perdido após trocar roupa: ${preset.sourceSvg}`);
+  assert(outfitSwapSvg.includes('data-layer="roupa-alterada"'), `Roupa nova não apareceu: ${preset.sourceSvg}`);
+
+  // Mudar novamente uma única peça não deve apagar as edições anteriores
+  // nem converter os demais elementos para os padrões do editor.
+  const mixed = prefs.clean({ ...withNewHair, avatarStyle: 'short', hairColor: '#8c6bd0',
+    outfitColor: '#79bc8d', presetEdits: ['avatarStyle', 'hairColor', 'outfitColor'] });
+  const mixedSvg = prefs.avatarSVG(mixed);
+  assert(mixedSvg.includes('data-layer="roupa-original"'), `Roupa original sumiu em edições sucessivas: ${preset.sourceSvg}`);
+  assert(mixedSvg.includes('#8c6bd0'), `Nova cor do cabelo não aplicada: ${preset.sourceSvg}`);
+  assert(mixedSvg.includes('#79bc8d'), `Nova cor da roupa não aplicada: ${preset.sourceSvg}`);
+  const restoredMixed = prefs.parseProfileSVG(prefs.exportProfileSVG(mixed));
+  assert.equal(restoredMixed.sourceSvg, preset.sourceSvg, `Backup perdeu a origem: ${preset.sourceSvg}`);
+  assert.equal(restoredMixed.presetEdits.join(','), mixed.presetEdits.join(','),
+    `Backup perdeu quais itens foram modificados: ${preset.sourceSvg}`);
+  assert.equal(prefs.avatarSVG(restoredMixed), mixedSvg,
+    `Importação não restaurou todas as peças: ${preset.sourceSvg}`);
 }
+const sanitizedPreset = prefs.clean({ sourceSvg: readyPresets[0].sourceSvg,
+  presetEdits: ['avatarStyle', 'avatarStyle', 'irrelevante', 'outfitStyle'] });
+assert.equal(sanitizedPreset.presetEdits.join(','), 'avatarStyle,outfitStyle',
+  'Campos duplicados ou inválidos não devem ficar gravados');
 assert.equal(prefs.clean({ sourceSvg: '../outro.svg' }).sourceSvg, undefined,
   'Não aceitar SVG arbitrário enviado por backups');
 assert.equal(prefs.clean({ petId: 'fox' }).petId, null, 'Pet deve estar bloqueado antes da segunda medalha');

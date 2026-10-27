@@ -119,6 +119,9 @@
     };
     if (typeof input.sourceSvg === 'string' && Object.hasOwn(window.LivrinhoAvatarPresetParts || {}, input.sourceSvg)) {
       result.sourceSvg = input.sourceSvg;
+      const editableParts = ['avatarStyle', 'outfitStyle', 'skinColor', 'hairColor', 'outfitColor'];
+      const changes = Array.isArray(input.presetEdits) ? input.presetEdits : [];
+      result.presetEdits = [...new Set(changes.filter((part) => editableParts.includes(part)))];
     }
     return result;
   }

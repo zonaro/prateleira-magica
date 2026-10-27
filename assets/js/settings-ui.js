@@ -37,6 +37,7 @@
   const petStyles = avatarCatalog.petStyles;
   const accessoryStyles = avatarCatalog.accessoryStyles || [];
   const accessoryGroups = Object.fromEntries(accessoryStyles.map(([id, , group]) => [id, group]));
+  const presetParts = window.LivrinhoAvatarPresetParts || {};
   let draft = preferences.load();
   let lastSaved = preferences.clean(draft);
   const undoHistory = [];
@@ -203,11 +204,14 @@
         btn.className = 'avatar-style';
         btn.innerHTML = '<span class="style-preview"></span><span class="style-label"></span>';
         btn.querySelector('.style-label').textContent = preset.name;
-        btn.querySelector('.style-preview').innerHTML = preferences.avatarSVG({ ...preset.profile, sourceSvg: preset.sourceSvg });
+        btn.querySelector('.style-preview').innerHTML = preferences.avatarSVG({
+          ...preset.profile, ...presetParts[preset.sourceSvg]?.colors, sourceSvg: preset.sourceSvg
+        });
         btn.addEventListener('click', () => {
           const matchingHair = hairStyles.find(([style]) => window.LivrinhoAvatarParts.hair[style]?.source === preset.sourceSvg)?.[0];
           const matchingOutfit = outfitStyles.find(([style]) => window.LivrinhoAvatarParts.outfit[style]?.source === preset.sourceSvg)?.[0];
-          const next = preferences.clean({ ...preset.profile, sourceSvg: preset.sourceSvg,
+          const next = preferences.clean({ ...preset.profile, ...presetParts[preset.sourceSvg]?.colors,
+            sourceSvg: preset.sourceSvg, presetEdits: [],
             avatarStyle: matchingHair || 'short', outfitStyle: matchingOutfit || 'tee',
             gender: preset.gender, achievements: draft.achievements });
           fillDialog(next);
@@ -251,14 +255,16 @@
       item.classList.toggle('selected', selected);
       item.setAttribute('aria-pressed', String(selected));
       const thumb = item.querySelector('.style-preview');
-      if (thumb) thumb.innerHTML = preferences.avatarSVG({ ...draft, sourceSvg: undefined, avatarStyle: item.dataset.style });
+      if (thumb) thumb.innerHTML = preferences.avatarSVG({ ...draft, avatarStyle: item.dataset.style,
+        presetEdits: [...new Set([...(draft.presetEdits || []), 'avatarStyle'])] });
     }
     for (const item of $('#outfitStyles').querySelectorAll('button')) {
       const selected = item.dataset.style === draft.outfitStyle;
       item.classList.toggle('selected', selected);
       item.setAttribute('aria-pressed', String(selected));
       const thumb = item.querySelector('.style-preview');
-      if (thumb) thumb.innerHTML = preferences.avatarSVG({ ...draft, sourceSvg: undefined, outfitStyle: item.dataset.style });
+      if (thumb) thumb.innerHTML = preferences.avatarSVG({ ...draft, outfitStyle: item.dataset.style,
+        presetEdits: [...new Set([...(draft.presetEdits || []), 'outfitStyle'])] });
     }
     for (const item of $('#bottomStyles').querySelectorAll('button')) {
       const selected = item.dataset.style === draft.bottomStyle;
@@ -368,6 +374,10 @@
     change();
     saveChange(group, redraw);
   }
+  function markPresetEdit(field) {
+    if (!draft.sourceSvg) return;
+    draft.presetEdits = [...new Set([...(draft.presetEdits || []), field])];
+  }
 
   function addStyles(containerId, entries, field) {
     const container = $(`#${containerId}`);
@@ -380,7 +390,7 @@
       button.innerHTML = '<span class="style-preview"></span><span class="style-label"></span>';
       button.querySelector('.style-label').textContent = label;
       button.addEventListener('click', () => edit('', () => {
-        if (field !== 'bottomStyle') delete draft.sourceSvg;
+        if (field !== 'bottomStyle') markPresetEdit(field);
         draft[field] = style;
       }));
       container.append(button);
@@ -458,7 +468,7 @@
       button.setAttribute('aria-label', label);
       button.style.backgroundColor = color;
       button.addEventListener('click', () => edit('', () => {
-        if (['skinColor', 'hairColor', 'outfitColor'].includes(field)) delete draft.sourceSvg;
+        if (['skinColor', 'hairColor', 'outfitColor'].includes(field)) markPresetEdit(field);
         draft[field] = color;
       }));
       container.append(button);
@@ -479,7 +489,7 @@
     const target = $('#magicColorTarget').value;
     if (!['skinColor', 'hairColor', 'outfitColor', 'bottomColor', 'shoeColor'].includes(target)) return;
     edit('', () => {
-      if (['skinColor', 'hairColor', 'outfitColor'].includes(target)) delete draft.sourceSvg;
+      if (['skinColor', 'hairColor', 'outfitColor'].includes(target)) markPresetEdit(target);
       draft[target] = generatedColor;
     });
   });
@@ -489,7 +499,8 @@
   $('#applyThemeAvatar').addEventListener('click', () => {
     const palette = colors?.palette(draft.themeMood) || defaultThemeColors;
     edit('', () => {
-      delete draft.sourceSvg;
+      markPresetEdit('hairColor');
+      markPresetEdit('outfitColor');
       [draft.hairColor, draft.outfitColor, draft.bottomColor, draft.shoeColor] = palette.slice(0, 4);
     });
   });
@@ -519,7 +530,7 @@
   for (const [inputId, field] of [['customSkinColor', 'skinColor'], ['customHairColor', 'hairColor'],
     ['customOutfitColor', 'outfitColor'], ['customBottomColor', 'bottomColor'], ['customShoeColor', 'shoeColor']]) {
     $(`#${inputId}`).addEventListener('input', (event) => edit(field, () => {
-      if (['skinColor', 'hairColor', 'outfitColor'].includes(field)) delete draft.sourceSvg;
+      if (['skinColor', 'hairColor', 'outfitColor'].includes(field)) markPresetEdit(field);
       draft[field] = event.target.value;
     }));
   }
