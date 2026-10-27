@@ -23,6 +23,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Preparar MediaPipe e modelos locais
+        run: node tools/vendor-mediapipe.mjs
       - name: Validar dados e estrutura
         run: |
           python3 tools/extract-avatar-components.py --check
