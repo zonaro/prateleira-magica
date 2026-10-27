@@ -2,6 +2,7 @@
   'use strict';
   const preferences = window.LivrinhoPreferences;
   const avatarCatalog = window.LivrinhoAvatar;
+  const avatarPhoto = window.LivrinhoAvatarPhoto;
   const narrator = window.LivrinhoSpeech;
   const colors = window.LivrinhoColors;
   if (!preferences || !avatarCatalog) return;
@@ -591,6 +592,36 @@
       markPresetEdit('outfitColor');
       [draft.hairColor, draft.outfitColor, draft.bottomColor, draft.shoeColor] = palette.slice(0, 4);
     });
+  });
+
+
+  // A análise não salva a foto: só transfere campos reconhecidos para o draft.
+  // Reaproveitar edit() garante undo, auto-save e refresh de todos os SVGs.
+  avatarPhoto?.mount({
+    editor,
+    onApply: (result) => {
+      edit('avatar-photo', () => {
+        const next = {
+          skinColor: result.skinColor,
+          hairColor: result.hairColor,
+          outfitColor: result.outfitColor,
+          avatarStyle: result.avatarStyle
+        };
+        for (const [field, value] of Object.entries(next)) {
+          if (!value || draft[field] === value) continue;
+          markPresetEdit(field);
+          draft[field] = value;
+        }
+        // Se houver uma máscara ou outro acessório facial, não sobrescrevemos.
+        // Ausência de detecção não exclui óculos: falso negativo é comum.
+        const current = Array.isArray(draft.accessories) ? draft.accessories : [];
+        if (result.glasses && !current.some((id) => accessoryGroups[id] === 'face')) {
+          draft.accessories = [...current, 'glasses_round'];
+        }
+      });
+      $('#autoSaveStatus').textContent = '✨ Avatar criado! Confira o penteado e os óculos.';
+      if (result.warnings.length) $('#autoSaveStatus').title = result.warnings.join(' ');
+    }
   });
 
   fillDialog();
