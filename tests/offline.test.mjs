@@ -69,6 +69,8 @@ const cache = await caches.open(cacheName);
 assert(await cache.match(`${scope}assets/js/avatar-parts.js`), 'Peças originais dos avatares não foram salvas offline');
 assert(await cache.match(`${scope}assets/js/pet-parts.js`), 'Pets para ilustrações não foram salvos offline');
 assert(await cache.match(`${scope}assets/js/avatar.js`), 'Renderização dos avatares não foi salva offline');
+assert(await cache.match(`${scope}assets/js/avatar-photo-colors.js`), 'Helper de cores não foi salvo offline');
+assert(await cache.match(`${scope}assets/js/avatar-photo.js`), 'Interface de foto não foi salva offline');
 assert(await cache.match(`${scope}assets/js/speech.js`), 'Narração e teste de pronúncia não foram salvos offline');
 assert(await cache.match(`${scope}assets/js/colors.js`), 'Integração de cores não foi salva offline');
 assert(await cache.match(`${scope}assets/js/color-explorer.js`), 'Laboratório de cores não foi salvo offline');
