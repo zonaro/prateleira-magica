@@ -1,0 +1,278 @@
+{
+  "schemaVersion": 1,
+  "language": "pt-BR",
+  "id": "o-clube-dos-dentinhos",
+  "title": "{{nome}} e o Clube dos Dentinhos",
+  "subtitle": "Escova macia, sorriso saudável e muito carinho",
+  "subject": "Saúde · higiene bucal e escovação",
+  "ageRange": [
+    4,
+    8
+  ],
+  "cover": "assets/illustrations/capitulos/o-clube-dos-dentinhos/01.svg",
+  "color": "#76c8d4",
+  "medal": "🦷 Medalha do Sorriso",
+  "rewards": [
+    {
+      "id": "toothbrush",
+      "label": "Escova de dentes de brinquedo"
+    }
+  ],
+  "exercises": [
+    {
+      "syllable": "🦷",
+      "text": "Escovo os dentes pelo menos duas vezes ao dia."
+    },
+    {
+      "syllable": "🌙",
+      "text": "Escovar antes de dormir é muito importante."
+    },
+    {
+      "syllable": "🪥",
+      "text": "Uso escova macia e movimentos suaves, sem machucar a gengiva."
+    },
+    {
+      "syllable": "🫧",
+      "text": "Um adulto coloca a quantidade adequada de pasta com flúor."
+    },
+    {
+      "syllable": "💧",
+      "text": "Não engulo a pasta e peço ajuda para cuspir."
+    },
+    {
+      "syllable": "🧵",
+      "text": "Um adulto me ajuda a limpar entre os dentes quando necessário."
+    },
+    {
+      "syllable": "🤝",
+      "text": "Posso pedir ajuda para escovar todos os cantinhos."
+    }
+  ],
+  "pages": [
+    {
+      "type": "cover",
+      "sticker": "OLÁ, DENTINHOS!",
+      "chapter": "O espelho encantado 🦷",
+      "title": "{{nome}} e o Clube dos Dentinhos",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "{{nome}} entrou no banheiro e ouviu um PLOC! O espelho mostrou um dente sorridente, chamado Dentinho Brilhante."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Nossa boca trabalha muito: fala, mastiga e sorri. Quer aprender a cuidar dela com carinho?"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/o-clube-dos-dentinhos/01.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "SOMOS UMA EQUIPE",
+      "chapter": "Capítulo 1 · Nossos dentes",
+      "title": "Os pequenos companheiros",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Os dentinhos de leite ajudam a mastigar, sorrir e falar. Com o tempo, muitos deles abrem espaço para os dentes permanentes."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Mesmo os dentes que vão cair precisam de cuidados todos os dias!"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/o-clube-dos-dentinhos/02.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "PLACAS PEGAJOSAS",
+      "chapter": "Capítulo 2 · Limpeza",
+      "title": "A melequinha invisível",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Pedacinhos de comida e uma película de micróbios podem ficar grudados nos dentes. Chamamos essa película de [[placa bacteriana]]."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Se ela fica por muito tempo, pode ajudar a aparecer a cárie. Por isso nossa escovinha entra em ação!"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/o-clube-dos-dentinhos/03.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "ESCOVA MACIA",
+      "chapter": "Capítulo 3 · Escovação",
+      "title": "A dança gentil da escova",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Com uma escova macia, {{nome}} aprendeu a fazer movimentos suaves em todas as faces dos dentes: do lado de fora, do lado de dentro e onde a gente mastiga."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Não precisa esfregar com força! Cuide da gengiva com delicadeza."
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/o-clube-dos-dentinhos/04.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "DOIS MINUTINHOS",
+      "chapter": "Capítulo 4 · Rotina",
+      "title": "A música do tic-tac",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "O Dentinho Brilhante tocou uma música de aproximadamente dois minutos. Esse é um bom tempo para escovar com calma!"
+        },
+        {
+          "kind": "paragraph",
+          "text": "A escovação acontece pelo menos duas vezes ao dia. Antes de dormir, ela é especialmente importante."
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/o-clube-dos-dentinhos/05.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "PASTA NA MEDIDA",
+      "chapter": "Capítulo 5 · Flúor",
+      "title": "Um pouquinho já ajuda",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "A pasta de dentes com [[flúor]] ajuda a proteger contra cáries. Um adulto escolhe a pasta e coloca a quantidade adequada para a idade e para a capacidade de cuspir."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— A espuma não é comida! Depois, cuspimos e pedimos ajuda se necessário."
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/o-clube-dos-dentinhos/06.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "ENTRE OS DENTES",
+      "chapter": "Capítulo 6 · Fio dental",
+      "title": "O lugar da escova não alcança",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Às vezes os dentes ficam bem juntinhos e a escova não alcança o espacinho entre eles. Nessas horas, o [[fio dental]] pode ajudar."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Um adulto pode passar o fio com cuidado para não machucar a gengiva."
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/o-clube-dos-dentinhos/07.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "ÁGUA E AMIGOS",
+      "chapter": "Capítulo 7 · Hábitos",
+      "title": "Cuidados além da escova",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Beber água, ter refeições variadas e não beliscar doces o tempo todo também faz parte dos cuidados com os dentes."
+        },
+        {
+          "kind": "paragraph",
+          "text": "A escova é pessoal: não devemos emprestá-la. Depois de usar, ela precisa ficar limpa e guardada direitinho."
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/o-clube-dos-dentinhos/08.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "CONSULTA COM CARINHO",
+      "chapter": "Capítulo 8 · Dentista",
+      "title": "O guardião dos sorrisos",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "A dentista mostrou um espelhinho e contou que pode ajudar a descobrir problemas cedo. É normal ter dúvidas ou ficar inseguro."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Você pode perguntar tudo e pedir uma pausa quando precisar. Os adultos estão aqui para ajudar!"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/o-clube-dos-dentinhos/09.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "VOCÊ CONSEGUE!",
+      "chapter": "Capítulo 9 · Apoio",
+      "title": "Escovar junto é melhor",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "{{nome}} tentou escovar sozinho, mas pediu ajuda para alcançar os cantinhos. O adulto responsável terminou de conferir com carinho."
+        },
+        {
+          "kind": "dialogue",
+          "text": "— Aprender leva tempo! O importante é cuidar da boca, sem medo e sem vergonha."
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/o-clube-dos-dentinhos/10.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "FONTES PARA OS ADULTOS",
+      "chapter": "Biblioteca do sorriso 📚",
+      "title": "De onde vêm essas dicas?",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Estas fontes são para responsáveis. Os endereços aparecem apenas como texto, sem links clicáveis. O uso de flúor e a quantidade de pasta devem seguir a orientação profissional adequada para a idade."
+        }
+      ],
+      "interactive": "bibliography",
+      "bibliography": [
+        {
+          "title": "Ministério da Saúde — Saúde bucal na primeira infância",
+          "url": "www.gov.br/saude/pt-br/assuntos/saude-de-a-a-z/s/saude-da-crianca/primeira-infancia/saude-bucal"
+        },
+        {
+          "title": "Ministério da Saúde — Diretriz de higiene bucal na infância",
+          "url": "bvsms.saude.gov.br/bvs/publicacoes/diretriz_odontologica_higiene_bucal_infancia.pdf"
+        },
+        {
+          "title": "Associação Dental Americana — Escovas dentais",
+          "url": "www.ada.org/resources/ada-library/oral-health-topics/toothbrushes"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/o-clube-dos-dentinhos/11.svg"
+    },
+    {
+      "type": "challenge",
+      "sticker": "DESAFIO DO SORRISO",
+      "chapter": "Missão da escovação 🎯",
+      "title": "Sete jeitos de cuidar da boca",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Marque cada frase que você aprendeu. Se precisar, peça ajuda para ler. No final, uma escova de dentes de brinquedo estará esperando pelo seu avatar!"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/o-clube-dos-dentinhos/12.svg"
+    },
+    {
+      "type": "finish",
+      "sticker": "MEDALHA DO SORRISO",
+      "chapter": "Muito bem, {{nome}}!",
+      "title": "Sorriso bem cuidado!",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Você descobriu a escovação gentil, a ajuda dos adultos, o flúor e os cuidados com seus dentinhos. A escova de brinquedo está desbloqueada!"
+        }
+      ],
+      "medal": "🦷 Medalha do Sorriso conquistada!",
+      "illustration": "assets/illustrations/capitulos/o-clube-dos-dentinhos/13.svg"
+    }
+  ]
+}

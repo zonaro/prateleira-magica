@@ -1,6 +1,6 @@
 # Prateleira Mágica ✨📚
 
-Um PWA estático, leve e extensível para leitura infantil com ilustrações, sílabas interativas, narração pelo navegador, desafios e uso offline. A prateleira tem quatro aventuras: **{{nome}} e o Trem Travesso** (TRA–TRU), **{{nome}} e o Drone Desaparecido** (DRA–DRU), **{{nome}} e o Trem dos Dragões** (as dez sílabas combinadas) e **{{nome}} e o Reino das Cores** (misturas, harmonias, exploração das cores e Medalha das Cores). Os títulos, os textos e os protagonistas ilustrados se adaptam à criança configurada.
+Um PWA estático, leve e extensível para leitura infantil com ilustrações, sílabas interativas, narração pelo navegador, desafios e uso offline. A prateleira reúne **18 livros**: aventuras personalizadas com a criança como protagonista e **contos clássicos com personagens próprios**, começando por *Rapunzel*. Os livros personalizados adaptam títulos, textos e ilustrações à criança configurada.
 
 ## Usar
 
@@ -73,6 +73,8 @@ tools/build-avatar-presets.mjs     Empacota personagens prontos para livros, per
 tools/download-cute-animal-pets.mjs Download original da coleção de pelúcias
 tools/build-pet-parts.mjs          Empacota SVGs originais das pelúcias para uso offline
 tools/preview-avatar-combinations.mjs Prévia visual das combinações de avatar
+tools/build-escovacao-rapunzel.mjs Gera livro de higiene bucal e transcreve Rapunzel com atribuição
+books/rapunzel-fonte.txt          Fonte textual licenciada extraída do PDF de referência
 docs/avatar-components.md         Proveniência, extração e compatibilidade
 .github/workflows/pages.yml        Deploy no GitHub Pages
 ```
@@ -83,7 +85,7 @@ Nenhum framework, empacotador, servidor PHP ou banco de dados é necessário.
 
 1. Crie um `books/<slug>.json` seguindo a estrutura do livro Ellie.
 2. Coloque as ilustrações SVG em `assets/illustrations/<slug>/`.
-3. Adicione um item ao array `books` de `books/index.json`, com `id`, `data`, `title`, `subtitle`, `cover`, `language`, `subject` e `ageRange: [idadeMinima, idadeMaxima]` (e `syllables`, quando necessário).
+3. Adicione um item ao array `books` de `books/index.json`, com `id`, `data`, `title`, `subtitle`, `cover`, `language`, `subject` e `ageRange: [idadeMinima, idadeMaxima]` (e `syllables`, quando necessário). Para livros em que a criança **não** é a protagonista, inclua `"protagonistMode":"fixed"` no manifesto e no livro; as ilustrações e o título não serão substituídos pelo avatar.
 4. Aumente a versão `CACHE_NAME` em `sw.js` para que o cache offline seja reconstruído.
 5. Execute `node tests/verify.mjs` e faça commit na `main`.
 
@@ -138,14 +140,18 @@ A prateleira oferece busca por título/assunto, filtro por assunto e faixa etár
 | Aventura do ABC | Alfabetização, letras A–Z e palavras | 4–8 anos | Blocos de empilhar A, B e C |
 | Trilha do NH | Alfabetização, NHA/NHE/NHI/NHO/NHU | 5–8 anos | Medalha do NH |
 | Jardim das Diferenças | Convivência, respeito e diversidade brasileira | 6–9 anos | Dupla hélice de DNA de brinquedo |
+| Clube dos Dentinhos | Saúde, higiene bucal, flúor e escovação | 4–8 anos | Escova de dentes de brinquedo |
+| Rapunzel (conto clássico) | Literatura e imaginação; leitura acompanhada | 7–9 anos | Cabelo de Rapunzel com tranças longas |
 
-Todo livro mantém um desafio antes da última página. Nos doze livros educativos, as **42 recompensas** só ficam selecionáveis depois de **marcar todas as frases do desafio e chegar à página final** (`finished` + `medalEarnedAt` ou `challengeCompletedAt`). O livro de dígrafo NH desbloqueia apenas a medalha, como os livros originais de alfabetização. No livro das festas, **todos os presentes de cada data** são liberados juntos ao terminar a aventura completa. Os itens ficam visíveis em cinza enquanto bloqueados. As recompensas vinculadas ao livro são definidas em `assets/js/avatar.js` (`rewardBooks`) e listadas como `rewards` no JSON do livro. Os IDs devem corresponder. A regra é verificada também ao carregar e importar perfis, não apenas na interface.
+Todo livro mantém um desafio antes da última página. As **44 recompensas** só ficam selecionáveis depois de **marcar todas as frases do desafio e chegar à página final** (`finished` + `medalEarnedAt` ou `challengeCompletedAt`). O livro de dígrafo NH desbloqueia apenas a medalha, como os livros originais de alfabetização. No livro das festas, **todos os presentes de cada data** são liberados juntos ao terminar a aventura completa. Os itens ficam visíveis em cinza enquanto bloqueados. As recompensas vinculadas ao livro são definidas em `assets/js/avatar.js` (`rewardBooks`) e listadas como `rewards` no JSON do livro. Os IDs devem corresponder. A regra é verificada também ao carregar e importar perfis, não apenas na interface. O penteado especial de Rapunzel segue a mesma regra de conclusão e é compatível com as cores de cabelo existentes.
 
-O coração é a 21ª pelúcia, exclusiva do Jardim dos Sentimentos, e o sol sorridente é a 22ª pelúcia, exclusiva da Dança do Tempo; as outras 20 continuam liberadas com duas medalhas. A cor do líquido da garrafinha é guardada separadamente em `waterColor` e incluída no backup SVG. Os três livros de saúde trazem bibliografia para os responsáveis, sem links clicáveis no leitor; os livros culturais e de astronomia também possuem fontes em texto puro. As explicações são educativas e não substituem a orientação da UBS ou dos profissionais de saúde.
+O coração é a 21ª pelúcia, exclusiva do Jardim dos Sentimentos, e o sol sorridente é a 22ª pelúcia, exclusiva da Dança do Tempo; as outras 20 continuam liberadas com duas medalhas. A cor do líquido da garrafinha é guardada separadamente em `waterColor` e incluída no backup SVG. Os **quatro livros de saúde** trazem bibliografia para os responsáveis, sem links clicáveis no leitor; os livros culturais e de astronomia também possuem fontes em texto puro. As explicações são educativas e não substituem a orientação da UBS ou dos profissionais de saúde.
 
 Na fantasia do Saci, a perna direita e o respectivo sapato são ocultados na composição do avatar, sem afetar a aparência normal ao retirar a fantasia. A abóbora de Halloween tem uma vela **apenas ilustrada** com animação SVG; não representa uma chama real. Todas as bolas planetárias têm texturas vetoriais únicas e a de Saturno inclui anéis. O texto distingue o **Dia do Saci** (uma celebração cultural brasileira reconhecida, por exemplo, em São Paulo) do **Halloween**; ambos ocorrem em 31 de outubro, mas não são o mesmo evento. Alguns dias apresentados são feriados nacionais, e outros são festividades ou pontos facultativos conforme o local.
 
-**Ilustração individual por página:** os 16 livros agora usam um SVG diferente para cada página. As 47 cenas originais dos três livros TR/DR foram preservadas e 141 novas cenas vetoriais foram criadas para os capítulos antes repetidos e para os três livros novos. A arte é gerada de modo reprodutível por `node tools/illustrate-books.mjs` e conferida em `--check` no CI; os três novos livros são gerados por `node tools/build-new-books.mjs`. As cenas incluem temas, personagens, cores e objetos diferentes — não se limitam a repetir a capa com o título alterado. O avatar da criança continua inserido no SVG via `#kid` quando a ilustração é personalizada. Os arquivos são incluídos automaticamente no cache offline do PWA.
+**Ilustração individual por página:** os 18 livros usam um SVG diferente para cada página. As 47 cenas originais dos três livros TR/DR foram preservadas, junto de **181 cenas vetoriais geradas** para os demais livros. A arte é gerada de modo reprodutível por `node tools/illustrate-books.mjs` e conferida em `--check` no CI. Os novos dados são gerados por `node tools/build-new-books.mjs` e `node tools/build-escovacao-rapunzel.mjs`. O avatar da criança continua inserido via `#kid` nas histórias personalizadas. *Rapunzel* possui personagens fixos desenhados exclusivamente para o conto e seus SVGs não são processados pela personalização de avatares. Os arquivos são incluídos automaticamente no cache offline do PWA.
+
+**Rapunzel — direitos e leitura acompanhada:** conto originalmente publicado pelos irmãos Grimm, transcrito integralmente da [edição em português adaptada por Sueli Maria de Regino (2016)](https://domainpublic.wordpress.com/wp-content/uploads/2022/03/rapunzel.pdf), pertencente à Biblioteca Bilíngue de Literatura Infantil e Juvenil – Libras/Português. O aviso de direitos no próprio PDF permite usar, reproduzir e divulgar os **textos** da adaptação com citação da fonte. As **ilustrações deste projeto são novas**; não utilizam as imagens do PDF. A íntegra do texto extraído está preservada em `books/rapunzel-fonte.txt`, conferida automaticamente em teste. Recomendamos leitura acompanhada por conta de acontecimentos delicados (separação familiar e ferimento do príncipe).
 
 **Cuidados com a diversidade:** a história apresenta as categorias de autodeclaração do IBGE (branca, preta, parda, amarela, indígena), sem tratá-las como tipos biológicos ou tons literais de pele. O termo "vermelha" é contextualizado como inadequado para substituir os nomes dos povos indígenas. Em vez de um ranking impossível de sustentar ("o Brasil é o mais miscigenado"), apresenta as diversas ancestralidades e histórias da população brasileira; explica racismo e convida ao respeito. As fontes do IBGE e do genoma humano aparecem em uma página para responsáveis, **sem links clicáveis**.
 

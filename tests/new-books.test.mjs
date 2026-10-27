@@ -41,7 +41,22 @@ for (const entry of catalog.books) {
     assert(raw.includes('<svg') && raw.includes('</svg>'), `SVG inválido: ${scene}`);
   }
 }
-assert.equal(catalog.books.length, 16);
+assert.equal(catalog.books.length, 18);
 assert.equal(catalog.books.filter((entry) => entry.id.startsWith('a-') || entry.id.startsWith('o-')).length >= 11, true);
+const dental = data('o-clube-dos-dentinhos');
+assert.equal(dental.rewards[0].id, 'toothbrush');
+assert(dental.pages.some((p) => p.interactive === 'bibliography' && p.bibliography.length >= 3));
+assert(dental.pages.flatMap((p) => p.blocks.map((b) => b.text)).join(' ').includes('flúor'));
+const rapunzel = data('rapunzel-contos-dos-grimm');
+assert.equal(rapunzel.protagonistMode, 'fixed');
+assert.equal(rapunzel.rewards[0].id, 'rapunzel');
+assert(rapunzel.pages.every((p) => !p.title.includes('{{nome}}')));
+assert(rapunzel.pages.some((p) => p.interactive === 'bibliography'));
+assert(rapunzel.pages.every((p) => !fs.readFileSync(path.join(root,p.illustration),'utf8').includes('<use href="#kid"')));
+const pdfText = fs.readFileSync(path.join(root,'books/rapunzel-fonte.txt'),'utf8');
+const sourceText = pdfText.slice(pdfText.indexOf('Era uma vez um casal'), pdfText.indexOf('Este texto é parte integrante')).replace(/\s+/g,' ').trim();
+const transcription = rapunzel.pages.slice(0,-3).flatMap((p) => p.blocks.map((b)=>b.text)).join(' ').replace(/\s+/g,' ').trim();
+assert.equal(transcription, sourceText, 'O texto adaptado do PDF deve estar completo e preservado');
 console.log('✓ ABC completo (26 letras), cinco sons do NH e diversidade com referências do IBGE');
-console.log('✓ 16 livros com cenas visuais distintas em cada página, sem repetição de ilustrações');
+console.log('✓ Escovação e Rapunzel licenciada com transcrição integral, referências e desbloqueios');
+console.log('✓ 18 livros com cenas visuais distintas em cada página, sem repetição de ilustrações');

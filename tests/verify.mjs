@@ -45,7 +45,9 @@ let illustrations = 0;
 for (const entry of index.books) {
   assert(!ids.has(entry.id), `ID duplicado: ${entry.id}`);
   ids.add(entry.id);
-  assert(entry.title.includes('{{nome}}'), `Título no catálogo não herda o protagonista: ${entry.id}`);
+  const fixed = entry.protagonistMode === 'fixed';
+  assert(fixed ? !entry.title.includes('{{nome}}') : entry.title.includes('{{nome}}'),
+    `Título incompatível com tipo de protagonista: ${entry.id}`);
   reference(entry.data);
   reference(entry.cover);
   const book = json(entry.data);
@@ -53,14 +55,21 @@ for (const entry of index.books) {
   assert.equal(book.id, entry.id);
   assert(book.language && book.title && Array.isArray(book.pages) && book.pages.length, `Livro inválido: ${entry.id}`);
   assert(entry.subject === book.subject, `Assunto inconsistente em ${entry.id}`);
+  assert.equal(book.protagonistMode || 'personalized', entry.protagonistMode || 'personalized',
+    `Modo do protagonista inconsistente: ${entry.id}`);
   assert(JSON.stringify(entry.ageRange) === JSON.stringify(book.ageRange), `Faixa etária inconsistente em ${entry.id}`);
-  assert(book.title.includes('{{nome}}'), `Livro não herda o nome da criança: ${entry.id}`);
+  assert(fixed ? !book.title.includes('{{nome}}') : book.title.includes('{{nome}}'),
+    `Nome de protagonista inconsistente: ${entry.id}`);
   assert.equal(new Set(book.pages.map((page) => page.illustration)).size, book.pages.length,
     `Cada página deve ter uma ilustração exclusiva: ${entry.id}`);
   assert(!/\b(?:Ellie|ELLIE)\b/.test(JSON.stringify(book)), `Nome fixo da protagonista encontrado em ${entry.id}`);
   const coverSvg = read(entry.cover);
-  assert(/<use href="#(ellie|kid|protagonist)"/.test(coverSvg), `A capa de ${entry.id} não exibe um avatar personalizável`);
-  assert(coverSvg.includes('{{nome}}'), `A capa de ${entry.id} não recebe o nome personalizado`);
+  if (fixed) {
+    assert(!/<use href="#(ellie|kid|protagonist)"/.test(coverSvg), `Capa do conto fixo usa avatar personalizado: ${entry.id}`);
+  } else {
+    assert(/<use href="#(ellie|kid|protagonist)"/.test(coverSvg), `A capa de ${entry.id} não exibe um avatar personalizável`);
+    assert(coverSvg.includes('{{nome}}'), `A capa de ${entry.id} não recebe o nome personalizado`);
+  }
   for (const page of book.pages) {
     assert(page.title && typeof page.title === 'string');
     assert(['cover', 'story', 'challenge', 'finish'].includes(page.type), `Tipo desconhecido: ${page.type}`);

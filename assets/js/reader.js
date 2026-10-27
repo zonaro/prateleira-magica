@@ -156,7 +156,8 @@
     img.src = asset(current.illustration);
     img.alt = `Ilustração: ${label(current.title)}`;
     img.draggable = false;
-    if (preferences?.personalizeIllustration) pendingImages.push(preferences.personalizeIllustration(img, asset(current.illustration)));
+    if (book?.protagonistMode !== 'fixed' && preferences?.personalizeIllustration)
+      pendingImages.push(preferences.personalizeIllustration(img, asset(current.illustration)));
     const sticker = document.createElement('div');
     sticker.className = 'art-sticker';
     sticker.textContent = label(current.sticker || '');

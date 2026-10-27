@@ -37,7 +37,7 @@
     img.loading = 'lazy';
     img.className = 'book-cover-img';
     stand.append(img);
-    preferences?.personalizeIllustration(img, asset(book.cover));
+    if (book.protagonistMode !== 'fixed') preferences?.personalizeIllustration(img, asset(book.cover));
 
     if (book.label) {
       const labelBadge = document.createElement('span');

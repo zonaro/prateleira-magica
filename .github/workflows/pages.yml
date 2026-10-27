@@ -33,6 +33,7 @@ jobs:
           node tools/build-avatar-presets.mjs --check
           node tools/build-pet-parts.mjs --check
           node tools/build-new-books.mjs --check
+          node tools/build-escovacao-rapunzel.mjs --check
           node tools/illustrate-books.mjs --check
           node tests/verify.mjs
           node tests/new-books.test.mjs

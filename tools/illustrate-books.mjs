@@ -20,6 +20,7 @@ const themes = {
   'o-jardim-dos-sentimentos': ['flowers','smile','tear','volcano','moon','surprise','breath','hearts','party'],
   'o-escudo-das-vacinas': ['clinic','shield','microbes','tear','hands','calendar','hearts','book','shield','party'],
   'o-corpo-em-movimento': ['park','dance','friends','bottle','rest','dumbbell','heart','book','calendar','party'],
+  'o-clube-dos-dentinhos': ['tooth','tooth','microbes','toothbrush','clock','toothpaste','floss','bottle','dentist','toothbrush','book','tooth','party'],
   'o-calendario-das-festas': ['festival','fireworks','mask','eggs','bunting','flag','top','saci','pumpkin','tree','book','calendar','party'],
   'a-danca-do-tempo': ['space','earth','week','calendar','orbit','sun','newmoon','crescent','fullmoon','waning','book','clock','party'],
   'a-turma-dos-alimentos': ['kitchen','apple','grapes','yogurt','salad','bread','egg','food','book','food','party'],
@@ -57,6 +58,11 @@ function motifShape(key, primary='#ee8e9e', secondary='#77c4b1') {
     ${c(0,0,73,base)}<clipPath id="planet-cut"><circle r="69"/></clipPath><g clip-path="url(#planet-cut)">${line('M-78-29q78 25 157-6M-76 14q81-21 156 4M-65 43q61 15 130-2',accent,13)}</g>
     ${ring ? line('M-110 32Q4 72 115-18','#f4dfad',10) : ''}</g>`;
   switch (key) {
+    case 'tooth': return `<path d="M-87-77Q-50-129 0-88q50-41 87 11 24 36-2 104-17 44-34 94-18 32-39-10L0 74l-12 37q-21 42-39 10-21-56-34-96-25-72-2-102Z" fill="#fffef9" stroke="#8bbac3" stroke-width="8"/>${circle(-28,-18,7,'#5d718a')}${circle(27,-18,7,'#5d718a')}${line('M-25 16q25 24 50 0','#dc8a9f',6)}${circle(-48,10,11,'#ffb7bd')}${circle(48,10,11,'#ffb7bd')}`;
+    case 'toothbrush': return `<g transform="rotate(24)">${rect(-17,-90,34,188,primary,15,'#5989a0',6)}${rect(-32,-131,64,52,'#e6f7fc',12,'#5989a0',6)}${Array.from({length:8},(_,i)=>line(`M${-24+i*7}-121v-29`,'#9dd5df',6)).join('')}${rect(-11,6,22,57,secondary,10)}</g>`;
+    case 'toothpaste': return `<g transform="rotate(-20)"><path d="M-67-72h134l-15 174H-51Z" fill="#eaf7f5" stroke="#74aab6" stroke-width="7"/>${rect(-67,-101,134,34,primary,6)}${rect(-44,-13,88,68,secondary,18)}${text('F',0,35,46,'#fff')}${line('M-44 75h88','#b2c9d4',5)}</g>`;
+    case 'floss': return `${rect(-90,-60,180,148,'#f8e6f8',28,'#a78cb3',7)}${circle(0,4,45,'#fffdfd','#c0a5cd',6)}${line('M-36-65q-28-68 30-69t38 55','#eafaff',8)}${text('FIO',0,21,39,'#9e85ad')}`;
+    case 'dentist': return `${motifShape('tooth')}<g transform="translate(108 -86) rotate(35)">${rect(-8,-46,16,93,'#a1c2d0',5,'#6d9cae',5)}${circle(0,-51,20,'#fafafa','#6d9cae',5)}</g>`;
     case 'star': case 'fireworks': case 'party': case 'trophy':
       return `<path d="M0-102 29-34l74 4-56 47 18 74L0 51-65 91l18-74-56-47 74-4Z" fill="#f8cf62" stroke="#ca8a64" stroke-width="7"/>${c(-13,-3,7,'#6f5376')}${c(22,-3,7,'#6f5376')}${line('M-11 20q20 15 40-2','#91566c',5)}`;
     case 'sun': case 'smile': return `${sun}${c(-25,-9,6,'#7d5964')}${c(26,-9,6,'#7d5964')}${line('M-24 26q24 24 48 0','#7d5964',5)}`;
@@ -132,7 +138,88 @@ function motifShape(key, primary='#ee8e9e', secondary='#77c4b1') {
   }
 }
 
+// Conto clássico: personagens fixos do texto original, não substituíveis pelo avatar.
+// Cada cena é composição vetorial autoral; a ilustração do PDF de referência não é utilizada.
+function rapunzelScene(book, page, index) {
+  const settings = [
+    'tower','garden','garden','garden','witch','witch','baby','tower','braids','sing','forest','forest',
+    'braids','visit','silk','witch','departure','tower','storm','storm','desert','forest','reunion','castle',
+    'book','questions','celebration'
+  ];
+  const setting = settings[index] || 'garden';
+  const [sky, hills, pink, purple] = palettes[(index*3+2)%palettes.length];
+  const night = index===12 || index===17 || index===18;
+  const forest = ['forest','storm','tower','braids','sing','visit'].includes(setting);
+  const skyFill = night ? '#333b69' : setting==='desert' ? '#f9daaa' : sky;
+  const ground = setting==='desert' ? '#e7ba82' : forest ? '#93b6ab' : hills;
+  const longHair = (x,y,length=310) => `<path d="M${x} ${y}q-23 ${length*.21} 3 ${length*.47}t-3 ${length*.48}" fill="none" stroke="#98704c" stroke-width="28" stroke-linecap="round"/><path d="M${x} ${y}q-23 ${length*.21} 3 ${length*.47}t-3 ${length*.48}" fill="none" stroke="#f3c868" stroke-width="21" stroke-linecap="round" stroke-dasharray="21 3"/>`;
+  const character = (kind, x, y, scale=1) => {
+    const isRapunzel = kind==='rapunzel' || kind==='youngRapunzel';
+    const isWitch = kind==='witch';
+    const isPrince = kind==='prince';
+    const hair = isRapunzel ? '#f0c36e' : isWitch ? '#69627e' : isPrince ? '#745d51' : '#946f56';
+    const skin = isRapunzel ? '#f0c6a6' : isWitch ? '#d9b89c' : '#d7a27d';
+    const dress = isRapunzel ? '#b39cdb' : isWitch ? '#584d85' : isPrince ? '#6083ab' : '#d68b96';
+    const skirt = `<path d="M-52 56Q-61 108-73 178q73 25 145 0L53 56Z" fill="${dress}" stroke="#5c577f" stroke-width="5"/>`;
+    return `<g data-character="${kind}" transform="translate(${x} ${y}) scale(${scale})">
+      ${isRapunzel ? `${longHair(-39,-14,215)}${longHair(37,-16,225)}` : ''}
+      ${ellipse(0,185,65,11,'#34496523')}${skirt}
+      ${line('M-44 70l-45 58M43 70l45 58',skin,19)}${circle(-88,127,12,skin)}${circle(89,127,12,skin)}
+      ${isWitch ? `<path d="M-60-18q-24-110 60-123 78 20 60 123l-15-18-92 0Z" fill="${hair}"/>` : `<path d="M-55-25q-11-82 51-84 74 6 57 85Z" fill="${hair}"/>`}
+      ${ellipse(0,-11,49,61,skin)}${circle(-19,-18,5,'#584c61')}${circle(18,-18,5,'#584c61')}
+      ${line('M-17 18q17 15 34 0',isWitch?'#866b7e':'#c37e86',5)}
+      ${isWitch?'<path d="M-82-72 0-172 90-72Z" fill="#6d6398" stroke="#574c7c" stroke-width="7"/>':''}
+      ${isPrince?`<path d="M-50 65h100L31 122h-61Z" fill="#779bc0"/>${line('M-40 60L24 105','#f3cd80',11)}`:''}
+      ${isRapunzel ? `<path d="M-38-54q28-45 77 0" fill="none" stroke="#f7db85" stroke-width="19"/>` : ''}</g>`;
+  };
+  const trees = Array.from({length:7},(_,i)=>{
+    const x = 54+i*145+(index*17)%65;
+    return `<g opacity="${i%2?'.82':'.97'}">${rect(x-14,342+(i%3)*19,27,225,'#8b7866',9)}${circle(x,320+(i%3)*19,72,i%2?'#8abca1':'#77a995')}${circle(x-41,347+(i%3)*19,44,'#afd3ac')}${circle(x+37,337+(i%3)*19,45,'#93c6a9')}</g>`;
+  }).join('');
+  const hillsSvg = `<path d="M0 450Q225 ${345+index%4*14} 480 452T1000 448V700H0Z" fill="${ground}"/><path d="M0 590Q190 540 440 585T1000 569V700H0Z" fill="${purple}" opacity=".17"/>`;
+  const stars = Array.from({length:21},(_,i)=>circle((i*137+index*51)%1000,(i*59+41)%310,i%3+2,night?'#ffe8ac':'#fff', 'none')).join('');
+  const tower = `<g data-scene="torre" transform="translate(${index%2?635:681} 0)">
+    <path d="M-95 690V195H105v495Z" fill="#d7bfd0" stroke="#a28cae" stroke-width="9"/>
+    ${Array.from({length:13},(_,i)=>line(`M-89 ${238+i*33}h${i%2?82:55}M${i%2?12:30} ${238+i*33}h70`,'#bba7c1',3)).join('')}
+    <path d="M-124 193-2 63l136 130Z" fill="#8d7da9" stroke="#6e668d" stroke-width="9"/><path d="M-44 317v-90q0-42 48-42t47 42v90Z" fill="#4d4b70" stroke="#e8d6df" stroke-width="10"/>
+    ${longHair(-15,286,280)}<path d="M-25 251q27-12 49 0l13 61h-76Z" fill="#b39cdb"/>${circle(-3,236,29,'#f0c7a3')}${line('M-12 241h2M8 241h2','#564d65',5)}<path d="M-30 221q27-39 55-5" stroke="#f3c868" stroke-width="12" fill="none"/>
+    <path d="M-70 690V530q68-50 142 0v160" fill="none" stroke="#afa0b3" stroke-width="4"/>
+  </g>`;
+  const garden = `<g data-scene="jardim" transform="translate(560 395)">${rect(-150,-10,340,190,'#aa826c',22,'#966d72',8)}${Array.from({length:12},(_,i)=>`<g transform="translate(${-121+(i%6)*55} ${21+Math.floor(i/6)*69})">${petal(0,-25,i%3?'#bc93cc':'#efbbd3')}${line('M0 0v48','#5e9d69',7)}</g>`).join('')}</g>`;
+  const flowers = Array.from({length:10},(_,i)=>`<g transform="translate(${(i*113+index*47)%980} ${562+(i*17)%99}) scale(${.24+i%3*.08})">${petal(0,0,['#ed9bb1','#f5c66c','#c8a7ed'][i%3])}</g>`).join('');
+  const storyLayers = {
+    tower: `${tower}${character(index===0?'rapunzel':index===7?'witch':'prince',247,436,.85)}`,
+    braids: `${tower}${character('prince',273,464,.86)}`,
+    sing: `${tower}${character('prince',254,449,.86)}${text('♫',522,257,63,'#f0c36e')}`,
+    garden: `${garden}${character(index===1?'parent':'parent',274,420,.92)}${index===2?character('parent',382,437,.7):''}`,
+    witch: `${garden}${character('witch',646,414,.97)}${character('parent',285,465,.8)}`,
+    baby: `${character('rapunzel',574,492,.54)}${character('witch',292,460,.95)}${petal(729,415)}`,
+    visit: `${tower}${character('prince',230,467,.82)}${text('❤',472,299,52,'#df8498')}`,
+    silk: `${tower}${character('rapunzel',275,461,.94)}${motifShape('book','#eac77b')}`,
+    departure: `${character('rapunzel',316,436,.93)}${character('witch',698,438,.97)}${line('M445 518q100-72 145-4','#d6aa6d',8)}`,
+    storm: `${tower}${character('prince',272,464,.86)}${Array.from({length:4},(_,i)=>line(`M${i*166+120} 160l-33 90`,'#e3d4ed',7)).join('')}`,
+    desert: `${character('rapunzel',445,451,.99)}${character('youngRapunzel',640,541,.36)}${character('youngRapunzel',722,561,.32)}${circle(808,153,65,'#ffcf73')}`,
+    forest: `${character('prince',277,443,.99)}${index===21?text('♪',613,305,93,'#f3c978'):''}`,
+    reunion: `${character('rapunzel',402,425,.91)}${character('prince',594,425,.91)}${text('♥',511,216,72,'#ec91a7')}`,
+    castle: `${character('rapunzel',350,451,.92)}${character('prince',600,451,.92)}<path d="M762 428V195l55-59 55 59v233Z" fill="#dec6e8" stroke="#a09abb" stroke-width="8"/>`,
+    book: `<g transform="translate(598 402) scale(1.45)">${motifShape('book')}</g>${character('rapunzel',285,435,.78)}`,
+    questions: `<g transform="translate(603 396) scale(1.5)">${motifShape('book')}</g>${text('?',603,414,120,'#c38abf')}${character('rapunzel',271,443,.78)}`,
+    celebration: `${character('rapunzel',397,435,.94)}${character('prince',621,435,.94)}${Array.from({length:11},(_,i)=>text('✦',200+i*62,197+(i%3)*30,23,['#efb36c','#bc9edc','#8cc5ac'][i%3])).join('')}`
+  };
+  const title = (index===0 ? 'RAPUNZEL' : page.sticker || page.title).slice(0,31);
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="700" viewBox="0 0 1000 700" role="img" aria-label="${xml(page.title)}">
+    <title>Rapunzel — cena ${index+1}: ${xml(page.title)}</title>
+    <rect width="1000" height="700" fill="${skyFill}"/>
+    ${night ? `<circle cx="888" cy="114" r="61" fill="#f3e4b7"/>` : `<circle cx="876" cy="102" r="54" fill="#ffdf9f"/>`}
+    ${stars}${hillsSvg}${forest ? trees : ''}${flowers}
+    ${storyLayers[setting] || storyLayers.garden}
+    <rect x="45" y="39" width="760" height="93" rx="43" fill="#fff9ee" opacity=".95" stroke="${pink}" stroke-width="7"/>
+    ${text(title,425,98,title.length>23?33:41,'#6c527e')}
+    </svg>\n`.replace(/[ \t]+$/gm,'');
+}
+
 function sceneArt(book,page,index,bookNo) {
+  if (book.protagonistMode==='fixed') return rapunzelScene(book,page,index);
   const isABC = book.id === 'a-aventura-do-abc';
   const isDiff = book.id === 'o-jardim-das-diferencas';
   const palette = palettes[(index + bookNo*2) % palettes.length];

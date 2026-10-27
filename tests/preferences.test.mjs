@@ -56,7 +56,8 @@ assert.equal(themeBackup.themeMood, 'Fun', 'O mood deve acompanhar o backup SVG 
 assert.equal(prefs.load().outfitStyle, 'hoodie');
 const catalog = JSON.parse(fs.readFileSync(path.join(root, 'books/index.json'), 'utf8'));
 for (const entry of catalog.books) {
-  assert.equal(prefs.personalize(entry.title).includes('Dani'), true, `Título não personalizado: ${entry.id}`);
+  assert.equal(prefs.personalize(entry.title).includes('Dani'), entry.protagonistMode !== 'fixed',
+    `Título incompatível com modo do protagonista: ${entry.id}`);
 }
 
 prefs.save({ name: 'Meggie', pronunciation: 'Mégui', gender: 'feminino', avatarStyle: 'short', skinColor: '#8bcfff' });

@@ -272,11 +272,17 @@
     const button = dialog.querySelector('#avatarStyles');
     for (const item of button.querySelectorAll('button')) {
       const selected = item.dataset.style === draft.avatarStyle;
+      const locked = !avatarCatalog.rewardUnlocked(draft, item.dataset.style);
       item.classList.toggle('selected', selected);
+      item.classList.toggle('locked', locked);
+      item.disabled = locked;
       item.setAttribute('aria-pressed', String(selected));
       const thumb = item.querySelector('.style-preview');
-      if (thumb) thumb.innerHTML = preferences.avatarSVG({ ...draft, avatarStyle: item.dataset.style,
-        presetEdits: [...new Set([...(draft.presetEdits || []), 'avatarStyle'])] });
+      if (thumb) {
+        const preview = { ...draft, avatarStyle: item.dataset.style,
+          presetEdits: [...new Set([...(draft.presetEdits || []), 'avatarStyle'])] };
+        thumb.innerHTML = locked ? avatarCatalog.avatarSVG(preview) : preferences.avatarSVG(preview);
+      }
     }
     for (const item of $('#outfitStyles').querySelectorAll('button')) {
       const selected = item.dataset.style === draft.outfitStyle;

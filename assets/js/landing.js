@@ -52,7 +52,7 @@
       img.loading = 'lazy';
       img.decoding = 'async';
       cover.append(img);
-      preferences?.personalizeIllustration(img, asset(entry.cover));
+      if (entry.protagonistMode !== 'fixed') preferences?.personalizeIllustration(img, asset(entry.cover));
     } else {
       const placeholder = document.createElement('div');
       placeholder.className = 'story-preview-cover-placeholder';

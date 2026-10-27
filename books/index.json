@@ -150,6 +150,22 @@
       "color": "#72ada0", "language": "pt-BR", "medal": "🤝 Medalha da Diversidade", "label": "🧬 DNA de brinquedo",
       "subject": "Convivência · diversidade e respeito", "ageRange": [6, 9],
       "rewards": ["Dupla hélice colorida de DNA"]
+    },
+    {
+      "id": "o-clube-dos-dentinhos", "data": "books/o-clube-dos-dentinhos.json",
+      "title": "{{nome}} e o Clube dos Dentinhos", "subtitle": "Escova macia, sorriso saudável e muito carinho",
+      "cover": "assets/illustrations/capitulos/o-clube-dos-dentinhos/01.svg",
+      "color": "#76c8d4", "language": "pt-BR", "medal": "🦷 Medalha do Sorriso", "label": "🪥 Escova de brinquedo",
+      "subject": "Saúde · higiene bucal e escovação", "ageRange": [4, 8],
+      "rewards": ["Escova de dentes de brinquedo"]
+    },
+    {
+      "id": "rapunzel-contos-dos-grimm", "data": "books/rapunzel-contos-dos-grimm.json",
+      "title": "Rapunzel", "subtitle": "O conto clássico dos irmãos Grimm, com ilustrações inéditas",
+      "cover": "assets/illustrations/capitulos/rapunzel-contos-dos-grimm/01.svg",
+      "color": "#ac8aca", "language": "pt-BR", "medal": "🌸 Medalha dos Contos", "label": "📖 Clássico ilustrado",
+      "subject": "Contos clássicos · literatura e imaginação", "ageRange": [7, 9],
+      "protagonistMode": "fixed", "rewards": ["Cabelo de Rapunzel com tranças compridas"]
     }
   ]
 }

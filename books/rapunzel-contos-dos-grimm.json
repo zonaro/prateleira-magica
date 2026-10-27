@@ -1,0 +1,474 @@
+{
+  "schemaVersion": 1,
+  "language": "pt-BR",
+  "id": "rapunzel-contos-dos-grimm",
+  "title": "Rapunzel",
+  "subtitle": "O conto clássico dos irmãos Grimm, com ilustrações originais",
+  "subject": "Contos clássicos · literatura e imaginação",
+  "ageRange": [
+    7,
+    9
+  ],
+  "protagonistMode": "fixed",
+  "originalAuthors": [
+    "Jacob Grimm",
+    "Wilhelm Grimm"
+  ],
+  "adaptation": "Sueli Maria de Regino",
+  "adaptationYear": 2016,
+  "sourceNotice": "Biblioteca Bilíngue de Literatura Infantil e Juvenil – Libras/Português. Reprodução textual permitida com citação da fonte, conforme aviso do PDF.",
+  "sourceDocument": "https://domainpublic.wordpress.com/wp-content/uploads/2022/03/rapunzel.pdf",
+  "cover": "assets/illustrations/capitulos/rapunzel-contos-dos-grimm/01.svg",
+  "color": "#ac8aca",
+  "medal": "🌸 Medalha dos Contos",
+  "rewards": [
+    {
+      "id": "rapunzel",
+      "label": "Cabelo de Rapunzel: tranças muito compridas"
+    }
+  ],
+  "exercises": [
+    {
+      "syllable": "🥬",
+      "text": "O nome Rapunzel veio dos rapôncios do jardim."
+    },
+    {
+      "syllable": "🏰",
+      "text": "Rapunzel morou numa torre no meio da floresta."
+    },
+    {
+      "syllable": "🎶",
+      "text": "O príncipe encontrou a torre seguindo uma canção."
+    },
+    {
+      "syllable": "🪢",
+      "text": "Rapunzel e o príncipe planejaram uma escada de seda."
+    },
+    {
+      "syllable": "💜",
+      "text": "Mesmo separados, eles continuaram procurando um ao outro."
+    },
+    {
+      "syllable": "🌟",
+      "text": "No final, Rapunzel reencontra o príncipe e sua família fica junta."
+    }
+  ],
+  "pages": [
+    {
+      "type": "cover",
+      "sticker": "UM GRANDE DESEJO",
+      "chapter": "O início do conto",
+      "title": "Rapunzel",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Era uma vez um casal que desejava muito ter um filho, mas os anos se passavam e seu sonho não se realizava. Um dia, a mulher percebeu que ia ter uma criança e ficou muito feliz. Nos fundos da casa onde moravam, havia uma janela que se abria para o quintal vizinho, e dali se via um lindo jardim, cercado por muros altos, com flores e hortaliças muito mais verdes e viçosas do que as que cresciam em qualquer outro lugar."
+        }
+      ],
+      "tip": "Versão clássica: contém separação familiar e um acidente. Recomendamos leitura acompanhada de um adulto.",
+      "illustration": "assets/illustrations/capitulos/rapunzel-contos-dos-grimm/01.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "O JARDIM VIZINHO",
+      "chapter": "Capítulo 1 · O jardim",
+      "title": "Os rapôncios da bruxa",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Um dia, espiando pela janela, a mulher viu um canteiro de rapôncios, bem verdinhos, que pareciam deliciosos, e teve vontade de comer uma salada. Mas a horta era de uma bruxa, chamada Gotel, que não dava nada a ninguém, e por isso não adiantava pedir umas folhinhas."
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/rapunzel-contos-dos-grimm/02.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "O DESEJO CRESCE",
+      "chapter": "Capítulo 2 · Uma vontade",
+      "title": "A salada desejada",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Os dias foram se passando e o desejo de provar as verduras só aumentava. A mulher foi ficando tão triste e abatida, que um dia o marido perguntou o que estava acontecendo e ela contou sobre o desejo de comer os rapôncios da horta da bruxa. Disse então, quase chorando:"
+        },
+        {
+          "kind": "dialogue",
+          "text": "― Ah! Se eu não comer uma salada com aquelas folhas, acho que vou morrer! A mulher esperava que o marido entrasse no quintal da bruxa para roubar as verduras, mas ele tinha outras preocupações:"
+        },
+        {
+          "kind": "dialogue",
+          "text": "― Se a bruxa me pegar, vai me transformar em um sapo!"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/rapunzel-contos-dos-grimm/03.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "NA NOITE SILENCIOSA",
+      "chapter": "Capítulo 3 · O muro",
+      "title": "O marido entra na horta",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "A mulher não respondeu. Só chorava, de tanta vontade de comer uma salada com as verduras do quintal da bruxa. Preocupado com a esposa, o homem pensou que talvez conseguisse entrar à noite no quintal vizinho, para pegar algumas folhas. E assim fez. Quando escureceu, ele pulou o muro da casa da bruxa, arrancou um punhado de verduras e levou para a mulher, que preparou uma salada, comeu, e por uns dias não falou mais em rapôncios."
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/rapunzel-contos-dos-grimm/04.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "GOTEL APARECE",
+      "chapter": "Capítulo 4 · A promessa",
+      "title": "A senhora do jardim",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Depois de algum tempo, porém, o desejo voltou ainda mais forte, e a mulher pediu ao marido que fosse buscar mais verduras. Tanto chorou e implorou, que ele voltou ao quintal da bruxa. Estava arrancando as folhas, quando a velha Gotel apareceu:"
+        },
+        {
+          "kind": "dialogue",
+          "text": "―Sabe o que acontece com quem rouba a minha horta? Apavorado, o homem pediu piedade:"
+        },
+        {
+          "kind": "dialogue",
+          "text": "―Senhora Gotel, minha mulher está grávida e chora, dia e noite, com desejo de comer uma salada de rapôncios."
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/rapunzel-contos-dos-grimm/05.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "UMA TROCA INJUSTA",
+      "chapter": "Capítulo 5 · A escolha",
+      "title": "O preço dos rapôncios",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "A bruxa, então, respondeu:"
+        },
+        {
+          "kind": "dialogue",
+          "text": "― Se é assim, pode levar o que quiser, mas quando o bebê nascer, quero a criança para mim. O homem estava tão apavorado, que concordou. Pegou as verduras e foi para casa, muito triste com o que havia acontecido."
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/rapunzel-contos-dos-grimm/06.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "CHEGOU RAPUNZEL",
+      "chapter": "Capítulo 6 · A menina",
+      "title": "O nome de uma flor",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Quando o bebê nasceu, a bruxa Gotel foi cobrar a promessa. E ao receber a criança, uma linda menina, deu-lhe o nome de Rapunzel, por causa dos rapôncios."
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/rapunzel-contos-dos-grimm/07.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "A TORRE MISTERIOSA",
+      "chapter": "Capítulo 7 · A floresta",
+      "title": "O quarto no alto da torre",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "O tempo foi passando e, a cada dia, Rapunzel ficava mais bonita. Quando a menina fez doze anos, Gotel a trancou no alto de uma torre, no meio de uma grande floresta."
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/rapunzel-contos-dos-grimm/08.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "TRANÇAS DE OURO",
+      "chapter": "Capítulo 8 · O segredo",
+      "title": "Uma escada de cabelos",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "A torre não tinha portas e nem escadas que levassem ao quarto de Rapunzel. Havia somente uma janelinha, bem no alto. Quando a bruxa queria entrar, ia até a torre e gritava:"
+        },
+        {
+          "kind": "dialogue",
+          "text": "― Oh, Rapunzel! Jogue-me tuas lindas tranças!"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/rapunzel-contos-dos-grimm/09.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "UMA CANÇÃO NA FLORESTA",
+      "chapter": "Capítulo 9 · A voz",
+      "title": "O príncipe ouve Rapunzel",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Assim que ouvia o chamado da velha, Rapunzel desenrolava as tranças, que brilhavam como ouro e eram tão compridas que chegavam até o chão. Então a bruxa subia por elas. Um belo dia, o filho de um rei passava a cavalo pela floresta, quando ouviu uma voz muito doce, cantando uma linda canção. Era Rapunzel, que cantava para espantar a solidão."
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/rapunzel-contos-dos-grimm/10.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "DE ONDE VEM A MÚSICA?",
+      "chapter": "Capítulo 10 · Procura",
+      "title": "O mistério da janelinha",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "O príncipe seguiu o som da linda voz e chegou à torre. Procurou a entrada, mas como não achou nenhuma porta, voltou para casa. O canto de Rapunzel, porém, havia tocado o seu coração. Todos os dias, ele voltava à floresta e caminhava até a torre, na esperança de ouvir de novo aquela voz."
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/rapunzel-contos-dos-grimm/11.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "UM SEGREDO DESCOBERTO",
+      "chapter": "Capítulo 11 · A árvore",
+      "title": "O príncipe observa a torre",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Uma tarde, o príncipe estava descansando à sombra de uma árvore, quando ouviu a bruxa se aproximar da torre e gritar:"
+        },
+        {
+          "kind": "dialogue",
+          "text": "― Oh, Rapunzel! Jogue-me tuas lindas tranças! Ao ver a bruxa subir pelas tranças, o príncipe pensou: “Se essa é a escada da torre, vou tentar subir por ela também!\""
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/rapunzel-contos-dos-grimm/12.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "UM ENCONTRO",
+      "chapter": "Capítulo 12 · A visita",
+      "title": "As tranças chegam ao chão",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "No dia seguinte, quando escureceu, o rapaz se aproximou da torre e gritou:"
+        },
+        {
+          "kind": "dialogue",
+          "text": "― Oh, Rapunzel! Jogue-me tuas lindas tranças! As tranças caíram pela janela e ele subiu."
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/rapunzel-contos-dos-grimm/13.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "CONVERSAS NA TORRE",
+      "chapter": "Capítulo 13 · Amizade",
+      "title": "Rapunzel conhece o visitante",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "A jovem ficou muito assustada quando viu o príncipe, mas ele foi tão bondoso e gentil, que Rapunzel perdeu o medo. E quando o rapaz perguntou se ela aceitava se casar com ele, respondeu que sim, pensando que, certamente, o príncipe gostaria mais dela do que a velha mãe Gotel."
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/rapunzel-contos-dos-grimm/14.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "FIOS DE SEDA",
+      "chapter": "Capítulo 14 · Um plano",
+      "title": "Uma escada para a liberdade",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Como a bruxa costumava ir à torre durante o dia, o príncipe visitava Rapunzel à noite. E assim, os dois passaram juntos muitas e muitas noites, se divertindo e fazendo planos para o futuro. Combinaram que o rapaz levaria fios de seda, para Rapunzel trançar uma escada. Quando ficasse pronta a escada de seda, ela desceria da torre e iriam juntos para o palácio. O príncipe e Rapunzel foram felizes até o dia em que a jovem, sem querer, disse à bruxa:"
+        },
+        {
+          "kind": "dialogue",
+          "text": "― Mãe Gotel, eu preciso de roupas novas. As minhas estão muito apertadas."
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/rapunzel-contos-dos-grimm/15.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "GOTEL DESCOBRE",
+      "chapter": "Capítulo 15 · A descoberta",
+      "title": "Uma surpresa para Gotel",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "A bruxa, que pensava ter isolado Rapunzel do mundo, viu que havia sido enganada e gritou:"
+        },
+        {
+          "kind": "dialogue",
+          "text": "― Ah, menina tola! O que você fez?"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/rapunzel-contos-dos-grimm/16.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "UMA TRISTE SEPARAÇÃO",
+      "chapter": "Capítulo 16 · O deserto",
+      "title": "As tranças são cortadas",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Furiosa, a bruxa agarrou Rapunzel pelos cabelos e, com uma tesoura, cortou suas belas tranças. Em seguida, levou a pobre menina para um deserto, onde a abandonou."
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/rapunzel-contos-dos-grimm/17.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "A ARMADILHA DA TORRE",
+      "chapter": "Capítulo 17 · A espera",
+      "title": "O príncipe volta à janela",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Depois de castigar Rapunzel, a bruxa voltou para a torre, prendeu as tranças na janela e ficou esperando. Ao anoitecer, o príncipe se aproximou e chamou sua amada:"
+        },
+        {
+          "kind": "dialogue",
+          "text": "― Oh, Rapunzel! Jogue-me tuas lindas tranças!"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/rapunzel-contos-dos-grimm/18.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "UM GRANDE SUSTO",
+      "chapter": "Capítulo 18 · A busca",
+      "title": "Rapunzel não está ali",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Ele viu as tranças serem jogadas da janela e subiu por elas. Mas ao entrar, o príncipe não encontrou Rapunzel. Quem o esperava era a bruxa:"
+        },
+        {
+          "kind": "dialogue",
+          "text": "― Ah! Veio buscar sua amada? Pois ela não está mais aqui. Você nunca mais verá Rapunzel!"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/rapunzel-contos-dos-grimm/19.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "PERDIDO NA FLORESTA",
+      "chapter": "Capítulo 19 · A travessia",
+      "title": "O príncipe perde a visão",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "O rapaz, desesperado, se jogou do alto da torre e caiu sobre uma moita de espinhos, que arranharam seus olhos. Cego, tateando na escuridão, o príncipe saiu vagando pela floresta, sofrendo por ter perdido sua amada."
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/rapunzel-contos-dos-grimm/20.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "CORAGEM NO DESERTO",
+      "chapter": "Capítulo 20 · Rapunzel",
+      "title": "Rapunzel cuida de seus filhos",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "No deserto, onde havia sido abandonada pela bruxa, Rapunzel também sofria. A pobre moça, sozinha, passou por muitas dificuldades e teve filhos gêmeos: um menino e uma menina. Com suas crianças, ela lutava para sobreviver."
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/rapunzel-contos-dos-grimm/21.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "UM CANTO CONHECIDO",
+      "chapter": "Capítulo 21 · Reencontro",
+      "title": "A voz que mostrou o caminho",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Um dia, depois de atravessar toda a floresta, o príncipe chegou ao deserto e ouviu um lindo canto. Seguiu o som da voz que cantava e encontrou o lugar onde Rapunzel acalentava os filhos."
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/rapunzel-contos-dos-grimm/22.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "LÁGRIMAS DE ALEGRIA",
+      "chapter": "Capítulo 22 · Esperança",
+      "title": "Um abraço mágico",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Assim que viu o príncipe, ela o reconheceu e correu ao seu encontro. Quando o rapaz contou o que havia acontecido, Rapunzel, em prantos, o abraçou. Duas de suas lágrimas caíram nos olhos de seu amado e, no mesmo instante, ele recuperou a visão, passando a enxergar tão bem quanto antes."
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/rapunzel-contos-dos-grimm/23.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "FINAL FELIZ",
+      "chapter": "Capítulo 23 · O palácio",
+      "title": "Juntos outra vez",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Então, o príncipe levou Rapunzel e as crianças para o seu palácio, onde foram recebidos com grande alegria. E ali, cercados de amigos, viveram felizes por muitos e muitos anos."
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/rapunzel-contos-dos-grimm/24.svg"
+    },
+    {
+      "type": "story",
+      "sticker": "FONTES E DIREITOS",
+      "chapter": "Para famílias e educadores 📚",
+      "title": "Sobre esta edição",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "História dos irmãos Grimm, com texto adaptado por Sueli Maria de Regino em 2016. Esta transcrição preserva o texto do PDF e apresenta ilustrações vetoriais inéditas da Prateleira Mágica."
+        },
+        {
+          "kind": "paragraph",
+          "text": "O PDF declara que os textos das adaptações em Libras e Português podem ser usados, reproduzidos e divulgados livremente com citação da fonte. As imagens do PDF não foram copiadas."
+        }
+      ],
+      "interactive": "bibliography",
+      "bibliography": [
+        {
+          "title": "PDF da edição adaptada por Sueli Maria de Regino",
+          "url": "domainpublic.wordpress.com/wp-content/uploads/2022/03/rapunzel.pdf"
+        },
+        {
+          "title": "Biblioteca Bilíngue de Literatura Infantil e Juvenil – Libras/Português",
+          "url": "www.bibliolibras.com.br"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/rapunzel-contos-dos-grimm/25.svg"
+    },
+    {
+      "type": "challenge",
+      "sticker": "DESAFIO DO CONTO",
+      "chapter": "Hora de recordar 🎯",
+      "title": "O que você descobriu com Rapunzel?",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Leia as frases sobre o conto e marque as que você reconhece. Ao concluir, o cabelo muito comprido de Rapunzel ficará disponível para o avatar!"
+        }
+      ],
+      "illustration": "assets/illustrations/capitulos/rapunzel-contos-dos-grimm/26.svg"
+    },
+    {
+      "type": "finish",
+      "sticker": "MEDALHA DOS CONTOS",
+      "chapter": "Uma história para guardar",
+      "title": "As tranças de Rapunzel",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Você conheceu o conto completo dos irmãos Grimm, na adaptação de Sueli Maria de Regino. Agora pode usar no avatar um cabelo inspirado nas longas tranças de Rapunzel!"
+        }
+      ],
+      "medal": "🌸 Medalha dos Contos conquistada!",
+      "illustration": "assets/illustrations/capitulos/rapunzel-contos-dos-grimm/27.svg"
+    }
+  ]
+}

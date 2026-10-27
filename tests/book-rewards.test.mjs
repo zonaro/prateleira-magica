@@ -36,11 +36,13 @@ const targets = {
   'a-viagem-dos-oito-planetas': ['mercury_ball', 'venus_ball', 'earth_ball', 'mars_ball',
     'jupiter_ball', 'saturn_ball', 'uranus_ball', 'neptune_ball'],
   'a-aventura-do-abc': ['abc_blocks'],
-  'o-jardim-das-diferencas': ['dna_helix']
+  'o-jardim-das-diferencas': ['dna_helix'],
+  'o-clube-dos-dentinhos': ['toothbrush'],
+  'rapunzel-contos-dos-grimm': ['rapunzel']
 };
-assert.equal(catalog.books.length, 16, 'Quatro originais e doze educativos');
+assert.equal(catalog.books.length, 18, 'Dezoito títulos infantis no catálogo');
 const allRewards = Object.values(targets).flat();
-assert.equal(allRewards.length, 42, 'Quarenta e duas recompensas no total');
+assert.equal(allRewards.length, 44, 'Quarenta e quatro recompensas no total');
 assert.equal(new Set(allRewards).size, allRewards.length);
 assert.equal(Object.keys(avatar.rewardBooks).length, allRewards.length);
 for (const bookEntry of catalog.books) {
@@ -69,6 +71,7 @@ for (const [bookId, rewards] of Object.entries(targets)) {
     assert.equal(avatar.rewardUnlocked(complete, id), true);
     const field = avatar.petStyles.some(([key]) => key === id) ? 'petId'
       : avatar.outfitStyles.some(([key]) => key === id) ? 'outfitStyle'
+        : avatar.hairStyles.some(([key]) => key === id) ? 'avatarStyle'
         : avatar.accessoryStyles.some(([key]) => key === id) ? 'accessories' : 'toys';
     assert(field !== 'toys' || avatar.toyStyles.some(([key]) => key === id), `Item ${id} sem catálogo`);
     const equipped = { [field]: ['toys', 'accessories'].includes(field) ? [id] : id };
@@ -108,7 +111,7 @@ const restored = prefs.parseProfileSVG(prefs.exportProfileSVG(state));
 assert.equal(restored.petId, 'heart_plush');
 assert.deepEqual([...restored.toys], ['water_bottle']);
 assert.equal(restored.waterColor, '#abcf86');
-const bibliography = ['o-escudo-das-vacinas', 'o-corpo-em-movimento',
+const bibliography = ['o-escudo-das-vacinas', 'o-corpo-em-movimento', 'o-clube-dos-dentinhos',
   'o-calendario-das-festas', 'a-danca-do-tempo', 'a-turma-dos-alimentos', 'a-viagem-dos-oito-planetas',
   'o-jardim-das-diferencas'];
 for (const id of bibliography) {
@@ -125,5 +128,5 @@ assert.deepEqual(Array.from(window.LivrinhoMusicKeyboard.notes, (note) => note[1
 assert(JSON.parse(read('books/a-festa-das-notas.json')).pages.some((page) => page.interactive === 'music-keyboard'));
 const reader = read('assets/js/reader.js');
 assert(reader.includes("url.textContent = entry.url"), 'Endereços devem ser texto puro sem âncoras');
-console.log('✓ Doze livros educativos e 42 recompensas, medalha + conclusão e bloqueio persistente');
+console.log('✓ 18 livros e 44 recompensas, medalha + conclusão e bloqueio persistente');
 console.log('✓ Coração, sol, vela animada, Saci de uma perna, oito planetas e fontes não clicáveis');

@@ -50,7 +50,7 @@
     image.src = asset(book.cover);
     image.alt = `Capa de ${preferences.personalize(book.title)}`;
     image.loading = 'lazy';
-    preferences.personalizeIllustration(image, asset(book.cover));
+    if (book.protagonistMode !== 'fixed') preferences.personalizeIllustration(image, asset(book.cover));
 
     const detail = document.createElement('div');
     detail.className = 'profile-book-details';

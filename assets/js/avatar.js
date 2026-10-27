@@ -20,7 +20,8 @@
     ['flower_braids', 'Lateral esquerdo'], ['mohawk', 'Moicano'], ['undercut', 'Topete lateral'],
     ['bow', 'Laços laterais'], ['quiff', 'Topete alto'], ['flower_bob', 'Chanel arredondado'],
     ['flower_heart', 'Lateral direito'], ['flower_long', 'Longo liso'], ['medium_waves', 'Ondas médias'],
-    ['side_sweep', 'Franja longa'], ['ringlets', 'Cachos curtinhos'], ['mullet', 'Mullets'], ['bald', 'Careca']
+    ['side_sweep', 'Franja longa'], ['ringlets', 'Cachos curtinhos'], ['mullet', 'Mullets'], ['bald', 'Careca'],
+    ['rapunzel', 'Tranças de Rapunzel (livro Rapunzel)']
   ];
   const outfitStyles = [
     ['hoodie', 'Moletom com capuz'], ['hoodie_zip', 'Moletom'], ['hoodie_patch', 'Moletom com zíper'], ['hoodie_stripes', 'Moletom listrado'],
@@ -68,7 +69,8 @@
     earth_ball: 'a-viagem-dos-oito-planetas', mars_ball: 'a-viagem-dos-oito-planetas',
     jupiter_ball: 'a-viagem-dos-oito-planetas', saturn_ball: 'a-viagem-dos-oito-planetas',
     uranus_ball: 'a-viagem-dos-oito-planetas', neptune_ball: 'a-viagem-dos-oito-planetas',
-    abc_blocks: 'a-aventura-do-abc', dna_helix: 'o-jardim-das-diferencas'
+    abc_blocks: 'a-aventura-do-abc', dna_helix: 'o-jardim-das-diferencas',
+    toothbrush: 'o-clube-dos-dentinhos', rapunzel: 'rapunzel-contos-dos-grimm'
   });
   function rewardUnlocked(settings, id) {
     const bookId = rewardBooks[id];
@@ -149,7 +151,8 @@
     ['uranus_ball', 'Bola de Urano (livro do espaço)', 'hand'],
     ['neptune_ball', 'Bola de Netuno (livro do espaço)', 'hand'],
     ['abc_blocks', 'Blocos de empilhar ABC (livro do abecedário)', 'hand'],
-    ['dna_helix', 'Dupla hélice de DNA (livro da diversidade)', 'hand']
+    ['dna_helix', 'Dupla hélice de DNA (livro da diversidade)', 'hand'],
+    ['toothbrush', 'Escova de dentes (livro da escovação)', 'hand']
   ];
   const hairColors = [
     ['#493a55', 'Castanho escuro'], ['#7b4c35', 'Castanho'],
@@ -439,6 +442,7 @@
       medical_kit: `<rect x="-31" y="-22" width="62" height="48" rx="7" fill="${tone}" stroke="${ink}" stroke-width="3"/><path d="M-14-22v-9h28v9" fill="none" stroke="${ink}" stroke-width="5"/><path d="M-12 2h24M0-10v24" stroke="#fff" stroke-width="7" stroke-linecap="round"/>`,
       dumbbells: `<g stroke="${ink}" stroke-width="3"><path d="M-29-4h58" stroke-width="6"/><rect x="-32" y="-18" width="11" height="28" rx="4" fill="${dark}"/><rect x="21" y="-18" width="11" height="28" rx="4" fill="${dark}"/><rect x="-39" y="-13" width="7" height="18" rx="3" fill="${tone}"/><rect x="32" y="-13" width="7" height="18" rx="3" fill="${tone}"/></g>`,
       water_bottle: `<g data-detail="agua-colorida"><rect x="-16" y="-28" width="32" height="60" rx="10" fill="#f3fcff" stroke="${ink}" stroke-width="3"/><path d="M-12-2h24v22q0 7-9 8H-3q-9-1-9-8Z" fill="${safeColor(settings.waterColor, '#64c9ed')}" opacity=".83"/><rect x="-10" y="-36" width="20" height="11" rx="3" fill="${tone}"/><path d="M-8-19h16" stroke="#fff" stroke-width="3"/></g>`,
+      toothbrush: `<g data-detail="escova-de-dentes" transform="rotate(-25)"><rect x="-6" y="-28" width="12" height="69" rx="6" fill="${tone}" stroke="${ink}" stroke-width="2.5"/><rect x="-4" y="-10" width="8" height="38" rx="3" fill="${light}" opacity=".9"/><rect x="-10" y="-43" width="20" height="20" rx="6" fill="${dark}" stroke="${ink}" stroke-width="2"/><g stroke="#e2f7ff" stroke-width="3" stroke-linecap="round"><path d="M-7-42v-10M-2-42v-12M3-42v-12M8-42v-10"/></g><circle cx="0" cy="19" r="3" fill="${dark}"/></g>`,
       chess_pieces: `<g fill="${tone}" stroke="${ink}" stroke-width="2.5" stroke-linejoin="round">
           <path d="M-20 19h19v-4h-2l-3-21 5-6-7-9-7 9 5 6-3 21h-7Z"/>
           <path d="M1 19h21v-4h-3l-2-22h4v-13H3v13h4l-2 22H1Z"/>
@@ -559,8 +563,15 @@
   function avatarBody(settings = {}) {
     const colors = palette(settings);
     const hoodCoversHair = Array.isArray(settings.accessories) && settings.accessories.includes('hooded_cape');
+    const rapunzel = !hoodCoversHair && settings.avatarStyle === 'rapunzel';
+    const rapunzelHair = {
+      source: 'rapunzel-conto-ilustracao',
+      back: `<path d="M117 181Q88 64 174 37q49-32 104 0 91 28 70 144l-30 267q-28 21-49-4l20-264H169l20 265q-25 22-47-5Z" fill="{{HAIR_DARK}}" stroke="{{HAIR_DEEP}}" stroke-width="9"/>`,
+      front: `<path d="M117 159Q95 36 222 35q130-1 128 122-11-31-40-55-30-27-53-20-57 42-139 40Z" fill="{{HAIR}}" stroke="{{HAIR_DARK}}" stroke-width="9"/><path d="M143 98q62-65 130-31M286 73q31 15 44 40" stroke="{{HAIR_LIGHT}}" stroke-width="12" fill="none" stroke-linecap="round"/>`
+    };
     const hair = hoodCoversHair
       ? { source: '', back: '', front: '' }
+      : rapunzel ? rapunzelHair
       : settings.avatarStyle === 'bald'
       ? { source: '', back: '<path d="M120 161v-28c0-57 46-89 112-89s112 32 112 89v28Z" fill="{{SKIN_LIGHT}}"/>', front: '' }
       : parts.hair[settings.avatarStyle] || parts.hair.puffs;
@@ -627,6 +638,7 @@
     return `${plushShadow}
       <g data-layer="avatar-completo"${skating ? ' transform="translate(0 -14)"' : ''}>
         ${lowerBody(settings, colors.SKIN)}
+        ${rapunzel ? `<g data-layer="rapunzel-trancas-compridas">${tint(`<path d="M70 105Q41 158 57 203T56 296q-4 19 13 18 19-4 13-22-8-57-5-91t3-101M141 107q43 52 29 102t5 88q7 19-13 20-17-4-12-22 9-54 4-91t-14-97" fill="none" stroke="{{HAIR_DEEP}}" stroke-width="20" stroke-linecap="round"/><path d="M70 105Q41 158 57 203T56 296q-4 19 13 18 19-4 13-22-8-57-5-91t3-101M141 107q43 52 29 102t5 88q7 19-13 20-17-4-12-22 9-54 4-91t-14-97" fill="none" stroke="{{HAIR}}" stroke-width="14" stroke-linecap="round"/>${Array.from({length:9}, (_,i)=>`<path d="M${i%2?52:63} ${139+i*18}l19 10M${i%2?163:156} ${140+i*18}l17-9" stroke="{{HAIR_LIGHT}}" stroke-width="3.5" opacity=".9"/>`).join('')}`, colors)}</g>` : ''}
         <g data-layer="tronco" transform="translate(0 34) scale(0.452586)">
           ${toysSVG(settings, colors, 'back')}
           ${accessoriesSVG(settings, colors, 'back')}

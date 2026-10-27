@@ -123,7 +123,9 @@
       gender: Object.hasOwn(genders, input.gender) ? input.gender : DEFAULTS.gender,
       petId: pets.includes(input.petId) && (avatar.rewardBooks[input.petId]
         ? avatar.rewardUnlocked({ achievements }, input.petId) : medals >= 2) ? input.petId : null,
-      avatarStyle: input.avatarStyle === 'cap' ? 'short' : styles.includes(input.avatarStyle) ? input.avatarStyle : DEFAULTS.avatarStyle,
+      avatarStyle: input.avatarStyle === 'cap' ? 'short'
+        : styles.includes(input.avatarStyle) && avatar.rewardUnlocked({ achievements }, input.avatarStyle)
+          ? input.avatarStyle : DEFAULTS.avatarStyle,
       outfitStyle: outfits.includes(input.outfitStyle) && avatar.rewardUnlocked({ achievements }, input.outfitStyle)
         ? input.outfitStyle : DEFAULTS.outfitStyle,
       bottomStyle: bottoms.includes(input.bottomStyle) ? input.bottomStyle : DEFAULTS.bottomStyle,

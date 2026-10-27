@@ -26,16 +26,16 @@ const renderer = window.LivrinhoAvatar;
 const prefs = window.LivrinhoPreferences;
 const hairStyles = renderer.hairStyles.map(([key]) => key);
 const outfits = renderer.outfitStyles.map(([key]) => key);
-assert.equal(hairStyles.length, 25);
+assert.equal(hairStyles.length, 26);
 assert.equal(outfits.length, 26);
-assert.equal(new Set(hairStyles).size, 25);
+assert.equal(new Set(hairStyles).size, 26);
 assert.equal(new Set(outfits).size, 26);
 assert.equal(renderer.petStyles.length, 22, '20 pets originais mais coração e sol exclusivos precisam existir');
 assert.equal(renderer.bottomStyles.map(([key]) => key).join(','), 'pants,shorts,skirt,long_skirt,diaper');
 assert.equal(renderer.footwearStyles.map(([key]) => key).join(','), 'sneakers,flipflops,socks,barefoot,skates');
 assert.equal(renderer.sockPatterns.map(([key]) => key).join(','), 'plain,stripes,dots');
 assert.equal(renderer.accessoryStyles.length, 26);
-assert.equal(renderer.toyStyles.length, 44);
+assert.equal(renderer.toyStyles.length, 45);
 
 const pictures = new Set();
 for (const avatarStyle of hairStyles) {
@@ -46,6 +46,8 @@ for (const avatarStyle of hairStyles) {
       achievements: { books: { 'o-escudo-das-vacinas': {
         finished: true, medalEarnedAt: '2026-10-27T10:00:00.000Z'
       }, 'o-calendario-das-festas': {
+        finished: true, medalEarnedAt: '2026-10-27T10:00:00.000Z'
+      }, 'rapunzel-contos-dos-grimm': {
         finished: true, medalEarnedAt: '2026-10-27T10:00:00.000Z'
       } } },
       skinColor: '#83dca5', hairColor: '#c47b43', outfitColor: '#639de8',
@@ -100,7 +102,7 @@ assert(sourceHoodie.includes('M389.078,436.226') && prefs.avatarSVG({ outfitStyl
   'O moletom precisa reutilizar a geometria vetorial do SVG baixado');
 const newSources = JSON.parse(fs.readFileSync(path.join(root, 'assets/avatar-reference/component-map.json'), 'utf8'));
 for (const hair of hairStyles) {
-  if (hair !== 'bald') assert(newSources.hair[hair], `Penteado ${hair} sem mapeamento do SVG original`);
+  if (!['bald', 'rapunzel'].includes(hair)) assert(newSources.hair[hair], `Penteado ${hair} sem mapeamento do SVG original`);
 }
 for (const outfit of outfits) {
   if (!['doctor_coat', 'carnival_tank'].includes(outfit)) assert(newSources.outfit[outfit], `Roupa ${outfit} sem mapeamento do SVG original`);
@@ -479,11 +481,11 @@ for (const file of downloaded) {
   assert(svg.includes('<svg') && svg.includes('</svg>'), `SVG de referência inválido: ${file}`);
 }
 
-console.log('✓ 25 cabelos × 26 roupas = 650 combinações, incluindo jaleco e regata de Carnaval');
+console.log(`✓ ${hairStyles.length} cabelos × ${outfits.length} roupas = ${pictures.size} combinações, incluindo Rapunzel`);
 console.log('✓ Careca, cabelos sem flores, boné maior e 26 acessórios desenhados em camadas');
 console.log('✓ Tiara de gatinho e capuz cobrindo todos os penteados sem alterá-los no perfil');
 console.log('✓ Flor sempre acima da tiara, capas atrás do corpo e máscaras exclusivas com óculos');
-console.log('✓ 44 brinquedos: 8 planetas, 7 alimentos, blocos ABC, DNA, Saci e instrumentos');
+console.log('✓ 45 brinquedos: 8 planetas, 7 alimentos, blocos ABC, DNA, escova de dentes e instrumentos');
 console.log('✓ Patins liberados com 3 medalhas; itens bloqueados mais claros e em escala de cinza');
 console.log('✓ 5 partes de baixo, 5 calçados, 3 estampas de meias, boina com inicial e desbloqueio com 3 medalhas');
 console.log('✓ Camisas e moletons listrados, camiseta de time e cardigã alinhados ao corpo');
