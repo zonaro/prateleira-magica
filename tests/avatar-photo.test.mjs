@@ -36,7 +36,7 @@ assert(photo.includes('result.close()'), 'Segmentador deve liberar máscaras');
 assert(photo.includes('frame.width = frame.height = 0'), 'Canvas temporário deve ser limpo');
 assert(photo.includes('stream.getTracks().forEach((track) => track.stop())'));
 assert(photo.includes("const MP_ROOT = new URL('./assets/vendor/mediapipe/', document.baseURI).href"));
-assert(!/https?:\\/\\//.test(photo), 'Não permitir URLs externas na página infantil');
+assert(!photo.includes('https://') && !photo.includes('http://'), 'Não permitir URLs externas na página infantil');
 assert(!photo.includes('localStorage.') && !photo.includes('sessionStorage.'),
   'Não guardar imagem nem dados intermediários em storage');
 assert(!photo.includes('toDataURL(') && !photo.includes('fetch(file'),
