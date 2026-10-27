@@ -123,7 +123,31 @@
     moodSelect.addEventListener('change', () => { mood = moodSelect.value; renderHarmonies(); });
     $('[data-hear-color]').addEventListener('click', () => {
       const name = colors.name(current);
-      narrator?.play(`Esta cor se chama ${name}.`, { lang: 'pt-BR', rate: .77, pitch: 1.08 });
+      const text = `Esta cor se chama ${name}.`;
+      try {
+        const synth = window.speechSynthesis;
+        if (synth && typeof synth.resume === 'function' && synth.state === 'paused') {
+          synth.resume();
+        }
+      } catch {}
+      const played = narrator?.play ? narrator.play(text, { lang: 'pt-BR', rate: .77, pitch: 1.08 }) : false;
+      if (played) return;
+      try {
+        const synth = window.speechSynthesis;
+        if (!synth || !window.SpeechSynthesisUtterance) return;
+        synth.cancel();
+        const utter = new window.SpeechSynthesisUtterance(text);
+        utter.lang = 'pt-BR';
+        utter.rate = .77;
+        utter.pitch = 1.08;
+        const voices = synth.getVoices?.() || [];
+        const voice = voices.find((item) => item.lang?.toLowerCase() === 'pt-br')
+          || voices.find((item) => item.lang?.toLowerCase().startsWith('pt'));
+        if (voice) utter.voice = voice;
+        synth.speak(utter);
+      } catch (error) {
+        console.warn('Não foi possível reproduzir o áudio da cor:', error);
+      }
     });
     updateColor(current);
     return section;
