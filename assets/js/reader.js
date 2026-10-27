@@ -123,6 +123,14 @@
       check.setAttribute('aria-label', `Marcar frase ${index + 1}`);
       check.setAttribute('aria-pressed', String(completed.has(index)));
       check.textContent = completed.has(index) ? '✓' : exercise.syllable;
+      if (/^#[\da-f]{6}$/i.test(exercise.color || '')) {
+        const colorDot = document.createElement('span');
+        colorDot.className = 'challenge-color-dot';
+        colorDot.style.backgroundColor = exercise.color;
+        colorDot.title = window.LivrinhoColors?.name(exercise.color) || exercise.color;
+        colorDot.setAttribute('aria-label', `Cor: ${colorDot.title}`);
+        row.append(colorDot);
+      }
       const phrase = document.createElement('button');
       phrase.type = 'button';
       phrase.className = 'challenge-say';
@@ -135,7 +143,7 @@
     if (challengeComplete()) {
       const message = document.createElement('div');
       message.className = 'medal';
-      message.textContent = '🏅 Medalha conquistada! Você já pode avançar!';
+      message.textContent = `${book.medal || '🏅 Medalha'} conquistada! Você já pode avançar!`;
       container.append(message);
     }
   }
@@ -180,6 +188,9 @@
       story.append(callout);
     }
     if (current.type === 'challenge') renderChallenge(story);
+    if (current.interactive === 'color-explorer' && window.LivrinhoColorExplorer) {
+      story.append(window.LivrinhoColorExplorer.create());
+    }
     if (current.medal) {
       const medal = document.createElement('div');
       medal.className = 'medal';
@@ -338,7 +349,7 @@
     if (check && book) {
       const index = Number(check.dataset.check);
       if (completed.has(index)) completed.delete(index);
-      else { completed.add(index); notify(challengeComplete() ? '🏅 Você ganhou uma medalha!' : 'Muito bem! ⭐'); }
+      else { completed.add(index); notify(challengeComplete() ? `${book.medal || '🏅 Medalha'} conquistada!` : 'Muito bem! ⭐'); }
       preferences?.recordBookProgress(book.id, { completedExercises: [...completed] }, book.exercises.length);
       if (challengeComplete()) {
         // Acrescenta a folha de conclusão apenas depois que todas as frases forem marcadas.

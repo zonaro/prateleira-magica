@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="700" viewBox="0 0 1000 700"><title>{{nome}} encontra o portal das cores</title><defs><symbol id="ellie" viewBox="0 0 210 340"><circle cx="100" cy="100" r="65" fill="#e9aa83"/><rect x="50" y="155" width="110" height="135" rx="25" fill="#ed7fa2"/></symbol></defs>
+<rect width="1000" height="700" fill="#cceff5"/><circle cx="860" cy="110" r="83" fill="#fff0ae"/><path d="M0 420Q220 315 490 430T1000 394V700H0" fill="#b5e3b4"/><path d="M0 564Q400 450 1000 563V700H0" fill="#6cc49b"/>
+<path d="M412 598V295a145 145 0 0 1 290 0v303Z" fill="#9b80ce" stroke="#725ac0" stroke-width="18"/><path d="M444 602V300a113 113 0 0 1 226 0v302Z" fill="#f7ecff"/><path d="M460 601V299a97 97 0 0 1 194 0v302Z" fill="#e1d4fe"/><path d="M480 601V297a77 77 0 0 1 154 0v304Z" fill="#f7cee6"/>
+<g fill="#fff" opacity=".9"><circle cx="516" cy="265" r="10"/><circle cx="587" cy="357" r="12"/><circle cx="535" cy="453" r="9"/></g><g fill="#f7bc67"><path d="m781 297 14 37 39 3-30 25 9 37-32-19-33 19 9-37-30-25 40-3z"/><circle cx="329" cy="233" r="15"/></g><use href="#ellie" x="116" y="318" width="218" height="350"/>
+</svg>

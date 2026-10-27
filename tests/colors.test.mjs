@@ -1,0 +1,65 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
+import vm from 'node:vm';
+import { fileURLToPath } from 'node:url';
+
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const read = (filename) => fs.readFileSync(path.join(root, filename), 'utf8');
+const styles = new Map();
+const attrs = new Set();
+const context = {
+  document: { documentElement: {
+    style: { setProperty(key, value) { styles.set(key, value); }, removeProperty(key) { styles.delete(key); } },
+    toggleAttribute(key, enabled) { if (enabled) attrs.add(key); else attrs.delete(key); }
+  } }
+};
+context.window = context;
+vm.createContext(context);
+for (const file of ['assets/vendor/NameToColor.js', 'assets/vendor/NameToColor.ptBR.js', 'assets/js/colors.js']) {
+  vm.runInContext(read(file), context, { filename: file });
+}
+const colors = context.LivrinhoColors;
+assert.equal(colors.moods.length, 10, 'Deve expor os 10 moods da biblioteca original');
+assert.equal(colors.hex('vermelho'), '#ff0000');
+assert.equal(colors.hex('azul'), '#0000ff');
+assert.equal(colors.hex('abraço'), colors.hex('abraço'), 'A geração precisa ser determinística');
+assert.equal(colors.name('#ff0000'), 'Vermelho');
+assert(colors.name('#aabbcc'), 'Cor sem nome deve ter um nome infantil próximo');
+assert.equal(colors.palette('Calm').length, 5);
+assert.equal(colors.palette('inexistente'), null);
+const combinations = colors.harmonies('#fa7195', 'Fun');
+assert.equal(combinations.length, 4);
+assert.equal(combinations[1].colors.length, 3, 'Triádica usa três cores da roda');
+assert.equal(combinations[0].colors.length, 5, 'Monocromática usa cinco tons');
+assert.equal(combinations[3].colors.length, 5, 'Paleta por mood usa cinco cores');
+colors.applyTheme('Calm');
+assert(attrs.has('data-color-theme'));
+assert(styles.has('--theme-page') && styles.has('--theme-accent'));
+colors.applyTheme('');
+assert(!attrs.has('data-color-theme'));
+assert.equal(styles.size, 0, 'Tema original limpa todas as variáveis alteradas');
+
+const appHtml = ['index.html', 'livro.html', 'perfil.html'].map(read);
+for (const html of appHtml) {
+  for (const file of ['NameToColor.js', 'NameToColor.ptBR.js', 'colors.js']) {
+    assert(html.includes(file), `NameToColor não carrega em todas as páginas: ${file}`);
+  }
+}
+const ui = read('assets/js/settings-ui.js');
+for (const id of ['magicColorWord', 'magicColorApply', 'magicColorTarget', 'themeMood', 'applyThemeAvatar']) {
+  assert(ui.includes(id), `Editor sem controle: ${id}`);
+}
+assert(ui.includes('[draft.hairColor, draft.outfitColor, draft.bottomColor, draft.shoeColor] = palette.slice(0, 4)'),
+  'Aplicar paleta ao avatar não deve tocar no tom da pele');
+const reader = read('assets/js/reader.js');
+assert(reader.includes('LivrinhoColorExplorer.create'), 'Página interativa não é renderizada no leitor');
+const book = JSON.parse(read('books/o-reino-das-cores.json'));
+assert(book.pages.some((page) => page.interactive === 'color-explorer'));
+assert.equal(new Set(book.exercises.map((exercise) => exercise.color)).size, book.exercises.length,
+  'Desafio precisa mostrar cor diferente em cada frase');
+assert.equal(book.medal, '🎨 Medalha das Cores');
+console.log('✓ NameToColor + pacote pt-BR integrados offline: palavras, cores e nomes');
+console.log('✓ 10 moods, harmonias e tema global reversível');
+console.log('✓ Editor do avatar com palavra mágica e paleta, sem alterar cor de pele automaticamente');
+console.log('✓ Livro interativo com sete cores únicas no desafio e Medalha das Cores');

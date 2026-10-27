@@ -63,11 +63,15 @@ vm.runInNewContext(source, { self, caches, fetch: localFetch, URL, Response, con
 let pending;
 listeners.install({ waitUntil(promise) { pending = promise; } });
 await pending;
-const cache = await caches.open('prateleira-magica-v13');
+const cache = await caches.open('prateleira-magica-v14');
 assert(await cache.match(`${scope}assets/js/avatar-parts.js`), 'Peças originais dos avatares não foram salvas offline');
 assert(await cache.match(`${scope}assets/js/pet-parts.js`), 'Pets para ilustrações não foram salvos offline');
 assert(await cache.match(`${scope}assets/js/avatar.js`), 'Renderização dos avatares não foi salva offline');
 assert(await cache.match(`${scope}assets/js/speech.js`), 'Narração e teste de pronúncia não foram salvos offline');
+assert(await cache.match(`${scope}assets/js/colors.js`), 'Integração de cores não foi salva offline');
+assert(await cache.match(`${scope}assets/js/color-explorer.js`), 'Laboratório de cores não foi salvo offline');
+assert(await cache.match(`${scope}assets/vendor/NameToColor.js`), 'NameToColor original não foi salvo offline');
+assert(await cache.match(`${scope}assets/vendor/NameToColor.ptBR.js`), 'Traduções pt-BR não foram salvas offline');
 assert(await cache.match(`${scope}assets/vendor/page-flip.browser.js`), 'Motor da virada de páginas deve funcionar offline');
 assert(await cache.match(`${scope}assets/js/profile-tabs.js`), 'Abas do perfil não funcionam offline');
 const petCatalog = JSON.parse(fs.readFileSync(path.join(root, 'assets/pets/catalog.json'), 'utf8'));

@@ -39,6 +39,18 @@
       "language": "pt-BR",
       "label": "10 sílabas juntas",
       "syllables": ["TRA", "TRE", "TRI", "TRO", "TRU", "DRA", "DRE", "DRI", "DRO", "DRU"]
+    },
+    {
+      "id": "o-reino-das-cores",
+      "data": "books/o-reino-das-cores.json",
+      "title": "{{nome}} e o Reino das Cores",
+      "subtitle": "Descubra cores, harmonias e a Medalha das Cores 🎨",
+      "cover": "assets/illustrations/cores/capa.svg",
+      "color": "#ed79a0",
+      "medal": "🎨 Medalha das Cores",
+      "language": "pt-BR",
+      "label": "Novo! 🎨",
+      "syllables": ["VERMELHO", "AZUL", "AMARELO", "VERDE", "ROXO"]
     }
   ]
 }

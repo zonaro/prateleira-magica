@@ -49,6 +49,10 @@ assert.equal(prefs.clean({ petId: 'rabbit' }).petId, null, 'Pets só depois de d
 assert(prefs.avatarSymbol('ellie').includes('<symbol id="ellie"'));
 assert.equal(prefs.clean({ outfitStyle: 'inexistente', hairColor: '#jklmno' }).outfitStyle, 'hoodie');
 assert.equal(prefs.clean({ outfitStyle: 'inexistente', hairColor: '#jklmno' }).hairColor, '#493a55');
+assert.equal(prefs.clean({ themeMood: 'Calm' }).themeMood, 'Calm');
+assert.equal(prefs.clean({ themeMood: 'não existe' }).themeMood, '');
+const themeBackup = prefs.parseProfileSVG(prefs.exportProfileSVG(prefs.clean({ name: 'Criança', themeMood: 'Fun' })));
+assert.equal(themeBackup.themeMood, 'Fun', 'O mood deve acompanhar o backup SVG da criança');
 assert.equal(prefs.load().outfitStyle, 'hoodie');
 const catalog = JSON.parse(fs.readFileSync(path.join(root, 'books/index.json'), 'utf8'));
 for (const entry of catalog.books) {

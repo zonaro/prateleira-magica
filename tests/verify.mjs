@@ -18,13 +18,15 @@ const required = [
   'index.html', 'livro.html', 'personagem.html', 'perfil.html', 'manifest.webmanifest', 'sw.js',
   'assets/css/app.css', 'assets/js/library.js', 'assets/js/reader.js', 'assets/js/avatar-parts.js', 'assets/js/avatar.js',
   'assets/js/preferences.js', 'assets/js/settings-ui.js', 'assets/js/profile.js', 'assets/js/page-turn.js',
+  'assets/js/colors.js', 'assets/js/color-explorer.js', 'assets/vendor/NameToColor.js', 'assets/vendor/NameToColor.ptBR.js',
   'assets/js/pet-parts.js', 'assets/pets/catalog.json',
   'assets/js/pwa.js', 'books/index.json', 'assets/icons/icon.svg'
 ];
 required.forEach(reference);
 
 for (const scriptFile of ['assets/js/avatar.js', 'assets/js/library.js', 'assets/js/reader.js', 'assets/js/preferences.js',
-  'assets/js/settings-ui.js', 'assets/js/profile.js', 'assets/js/page-turn.js', 'assets/js/pet-parts.js', 'assets/js/pwa.js', 'sw.js']) {
+  'assets/js/settings-ui.js', 'assets/js/profile.js', 'assets/js/page-turn.js', 'assets/js/colors.js',
+  'assets/js/color-explorer.js', 'assets/js/pet-parts.js', 'assets/js/pwa.js', 'sw.js']) {
   new Script(read(scriptFile), { filename: scriptFile });
 }
 

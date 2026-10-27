@@ -18,6 +18,7 @@
     bottomStyle: 'pants',
     bottomColor: '#5879b9',
     shoeColor: '#625a89',
+    themeMood: '',
     achievements: { books: {} }
   });
   const styles = avatar.hairStyles.map(([key]) => key);
@@ -98,6 +99,8 @@
       outfitColor: /^#[0-9a-f]{6}$/i.test(input.outfitColor || '') ? input.outfitColor.toLowerCase() : legacyShirtColor,
       bottomColor: /^#[0-9a-f]{6}$/i.test(input.bottomColor || '') ? input.bottomColor.toLowerCase() : DEFAULTS.bottomColor,
       shoeColor: /^#[0-9a-f]{6}$/i.test(input.shoeColor || '') ? input.shoeColor.toLowerCase() : DEFAULTS.shoeColor,
+      themeMood: ['', 'Vibrant', 'Futuristic', 'Fun', 'Soft Pastel', 'Calm', 'Vintage',
+        'Organic', 'Sophisticated', 'Dark', 'Corporate'].includes(input.themeMood) ? input.themeMood : '',
       achievements
     };
   }

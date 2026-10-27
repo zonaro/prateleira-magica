@@ -45,7 +45,7 @@
     const achievement = document.createElement('span');
     if (progress?.medalEarnedAt || progress?.challengeCompletedAt) {
       achievement.className = 'book-achievement';
-      achievement.textContent = '🏅 Medalha conquistada';
+      achievement.textContent = `${book.medal || '🏅 Medalha'} conquistada`;
     } else if (progress?.finished) {
       achievement.className = 'book-achievement';
       achievement.textContent = '✅ História concluída';

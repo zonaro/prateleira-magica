@@ -3,6 +3,7 @@
   const preferences = window.LivrinhoPreferences;
   const avatarCatalog = window.LivrinhoAvatar;
   const narrator = window.LivrinhoSpeech;
+  const colors = window.LivrinhoColors;
   if (!preferences || !avatarCatalog) return;
   const root = new URL('./', document.baseURI);
   const editor = document.getElementById('settingsApp');
@@ -98,6 +99,34 @@
           <label class="custom-color"><span>Outra cor</span><input id="customShoeColor" type="color" aria-label="Selecionar outra cor dos sapatos"></label>
         </fieldset>
       </div>
+      <section class="magic-color-maker" aria-labelledby="magicColorTitle">
+        <h3 id="magicColorTitle">✨ Invente uma cor com palavras!</h3>
+        <p>Escreva uma cor, um sentimento ou uma palavra maluca. O NameToColor transforma letras em uma cor mágica, sempre igual para a mesma palavra!</p>
+        <label for="magicColorWord">Minha palavra mágica</label>
+        <input id="magicColorWord" type="text" maxlength="120" placeholder="Ex.: girassol, lilás, abraço…" autocomplete="off">
+        <div class="magic-color-result">
+          <span id="magicColorSwatch" class="magic-color-swatch" aria-hidden="true"></span>
+          <span id="magicColorName" role="status" aria-live="polite">Escreva para descobrir uma cor!</span>
+          <button id="magicColorHear" type="button" aria-label="Ouvir o nome da cor" disabled>🔊 Ouvir</button>
+        </div>
+        <div class="magic-color-actions"><label for="magicColorTarget">Pintar qual parte?</label>
+          <select id="magicColorTarget">
+            <option value="hairColor">Cabelo</option><option value="outfitColor">Roupa</option>
+            <option value="bottomColor">Calça, shorts ou saia</option><option value="shoeColor">Sapatos</option>
+            <option value="skinColor">Pele (inclusive fantasia)</option>
+          </select>
+          <button id="magicColorApply" type="button" disabled>🎨 Usar esta cor</button>
+        </div>
+      </section>
+      <section class="mood-theme-maker" aria-labelledby="themeMoodTitle">
+        <h3 id="themeMoodTitle">🌈 Meu mundo, minhas cores!</h3>
+        <p>Escolha o sentimento das cores do aplicativo inteiro. Cada clima tem uma paleta especial do NameToColor.</p>
+        <label for="themeMood">Qual o clima da sua prateleira?</label>
+        <select id="themeMood"><option value="">💗 Original da Prateleira Mágica</option></select>
+        <div id="themeMoodSwatches" class="theme-mood-swatches" aria-label="Prévia da paleta"></div>
+        <button id="applyThemeAvatar" type="button">✨ Vestir meu personagem com esta paleta</button>
+        <p class="theme-avatar-hint">Só cabelo, roupa, calça/shorts/saia e sapatos mudam. <strong>A cor da pele continua como você escolheu.</strong></p>
+      </section>
       <section class="profile-backup" aria-label="Backup do personagem">
         <h3>💾 Guarde seu personagem</h3>
         <p>Baixe o personagem como uma imagem SVG. Ela também guarda nome, pronúncia, nascimento, pronomes, pelúcia e conquistas dos livros para recuperar tudo depois.</p>
@@ -117,6 +146,41 @@
   const nameInput = $('#childName');
   const pronunciationInput = $('#childPronunciation');
   const birthInput = $('#birthDate');
+  const moodSelect = $('#themeMood');
+  const defaultThemeColors = ['#493a55', '#fa7195', '#5879b9', '#625a89', '#fbe6f1'];
+  if (colors) {
+    for (const [id, label] of colors.moods) {
+      const option = document.createElement('option');
+      option.value = id;
+      option.textContent = label;
+      moodSelect.append(option);
+    }
+  }
+
+  function drawThemePalette() {
+    const palette = colors?.palette(draft.themeMood) || defaultThemeColors;
+    $('#themeMoodSwatches').replaceChildren();
+    for (const [index, color] of palette.entries()) {
+      const dot = document.createElement('span');
+      dot.style.backgroundColor = color;
+      dot.title = colors?.name(color) || `Cor ${index + 1}`;
+      dot.setAttribute('aria-label', `${dot.title}, ${color}`);
+      $('#themeMoodSwatches').append(dot);
+    }
+    moodSelect.value = draft.themeMood;
+  }
+
+  let generatedColor = null;
+  function refreshMagicColor() {
+    const phrase = $('#magicColorWord').value.trim();
+    generatedColor = colors?.hex(phrase) || null;
+    $('#magicColorSwatch').style.background = generatedColor || 'repeating-linear-gradient(45deg,#f4e8f9 0 10px,#fff 10px 20px)';
+    $('#magicColorName').textContent = generatedColor
+      ? `${colors.name(generatedColor)} · ${generatedColor.toUpperCase()}`
+      : 'Escreva para descobrir uma cor!';
+    $('#magicColorHear').disabled = !generatedColor;
+    $('#magicColorApply').disabled = !generatedColor;
+  }
 
   narrator.subscribe((status) => {
     const previewButton = $('#hearPronunciation');
@@ -177,6 +241,7 @@
     $('#customOutfitColor').value = draft.outfitColor;
     $('#customBottomColor').value = draft.bottomColor;
     $('#customShoeColor').value = draft.shoeColor;
+    drawThemePalette();
     const medals = preferences.medalCount(draft);
     const unlocked = medals >= 2;
     $('#petUnlockStatus').textContent = unlocked
@@ -204,6 +269,7 @@
     nameInput.value = draft.name;
     pronunciationInput.value = draft.pronunciation;
     birthInput.value = draft.birthDate;
+    refreshMagicColor();
     $(`input[name="childGender"][value="${draft.gender}"]`).checked = true;
     drawPreview();
   }
@@ -278,6 +344,30 @@
   addColors('bottomColorOptions', avatarCatalog.bottomColors, 'bottomColor');
   addColors('shoeColorOptions', avatarCatalog.shoeColors, 'shoeColor');
 
+  $('#magicColorWord').addEventListener('input', refreshMagicColor);
+  $('#magicColorHear').addEventListener('click', () => {
+    if (generatedColor) narrator?.play(`Esta cor se chama ${colors.name(generatedColor)}.`, { lang: 'pt-BR', rate: .78, pitch: 1.08 });
+  });
+  $('#magicColorApply').addEventListener('click', () => {
+    if (!generatedColor) return;
+    const target = $('#magicColorTarget').value;
+    if (!['skinColor', 'hairColor', 'outfitColor', 'bottomColor', 'shoeColor'].includes(target)) return;
+    draft[target] = generatedColor;
+    drawPreview();
+  });
+  moodSelect.addEventListener('change', () => {
+    draft.themeMood = moodSelect.value;
+    colors?.applyTheme(draft.themeMood);
+    // O tema vale para todas as páginas, mesmo antes de salvar o avatar.
+    preferences.save({ ...preferences.load(), themeMood: draft.themeMood });
+    drawThemePalette();
+  });
+  $('#applyThemeAvatar').addEventListener('click', () => {
+    const palette = colors?.palette(draft.themeMood) || defaultThemeColors;
+    [draft.hairColor, draft.outfitColor, draft.bottomColor, draft.shoeColor] = palette.slice(0, 4);
+    drawPreview();
+  });
+
   fillDialog();
   nameInput.addEventListener('input', () => {
     draft.name = nameInput.value;
@@ -307,6 +397,7 @@
     pronunciationInput.value = draft.pronunciation;
     birthInput.value = draft.birthDate;
     $(`input[name="childGender"][value="${draft.gender}"]`).checked = true;
+    colors?.applyTheme(draft.themeMood);
     drawPreview();
   });
   function currentDraft() {

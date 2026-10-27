@@ -29,6 +29,7 @@ jobs:
           node tools/build-pet-parts.mjs --check
           node tests/verify.mjs
           node tests/preferences.test.mjs
+          node tests/colors.test.mjs
           node tests/avatar.test.mjs
           node tests/progression.test.mjs
           node tests/page-turn.test.mjs

@@ -1,6 +1,6 @@
 # Prateleira Mágica ✨📚
 
-Um PWA estático, leve e extensível para leitura infantil com ilustrações, sílabas interativas, narração pelo navegador, desafios e uso offline. A prateleira tem três aventuras: **{{nome}} e o Trem Travesso** (TRA–TRU), **{{nome}} e o Drone Desaparecido** (DRA–DRU) e **{{nome}} e o Trem dos Dragões** (as dez sílabas combinadas). Os títulos, os textos e os protagonistas ilustrados se adaptam à criança configurada.
+Um PWA estático, leve e extensível para leitura infantil com ilustrações, sílabas interativas, narração pelo navegador, desafios e uso offline. A prateleira tem quatro aventuras: **{{nome}} e o Trem Travesso** (TRA–TRU), **{{nome}} e o Drone Desaparecido** (DRA–DRU), **{{nome}} e o Trem dos Dragões** (as dez sílabas combinadas) e **{{nome}} e o Reino das Cores** (misturas, harmonias, exploração das cores e Medalha das Cores). Os títulos, os textos e os protagonistas ilustrados se adaptam à criança configurada.
 
 ## Usar
 
@@ -27,6 +27,10 @@ assets/css/app.css                 Estilos da biblioteca e do leitor
 assets/js/library.js               Prateleira dinâmica
 assets/js/reader.js                Leitor e narração
 assets/js/page-turn.js             Adaptador da virada de páginas por toque
+assets/js/colors.js                Adaptador do NameToColor, paletas, nomes infantis e temas
+assets/js/color-explorer.js        Laboratório interativo de cores dentro do leitor
+assets/vendor/NameToColor.js       Biblioteca original de zonaro/NameToColor
+assets/vendor/NameToColor.ptBR.js  Dados originais de tradução brasileira
 assets/vendor/page-flip.browser.js Motor StPageFlip 2.0.7, MIT, disponível offline
 assets/vendor/LICENSE              Licença MIT da biblioteca StPageFlip
 assets/js/avatar-parts.js          Peças vetoriais extraídas dos SVGs originais (geradas)
@@ -48,6 +52,7 @@ sw.js                              Cache offline
 tests/verify.mjs                   Testes de integridade
 tests/preferences.test.mjs         Testes da personalização
 tests/offline.test.mjs             Teste completo do cache offline
+tests/colors.test.mjs              Gerador de cores, harmonias, moods e novo livro
 tests/progression.test.mjs         Desafio final e trava de páginas
 tests/page-turn.test.mjs           Virada de página desktop e mobile
 tools/generate-story-art.mjs       Geração dos SVGs dos livros de Draco
@@ -97,7 +102,7 @@ O catálogo gera automaticamente um card na prateleira (até três colunas no de
 }
 ```
 
-Nas páginas, coloque `[[palavra]]` para exibir uma palavra colorida que pode ser tocada para ouvi-la. `kind: "dialogue"` destaca o parágrafo como fala. Propriedades opcionais de página: `syllables`, `speech`, `tip`, `callout`, `medal`. `type: "challenge"` exibe os exercícios do livro; `type: "finish"` conclui a aventura.
+Nas páginas, coloque `[[palavra]]` para exibir uma palavra colorida que pode ser tocada para ouvi-la. `kind: "dialogue"` destaca o parágrafo como fala. Propriedades opcionais de página: `syllables`, `speech`, `tip`, `callout`, `medal`, `interactive`. `type: "challenge"` exibe os exercícios do livro; `type: "finish"` conclui a aventura. A página com `"interactive": "color-explorer"` mostra o laboratório de cores sem alterar as demais funções da leitura. O item `exercises[].color`, quando informado como `#rrggbb`, mostra a cor da frase. O campo opcional `medal` no JSON do livro e no catálogo personaliza o nome/emoji da medalha exibida após o desafio.
 
 ### Protagonista personalizável
 
@@ -110,13 +115,16 @@ O botão **Personalizar** (na prateleira e na aba Perfil) abre [`perfil.html#per
 - Escolha independente da cor do cabelo e da roupa, com paletas e seleção livre.
 - **Calça, shorts ou saia**, com cor independente, e cor personalizada para os tênis, espelhados para permanecer alinhados.
 - Cores de pele naturais ou fantasia (incluindo verde, azul, lilás e rosa), mantendo o seletor livre existente.
+- **Palavra mágica → cor:** escreva `vermelho`, `girassol`, `abraço` ou outra palavra. O NameToColor gera uma cor repetível, mostra um nome infantil aproximado, oferece leitura em voz alta e permite aplicá-la ao cabelo, roupa, calça/shorts/saia, sapatos ou pele.
+- **Paleta do aplicativo por mood:** uma seleção entre os dez estilos oficiais do NameToColor (Vibrante, Futurista, Divertido, Pastel suave, Calmo, Retrô, Orgânico, Sofisticado, Escuro e Corporativo), mais o tema original. O tema muda as cores de navegação e da interface na prateleira, no leitor e no perfil, sem afetar as cores do livro, ilustrações ou pele.
+- O botão **Vestir meu personagem com esta paleta** usa quatro tons da paleta para cabelo, roupa, parte inferior e tênis. **Não altera `skinColor`**. A criança pode seguir customizando cada parte depois.
 - Uma das **20 pelúcias originais** da coleção [Cute Animal Vectors](https://www.svgrepo.com/collection/cute-animal-vectors/), desbloqueada somente depois de conquistar **duas medalhas**. A pelúcia fica ao lado do avatar, apoiada no chão na altura dos tênis, nas ilustrações, no editor e no perfil.
 
 ### Progresso e medalhas
 
 Na página [`perfil.html`](perfil.html), a criança vê o nome, a idade (quando informada), o personagem, a pelúcia e os livros já iniciados ou concluídos. Cada livro exibe **percentual de páginas visitadas** e o emoji **🏅** caso a medalha do desafio tenha sido conquistada. Os cards permitem retomar a leitura.
 
-Todos os três livros têm um desafio de frases antes da última página. **A página seguinte e a medalha final ficam bloqueadas** até a criança marcar todas as frases. O bloqueio vale para botão, bolinhas, setas do teclado e deslize. Ao completar o desafio, uma medalha fica registrada em `achievements.books[id].medalEarnedAt` e não se perde ao fechar o app. O campo `visitedPages` registra as páginas efetivamente visitadas; livros marcados como concluídos em versões antigas continuam com 100% para preservar o histórico.
+Todos os quatro livros têm um desafio de frases antes da última página. **A página seguinte e a medalha final ficam bloqueadas** até a criança marcar todas as frases. O bloqueio vale para botão, bolinhas, setas do teclado e deslize. Ao completar o desafio, uma medalha fica registrada em `achievements.books[id].medalEarnedAt` e não se perde ao fechar o app. O campo `visitedPages` registra as páginas efetivamente visitadas; livros marcados como concluídos em versões antigas continuam com 100% para preservar o histórico. O Reino das Cores usa sete frases com sete cores distintas e registra **🎨 Medalha das Cores** no perfil, além de contar para liberar a pelúcia.
 
 O desbloqueio das pelúcias conta **medalhas de livros diferentes**, nunca frases isoladas. Sem duas medalhas, o catálogo aparece bloqueado. A escolha fica salva localmente e é incluída no SVG de backup.
 
@@ -126,7 +134,7 @@ Essas preferências ficam apenas no `localStorage` do navegador, sem conta ou se
 
 No editor, **Baixar personagem SVG** salva as escolhas atuais e oferece um arquivo `.svg` que funciona como uma ilustração vetorial comum. Ele inclui um elemento `<metadata id="prateleira-magica-profile" data-format="application/json">` contendo um JSON inline com:
 
-- `profile`: `name`, `pronunciation`, `birthDate`, `gender`, `petId`, `avatarStyle`, `outfitStyle`, `skinColor`, `hairColor`, `outfitColor`, `bottomStyle`, `bottomColor`, `shoeColor`;
+- `profile`: `name`, `pronunciation`, `birthDate`, `gender`, `petId`, `avatarStyle`, `outfitStyle`, `skinColor`, `hairColor`, `outfitColor`, `bottomStyle`, `bottomColor`, `shoeColor`, `themeMood`;
 - `achievements.books`: cada ID de livro com frases marcadas (`completedExercises`), páginas visitadas (`visitedPages`), conclusão da história (`finished`, `finishedAt`) e medalha (`medalEarnedAt`, `challengeCompletedAt` legado);
 - `app`, `schemaVersion` e `exportedAt` para identificar a origem, versão e data do backup.
 
@@ -152,6 +160,22 @@ Para reconstruir as peças usadas pelo app após alterar as seleções, execute 
 
 Os arquivos `assets/pets/*.svg` são os **20 SVGs originais e sem alterações** da coleção [Cute Animal Vectors](https://www.svgrepo.com/collection/cute-animal-vectors/), todos conferidos com indicação de licença CC0 nas páginas individuais. O script `node tools/download-cute-animal-pets.mjs` baixa e valida a coleção completa. O script `node tools/build-pet-parts.mjs` empacota as formas originais sem modificar seus caminhos; apenas o contêiner posiciona a pelúcia ao lado da criança, encostada na mesma linha de chão dos sapatos (inclusive nas histórias e nos backups offline). A chave `petId` permanece nos dados salvos por compatibilidade.
 
+### NameToColor e o Livro das Cores
+
+A integração utiliza os **arquivos originais** [`NameToColor.js`](https://github.com/zonaro/NameToColor/blob/main/NameToColor.js) e [`NameToColor.ptBR.js`](https://github.com/zonaro/NameToColor/blob/main/NameToColor.ptBR.js), copiados para `assets/vendor/` e pré-cacheados no Service Worker. Não há chamada à API nem necessidade de CDN em tempo de execução. Depois da primeira carga completa, o gerador de cores e o catálogo brasileiro funcionam offline. Para atualizar essa dependência no futuro, substitua ambos os arquivos com as versões do mesmo repositório e rode `node tests/colors.test.mjs`.
+
+O adaptador `assets/js/colors.js` expõe `window.LivrinhoColors` com os métodos `hex(palavra)`, `name(hex)`, `palette(mood)`, `harmonies(hex,mood)` e `applyTheme(mood)`. `hex()` usa `generateColor` e `palette()` usa `generateThemePalette`, exatamente como na biblioteca original. A função `name()` consulta `colorName` e `closestName` em português e, quando o nome retornado não tem tradução, procura uma **aproximação** entre os 181 nomes de cores do pacote brasileiro (não uma equivalência científica exata). Os modos de harmonia usam `generateMonochrome`, `generateTriadic`, `generateComplementary` e `generateThemePalette`.
+
+No livro **{{nome}} e o Reino das Cores**, a criança explora misturas de tinta (com resultados ilustrativos, que variam conforme os pigmentos), sensação de cores quentes/frias, contraste complementar, três cores triádicas, variações monocromáticas e combinações por sentimento. No laboratório interativo, pode:
+
+1. Selecionar uma cor pelo `input[type=color]`.
+2. Tocar em uma das dezoito bolinhas de cores comuns.
+3. Digitar qualquer palavra em português e transformá-la numa cor reprodutível.
+4. Ler e ouvir o nome aproximado, ver HEX e explorar quatro tipos de paletas que podem ser tocadas para descobrir outras cores.
+5. Completar sete frases coloridas para obter **🎨 Medalha das Cores**, salva no mesmo `achievements.books` dos demais livros.
+
+O tema escolhido na personalização é persistido no mesmo perfil (`themeMood`), portanto acompanha o SVG de backup e a restauração. O padrão `""` mantém a aparência clássica. Os dez moods disponíveis correspondem à lista oficial de temas da categoria `mood` do NameToColor. Para acessibilidade, as cores de destaque do tema são escurecidas quando necessário para manter contraste com textos em branco, e os fundos são suavizados; os dados das paletas originais não são alterados.
+
 ### Pronúncia
 
 O texto exibido é personalizado com o nome escolhido, mas a escrita fonética aparece somente na voz. O botão **🔊 Ouvir**, ao lado do campo de pronúncia em **Perfil → Personalizar**, testa exatamente o texto digitado, sem precisar salvá-lo. `pronunciation.names` continua disponível para personagens secundários (por exemplo, Drica e Draco); a pronúncia definida pela criança tem prioridade. `pronunciation.syllables` envia sons fonéticos e palavras de apoio (TRO: “tró, como em troca”; TRU: “trú, como em truque”). A disponibilidade e a qualidade da voz dependem do sintetizador de fala instalado no navegador/dispositivo.
@@ -167,7 +191,7 @@ O texto exibido é personalizado com o nome escolhido, mas a escrita fonética a
 
 ## Offline e instalação
 
-O Service Worker salva a prateleira, o leitor, o editor, o perfil, todos os JSONs, as ilustrações e **os 20 SVGs das pelúcias**, quando há rede no primeiro acesso. Depois, a navegação e a leitura ficam disponíveis offline, inclusive em URLs de livros com parâmetros. Com conexão, HTML, CSS, JavaScript e JSONs usam **network-first**, atualizando o cache após novos deploys; ilustrações usam cache-first. Quando offline, tudo recorre às versões locais disponíveis.
+O Service Worker salva a prateleira, o leitor, o editor, o perfil, todos os JSONs, as ilustrações, os dois arquivos originais do NameToColor e **os 20 SVGs das pelúcias**, quando há rede no primeiro acesso. Depois, a navegação e a leitura ficam disponíveis offline, inclusive em URLs de livros com parâmetros. Com conexão, HTML, CSS, JavaScript e JSONs usam **network-first**, atualizando o cache após novos deploys; ilustrações usam cache-first. Quando offline, tudo recorre às versões locais disponíveis.
 
 Em navegadores compatíveis, use **Instalar app** ou a opção **Adicionar à tela inicial**. A narração por voz depende das vozes disponíveis localmente; alguns sintetizadores podem precisar de conectividade.
 
@@ -182,6 +206,7 @@ Se o Pages ainda não estiver habilitado: **Settings → Pages → Build and dep
 ```bash
 node tests/verify.mjs
 node tests/preferences.test.mjs
+node tests/colors.test.mjs
 node tests/avatar.test.mjs
 node tests/progression.test.mjs
 node tests/page-turn.test.mjs

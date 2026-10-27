@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="700" viewBox="0 0 1000 700" role="img" aria-label="{{nome}} entra no Reino das Cores">
+<title>{{nome}} e o Reino das Cores</title>
+<defs><linearGradient id="sky" x2="0" y2="1"><stop stop-color="#d7c9fc"/><stop offset="1" stop-color="#fff1d8"/></linearGradient><symbol id="ellie" viewBox="0 0 210 340"><circle cx="100" cy="110" r="67" fill="#e9aa83"/><path d="M50 160h105v130H50z" fill="#f47fa3"/><path d="M55 285h30v45H55zm64 0h30v45h-30" fill="#647ac2"/></symbol></defs>
+<rect width="1000" height="700" fill="url(#sky)"/><circle cx="845" cy="115" r="85" fill="#fff6c3"/><g fill="#fff" opacity=".8"><ellipse cx="160" cy="105" rx="135" ry="45"/><ellipse cx="770" cy="212" rx="105" ry="37"/></g><path d="M0 555Q250 440 510 560T1000 525V700H0" fill="#85c7a5"/><path d="M0 635Q440 560 1000 632V700H0" fill="#4ca987"/>
+<g fill="none" stroke-linecap="round" opacity=".9"><path d="M345 520A165 165 0 0 1 675 520" stroke="#ed496b" stroke-width="31"/><path d="M374 520A136 136 0 0 1 646 520" stroke="#ff9c47" stroke-width="29"/><path d="M404 520A106 106 0 0 1 616 520" stroke="#ffdc59" stroke-width="29"/><path d="M434 520A76 76 0 0 1 586 520" stroke="#48bd88" stroke-width="29"/><path d="M463 520A47 47 0 0 1 557 520" stroke="#5b95e2" stroke-width="27"/></g>
+<g fill="#fff8f2" stroke="#f6b65e" stroke-width="9"><path d="M463 515v150h92V515z"/><circle cx="528" cy="593" r="7" fill="#f6b65e"/></g><g fill="#ffda69"><path d="m765 337 13 34 37 4-28 24 9 36-31-18-32 18 10-36-28-24 38-4z"/><path d="m226 252 7 19 21 2-15 14 5 20-18-10-18 10 5-20-16-14 21-2z"/></g>
+<use href="#ellie" x="105" y="309" width="212" height="345"/>
+</svg>

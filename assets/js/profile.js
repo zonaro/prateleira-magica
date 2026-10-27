@@ -57,7 +57,7 @@
     status.textContent = progress.finished ? '✅ História concluída' : '📖 Em leitura';
     const medal = document.createElement('span');
     medal.className = `profile-medal${hasMedal ? ' earned' : ''}`;
-    medal.textContent = hasMedal ? '🏅 Medalha conquistada' : '🔒 Medalha do desafio';
+    medal.textContent = hasMedal ? `${book.medal || '🏅 Medalha'} conquistada` : `🔒 ${book.medal || 'Medalha do desafio'}`;
     const progressCopy = document.createElement('div');
     progressCopy.className = 'profile-progress-heading';
     const percentLabel = document.createElement('strong');
