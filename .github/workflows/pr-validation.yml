@@ -33,5 +33,6 @@ jobs:
           node tests/avatar-photo-availability.test.mjs
           node tests/progression.test.mjs
           node tests/page-turn.test.mjs
+          node tests/page-turn-adaptive.test.mjs
           node tests/speech.test.mjs
           node tests/offline.test.mjs

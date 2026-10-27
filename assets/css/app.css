@@ -1097,3 +1097,32 @@ html[data-color-theme] .profile-tabs{border-color:var(--outline);background:var(
   .avatar-photo-crop-preview { max-height: 52dvh; }
   .avatar-photo-crop-buttons button { width: 100%; }
 }
+
+/* Leitor adaptativo: sem StPageFlip, sombras transformadas ou animação pesada. */
+.reader-motion-settings {
+  display:flex; flex-wrap:wrap; align-items:center; gap:8px 12px;
+  padding:8px 12px 14px; color:#625377; font-weight:750; font-size:14px;
+}
+.reader-motion-settings select {
+  min-height:40px; max-width:100%;
+  border:1px solid #cfc1df; border-radius:12px; padding:8px 12px;
+  font:inherit; font-weight:700; color:#503a75; background:#fffaf8;
+}
+.reader-motion-settings select:focus-visible { outline:3px solid #9170c6; outline-offset:2px; }
+.reader-motion-settings [role="status"] { margin-left:auto; font-size:12px; }
+.reader-shell .book.reader-simple {
+  display:flex; gap:0; position:relative; touch-action:pan-y;
+  overflow:visible; isolation:isolate;
+}
+.reader-shell .book.reader-simple > .flip-page {
+  display:flex; height:100%; flex:1 1 50%; min-width:0;
+  position:relative; box-shadow:0 6px 18px #584d5924;
+}
+.reader-shell .book.reader-simple > .flip-page[hidden] { display:none!important; }
+.reader-shell .book.reader-simple.reader-portrait > .flip-page { flex:1 1 100%; }
+.reader-shell .book.reader-simple > .flip-page .read-panel { overflow-y:auto; }
+@media(max-width:520px) {
+  .reader-motion-settings { font-size:13px; padding:6px 4px 12px; }
+  .reader-motion-settings select { flex:1 1 175px; }
+  .reader-motion-settings [role="status"] { margin-left:0; }
+}

@@ -265,7 +265,14 @@
     if (request !== mountedCount) return;
     const staleBlobs = [...$('#book').querySelectorAll('img[data-avatar-blob]')].map((img) => img.dataset.avatarBlob);
     pageTurn.mount($('#book'), pages, page, onPageFlip, {
-      canDragPage: (index) => !book.pages[index]?.interactive
+      canDragPage: (index) => !book.pages[index]?.interactive,
+      onModeChange: ({ mode, reason }) => {
+        // Informar a troca automática sem atrapalhar a leitura ou o progresso.
+        if (book) updateControls();
+        if (reason === 'slow' || reason === 'timeout') {
+          notify('📖 Ativamos a leitura leve: este aparelho estava travando com a animação.');
+        }
+      }
     });
     for (const old of staleBlobs) URL.revokeObjectURL(old);
     updateVisiblePageNumbers();
@@ -277,12 +284,19 @@
     $('#progressBar').style.width = `${(page + 1) / book.pages.length * 100}%`;
     $('#progressLabel').textContent = `Página ${page + 1} de ${book.pages.length}`;
     const exploring = Boolean(book.pages[page].interactive);
+    const light = pageTurn.currentMode() === 'light';
+    const guidance = light
+      ? 'Deslize para os lados ou use Voltar/Próxima. Teclado: ← anterior · → próxima · Espaço para ouvir ou pausar.'
+      : 'Arraste os cantos das páginas para virá-las. Teclado: ← anterior · → próxima · Espaço para ouvir ou pausar.';
     $('#book').setAttribute('aria-label', exploring
       ? 'Páginas do livrinho. Nesta atividade, use os botões ou o teclado para virar a página.'
-      : 'Páginas do livrinho. Arraste um canto para virar a página.');
+      : (light ? 'Páginas do livrinho em modo leve. Deslize horizontalmente ou use os botões.' :
+        'Páginas do livrinho. Arraste um canto para virar a página.'));
     $('.bottom-note').textContent = exploring
       ? 'Brinque à vontade com as cores! Para virar a página, use os botões Voltar ou Próxima. Teclado: ← anterior · → próxima · Espaço para ouvir ou pausar.'
-      : 'Toque nas palavras coloridas para ouvi-las. Arraste os cantos das páginas para virá-las. Teclado: ← anterior · → próxima · Espaço para ouvir ou pausar.';
+      : 'Toque nas palavras coloridas para ouvi-las. ' + guidance;
+    $('#pageAnimationMode').value = pageTurn.preference();
+    $('#pageAnimationStatus').textContent = light ? '📖 Leitura leve ativa' : '✨ Virada animada';
     $('#prev').disabled = page === 0;
     const challengeLocked = book.pages[page].type === 'challenge' && !challengeComplete();
     $('#next').disabled = challengeLocked;
@@ -348,6 +362,15 @@
     error.append(link);
     error.hidden = false;
   }
+
+  $('#pageAnimationMode').addEventListener('change', (event) => {
+    if (!pageTurn.setPreference(event.target.value)) return;
+    if (!book) return;
+    mountPages().catch((error) => {
+      console.error('Falha ao trocar modo de virada:', error);
+      showError('Não foi possível trocar o modo de leitura.');
+    });
+  });
 
   narrator.subscribe(updateListenButton);
   $('#prev').addEventListener('click', () => go(page - 1));
