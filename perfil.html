@@ -40,6 +40,7 @@
       <a id="tabConquistas" class="profile-tab" href="#conquistas" role="tab" aria-controls="profileOverview">🏅 Meu perfil</a>
       <a id="tabPresets" class="profile-tab" href="#predefinidos" role="tab" aria-controls="profilePresets">✨ Personagens prontos</a>
       <a id="tabPersonalizar" class="profile-tab" href="#personalizar" role="tab" aria-controls="profileEditor">🎨 Personalizar</a>
+      <a id="tabFoto" class="profile-tab" href="#foto" role="tab" aria-controls="profilePhoto" hidden aria-hidden="true">📷 Minha foto</a>
     </nav>
     <main class="profile-main" id="profileOverview" role="tabpanel" aria-labelledby="tabConquistas">
       <section class="profile-identity" aria-labelledby="profileTitle">
@@ -78,6 +79,9 @@
     </section>
     <section id="profileEditor" class="profile-editor-pane settings-screen" role="tabpanel" aria-labelledby="tabPersonalizar" hidden>
       <div id="settingsApp" class="settings-app" aria-label="Editor de personagem"></div>
+    </section>
+    <section id="profilePhoto" class="profile-editor-pane settings-screen avatar-photo-screen" role="tabpanel" aria-labelledby="tabFoto" hidden>
+      <div id="avatarPhotoApp" class="avatar-photo-app" aria-label="Criar personagem a partir de uma foto"></div>
     </section>
   </div>
 </body>
