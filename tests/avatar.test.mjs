@@ -35,7 +35,7 @@ assert.equal(renderer.bottomStyles.map(([key]) => key).join(','), 'pants,shorts,
 assert.equal(renderer.footwearStyles.map(([key]) => key).join(','), 'sneakers,flipflops,socks,barefoot,skates');
 assert.equal(renderer.sockPatterns.map(([key]) => key).join(','), 'plain,stripes,dots');
 assert.equal(renderer.accessoryStyles.length, 20);
-assert.equal(renderer.toyStyles.length, 12);
+assert.equal(renderer.toyStyles.length, 13);
 
 const pictures = new Set();
 for (const avatarStyle of hairStyles) {
@@ -179,6 +179,25 @@ assert(renderer.avatarSVG({ name: 'Éllie', accessories: ['plumber_beret'] }).in
 assert(prefs.avatarSVG({ accessories: ['flower_clip'], accessoryColor: '#8c6bd0' }).includes('fill="#8c6bd0"'),
   'Flores acessórias devem aceitar a cor escolhida');
 assert(prefs.avatarSVG({ accessories: ['cap'] }).includes('scale(1.2)'), 'Boné precisa ser maior');
+// Ioiô: bloqueado antes de voltar uma página, permanente entre livros e backups.
+assert(renderer.toyStyles.some(([id, , group]) => id === 'yoyo' && group === 'hand'));
+assert(renderer.avatarSVG({ toys: ['yoyo'], toyColor: '#639de8' }).includes('data-toy="yoyo"'));
+assert(!prefs.clean({ toys: ['yoyo'] }).toys.includes('yoyo'));
+assert(!prefs.clean({ toys: ['yoyo'], achievements: { books: {}, pageReturn: false } }).toys.includes('yoyo'));
+const yoYoState = prefs.clean({ toys: ['yoyo'], achievements: { books: {}, pageReturn: true } });
+assert(yoYoState.toys.includes('yoyo'), 'O ioiô deve liberar com a primeira página voltada');
+assert(yoYoState.achievements.pageReturn, 'Conquista da volta de página deve persistir');
+assert(prefs.parseProfileSVG(prefs.exportProfileSVG(yoYoState)).toys.includes('yoyo'),
+  'Backup SVG deve preservar o ioiô e seu desbloqueio');
+assert(!prefs.load().achievements.pageReturn);
+assert.equal(prefs.unlockYoYo(), true, 'Primeira volta registra conquista');
+assert.equal(prefs.unlockYoYo(), false, 'Repetições não devem gerar novas conquistas');
+assert.equal(prefs.load().achievements.pageReturn, true);
+const justUnlocked = prefs.save({ ...prefs.load(), toys: ['yoyo'] });
+assert(justUnlocked.toys.includes('yoyo') && justUnlocked.achievements.pageReturn);
+assert.equal(prefs.medalCount(justUnlocked), 0, 'Desbloquear ioiô não deve contar como medalha');
+prefs.save(prefs.DEFAULTS);
+
 const threeMedals = { books: Object.fromEntries(['um', 'dois', 'tres'].map(id => [id,
   { challengeCompletedAt: '2026-10-27T10:00:00.000Z' }])) };
 const fourMedals = { books: { ...threeMedals.books,
@@ -293,6 +312,23 @@ for (const preset of readyPresets) {
   assert(mixedSvg.includes('data-layer="roupa-original"'), `Roupa original sumiu em edições sucessivas: ${preset.sourceSvg}`);
   assert(mixedSvg.includes('#8c6bd0'), `Nova cor do cabelo não aplicada: ${preset.sourceSvg}`);
   assert(mixedSvg.includes('#79bc8d'), `Nova cor da roupa não aplicada: ${preset.sourceSvg}`);
+  // Os desenhos de Gabriel e Bruno têm eixos diferentes. Alinhar as partes
+  // antigas juntas, sem deslocar a camiseta nova, evita mangas fora do corpo.
+  if (['132848-boy.svg', '66797-boy.svg'].includes(preset.sourceSvg)) {
+    const direction = preset.sourceSvg === '66797-boy.svg' ? -24 : 0;
+    const outfitApplied = prefs.avatarSVG(prefs.clean({
+      ...profile, outfitStyle: 'tee', presetEdits: ['outfitStyle']
+    }));
+    assert(outfitApplied.includes(`data-align-preset="${preset.sourceSvg.replace('.svg', '')}" transform="translate(${direction} 0)"`),
+      `Camadas do ${preset.sourceSvg} não foram alinhadas`);
+    const layer = outfitApplied.indexOf('data-layer="roupa-alterada"');
+    assert(layer > outfitApplied.indexOf('data-align-preset='), 'A roupa modular precisa ficar fora do ajuste da silhueta');
+    assert(!outfitApplied.slice(layer).includes('data-layer="original-outfit"'),
+      'Não redesenhar manga original em cima da roupa nova');
+    const withHair = prefs.avatarSVG(prefs.clean({ ...profile, avatarStyle: 'short', presetEdits: ['avatarStyle'] }));
+    assert(withHair.includes(`data-align-preset="${preset.sourceSvg.replace('.svg', '')}"`),
+      'Ao trocar cabelo, preservar o eixo da roupa original');
+  }
   const restoredMixed = prefs.parseProfileSVG(prefs.exportProfileSVG(mixed));
   assert.equal(restoredMixed.sourceSvg, preset.sourceSvg, `Backup perdeu a origem: ${preset.sourceSvg}`);
   assert.equal(restoredMixed.presetEdits.join(','), mixed.presetEdits.join(','),
@@ -430,7 +466,7 @@ console.log('✓ 25 cabelos × 24 roupas = 600 combinações com vetores origina
 console.log('✓ Careca, cabelos sem flores, boné maior e 20 acessórios desenhados em camadas');
 console.log('✓ Tiara de gatinho e capuz cobrindo todos os penteados sem alterá-los no perfil');
 console.log('✓ Flor sempre acima da tiara, capas atrás do corpo e máscaras exclusivas com óculos');
-console.log('✓ 12 brinquedos com cor independente, fantasia de fantasma, asas atrás e skate sob os pés');
+console.log('✓ 13 brinquedos com ioiô desbloqueável, fantasia de fantasma, asas e skate');
 console.log('✓ Patins liberados com 3 medalhas; itens bloqueados mais claros e em escala de cinza');
 console.log('✓ 5 partes de baixo, 5 calçados, 3 estampas de meias, boina com inicial e desbloqueio com 3 medalhas');
 console.log('✓ Camisas e moletons listrados, camiseta de time e cardigã alinhados ao corpo');
