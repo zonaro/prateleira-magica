@@ -50,6 +50,29 @@
   let lastEditAt = 0;
   let pronunciationTouched = false;
 
+  // Mesmos controles em todas as partes coloríveis. As palavras geram a cor
+  // localmente com NameToColor; apenas o HEX escolhido é salvo no perfil.
+  const colorPickers = [
+    ['customSkinColor', 'skinColor', 'cor da pele'],
+    ['customHairColor', 'hairColor', 'cor do cabelo'],
+    ['customOutfitColor', 'outfitColor', 'cor da roupa'],
+    ['customAccessoryColor', 'accessoryColor', 'cor dos acessórios'],
+    ['customToyColor', 'toyColor', 'cor dos brinquedos'],
+    ['customWaterColor', 'waterColor', 'cor do líquido da garrafinha'],
+    ['customBottomColor', 'bottomColor', 'cor da calça, shorts ou saia'],
+    ['customShoeColor', 'shoeColor', 'cor dos sapatos, chinelos ou meias']
+  ];
+  const colorPicker = (id, label, accessibleName) => `<div class="custom-color-row">
+    <label class="custom-color"><span>${label}</span><input id="${id}" type="color" aria-label="Selecionar ${accessibleName}"></label>
+    <div class="color-word-tools">
+      <label class="visually-hidden" for="${id}Word">Inventar ${accessibleName} com palavras</label>
+      <input id="${id}Word" class="color-word-input" type="text" maxlength="120" autocomplete="off"
+        placeholder="✨ Invente uma cor..." aria-label="Inventar ${accessibleName} com palavras">
+      <button id="${id}Hear" class="color-word-hear" type="button" aria-label="Ouvir o nome da ${accessibleName}" disabled>🔊 Ouvir</button>
+    </div>
+    <output id="${id}Name" class="color-word-name" aria-live="polite"></output>
+  </div>`;
+
   const dialog = editor;
   dialog.innerHTML = `
     <div class="settings-layout">
@@ -99,57 +122,36 @@
         <p class="settings-intro" style="margin-bottom:8px;">Escolha algo para segurar, asas ou um skate! Alguns presentes aparecem ao terminar o desafio e a leitura dos livros. 🏅 Skate: 4 medalhas. 🪀 Ioiô: volte uma página!</p>
         <div id="toyStyles" class="avatar-style-grid"></div>
       </fieldset>
-      <label class="custom-color"><span>💧 Cor do líquido da garrafinha</span><input id="customWaterColor" type="color" aria-label="Escolher a cor do líquido da garrafinha"></label>
+      ${colorPicker('customWaterColor', '💧 Cor do líquido da garrafinha', 'cor do líquido da garrafinha')}
       <fieldset class="avatar-style-fieldset pet-fieldset"><legend>Minha pelúcia companheira 🧸</legend>
         <p id="petUnlockStatus" class="pet-unlock-status" role="status"></p>
         <div id="petStyles" class="pet-style-grid"></div>
       </fieldset>
       <fieldset class="skin-fieldset"><legend>Cor da pele — natural ou fantasia</legend><div id="skinOptions" class="skin-options"></div>
-        <label class="custom-color"><span>Ou escolha qualquer cor</span><input id="customSkinColor" type="color" aria-label="Selecionar outra cor de pele"></label>
+        ${colorPicker('customSkinColor', 'Ou escolha qualquer cor', 'cor da pele')}
       </fieldset>
       <div class="avatar-color-fields">
         <fieldset class="skin-fieldset"><legend>Cor do cabelo</legend><div id="hairColorOptions" class="skin-options"></div>
-          <label class="custom-color"><span>Outra cor</span><input id="customHairColor" type="color" aria-label="Selecionar outra cor de cabelo"></label>
+          ${colorPicker('customHairColor', 'Outra cor', 'cor do cabelo')}
         </fieldset>
         <fieldset class="skin-fieldset"><legend>Cor da roupa</legend><div id="outfitColorOptions" class="skin-options"></div>
-          <label class="custom-color"><span>Outra cor</span><input id="customOutfitColor" type="color" aria-label="Selecionar outra cor de roupa"></label>
+          ${colorPicker('customOutfitColor', 'Outra cor', 'cor da roupa')}
         </fieldset>
         <fieldset class="skin-fieldset"><legend>Cor dos acessórios</legend><div id="accessoryColorOptions" class="skin-options"></div>
-          <label class="custom-color"><span>Outra cor</span><input id="customAccessoryColor" type="color" aria-label="Selecionar outra cor de acessórios"></label>
+          ${colorPicker('customAccessoryColor', 'Outra cor', 'cor dos acessórios')}
         </fieldset>
         <fieldset class="skin-fieldset"><legend>Cor dos brinquedos</legend><div id="toyColorOptions" class="skin-options"></div>
-          <label class="custom-color"><span>Outra cor</span><input id="customToyColor" type="color" aria-label="Selecionar outra cor de brinquedos"></label>
+          ${colorPicker('customToyColor', 'Outra cor', 'cor dos brinquedos')}
         </fieldset>
       </div>
       <div class="avatar-color-fields">
         <fieldset class="skin-fieldset"><legend>Cor da calça, shorts ou saia</legend><div id="bottomColorOptions" class="skin-options"></div>
-          <label class="custom-color"><span>Outra cor</span><input id="customBottomColor" type="color" aria-label="Selecionar outra cor de calça, shorts ou saia"></label>
+          ${colorPicker('customBottomColor', 'Outra cor', 'cor da calça, shorts ou saia')}
         </fieldset>
         <fieldset class="skin-fieldset"><legend>Cor dos sapatos, chinelos ou meias</legend><div id="shoeColorOptions" class="skin-options"></div>
-          <label class="custom-color"><span>Outra cor</span><input id="customShoeColor" type="color" aria-label="Selecionar outra cor dos pés"></label>
+          ${colorPicker('customShoeColor', 'Outra cor', 'cor dos sapatos, chinelos ou meias')}
         </fieldset>
       </div>
-      <section class="magic-color-maker" aria-labelledby="magicColorTitle">
-        <h3 id="magicColorTitle">✨ Invente uma cor com palavras!</h3>
-        <p>Escreva uma cor, um sentimento ou uma palavra maluca e veja que cor aparece! A mesma palavra sempre cria a mesma cor.</p>
-        <label for="magicColorWord">Minha palavra mágica</label>
-        <input id="magicColorWord" type="text" maxlength="120" placeholder="Ex.: girassol, lilás, abraço…" autocomplete="off">
-        <div class="magic-color-result">
-          <span id="magicColorSwatch" class="magic-color-swatch" aria-hidden="true"></span>
-          <span id="magicColorName" role="status" aria-live="polite">Escreva para descobrir uma cor!</span>
-          <button id="magicColorHear" type="button" aria-label="Ouvir o nome da cor" disabled>🔊 Ouvir</button>
-        </div>
-        <div class="magic-color-actions"><label for="magicColorTarget">Pintar qual parte?</label>
-          <select id="magicColorTarget">
-            <option value="hairColor">Cabelo</option><option value="outfitColor">Roupa</option>
-            <option value="bottomColor">Calça, shorts ou saia</option><option value="shoeColor">Sapatos</option>
-            <option value="skinColor">Pele (inclusive fantasia)</option>
-            <option value="accessoryColor">Acessórios</option>
-            <option value="toyColor">Brinquedos</option>
-          </select>
-          <button id="magicColorApply" type="button" disabled>🎨 Usar esta cor</button>
-        </div>
-      </section>
       <section class="mood-theme-maker" aria-labelledby="themeMoodTitle">
         <h3 id="themeMoodTitle">🌈 Meu mundo, minhas cores!</h3>
         <p>Que tal dar um novo clima para a prateleira? Escolha as cores que combinam com seu dia!</p>
@@ -200,18 +202,6 @@
       $('#themeMoodSwatches').append(dot);
     }
     moodSelect.value = draft.themeMood;
-  }
-
-  let generatedColor = null;
-  function refreshMagicColor() {
-    const phrase = $('#magicColorWord').value.trim();
-    generatedColor = colors?.hex(phrase) || null;
-    $('#magicColorSwatch').style.background = generatedColor || 'repeating-linear-gradient(45deg,#f4e8f9 0 10px,#fff 10px 20px)';
-    $('#magicColorName').textContent = generatedColor
-      ? `${colors.name(generatedColor)} · ${generatedColor.toUpperCase()}`
-      : 'Escreva para descobrir uma cor!';
-    $('#magicColorHear').disabled = !generatedColor;
-    $('#magicColorApply').disabled = !generatedColor;
   }
 
   // Load and render presets
@@ -411,7 +401,13 @@
     nameInput.value = draft.name;
     pronunciationInput.value = draft.pronunciation;
     birthInput.value = draft.birthDate;
-    refreshMagicColor();
+    // A palavra não faz parte do perfil: ao importar, desfazer ou trocar de
+    // personagem, a cor persistida continua no seletor, sem frase antiga.
+    for (const [id] of colorPickers) {
+      $(`#${id}Word`).value = '';
+      $(`#${id}Name`).textContent = '';
+      $(`#${id}Hear`).disabled = true;
+    }
     $(`input[name="childGender"][value="${draft.gender}"]`).checked = true;
     drawPreview();
   }
@@ -463,6 +459,14 @@
   function markPresetEdit(field) {
     if (!draft.sourceSvg) return;
     draft.presetEdits = [...new Set([...(draft.presetEdits || []), field])];
+  }
+  function clearColorWord(field) {
+    const picker = colorPickers.find(([, key]) => key === field);
+    if (!picker) return;
+    const [id] = picker;
+    $(`#${id}Word`).value = '';
+    $(`#${id}Name`).textContent = '';
+    $(`#${id}Hear`).disabled = true;
   }
 
   function addStyles(containerId, entries, field) {
@@ -582,6 +586,7 @@
       button.setAttribute('aria-label', label);
       button.style.backgroundColor = color;
       button.addEventListener('click', () => edit('', () => {
+        clearColorWord(field);
         if (['skinColor', 'hairColor', 'outfitColor'].includes(field)) markPresetEdit(field);
         draft[field] = color;
       }));
@@ -596,19 +601,29 @@
   addColors('bottomColorOptions', avatarCatalog.bottomColors, 'bottomColor');
   addColors('shoeColorOptions', avatarCatalog.shoeColors, 'shoeColor');
 
-  $('#magicColorWord').addEventListener('input', refreshMagicColor);
-  $('#magicColorHear').addEventListener('click', () => {
-    if (generatedColor) narrator?.play(`Esta cor se chama ${colors.name(generatedColor)}.`, { lang: 'pt-BR', rate: .78, pitch: 1.08 });
-  });
-  $('#magicColorApply').addEventListener('click', () => {
-    if (!generatedColor) return;
-    const target = $('#magicColorTarget').value;
-    if (!['skinColor', 'hairColor', 'outfitColor', 'bottomColor', 'shoeColor', 'accessoryColor', 'toyColor'].includes(target)) return;
-    edit('', () => {
-      if (['skinColor', 'hairColor', 'outfitColor'].includes(target)) markPresetEdit(target);
-      draft[target] = generatedColor;
+  for (const [id, field] of colorPickers) {
+    const word = $(`#${id}Word`);
+    const output = $(`#${id}Name`);
+    const hear = $(`#${id}Hear`);
+    word.addEventListener('input', () => {
+      const generated = colors?.hex(word.value.trim());
+      hear.disabled = !generated;
+      output.textContent = generated ? `${colors.name(generated)} · ${generated.toUpperCase()}` : '';
+      if (!generated) return; // Apagar a palavra não apaga a cor já escolhida.
+      edit(field, () => {
+        if (['skinColor', 'hairColor', 'outfitColor'].includes(field)) markPresetEdit(field);
+        draft[field] = generated;
+      });
     });
-  });
+    word.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') event.preventDefault(); // Não envia o formulário.
+    });
+    hear.addEventListener('click', () => {
+      const generated = colors?.hex(word.value.trim());
+      if (!generated) return;
+      narrator?.play(`Esta cor se chama ${colors.name(generated)}.`, { lang: 'pt-BR', rate: .78, pitch: 1.08 });
+    });
+  }
   moodSelect.addEventListener('change', () => {
     edit('', () => { draft.themeMood = moodSelect.value; });
   });
@@ -617,6 +632,7 @@
     edit('', () => {
       markPresetEdit('hairColor');
       markPresetEdit('outfitColor');
+      for (const field of ['hairColor', 'outfitColor', 'bottomColor', 'shoeColor']) clearColorWord(field);
       [draft.hairColor, draft.outfitColor, draft.bottomColor, draft.shoeColor] = palette.slice(0, 4);
     });
   });
@@ -689,14 +705,14 @@
   for (const option of dialog.querySelectorAll('input[name="childGender"]')) {
     option.addEventListener('change', () => edit('', () => { draft.gender = option.value; }));
   }
-  for (const [inputId, field] of [['customSkinColor', 'skinColor'], ['customHairColor', 'hairColor'],
-    ['customOutfitColor', 'outfitColor'], ['customAccessoryColor', 'accessoryColor'], ['customToyColor', 'toyColor'],
-    ['customWaterColor', 'waterColor'],
-    ['customBottomColor', 'bottomColor'], ['customShoeColor', 'shoeColor']]) {
-    $(`#${inputId}`).addEventListener('input', (event) => edit(field, () => {
-      if (['skinColor', 'hairColor', 'outfitColor'].includes(field)) markPresetEdit(field);
-      draft[field] = event.target.value;
-    }));
+  for (const [id, field] of colorPickers) {
+    $(`#${id}`).addEventListener('input', (event) => {
+      clearColorWord(field);
+      edit(field, () => {
+        if (['skinColor', 'hairColor', 'outfitColor'].includes(field)) markPresetEdit(field);
+        draft[field] = event.target.value;
+      });
+    });
   }
   $('#clearProfile').addEventListener('click', () => {
     const warning = 'Tem certeza de que quer começar de novo? Seu personagem, seus livros lidos e todas as medalhas serão apagados deste aparelho. Se quiser guardar uma cópia, use “Exportar perfil” primeiro.\n\nVocê ainda poderá tocar em “Desfazer” antes de sair desta página.';

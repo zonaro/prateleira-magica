@@ -50,9 +50,27 @@ for (const html of appHtml) {
   }
 }
 const ui = read('assets/js/settings-ui.js');
-for (const id of ['magicColorWord', 'magicColorApply', 'magicColorTarget', 'themeMood', 'applyThemeAvatar']) {
+for (const id of ['colorPickers', 'colorPicker', 'themeMood', 'applyThemeAvatar']) {
   assert(ui.includes(id), `Editor sem controle: ${id}`);
 }
+const pickerDefinitions = ui.slice(ui.indexOf('  const colorPickers ='), ui.indexOf('  const dialog ='));
+const { colorPickers, colorPicker } = new Function(`${pickerDefinitions}\nreturn { colorPickers, colorPicker };`)();
+const fields = ['skinColor','hairColor','outfitColor','accessoryColor','toyColor','waterColor','bottomColor','shoeColor'];
+assert.deepEqual(colorPickers.map(([,field])=>field),fields,'Todas as oito cores precisam de uma palavra própria');
+for (const [id,,name] of colorPickers) {
+  const markup = colorPicker(id,'Outra cor',name);
+  for (const expected of [`id="${id}" type="color"`, `id="${id}Word"`, `id="${id}Hear"`, `id="${id}Name"`]) {
+    assert(markup.includes(expected), `Controle ausente no seletor ${id}: ${expected}`);
+  }
+  assert(markup.includes('type="button"') && markup.includes('maxlength="120"'), `Entrada inválida em ${id}`);
+}
+assert(ui.includes('const generated = colors?.hex(word.value.trim())'), 'Cada palavra deve ser convertida pelo NameToColor');
+assert(ui.includes('draft[field] = generated'), 'Cor inventada deve alterar diretamente o campo do perfil');
+assert(ui.includes('edit(field, () =>'), 'Cor inventada precisa de salvamento automático e desfazer');
+assert(ui.includes('event.key === \'Enter\'') && ui.includes('event.preventDefault()'), 'Enter não deve enviar o formulário');
+assert(ui.includes('narrator?.play(`Esta cor se chama ${colors.name(generated)}.'), 'Cada campo deve permitir ouvir o nome da cor');
+assert(!ui.includes('magicColorWord') && !ui.includes('magicColorTarget') && !ui.includes('magicColorApply'),
+  'A seção antiga de cores não deve continuar no editor');
 assert(ui.includes('[draft.hairColor, draft.outfitColor, draft.bottomColor, draft.shoeColor] = palette.slice(0, 4)'),
   'Aplicar paleta ao avatar não deve tocar no tom da pele');
 assert(ui.includes('lastSaved = preferences.save(next)'), 'Personalização deve salvar automaticamente a cada mudança');
@@ -75,6 +93,6 @@ assert.equal(new Set(book.exercises.map((exercise) => exercise.color)).size, boo
 assert.equal(book.medal, '🎨 Medalha das Cores');
 console.log('✓ NameToColor + pacote pt-BR integrados offline: palavras, cores e nomes');
 console.log('✓ 10 moods, harmonias e tema global reversível');
-console.log('✓ Editor do avatar com palavra mágica e paleta, sem alterar cor de pele automaticamente');
+console.log('✓ Oito color pickers com palavra livre, nome, ouvir, atualização direta, desfazer e paleta');
 console.log('✓ Personalização com gravação automática, desfazer e limpeza confirmada do perfil');
 console.log('✓ Livro interativo com sete cores únicas no desafio e Medalha das Cores');
