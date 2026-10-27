@@ -15,8 +15,8 @@ jobs:
       - uses: actions/checkout@v4
       - name: Preparar MediaPipe e modelos locais
         run: node tools/vendor-mediapipe.mjs
-      - name: Diagnosticar arquivos MediaPipe no site publicado
-        run: node tools/diagnose-photo-public.mjs
+      - name: Validar existência dos arquivos MediaPipe gerados
+        run: node tools/check-photo-deployment.mjs --local
       - name: Conferir scripts e dados
         run: |
           python3 tools/extract-avatar-components.py --check
