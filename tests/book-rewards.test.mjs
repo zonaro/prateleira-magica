@@ -30,13 +30,14 @@ const targets = {
   'o-escudo-das-vacinas': ['medical_kit', 'doctor_coat'],
   'o-corpo-em-movimento': ['dumbbells', 'water_bottle'],
   'o-calendario-das-festas': ['new_year_crown', 'carnival_mask', 'carnival_tank', 'bunny_headband',
-    'easter_eggs', 'june_hat', 'brazil_flag', 'wooden_top', 'saci_costume', 'witch_hat', 'halloween_pumpkin', 'santa_hat'],
+    'easter_eggs', 'june_hat', 'brazil_flag', 'wooden_top', 'saci_costume', 'witch_hat', 'halloween_pumpkin',
+    'ghost_costume', 'bat_wings', 'fairy_wings', 'santa_hat'],
   'a-danca-do-tempo': ['calendar', 'moon_ball', 'sun_plush'],
   'a-turma-dos-alimentos': ['apple', 'pear', 'grapes', 'yogurt', 'salad', 'bread', 'egg'],
   'a-viagem-dos-oito-planetas': ['mercury_ball', 'venus_ball', 'earth_ball', 'mars_ball',
-    'jupiter_ball', 'saturn_ball', 'uranus_ball', 'neptune_ball'],
+    'jupiter_ball', 'saturn_ball', 'hula_hoop', 'uranus_ball', 'neptune_ball'],
   'a-aventura-do-abc': ['abc_blocks'],
-  'o-jardim-das-diferencas': ['dna_helix'],
+  'o-jardim-das-diferencas': ['dna_helix', 'shuttlecock'],
   'o-clube-dos-dentinhos': ['toothbrush'],
   'rapunzel-contos-dos-grimm': ['rapunzel'],
   'o-rouxinol-e-o-imperador': ['nightingale_plush'],
@@ -46,7 +47,7 @@ const targets = {
 };
 assert.equal(catalog.books.length, 22, 'Vinte e dois títulos infantis no catálogo');
 const allRewards = Object.values(targets).flat();
-assert.equal(allRewards.length, 48, 'Quarenta e oito recompensas no total');
+assert.equal(allRewards.length, 53, 'Cinquenta e três recompensas vinculadas a livros');
 assert.equal(new Set(allRewards).size, allRewards.length);
 assert.equal(Object.keys(avatar.rewardBooks).length, allRewards.length);
 for (const bookEntry of catalog.books) {
@@ -96,6 +97,12 @@ assert(avatar.avatarSVG({ toys: ['wooden_tortoise'] }).includes('data-detail="ta
   'A fábula precisa desbloquear a tartaruguinha');
 assert(avatar.avatarSVG({ toys: ['garden_carrot'] }).includes('data-detail="cenoura-pedro-coelho"'),
   'Pedro Coelho precisa desbloquear a cenoura');
+const hula = avatar.avatarSVG({ toys: ['saturn_ball', 'hula_hoop'], toyColor: '#8c6bd0' });
+assert(hula.includes('data-toy="saturn_ball"') && hula.includes('data-placement="waist-back"')
+  && hula.includes('data-placement="waist-front"'),
+  'Bambolê deve passar atrás e à frente da cintura e combinar com a bola de Saturno');
+assert(hula.includes('data-detail="bambole-colorido"') && hula.includes('stroke="#8c6bd0"'),
+  'Bambolê deve possuir ilustração própria e permitir escolha de cor');
 const saci = avatar.avatarSVG({ toys: ['saci_costume'] });
 assert(saci.includes('data-saci-one-leg="true"'), 'A fantasia do Saci precisa esconder uma perna');
 assert(!saci.includes('data-layer="tenis-direito"'), 'A fantasia do Saci não deve desenhar a segunda perna');
@@ -141,5 +148,5 @@ assert.deepEqual(Array.from(window.LivrinhoMusicKeyboard.notes, (note) => note[1
 assert(JSON.parse(read('books/a-festa-das-notas.json')).pages.some((page) => page.interactive === 'music-keyboard'));
 const reader = read('assets/js/reader.js');
 assert(reader.includes("url.textContent = entry.url"), 'Endereços devem ser texto puro sem âncoras');
-console.log('✓ 22 livros e 48 recompensas, medalha + conclusão e bloqueio persistente');
+console.log('✓ 22 livros e 53 recompensas de leitura, medalha + conclusão e bloqueio persistente');
 console.log('✓ Coração, sol, vela animada, Saci de uma perna, oito planetas e fontes não clicáveis');

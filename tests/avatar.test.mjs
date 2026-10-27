@@ -35,7 +35,7 @@ assert.equal(renderer.bottomStyles.map(([key]) => key).join(','), 'pants,shorts,
 assert.equal(renderer.footwearStyles.map(([key]) => key).join(','), 'sneakers,flipflops,socks,barefoot,skates');
 assert.equal(renderer.sockPatterns.map(([key]) => key).join(','), 'plain,stripes,dots');
 assert.equal(renderer.accessoryStyles.length, 27);
-assert.equal(renderer.toyStyles.length, 47);
+assert.equal(renderer.toyStyles.length, 48);
 
 const pictures = new Set();
 for (const avatarStyle of hairStyles) {
@@ -219,8 +219,18 @@ prefs.save(prefs.DEFAULTS);
 
 const threeMedals = { books: Object.fromEntries(['um', 'dois', 'tres'].map(id => [id,
   { challengeCompletedAt: '2026-10-27T10:00:00.000Z' }])) };
+const oneMedal = { books: { um: threeMedals.books.um } };
+const twoMedals = { books: { um: threeMedals.books.um, dois: threeMedals.books.dois } };
 const fourMedals = { books: { ...threeMedals.books,
   quatro: { challengeCompletedAt: '2026-10-27T10:00:00.000Z' } } };
+assert.equal(renderer.rewardUnlocked({ achievements: oneMedal }, 'pocket_ball'), false,
+  'Uma medalha ainda não libera a bola de monstrinho');
+assert.equal(renderer.rewardUnlocked({ achievements: twoMedals }, 'pocket_ball'), true,
+  'Duas medalhas de livros distintos liberam a bola de monstrinho');
+assert(!prefs.clean({ toys: ['pocket_ball'], achievements: oneMedal }).toys.includes('pocket_ball'),
+  'Perfis antigos ou importados não podem equipar a bola com só uma medalha');
+assert(prefs.clean({ toys: ['pocket_ball'], achievements: twoMedals }).toys.includes('pocket_ball'),
+  'Duas medalhas devem liberar a bola de monstrinho em qualquer perfil');
 assert(!prefs.clean({ toys: ['skateboard'] }).toys.includes('skateboard'),
   'Skate deve ser bloqueado antes de 4 medalhas');
 assert(!prefs.clean({ toys: ['skateboard'], achievements: threeMedals }).toys.includes('skateboard'),
@@ -234,7 +244,13 @@ assert.equal(prefs.clean({ footwearStyle: 'skates', achievements: threeMedals })
 assert(renderer.avatarSVG({ footwearStyle: 'skates' }).includes('transform="translate(60 297)"'),
   'Patins precisam ficar alinhados ao chão com rodas visíveis');
 assert.equal(prefs.clean({ toys: ['soccer_ball', 'basketball', 'fairy_wings', 'bat_wings', 'unknown'] }).toys.join(','),
-  'soccer_ball,fairy_wings', 'Brinquedos do mesmo grupo devem ser exclusivos');
+  'soccer_ball', 'Asas ligadas a Halloween devem estar bloqueadas sem concluir o livro');
+const halloweenMedal = { books: { 'o-calendario-das-festas': {
+  finished: true, medalEarnedAt: '2026-10-27T10:00:00.000Z'
+} } };
+assert.equal(prefs.clean({ toys: ['soccer_ball', 'basketball', 'fairy_wings', 'bat_wings'],
+  achievements: halloweenMedal }).toys.join(','), 'soccer_ball,fairy_wings',
+'Brinquedos do mesmo grupo são exclusivos mesmo após desbloqueados');
 assert(!prefs.clean({ accessories: ['plumber_beret'] }).accessories.includes('plumber_beret'),
   'Boina deve ser bloqueada antes de 3 medalhas');
 assert(prefs.clean({ accessories: ['plumber_beret'], achievements: threeMedals }).accessories.includes('plumber_beret'),
@@ -245,7 +261,7 @@ const unlockedBackup = prefs.parseProfileSVG(prefs.exportProfileSVG(unlockedProf
 assert(unlockedBackup.accessories.includes('plumber_beret'), 'Boina deve sobreviver ao backup com três medalhas');
 assert.equal(unlockedBackup.accessoryColor, '#ed805d', 'Backup deve guardar a cor dos acessórios');
 const toyProfile = prefs.clean({ toys: ['skateboard', 'pocket_ball', 'bat_wings'],
-  toyColor: '#9c80df', achievements: fourMedals });
+  toyColor: '#9c80df', achievements: { books: { ...fourMedals.books, ...halloweenMedal.books } } });
 const toyBackup = prefs.parseProfileSVG(prefs.exportProfileSVG(toyProfile));
 assert.equal(toyBackup.toys.join(','), 'skateboard,pocket_ball,bat_wings',
   'Backup deve preservar brinquedos combinados e desbloqueados');
@@ -485,7 +501,7 @@ console.log(`✓ ${hairStyles.length} cabelos × ${outfits.length} roupas = ${pi
 console.log('✓ Careca, cabelos sem flores, boné maior e 27 acessórios desenhados em camadas');
 console.log('✓ Tiara de gatinho e capuz cobrindo todos os penteados sem alterá-los no perfil');
 console.log('✓ Flor sempre acima da tiara, capas atrás do corpo e máscaras exclusivas com óculos');
-console.log('✓ 47 brinquedos: planetas, alimentos, blocos ABC, DNA, escova, tartaruga, cenoura e instrumentos');
+console.log('✓ 48 brinquedos: planetas, bambolê, alimentos, blocos ABC, DNA, escova, tartaruga, cenoura e instrumentos');
 console.log('✓ Patins liberados com 3 medalhas; itens bloqueados mais claros e em escala de cinza');
 console.log('✓ 5 partes de baixo, 5 calçados, 3 estampas de meias, boina com inicial e desbloqueio com 3 medalhas');
 console.log('✓ Camisas e moletons listrados, camiseta de time e cardigã alinhados ao corpo');

@@ -70,6 +70,8 @@
     brazil_flag: 'o-calendario-das-festas', wooden_top: 'o-calendario-das-festas',
     saci_costume: 'o-calendario-das-festas', witch_hat: 'o-calendario-das-festas',
     halloween_pumpkin: 'o-calendario-das-festas', santa_hat: 'o-calendario-das-festas',
+    ghost_costume: 'o-calendario-das-festas', bat_wings: 'o-calendario-das-festas',
+    fairy_wings: 'o-calendario-das-festas',
     calendar: 'a-danca-do-tempo', moon_ball: 'a-danca-do-tempo', sun_plush: 'a-danca-do-tempo',
     apple: 'a-turma-dos-alimentos', pear: 'a-turma-dos-alimentos',
     grapes: 'a-turma-dos-alimentos', yogurt: 'a-turma-dos-alimentos',
@@ -77,13 +79,19 @@
     mercury_ball: 'a-viagem-dos-oito-planetas', venus_ball: 'a-viagem-dos-oito-planetas',
     earth_ball: 'a-viagem-dos-oito-planetas', mars_ball: 'a-viagem-dos-oito-planetas',
     jupiter_ball: 'a-viagem-dos-oito-planetas', saturn_ball: 'a-viagem-dos-oito-planetas',
+    hula_hoop: 'a-viagem-dos-oito-planetas',
     uranus_ball: 'a-viagem-dos-oito-planetas', neptune_ball: 'a-viagem-dos-oito-planetas',
     abc_blocks: 'a-aventura-do-abc', dna_helix: 'o-jardim-das-diferencas',
+    shuttlecock: 'o-jardim-das-diferencas',
     toothbrush: 'o-clube-dos-dentinhos', rapunzel: 'rapunzel-contos-dos-grimm',
     nightingale_plush: 'o-rouxinol-e-o-imperador', emperor_crown: 'a-roupa-nova-do-imperador',
     wooden_tortoise: 'as-fabulas-de-esopo', garden_carrot: 'a-historia-de-pedro-coelho'
   });
   function rewardUnlocked(settings, id) {
+    // A bola de monstrinho não depende de um livro específico, mas de duas
+    // medalhas de leituras distintas (inclusive em perfis importados).
+    if (id === 'pocket_ball') return Object.values(settings?.achievements?.books || {})
+      .filter(progress => progress?.medalEarnedAt || progress?.challengeCompletedAt).length >= 2;
     const bookId = rewardBooks[id];
     if (!bookId) return true;
     const progress = settings?.achievements?.books?.[bookId];
@@ -126,13 +134,13 @@
     ['tennis_ball', 'Bola de tênis', 'hand'],
     ['american_football', 'Bola de futebol americano', 'hand'],
     ['handball', 'Bola de handebol', 'hand'],
-    ['pocket_ball', 'Bola de monstrinho de bolso', 'hand'],
-    ['shuttlecock', 'Peteca', 'hand'],
+    ['pocket_ball', 'Bola de monstrinho de bolso (2 medalhas)', 'hand'],
+    ['shuttlecock', 'Peteca (livro da diversidade)', 'hand'],
     ['chess_pieces', 'Peças de xadrez', 'hand'],
     ['yoyo', 'Ioiô (volte uma página para liberar)', 'hand'],
-    ['fairy_wings', 'Asas de fada', 'back'],
-    ['bat_wings', 'Asas de morcego', 'back'],
-    ['ghost_costume', 'Fantasia de fantasma', 'costume'],
+    ['fairy_wings', 'Asas de fada (livro das festas)', 'back'],
+    ['bat_wings', 'Asas de morcego (livro das festas)', 'back'],
+    ['ghost_costume', 'Fantasia de fantasma (livro das festas)', 'costume'],
     ['speaker', 'Caixa de som (livro dos sons)', 'hand'],
     ['mini_keyboard', 'Mini teclado (livro de música)', 'hand'],
     ['guitar', 'Violão (livro de música)', 'hand'],
@@ -160,6 +168,7 @@
     ['mars_ball', 'Bola de Marte (livro do espaço)', 'hand'],
     ['jupiter_ball', 'Bola de Júpiter (livro do espaço)', 'hand'],
     ['saturn_ball', 'Bola de Saturno (livro do espaço)', 'hand'],
+    ['hula_hoop', 'Bambolê (livro do espaço)', 'waist'],
     ['uranus_ball', 'Bola de Urano (livro do espaço)', 'hand'],
     ['neptune_ball', 'Bola de Netuno (livro do espaço)', 'hand'],
     ['abc_blocks', 'Blocos de empilhar ABC (livro do abecedário)', 'hand'],
@@ -428,6 +437,20 @@
             <path d="M83 245q20 7 39 0" fill="none" stroke="${tone}" stroke-width="3" stroke-dasharray="5 8"/>
           </g>` : '';
     }
+    // O bambolê passa atrás do tronco e volta pela frente da cintura. As duas
+    // metades são desenhadas em planos separados para dar profundidade e
+    // permitir que o avatar também segure uma bola ou outro brinquedo.
+    if (placement === 'waist-back' || placement === 'waist-front') {
+      if (!chosen.includes('hula_hoop')) return '';
+      const arc = placement === 'waist-back'
+        ? 'M28 232C30 203 179 203 182 232'
+        : 'M28 232C30 266 179 266 182 232';
+      return `<g data-toy="hula_hoop" data-placement="${placement}" data-detail="bambole-colorido" fill="none" stroke-linecap="round">
+        <path d="${arc}" stroke="${ink}" stroke-width="11"/>
+        <path d="${arc}" stroke="${tone}" stroke-width="8"/>
+        <path d="${arc}" stroke="${light}" stroke-width="4" stroke-dasharray="18 13"/>
+      </g>`;
+    }
     if (placement !== 'hand') return '';
     const items = {
       soccer_ball: `<circle r="22" fill="#fffdf5" stroke="${ink}" stroke-width="2.5"/>
@@ -662,6 +685,7 @@
     return `${plushShadow}
       <g data-layer="avatar-completo"${skating ? ' transform="translate(0 -14)"' : ''}>
         ${lowerBody(settings, colors.SKIN)}
+        ${toysSVG(settings, colors, 'waist-back')}
         ${rapunzel ? `<g data-layer="rapunzel-trancas-compridas">${tint(`<path d="M70 105Q41 158 57 203T56 296q-4 19 13 18 19-4 13-22-8-57-5-91t3-101M141 107q43 52 29 102t5 88q7 19-13 20-17-4-12-22 9-54 4-91t-14-97" fill="none" stroke="{{HAIR_DEEP}}" stroke-width="20" stroke-linecap="round"/><path d="M70 105Q41 158 57 203T56 296q-4 19 13 18 19-4 13-22-8-57-5-91t3-101M141 107q43 52 29 102t5 88q7 19-13 20-17-4-12-22 9-54 4-91t-14-97" fill="none" stroke="{{HAIR}}" stroke-width="14" stroke-linecap="round"/>${Array.from({length:9}, (_,i)=>`<path d="M${i%2?52:63} ${139+i*18}l19 10M${i%2?163:156} ${140+i*18}l17-9" stroke="{{HAIR_LIGHT}}" stroke-width="3.5" opacity=".9"/>`).join('')}`, colors)}</g>` : ''}
         <g data-layer="tronco" transform="translate(0 34) scale(0.452586)">
           ${toysSVG(settings, colors, 'back')}
@@ -670,6 +694,7 @@
           ${accessoriesSVG(settings, colors)}
         </g>
         ${toysSVG(settings, colors, 'hand')}
+        ${toysSVG(settings, colors, 'waist-front')}
         ${toysSVG(settings, colors, 'costume')}
       </g>
       ${toysSVG(settings, colors, 'floor')}${companion}`;

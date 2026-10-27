@@ -38,6 +38,10 @@
       "label": "Bola de Saturno, com anéis"
     },
     {
+      "id": "hula_hoop",
+      "label": "Bambolê colorido para brincar de anéis de Saturno"
+    },
+    {
       "id": "uranus_ball",
       "label": "Bola de Urano, azul-claro"
     },
@@ -208,7 +212,7 @@
           "text": "— Parecem bambolês, mas não são um anel sólido!"
         }
       ],
-      "callout": "🎁 Textura de bola: Saturno com anéis ao redor."
+      "callout": "🎁 Presentes de Saturno: bola com anéis e bambolê colorido para brincar de girar como um anel!"
     },
     {
       "type": "story",
@@ -309,7 +313,7 @@
       "blocks": [
         {
           "kind": "paragraph",
-          "text": "Leia as pistas e marque os planetas que reconheceu. Depois, lembre o motivo de Plutão ser um planeta anão. Oito bolas com texturas diferentes estão quase prontas para brincar!"
+          "text": "Leia as pistas e marque os planetas que reconheceu. Depois, lembre o motivo de Plutão ser um planeta anão. Oito bolas com texturas diferentes e um bambolê colorido estão quase prontos para brincar!"
         }
       ]
     },
@@ -322,7 +326,7 @@
       "blocks": [
         {
           "kind": "paragraph",
-          "text": "Você visitou os oito planetas, aprendeu por que Plutão é classificado como planeta anão e desbloqueou oito bolas diferentes: Mercúrio, Vênus, Terra, Marte, Júpiter, Saturno, Urano e Netuno!"
+          "text": "Você visitou os oito planetas, aprendeu por que Plutão é classificado como planeta anão e desbloqueou oito bolas diferentes e um bambolê colorido, inspirado nos anéis de Saturno!"
         }
       ],
       "medal": "🪐 Medalha do Espaço conquistada!"

@@ -102,7 +102,7 @@
       "cover": "assets/illustrations/aprender/festas-brasileiras.svg", "color": "#e88a9e", "language": "pt-BR",
       "medal": "🎉 Medalha das Festas", "label": "🎭 Festas brasileiras",
       "subject": "Cultura · datas e tradições brasileiras", "ageRange": [5, 9],
-      "rewards": ["Coroa de Ano-Novo", "Máscara e regata de Carnaval", "Orelhas e ovos de Páscoa", "Chapéu junino", "Bandeira do Brasil", "Pião de madeira", "Fantasia de Saci", "Chapéu de bruxa", "Abóbora animada", "Gorro natalino"]
+      "rewards": ["Coroa de Ano-Novo", "Máscara e regata de Carnaval", "Orelhas e ovos de Páscoa", "Chapéu junino", "Bandeira do Brasil", "Pião de madeira", "Fantasia de Saci", "Chapéu de bruxa", "Abóbora animada", "Fantasia de fantasma", "Asas de morcego", "Asas de fada", "Gorro natalino"]
     },
     {
       "id": "a-danca-do-tempo", "data": "books/a-danca-do-tempo.json",
@@ -126,7 +126,7 @@
       "cover": "assets/illustrations/aprender/sistema-solar.svg", "color": "#6867b9", "language": "pt-BR",
       "medal": "🪐 Medalha do Espaço", "label": "🪐 Oito bolas planetárias",
       "subject": "Ciências · Sistema Solar e planetas", "ageRange": [5, 9],
-      "rewards": ["Bola de Mercúrio", "Bola de Vênus", "Bola da Terra", "Bola de Marte", "Bola de Júpiter", "Bola de Saturno", "Bola de Urano", "Bola de Netuno"]
+      "rewards": ["Bola de Mercúrio", "Bola de Vênus", "Bola da Terra", "Bola de Marte", "Bola de Júpiter", "Bola de Saturno", "Bambolê", "Bola de Urano", "Bola de Netuno"]
     },
     {
       "id": "a-aventura-do-abc", "data": "books/a-aventura-do-abc.json",
@@ -149,7 +149,7 @@
       "cover": "assets/illustrations/capitulos/o-jardim-das-diferencas/01.svg",
       "color": "#72ada0", "language": "pt-BR", "medal": "🤝 Medalha da Diversidade", "label": "🧬 DNA de brinquedo",
       "subject": "Convivência · diversidade e respeito", "ageRange": [6, 9],
-      "rewards": ["Dupla hélice colorida de DNA"]
+      "rewards": ["Dupla hélice colorida de DNA", "Peteca"]
     },
     {
       "id": "o-clube-dos-dentinhos", "data": "books/o-clube-dos-dentinhos.json",

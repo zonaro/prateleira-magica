@@ -58,6 +58,18 @@
       "label": "Halloween: abóbora com vela animada"
     },
     {
+      "id": "ghost_costume",
+      "label": "Halloween: fantasia de fantasma"
+    },
+    {
+      "id": "bat_wings",
+      "label": "Halloween: asas de morcego"
+    },
+    {
+      "id": "fairy_wings",
+      "label": "Halloween: asas de fada"
+    },
+    {
       "id": "santa_hat",
       "label": "Natal: gorro do Papai Noel"
     }
@@ -280,7 +292,7 @@
           "text": "— Buuu! Minha abóbora tem uma velinha de desenho que dança sem fogo de verdade!"
         }
       ],
-      "callout": "🎁 Presentes da data: chapéu de bruxa e abóbora com vela animada (só de faz de conta)."
+      "callout": "🎁 Presentes da data: chapéu de bruxa, abóbora com vela animada (de brincadeira), fantasia de fantasma, asas de morcego e asas de fada."
     },
     {
       "type": "story",

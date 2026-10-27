@@ -16,6 +16,10 @@
     {
       "id": "dna_helix",
       "label": "Dupla hélice colorida de DNA (brinquedo)"
+    },
+    {
+      "id": "shuttlecock",
+      "label": "Peteca colorida (brinquedo)"
     }
   ],
   "exercises": [
@@ -246,7 +250,7 @@
       "blocks": [
         {
           "kind": "paragraph",
-          "text": "Marque as frases que lembram nossas descobertas. No fim, uma dupla hélice colorida de brinquedo vai ficar disponível para o avatar!"
+          "text": "Marque as frases que lembram nossas descobertas. No fim, uma dupla hélice colorida de DNA e uma peteca de brinquedo vão ficar disponíveis para o avatar!"
         }
       ],
       "illustration": "assets/illustrations/capitulos/o-jardim-das-diferencas/11.svg"
@@ -259,7 +263,7 @@
       "blocks": [
         {
           "kind": "paragraph",
-          "text": "Você aprendeu que aparência não define valor, que o Brasil tem muitas histórias e que respeitar as diferenças fortalece as amizades. A dupla hélice de DNA de brinquedo está liberada!"
+          "text": "Você aprendeu que aparência não define valor, que o Brasil tem muitas histórias e que respeitar as diferenças fortalece as amizades. A dupla hélice de DNA e a peteca de brinquedo estão liberadas!"
         }
       ],
       "medal": "🤝 Medalha da Diversidade conquistada!",

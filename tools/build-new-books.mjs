@@ -160,15 +160,16 @@ const diffPages = [
       { title: 'Instituto Nacional de Pesquisa do Genoma Humano — DNA', url: 'www.genome.gov/genetics-glossary/Deoxyribonucleic-Acid-DNA' }
     ] },
   page('challenge', 'DESAFIO DO RESPEITO', 'Missão da amizade 🎯', 'Muitas origens, igual dignidade',
-    paragraph('Marque as frases que lembram nossas descobertas. No fim, uma dupla hélice colorida de brinquedo vai ficar disponível para o avatar!')),
+    paragraph('Marque as frases que lembram nossas descobertas. No fim, uma dupla hélice colorida de DNA e uma peteca de brinquedo vão ficar disponíveis para o avatar!')),
   { ...page('finish', 'MEDALHA DA DIVERSIDADE', 'Muito bem, {{nome}}!', 'Um jardim onde todo mundo cabe!',
-    paragraph('Você aprendeu que aparência não define valor, que o Brasil tem muitas histórias e que respeitar as diferenças fortalece as amizades. A dupla hélice de DNA de brinquedo está liberada!')),
+    paragraph('Você aprendeu que aparência não define valor, que o Brasil tem muitas histórias e que respeitar as diferenças fortalece as amizades. A dupla hélice de DNA e a peteca de brinquedo estão liberadas!')),
     medal: '🤝 Medalha da Diversidade conquistada!' }
 ];
 book({ id: diffId, title: '{{nome}} e o Jardim das Diferenças', subtitle: 'Cada pessoa tem uma história, e todas merecem respeito',
   subject: 'Convivência · diversidade e respeito', ageRange: [6, 9],
   cover: art(diffId, 0), color: '#72ada0', medal: '🤝 Medalha da Diversidade',
-  rewards: [{ id: 'dna_helix', label: 'Dupla hélice colorida de DNA (brinquedo)' }],
+  rewards: [{ id: 'dna_helix', label: 'Dupla hélice colorida de DNA (brinquedo)' },
+    { id: 'shuttlecock', label: 'Peteca colorida (brinquedo)' }],
   exercises: [
     { syllable: '🤝', text: 'Toda pessoa merece respeito, seja qual for seu tom de pele.' },
     { syllable: '🌿', text: 'Os povos indígenas têm muitas histórias e continuam presentes no Brasil.' },

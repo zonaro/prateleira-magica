@@ -119,7 +119,7 @@
         <div id="accessoryStyles" class="avatar-style-grid"></div>
       </fieldset>
       <fieldset class="avatar-style-fieldset"><legend>Brinquedos 🪀</legend>
-        <p class="settings-intro" style="margin-bottom:8px;">Escolha algo para segurar, asas ou um skate! Alguns presentes aparecem ao terminar o desafio e a leitura dos livros. 🏅 Skate: 4 medalhas. 🪀 Ioiô: volte uma página!</p>
+        <p class="settings-intro" style="margin-bottom:8px;">Escolha algo para segurar, asas, bambolê ou um skate! Alguns presentes aparecem após concluir os livros. 🏅 Bola de monstrinho: 2 medalhas; skate: 4 medalhas. 🪀 Ioiô: volte uma página!</p>
         <div id="toyStyles" class="avatar-style-grid"></div>
       </fieldset>
       ${colorPicker('customWaterColor', '💧 Cor do líquido da garrafinha', 'cor do líquido da garrafinha')}
