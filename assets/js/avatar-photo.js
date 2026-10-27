@@ -11,6 +11,36 @@
   const MP_ROOT = new URL('./assets/vendor/mediapipe/', document.baseURI).href;
   const FACE_MODEL = MP_ROOT + 'models/face_landmarker.task';
   const MULTICLASS_MODEL = MP_ROOT + 'models/selfie_multiclass_256x256.tflite';
+  // Só oferecer a aba se os recursos existem no mesmo domínio ou já estão no
+  // cache do PWA. HEAD não baixa modelos grandes para apenas verificar a aba.
+  const REQUIRED_ASSETS = [
+    'vision_bundle.mjs',
+    'wasm/vision_wasm_internal.js', 'wasm/vision_wasm_internal.wasm',
+    'wasm/vision_wasm_nosimd_internal.js', 'wasm/vision_wasm_nosimd_internal.wasm',
+    'models/face_landmarker.task', 'models/selfie_multiclass_256x256.tflite'
+  ].map((file) => MP_ROOT + file);
+  let availabilityPromise = null;
+
+  async function checkAvailability() {
+    if (!availabilityPromise) {
+      availabilityPromise = (async () => {
+        const available = await Promise.all(REQUIRED_ASSETS.map(async (url) => {
+          try {
+            if (typeof caches !== 'undefined' && await caches.match(url)) return true;
+          } catch { /* Cache Storage pode estar bloqueado pelo navegador. */ }
+          try {
+            const response = await fetch(url, { method: 'HEAD', cache: 'no-store' });
+            return response.ok;
+          } catch { return false; }
+        }));
+        return available.every(Boolean);
+      })().catch(() => false).then((ready) => {
+        if (!ready) availabilityPromise = null; // permitir nova checagem ao reconectar
+        return ready;
+      });
+    }
+    return availabilityPromise;
+  }
   // Classe: 0 fundo, 1 cabelo, 2 pele do corpo, 3 rosto, 4 roupa, 5 acessórios.
   const LABEL = Object.freeze({ hair: 1, face: 3, outfit: 4, accessory: 5 });
   const NATURAL_SKIN = ['#f5d4b3', '#e9aa83', '#c98760', '#a66846', '#75472f', '#4a2c28'];
@@ -19,7 +49,7 @@
   function getModels() {
     if (!modelPromise) {
       modelPromise = (async () => {
-        const mediapipe = await import(MP_ROOT + '/vision_bundle.mjs');
+        const mediapipe = await import(MP_ROOT + 'vision_bundle.mjs');
         const wasm = await mediapipe.FilesetResolver.forVisionTasks(MP_ROOT + 'wasm');
         const face = await mediapipe.FaceLandmarker.createFromOptions(wasm, {
           baseOptions: { modelAssetPath: FACE_MODEL, delegate: 'CPU' },
@@ -38,10 +68,9 @@
         }
       })().catch((error) => {
         modelPromise = null; // permitir nova tentativa se cache/modelos estiverem indisponíveis
-        if (error instanceof TypeError && /fetch|import|module|load/i.test(error.message)) {
-          throw new Error('Arquivos de IA indisponíveis. Reabra o app com internet para completar o cache.');
-        }
-        throw error;
+        const unavailable = new Error('A magia da foto está descansando! Tente voltar quando ela estiver pronta. ✨');
+        unavailable.avatarModelUnavailable = true;
+        throw unavailable;
       });
     }
     return modelPromise;
@@ -219,41 +248,44 @@
     }
   }
 
-  function mount({ editor, onApply }) {
-    const toolbar = editor.querySelector('.editor-history-tools');
-    if (!toolbar) return;
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.className = 'avatar-photo-start';
-    button.textContent = '📷 Criar pela minha foto';
-    toolbar.insertAdjacentElement('afterend', button);
+  function mount({ onApply }) {
+    const screen = document.getElementById('profilePhoto');
+    const host = document.getElementById('avatarPhotoApp');
+    if (!screen || !host) return;
 
-    const modal = document.createElement('dialog');
-    modal.className = 'avatar-photo-modal';
-    modal.setAttribute('aria-label', 'Criar avatar a partir de uma foto');
-    modal.innerHTML = '<div class="avatar-photo-panel">' +
-      '<h2>📷 Meu avatar por foto</h2>' +
-      '<p>Use uma foto com seu rosto e a parte de cima da roupa, de frente, com boa luz.</p>' +
-      '<video class="avatar-photo-video" playsinline muted autoplay hidden aria-label="Prévia da câmera"></video>' +
+    host.innerHTML = '<div class="avatar-photo-panel">' +
+      '<div class="section-kicker">UMA PITADA DE MAGIA ✨</div>' +
+      '<h2>📷 Sua foto vira personagem!</h2>' +
+      '<p class="avatar-photo-intro">Que tal criar um personagem parecido com você? ' +
+        'A Prateleira Mágica vai observar as cores do seu cabelo, rosto e roupa para imaginar um novo visual! 🌈</p>' +
+      '<p class="avatar-photo-adult">🧑‍🧑‍🧒 <strong>Chame uma pessoa adulta para ajudar!</strong> ' +
+        'Juntos, escolham uma foto só sua, de frente, com o rosto e a roupa aparecendo e bastante luz.</p>' +
+      '<div class="avatar-photo-camera-area">' +
+        '<div class="avatar-photo-camera-placeholder" aria-hidden="true">🪄📸✨</div>' +
+        '<video class="avatar-photo-video" playsinline muted autoplay hidden aria-label="Prévia da câmera"></video>' +
+      '</div>' +
       '<div class="avatar-photo-buttons">' +
-        '<button type="button" data-action="camera">Abrir câmera</button>' +
-        '<button type="button" data-action="capture" hidden>📸 Tirar foto</button>' +
-        '<button type="button" data-action="file">Escolher imagem</button>' +
-        '<button type="button" data-action="close">Cancelar</button>' +
+        '<button type="button" data-action="camera">📷 Abrir a câmera</button>' +
+        '<button type="button" data-action="capture" hidden>✨ Tirar minha foto</button>' +
+        '<button type="button" data-action="file">🖼️ Escolher uma foto</button>' +
+        '<a href="#personalizar" class="avatar-photo-back">🎨 Voltar a personalizar</a>' +
       '</div>' +
       '<input class="avatar-photo-input" type="file" accept="image/jpeg,image/png,image/webp" hidden>' +
-      '<p class="avatar-photo-status" role="status" aria-live="polite"></p>' +
-      '<p class="avatar-photo-privacy">🔒 A foto é analisada no aparelho, não é salva nem enviada pelo aplicativo. ' +
-      'Os modelos vêm do próprio aplicativo e podem funcionar offline após o cache inicial. Peça ajuda a um responsável.</p>' +
+      '<p class="avatar-photo-status" role="status" aria-live="polite">Tudo pronto para começar? 🌟</p>' +
+      '<p class="avatar-photo-privacy">🔒 Sua foto fica só neste aparelho enquanto a mágica acontece. ' +
+        'Depois, ela é descartada: guardamos apenas as cores e escolhas do seu personagem. ' +
+        'Peça sempre a ajuda de um adulto!</p>' +
       '</div>';
-    editor.append(modal);
-    const find = (selector) => modal.querySelector(selector);
+
+    const find = (selector) => host.querySelector(selector);
     const video = find('video'), input = find('input');
     const status = find('.avatar-photo-status');
     const cameraButton = find('[data-action="camera"]');
     const captureButton = find('[data-action="capture"]');
     const chooseButton = find('[data-action="file"]');
+    const placeholder = find('.avatar-photo-camera-placeholder');
     let stream = null, busy = false, runId = 0, activeFrame = null;
+    const isActive = () => !screen.hidden && location.hash === '#foto';
 
     function scrubFrame() {
       if (!activeFrame) return;
@@ -262,7 +294,6 @@
       canvas.getContext('2d')?.clearRect(0, 0, canvas.width, canvas.height);
       canvas.width = canvas.height = 0;
     }
-
     function stopCamera() {
       if (stream) {
         stream.getTracks().forEach((track) => track.stop());
@@ -272,6 +303,7 @@
       video.srcObject = null;
       video.hidden = true;
       captureButton.hidden = true;
+      placeholder.hidden = false;
     }
     function setBusy(value) {
       busy = value;
@@ -280,114 +312,120 @@
       chooseButton.disabled = value;
     }
     function describeError(error) {
-      if (error?.name === 'NotAllowedError') return 'A câmera foi bloqueada. Permita o acesso ou envie uma imagem.';
-      if (error?.name === 'NotFoundError') return 'Nenhuma câmera encontrada. Escolha uma imagem.';
-      if (error?.name === 'NotReadableError') return 'A câmera está ocupada. Feche outros aplicativos.';
-      return error?.message || 'Não foi possível analisar a foto. Tente novamente.';
+      if (error?.name === 'NotAllowedError') return 'A câmera não foi autorizada. Um adulto pode ajudar ou escolher uma foto. 🖼️';
+      if (error?.name === 'NotFoundError') return 'Não encontramos uma câmera. Você pode escolher uma foto!';
+      if (error?.name === 'NotReadableError') return 'A câmera está ocupada. Feche outro aplicativo e tente de novo.';
+      return error?.message || 'A foto não deu certo desta vez. Vamos tentar outra? 🌟';
     }
-    function close() {
+    function reset() {
       runId++;
       stopCamera();
       scrubFrame();
       input.value = '';
-      if (modal.open) modal.close();
+      setBusy(false);
     }
-
     async function takeFrom(source) {
-      if (busy) return;
+      if (busy || !isActive()) return;
       const token = ++runId;
       const width = source.videoWidth || source.width;
       const height = source.videoHeight || source.height;
-      if (!width || !height) { status.textContent = 'Não conseguimos ler esta imagem.'; return; }
-      // Limitar dimensões ajuda a não esgotar a RAM de celulares modestos.
+      if (!width || !height) { status.textContent = 'Não conseguimos enxergar essa foto. Tente outra!'; return; }
       const scale = Math.min(1, 768 / Math.max(width, height));
       const frame = document.createElement('canvas');
       activeFrame = frame;
       frame.width = Math.max(1, Math.round(width * scale));
       frame.height = Math.max(1, Math.round(height * scale));
       const ctx = frame.getContext('2d', { willReadFrequently: true });
-      if (!ctx) { status.textContent = 'Seu navegador não oferece Canvas 2D.'; stopCamera(); scrubFrame(); return; }
+      if (!ctx) { status.textContent = 'Este aparelho não conseguiu abrir a imagem.'; stopCamera(); scrubFrame(); return; }
       try {
         ctx.drawImage(source, 0, 0, frame.width, frame.height);
         stopCamera();
         setBusy(true);
-        status.textContent = 'Analisando apenas neste aparelho…';
+        status.textContent = '✨ Misturando cores e criando seu personagem…';
         await new Promise((resolve) => requestAnimationFrame(resolve));
-        if (token !== runId || !modal.open) return;
-        const extracted = await analyze(frame, () => token !== runId || !modal.open);
-        if (token !== runId || !modal.open || !extracted) return;
+        if (token !== runId || !isActive()) return;
+        const extracted = await analyze(frame, () => token !== runId || !isActive());
+        if (token !== runId || !isActive() || !extracted) return;
         onApply(extracted);
-        close();
+        reset();
+        location.hash = '#personalizar';
       } catch (error) {
-        if (token === runId) status.textContent = describeError(error);
+        if (token === runId && isActive()) {
+          status.textContent = describeError(error);
+          if (error?.avatarModelUnavailable) {
+            window.dispatchEvent(new Event('livrinhos:avatar-photo-unavailable'));
+          }
+        }
       } finally {
         ctx.clearRect(0, 0, frame.width, frame.height);
-        frame.width = frame.height = 0; // libera pixels do Canvas
+        frame.width = frame.height = 0;
         if (activeFrame === frame) activeFrame = null;
-        setBusy(false);
+        if (token === runId) setBusy(false);
       }
     }
 
-    button.addEventListener('click', () => {
-      status.textContent = 'Sua foto será descartada após a análise.';
-      modal.showModal();
-    });
     cameraButton.addEventListener('click', async () => {
-      if (busy) return;
+      if (busy || !isActive()) return;
       if (!navigator.mediaDevices?.getUserMedia || !window.isSecureContext) {
-        status.textContent = 'A câmera exige HTTPS ou localhost. Use uma imagem salva.';
+        status.textContent = 'Para abrir a câmera, use um site seguro (HTTPS) ou escolha uma foto.';
         return;
       }
+      const token = ++runId;
       setBusy(true);
-      status.textContent = 'Solicitando permissão para a câmera…';
+      status.textContent = '📷 Pedindo licença para abrir a câmera…';
       try {
         const acquired = await navigator.mediaDevices.getUserMedia({
           audio: false, video: { facingMode: 'user', width: { ideal: 960 }, height: { ideal: 1280 } }
         });
-        if (!modal.open) { acquired.getTracks().forEach((track) => track.stop()); return; }
+        if (token !== runId || !isActive()) { acquired.getTracks().forEach((track) => track.stop()); return; }
         stream = acquired;
         video.srcObject = acquired;
         video.hidden = false;
+        placeholder.hidden = true;
         await video.play();
+        if (token !== runId || !isActive()) { stopCamera(); return; }
         captureButton.hidden = false;
-        status.textContent = 'Olhe para a câmera e toque em Tirar foto.';
+        status.textContent = 'Sorria para a câmera! Quando estiver pronto, tire sua foto. 😄';
       } catch (error) {
         stopCamera();
-        status.textContent = describeError(error);
-      } finally { setBusy(false); }
+        if (token === runId && isActive()) status.textContent = describeError(error);
+      } finally {
+        if (token === runId) setBusy(false);
+      }
     });
     captureButton.addEventListener('click', () => takeFrom(video));
-    chooseButton.addEventListener('click', () => input.click());
+    chooseButton.addEventListener('click', () => { if (isActive() && !busy) input.click(); });
     input.addEventListener('change', async () => {
       const file = input.files?.[0];
-      if (!file) return;
+      if (!file || !isActive()) return;
       if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type) || file.size > 10_000_000) {
-        status.textContent = 'Use JPG, PNG ou WebP com até 10 MB.';
+        status.textContent = 'Escolha uma foto JPG, PNG ou WebP de até 10 MB.';
         input.value = '';
         return;
       }
       let bitmap;
       try {
         bitmap = await createImageBitmap(file);
-        if (modal.open) await takeFrom(bitmap);
+        if (isActive()) await takeFrom(bitmap);
       } catch (error) {
-        status.textContent = describeError(error);
+        if (isActive()) status.textContent = describeError(error);
       } finally {
         bitmap?.close();
         input.value = '';
       }
     });
-    find('[data-action="close"]').addEventListener('click', close);
-    modal.addEventListener('close', () => { runId++; stopCamera(); scrubFrame(); input.value = ''; });
+    window.addEventListener('hashchange', () => {
+      if (location.hash !== '#foto') reset();
+    });
     document.addEventListener('visibilitychange', () => {
-      if (document.hidden && modal.open) {
-        stopCamera();
-        status.textContent = 'A câmera foi desligada porque a página saiu de foco.';
+      if (document.hidden) {
+        reset();
+        if (isActive()) status.textContent = 'A câmera descansou enquanto você saiu da página. 💤';
       }
     });
-    window.addEventListener('pagehide', close);
-    return { close };
+    window.addEventListener('pagehide', reset);
+    return { close: reset };
   }
 
-  window.LivrinhoAvatarPhoto = { mount, analyze };
+  window.LivrinhoAvatarPhoto = { mount, analyze, checkAvailability };
 })();
