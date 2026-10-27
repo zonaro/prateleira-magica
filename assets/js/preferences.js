@@ -87,7 +87,7 @@
     const legacyShirtColor = input.gender === 'masculino' ? '#6e9beb' : input.gender === 'neutro' ? '#9b8ae5' : DEFAULTS.outfitColor;
     const achievements = cleanAchievements(input.achievements);
     const accessories = Array.isArray(input.accessories) ? input.accessories.filter(a => typeof a === 'string' && a.length < 32).slice(0, 10) : [];
-    return {
+    const result = {
       name,
       pronunciation,
       birthDate: validBirthDate(input.birthDate),
@@ -106,6 +106,10 @@
       accessories,
       achievements
     };
+    if (typeof input.sourceSvg === 'string' && input.sourceSvg.endsWith('.svg')) {
+      result.sourceSvg = input.sourceSvg;
+    }
+    return result;
   }
 
   function load() {

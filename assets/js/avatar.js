@@ -156,7 +156,10 @@
     if (!/^[a-z]+$/.test(id)) throw Error('ID de símbolo SVG inválido');
     return `<symbol id="${id}" viewBox="0 0 210 340">${avatarBody(settings)}</symbol>`;
   }
-  function avatarSVG(settings) {
+  function avatarSVG(settings = {}) {
+    if (settings.sourceSvg) {
+      return `<svg xmlns="http://www.w3.org/2000/svg" width="210" height="340" viewBox="0 0 464 464" role="img" aria-label="Avatar infantil">${avatarBody({ ...settings, avatarStyle: 'puffs', outfitStyle: 'tee', bottomStyle: 'pants', petId: null, accessories: [] }).replace(/<g[^>]*data-layer="pernas-originais-do-app"[\s\S]*?<\/g>/, '')}</svg>`.replace('viewBox="0 0 210 340"', 'viewBox="0 0 464 464"');
+    }
     return `<svg xmlns="http://www.w3.org/2000/svg" width="210" height="340" viewBox="0 0 210 340" role="img" aria-label="Avatar infantil personalizável">${avatarBody(settings)}</svg>`;
   }
   window.LivrinhoAvatar = { hairStyles, outfitStyles, bottomStyles, petStyles, accessoryStyles, hairColors, outfitColors,

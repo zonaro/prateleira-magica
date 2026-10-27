@@ -203,14 +203,15 @@
         btn.innerHTML = '<span class="style-preview"></span><span class="style-label"></span>';
         btn.querySelector('.style-label').textContent = preset.name;
         try {
-          btn.querySelector('.style-preview').innerHTML = preferences.avatarSVG(preset.profile);
+          btn.querySelector('.style-preview').innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 464 464"><image href="./assets/avatar-reference/svgrepo-kids/${preset.sourceSvg}" width="464" height="464"/></svg>`;
         } catch(e) {}
         btn.addEventListener('click', () => {
-          const next = preferences.clean({ ...preset.profile, achievements: draft.achievements });
+          const next = preferences.clean({ ...preset.profile, sourceSvg: preset.sourceSvg, gender: preset.gender, achievements: draft.achievements });
           preferences.save(next);
           fillDialog(next);
           location.hash = '#personalizar';
-          document.getElementById('profileBackupStatus')?.textContent && (document.getElementById('profileBackupStatus').textContent = `✨ Personagem "${preset.name}" aplicado!`);
+          const status = document.getElementById('profileBackupStatus');
+          if (status) status.textContent = `✨ Personagem "${preset.name}" aplicado!`;
         });
         presetsGrid.append(btn);
       }
