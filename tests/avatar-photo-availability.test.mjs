@@ -76,21 +76,32 @@ function fakeElement() {
     setAttribute(name, value) { attributes.set(name, value); }
   };
 }
-function createTabs({ available, hash = '' }) {
+function createTabs({ available, hash = '', allowed = true }) {
   const ids = ['tabConquistas', 'profileOverview', 'tabPresets', 'profilePresets',
     'tabPersonalizar', 'profileEditor', 'tabFoto', 'profilePhoto', 'tabPais', 'profileParents'];
   const elements = Object.fromEntries(ids.map((id) => [id, fakeElement()]));
   elements.tabFoto.hidden = true;
   elements.profilePhoto.hidden = true;
   const events = {};
+  const permission = { allowed };
+  const opened = [];
   const window = { addEventListener(name, fn) { (events[name] ||= []).push(fn); },
-    scrollTo() {}, LivrinhoAvatarPhoto: { async checkAvailability() { return available; } } };
+    dispatchEvent(event) { opened.push(event.type); },
+    scrollTo() {}, LivrinhoParental: { photoAllowed() { return permission.allowed; } },
+    LivrinhoAvatarPhoto: { async checkAvailability() { return available; } } };
   const navigator = { serviceWorker: { addEventListener(name, fn) { (events[name] ||= []).push(fn); } } };
   const location = { hash, replace(next) { this.hash = next; (events.hashchange || []).forEach((fn) => fn()); } };
   vm.runInNewContext(tabsSource, {
-    document: { getElementById(id) { return elements[id]; } }, window, navigator, location, Boolean
+    document: { getElementById(id) { return elements[id]; } }, window, navigator, location, Boolean,
+    Event: class { constructor(type) { this.type = type; } }
   }, { filename: 'profile-tabs.js' });
-  return { elements, events, location };
+  return { elements, events, location, permission, opened };
+}
+{
+  const { elements, location } = createTabs({ available: true, allowed: false, hash: '#foto' });
+  await wait();
+  assert.equal(elements.tabFoto.hidden, true, 'A criança sem autorização não vê a aba');
+  assert.equal(location.hash, '#personalizar', 'A URL direta também deve respeitar os pais');
 }
 {
   const { elements, location } = createTabs({ available: false, hash: '#foto' });
@@ -100,11 +111,21 @@ function createTabs({ available, hash = '' }) {
   assert.equal(elements.profileEditor.hidden, false);
 }
 {
-  const { elements, location, events } = createTabs({ available: true, hash: '#foto' });
+  const { elements, location, events, permission, opened } = createTabs({ available: true, hash: '#foto' });
   await wait();
   assert.equal(elements.tabFoto.hidden, false);
   assert.equal(elements.profilePhoto.hidden, false);
   assert.equal(elements.profileEditor.hidden, true);
+  assert(opened.includes('livrinhos:avatar-photo-open'), 'Aba autorizada deve solicitar abertura automática');
+  permission.allowed = false;
+  (events['livrinhos:parental-changed'] || []).forEach((fn) => fn());
+  await wait();
+  assert.equal(elements.tabFoto.hidden, true, 'Revogação pelos pais deve esconder a aba');
+  assert.equal(location.hash, '#personalizar', 'Revogação fecha a aba ativa');
+  permission.allowed = true;
+  (events['livrinhos:parental-changed'] || []).forEach((fn) => fn());
+  await wait();
+  assert.equal(elements.tabFoto.hidden, false, 'Pais podem reativar o recurso');
   (events['livrinhos:avatar-photo-unavailable'] || []).forEach((fn) => fn());
   assert.equal(elements.tabFoto.hidden, true, 'Desabilitar imediatamente quando o modelo falhar');
   assert.equal(location.hash, '#personalizar', 'Ao falhar, voltar para editor');

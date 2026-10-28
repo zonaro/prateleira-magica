@@ -31,7 +31,11 @@
     for (const [id, value] of Object.entries(raw?.limits || {}).slice(0, 30)) {
       if (/^[a-z0-9-]{1,64}$/.test(id)) limits[id] = cleanMinutes(value);
     }
-    return memoryPolicy = { limits,
+    const photoEnabled = {};
+    for (const [id, allowed] of Object.entries(raw?.photoEnabled || {}).slice(0, 30)) {
+      if (/^[a-z0-9-]{1,64}$/.test(id) && allowed === true) photoEnabled[id] = true;
+    }
+    return memoryPolicy = { limits, photoEnabled,
       pin: typeof raw?.pin?.salt === 'string' && /^[a-f0-9]{32}$/.test(raw.pin.salt)
         && typeof raw.pin.hash === 'string' && /^[a-f0-9]{64}$/.test(raw.pin.hash)
         ? raw.pin : null };
@@ -53,6 +57,17 @@
     }
     const state = policy();
     state.limits[id] = Number(minutes);
+    write(POLICY_KEY, state);
+    document.dispatchEvent(new CustomEvent('livrinhos:parental-changed'));
+  }
+  function photoAllowed(id = preferences.family().activeId) {
+    return policy().photoEnabled[id] === true;
+  }
+  function setPhotoAllowed(id, allowed) {
+    if (!preferences.family().profiles.some((entry) => entry.id === id)) throw Error('Perfil inválido.');
+    const state = policy();
+    if (allowed === true) state.photoEnabled[id] = true;
+    else delete state.photoEnabled[id];
     write(POLICY_KEY, state);
     document.dispatchEvent(new CustomEvent('livrinhos:parental-changed'));
   }
@@ -114,6 +129,7 @@
   function forgetProfile(id) {
     const settings = policy();
     delete settings.limits[id];
+    delete settings.photoEnabled[id];
     write(POLICY_KEY, settings);
     const items = usage();
     delete items[id];
@@ -144,6 +160,7 @@
     const lease = read(LEASE_KEY, null);
     if (lease?.owner === tabId) write(LEASE_KEY, { owner: tabId, until: 0 });
   }
-  window.LivrinhoParental = { policy, setLimit, limitMinutes, shouldCount, hasPin, setPin, verifyPin,
+  window.LivrinhoParental = { policy, setLimit, limitMinutes, shouldCount, photoAllowed, setPhotoAllowed,
+    hasPin, setPin, verifyPin,
     usedMs, remainingMs, locked, resetTime, forgetProfile, tick, pause, dateKey };
 })();

@@ -44,6 +44,10 @@ assert(editor.includes('draft.accessoryColor = result.accessoryColor'), 'Óculos
 assert(photo.includes('color.dominantHairColor(hairSamples)'), 'Cabelo tingido deve usar cor dominante');
 assert(photo.includes('catalog.hairColors)') && !photo.includes('catalog.hairColors.slice(0, 5)'), 'Todas as tinturas devem ser admitidas');
 assert(photo.includes('navigator.mediaDevices.getUserMedia('));
+assert(!photo.includes('data-action="camera"'), 'Botão Abrir a câmera deve ser removido');
+assert(photo.includes("window.addEventListener('livrinhos:avatar-photo-open', startCamera)"),
+  'Câmera deve abrir automaticamente ao entrar na aba autorizada');
+assert(photo.includes('LivrinhoParental?.photoAllowed?.()'), 'A câmera precisa validar o perfil autorizado');
 assert(photo.includes("input = find('input.avatar-photo-input[type=\"file\"]')"),
   'O campo de arquivo não pode usar seletor genérico que encontra o zoom');
 assert(!photo.includes("find('input');"), 'Não vincular upload ao slider');

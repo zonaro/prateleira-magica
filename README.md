@@ -93,6 +93,8 @@ O tempo é contado enquanto o aplicativo está visível **somente na prateleira,
 
 Os dados antigos do perfil único são migrados automaticamente, sem apagar conquistas. O backup SVG de cada criança, inclusive exportação e importação, está na área dos pais; **não inclui a senha ou o limite de tempo**. Os dados e o hash com sal da senha são armazenados localmente (`localStorage`), sem envio a servidores. Como o aplicativo é inteiramente client-side, esses controles ajudam no uso cotidiano, mas **não são uma barreira inviolável** contra alterações no armazenamento do navegador ou no relógio do dispositivo.
 
+**Minha Foto** começa desabilitada em todos os perfis. Na área dos pais, habilitar essa opção solicita a permissão de câmera pelo navegador e libera a aba somente para a criança selecionada. Ao acessar a aba, a câmera inicia automaticamente (não há botão “Abrir câmera”). Revogar a autorização oculta a aba e encerra a câmera. A permissão física do navegador é compartilhada por todo o site, enquanto a trava infantil é controlada separadamente pelo app. Detalhes em [Avatar por foto](docs/avatar-photo.md).
+
 ## Adicionar outro livro
 
 1. Crie um `books/<slug>.json` seguindo a estrutura do livro Ellie.

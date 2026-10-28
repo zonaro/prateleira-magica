@@ -69,13 +69,14 @@
       overlay.hidden = !blocked;
       document.body.classList.toggle('reading-time-expired', blocked);
       if (blocked) {
+        window.dispatchEvent(new Event('livrinhos:reading-time-expired'));
         $('.parental-unlock-form', overlay).hidden = !parental.hasPin();
         $('.parental-unlock-note', overlay).textContent = parental.hasPin()
           ? '' : 'Peça a um responsável para criar uma senha na Área dos pais.';
         renderSelector();
         $('#parentalUnlockPin', overlay)?.focus();
         window.LivrinhoSpeech?.stop();
-      }
+      } else window.dispatchEvent(new Event('livrinhos:reading-time-restored'));
     }
   }
   const toggle = $('.family-toggle', toolbar);
@@ -143,6 +144,9 @@
           <label for="parentChildBirth">Data de nascimento (opcional)</label><input id="parentChildBirth" type="date">
           <label for="parentChildGender">Como os livros vão falar da criança?</label>
           <select id="parentChildGender"><option value="feminino">Feminino · ela/dela</option><option value="masculino">Masculino · ele/dele</option><option value="neutro">Neutro · elu/delu</option></select>
+          <label class="parent-photo-permission" for="parentPhotoAllowed"><input id="parentPhotoAllowed" type="checkbox"> 📷 Permitir “Minha Foto” para esta criança</label>
+          <p class="field-help">Ao ativar, o navegador pedirá acesso à câmera agora. A prévia abrirá automaticamente quando a criança entrar na aba. Se desativado, a aba não aparece.</p>
+          <p id="parentPhotoStatus" role="status" aria-live="polite"></p>
           <label for="parentChildMinutes">Limite de uso por dia (minutos)</label><input id="parentChildMinutes" type="number" min="5" max="480" step="1" required>
           <p class="field-help" id="parentTimeStatus"></p>
           <div class="parent-form-buttons"><button type="submit">💾 Salvar dados e limite</button><button id="parentResetChild" type="button">↻ Reiniciar tempo de hoje</button><button id="parentRemoveChild" type="button" class="settings-reset">Excluir perfil</button></div>
@@ -192,6 +196,7 @@
       $('#parentChildPronunciation').value = selected.profile.pronunciation;
       $('#parentChildBirth').value = selected.profile.birthDate;
       $('#parentChildGender').value = selected.profile.gender;
+      $('#parentPhotoAllowed').checked = parental.photoAllowed(selectedId);
       $('#parentChildMinutes').value = parental.limitMinutes(selectedId);
       $('#parentTimeStatus').textContent = `Hoje: ${Math.floor(parental.usedMs(selectedId) / 60_000)} min usados de ${parental.limitMinutes(selectedId)} min.`;
       $('#parentRemoveChild').disabled = state.profiles.length === 1;
@@ -232,6 +237,39 @@
       const current = preferences.family().profiles.find((entry) => entry.id === selectedId)?.profile;
       if (current && $('#parentChildPronunciation').value === current.pronunciation) {
         $('#parentChildPronunciation').value = $('#parentChildName').value;
+      }
+    });
+    $('#parentPhotoAllowed').addEventListener('change', async (event) => {
+      const childId = selectedId;
+      const checkbox = event.target;
+      const message = $('#parentPhotoStatus');
+      if (!checkbox.checked) {
+        parental.setPhotoAllowed(childId, false);
+        message.textContent = '📷 Minha Foto desativada para esta criança.';
+        return;
+      }
+      if (!window.isSecureContext || !navigator.mediaDevices?.getUserMedia) {
+        checkbox.checked = false;
+        message.textContent = 'A câmera exige HTTPS e um navegador com suporte a câmera.';
+        return;
+      }
+      checkbox.disabled = true;
+      message.textContent = '📷 Peça permissão ao navegador para esta criança usar Minha Foto…';
+      try {
+        // O pedido parte do clique do responsável. Não mantemos a câmera aberta
+        // nem fotografamos nada durante a configuração.
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: false, video: { facingMode: 'user' } });
+        stream.getTracks().forEach((track) => track.stop());
+        parental.setPhotoAllowed(childId, true);
+        message.textContent = '✅ Minha Foto liberada! A câmera abrirá quando a criança entrar na aba.';
+      } catch (error) {
+        parental.setPhotoAllowed(childId, false);
+        message.textContent = error?.name === 'NotAllowedError'
+          ? 'Permissão negada. Ative a câmera nas permissões deste site e tente novamente.'
+          : 'Não foi possível autorizar a câmera neste aparelho. Verifique a câmera e tente novamente.';
+      } finally {
+        checkbox.disabled = false;
+        checkbox.checked = parental.photoAllowed(selectedId);
       }
     });
     $('#parentHearName').addEventListener('click', () => window.LivrinhoSpeech?.play(

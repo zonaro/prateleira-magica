@@ -1180,6 +1180,9 @@ html[data-color-theme] .profile-tabs{border-color:var(--outline);background:var(
 .parent-settings-card h2 { font-size:22px }
 .parent-settings-card label { display:block;font-weight:850;margin-top:12px }
 .parent-settings-card input:not([type="file"]),.parent-settings-card select { width:100% }
+.parent-settings-card input[type="checkbox"] { width:auto;min-height:0;accent-color:#8060b9 }
+.parent-settings-card .parent-photo-permission { display:flex;align-items:center;gap:10px;
+  padding:13px;border-radius:12px;background:#f1eafd;border:1px solid #d8c8ec;cursor:pointer }
 .parent-settings-card .pronunciation-input-row { display:flex;gap:9px }
 .parent-settings-card .pronunciation-input-row input { flex:1;min-width:0 }
 .parent-settings-card .pronunciation-input-row button { flex:none }

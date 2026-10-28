@@ -9,6 +9,7 @@
   ];
   if (tabs.some(({ tab, panel }) => !tab || !panel)) return;
   const photoTab = document.getElementById('tabFoto');
+  const photoAllowed = () => window.LivrinhoParental?.photoAllowed?.() === true;
   let photoReady = false;
   let generation = 0;
 
@@ -25,11 +26,12 @@
       tab.tabIndex = active ? 0 : -1;
       panel.hidden = !active;
     }
+    if (selected === 'foto') window.dispatchEvent?.(new Event('livrinhos:avatar-photo-open'));
     window.scrollTo?.({ top: 0, behavior: 'instant' });
   }
 
   function setPhotoAvailability(ready) {
-    photoReady = Boolean(ready);
+    photoReady = Boolean(ready) && photoAllowed();
     photoTab.hidden = !photoReady;
     photoTab.setAttribute('aria-hidden', String(!photoReady));
     if (!photoReady && location.hash === '#foto') {
@@ -39,6 +41,7 @@
   }
   async function refreshPhotoAvailability() {
     const token = ++generation;
+    if (!photoAllowed()) { setPhotoAvailability(false); return; }
     // Falhar fechado: a aba não é oferecida até que ambos os modelos e as
     // bibliotecas de inferência respondam pelo mesmo domínio ou cache PWA.
     const available = Boolean(await window.LivrinhoAvatarPhoto?.checkAvailability());
@@ -47,6 +50,11 @@
   }
 
   window.addEventListener('hashchange', selectTab);
+  window.addEventListener('livrinhos:parental-changed', refreshPhotoAvailability);
+  window.addEventListener('livrinhos:protagonist-changed', refreshPhotoAvailability);
+  window.addEventListener('storage', (event) => {
+    if (event.key === 'prateleira-magica:responsaveis:v1') refreshPhotoAvailability();
+  });
   window.addEventListener('online', refreshPhotoAvailability);
   navigator.serviceWorker?.addEventListener('controllerchange', refreshPhotoAvailability);
   window.addEventListener('livrinhos:avatar-photo-unavailable', () => {

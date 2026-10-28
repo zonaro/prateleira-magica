@@ -277,7 +277,6 @@
         '<video class="avatar-photo-video" playsinline muted autoplay hidden aria-label="Prévia da câmera"></video>' +
       '</div>' +
       '<div class="avatar-photo-buttons">' +
-        '<button type="button" data-action="camera">📷 Abrir a câmera</button>' +
         '<button type="button" data-action="capture" hidden>✨ Tirar minha foto</button>' +
         '<label class="avatar-photo-file-control" data-action="file">🖼️ Escolher uma foto' +
           '<input class="avatar-photo-input" type="file" accept="image/jpeg,image/png,image/webp" ' +
@@ -308,7 +307,6 @@
     // O upload fica dentro da área clicável para ativação nativa no celular.
     const video = find('video'), input = find('input.avatar-photo-input[type="file"]');
     const status = find('.avatar-photo-status');
-    const cameraButton = find('[data-action="camera"]');
     const captureButton = find('[data-action="capture"]');
     const chooseButton = find('[data-action="file"]');
     const cameraArea = find('.avatar-photo-camera-area');
@@ -324,7 +322,9 @@
     let activeFrame = null, cropSource = null, cropState = null;
     const pointers = new Map();
     let pinchDistance = null;
-    const isActive = () => !screen.hidden && location.hash === '#foto';
+    const isActive = () => !screen.hidden && location.hash === '#foto'
+      && window.LivrinhoParental?.photoAllowed?.() === true
+      && !window.LivrinhoParental?.locked?.();
 
     function wipe(canvas) {
       if (!canvas) return;
@@ -361,7 +361,6 @@
     }
     function setBusy(value) {
       busy = value;
-      cameraButton.disabled = value;
       captureButton.disabled = value;
       input.disabled = value;
       chooseButton.classList.toggle('disabled', value);
@@ -515,13 +514,13 @@
     cancelCropButton.addEventListener('click', () => {
       if (!busy) {
         releaseCrop();
-        status.textContent = 'Escolha outra foto para continuar. 📷';
+        startCamera();
       }
     });
     analyzeButton.addEventListener('click', analyzeCrop);
 
-    cameraButton.addEventListener('click', async () => {
-      if (busy || !isActive()) return;
+    async function startCamera() {
+      if (busy || stream || cropSource || !isActive()) return;
       if (!navigator.mediaDevices?.getUserMedia || !window.isSecureContext) {
         status.textContent = 'Para abrir a câmera, use HTTPS ou escolha uma foto.';
         return;
@@ -548,7 +547,12 @@
       } finally {
         if (token === runId) setBusy(false);
       }
-    });
+    }
+    // A autorização já ocorreu na aba dos pais. Uma nova entrada nesta aba
+    // abre a câmera diretamente, sem solicitar um segundo clique infantil.
+    window.addEventListener('livrinhos:avatar-photo-open', startCamera);
+    window.addEventListener('livrinhos:reading-time-expired', reset);
+    window.addEventListener('livrinhos:reading-time-restored', startCamera);
     captureButton.addEventListener('click', () => {
       if (busy || !isActive()) return;
       try { setCropSource(video, true); }
@@ -587,7 +591,10 @@
       if (document.hidden) {
         reset();
         if (isActive()) status.textContent = 'A câmera descansou enquanto você saiu da página. 💤';
-      }
+      } else if (isActive()) startCamera();
+    });
+    document.addEventListener('livrinhos:parental-changed', () => {
+      if (!window.LivrinhoParental?.photoAllowed?.()) reset();
     });
     window.addEventListener('pagehide', reset);
     return { close: reset };

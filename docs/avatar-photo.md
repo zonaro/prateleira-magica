@@ -3,15 +3,34 @@
 ## Arquitetura
 
 O projeto é estático e usa **HTML + JavaScript vanilla**, sem React, bundler
-ou backend. A opção **📷 Minha foto** aparece como a quarta aba de `perfil.html`, ao lado de
-**Meu perfil**, **Personagens prontos** e **Personalizar**. A aba inicia
-oculta e só aparece depois da confirmação de que os **sete recursos locais**
+ou backend. A opção **📷 Minha foto** é uma aba de `perfil.html` que inicia
+oculta e só aparece depois que um responsável a habilita **para a criança selecionada**
+e da confirmação de que os **sete recursos locais**
 (bundle JS, arquivos WASM e ambos os modelos) estão disponíveis no domínio
 do site ou no cache do PWA. Se faltar um deles, ela não aparece. Um link
 direto para `perfil.html#foto` retorna a `#personalizar` se os recursos não
 estiverem acessíveis. A checagem usa `HEAD` sem descarregar modelos grandes
 só para verificar a disponibilidade. A conexão/restauração do Service Worker
 permite reavaliar os recursos. A interação é uma tela própria, **sem pop-up**.
+
+### Autorização individual e câmera automática
+
+Em `perfil.html#pais`, selecione a criança e ative **Permitir “Minha Foto”**.
+O clique do adulto solicita ao navegador permissão para usar a câmera;
+quando concedida, o stream é interrompido imediatamente e a opção passa a
+valer apenas para aquele perfil no app. Se a permissão for negada, a opção
+permanece desativada. Essa autorização fica no armazenamento parental local,
+fora do backup SVG da criança.
+
+Ao entrar na aba autorizada, a câmera **abre automaticamente**, sem botão extra.
+Há botão **Tirar minha foto** e opção de escolher imagem da galeria. Ao sair
+da aba, trocar de criança, revogar a autorização ou esgotar o tempo diário,
+a câmera é desligada. Ao liberar mais tempo, a prévia pode reiniciar.
+
+**Limite do navegador:** a permissão física da câmera pertence à origem do
+site (`zonaro.github.io`), não a cada perfil infantil. O app acrescenta sua
+própria trava por criança. O navegador pode revogar a permissão ou solicitar
+nova confirmação; nesse caso, o responsável deve conferir as permissões do site.
 
 O texto apresentado à criança usa linguagem lúdica, solicita expressamente
 ajuda de um adulto e explica que a foto será descartada após a criação.
@@ -80,9 +99,10 @@ node tools/vendor-mediapipe.mjs
 python3 -m http.server 8000
 ```
 
-Abra `http://localhost:8000/perfil.html#foto` após o carregamento dos
-modelos. A câmera exige
-HTTPS ou localhost e permissão explícita. Abrir arquivos `file://` não serve.
+Abra `http://localhost:8000/perfil.html#pais` após o carregamento dos
+modelos, autorize a função para a criança e então visite **Minha Foto**.
+A câmera exige HTTPS ou localhost e permissão explícita. Abrir arquivos
+`file://` não serve.
 
 ### Testar
 

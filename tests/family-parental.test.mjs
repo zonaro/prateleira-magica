@@ -67,6 +67,14 @@ assert.equal(prefs.load().name, 'Você');
 assert.equal(prefs.load().pronunciation, 'Você');
 assert.equal(prefs.medalCount(prefs.load()), 0);
 assert.equal(parental.limitMinutes(secondId), 60);
+assert.equal(parental.photoAllowed(secondId), false, 'A função Minha Foto deve começar bloqueada');
+parental.setPhotoAllowed(originalId, true);
+assert.equal(parental.photoAllowed(originalId), true);
+assert.equal(parental.photoAllowed(secondId), false, 'Permissão de uma criança não libera outra');
+parental.setPhotoAllowed(secondId, true);
+assert.equal(parental.photoAllowed(secondId), true);
+parental.setPhotoAllowed(secondId, false);
+assert.equal(parental.photoAllowed(secondId), false, 'Desativar revoga a autorização desta criança');
 prefs.saveProfile(secondId, { name: 'Millie', pronunciation: 'Míli', gender: 'neutro', birthDate: '2020-02-29' });
 assert.equal(prefs.load().name, 'Millie');
 prefs.recordBookProgress('novo-livro', { completedExercises: [0], finished: true }, 1);
@@ -123,6 +131,7 @@ assert.equal(prefs.family().profiles.length, 1);
 assert.throws(() => prefs.removeProfile(secondId), /pelo menos um/);
 parental.forgetProfile(originalId);
 assert.equal(parental.limitMinutes(originalId), 60);
+assert.equal(parental.photoAllowed(originalId), false, 'Exclusão precisa remover a permissão fotográfica');
 
 const editor = read('assets/js/settings-ui.js');
 const parentsUi = read('assets/js/parental-ui.js');
@@ -130,7 +139,7 @@ assert(!editor.includes('id="childName"') && !editor.includes('id="birthDate"') 
 assert(editor.includes('renameDefault = draft.name === preferences.DEFAULTS.name'),
   'Preset só pode renomear quando o nome ainda for Você');
 for (const name of ['parentChildName', 'parentChildPronunciation', 'parentChildBirth',
-  'parentChildGender', 'parentChildMinutes', 'parentNewPassword', 'parentAccessPin']) {
+  'parentChildGender', 'parentChildMinutes', 'parentNewPassword', 'parentAccessPin', 'parentPhotoAllowed']) {
   assert(parentsUi.includes(name), `Campo dos pais ausente: ${name}`);
 }
 for (const file of ['index.html', 'prateleira.html', 'livro.html', 'perfil.html']) {
@@ -142,4 +151,5 @@ console.log('✓ Perfil antigo preservado; múltiplas crianças com avatares e m
 console.log('✓ Padrão Você; dados pessoais exclusivos da área dos pais e presets condicionais');
 console.log('✓ Limites independentes, contagem visível, pausa, bloqueio, reinício e renovação diária');
 console.log('✓ Temporizador somente na prateleira, leitura e personalização; landing e pais pausados');
+console.log('✓ Minha Foto começa oculta e só é liberada para o perfil autorizado pelos pais');
 console.log('✓ Senha com hash e salt, campos parentais protegidos e componentes offline em todas as telas');
