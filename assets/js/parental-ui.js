@@ -5,6 +5,7 @@
   if (!preferences || !parental) return;
   const $ = (selector, parent = document) => parent.querySelector(selector);
   const inParentSettings = () => location.pathname.endsWith('/perfil.html') && location.hash === '#pais';
+  const counting = () => parental.shouldCount(location.pathname, location.hash);
   let authorized = false;
   let renderParentSettings = () => {};
 
@@ -35,12 +36,13 @@
   document.body.append(overlay);
 
   const showMinutes = (ms) => `${Math.ceil(ms / 60_000)} min`;
+  const timeLabel = () => `${counting() ? '' : '⏸ '}${showMinutes(parental.remainingMs())}`;
   const profiles = () => preferences.family().profiles;
   function renderSelector() {
     const state = preferences.family();
     const current = state.profiles.find((entry) => entry.id === state.activeId);
     $('.family-active-name', toolbar).textContent = current?.profile.name || 'Você';
-    $('.family-time', toolbar).textContent = showMinutes(parental.remainingMs());
+    $('.family-time', toolbar).textContent = timeLabel();
     const options = $('.family-children', toolbar);
     const blockedOptions = $('.parental-profile-choices', overlay);
     options.replaceChildren();
@@ -62,7 +64,7 @@
     }
   }
   function showLock() {
-    const blocked = parental.locked() && !inParentSettings();
+    const blocked = parental.locked() && counting();
     if (overlay.hidden === blocked) {
       overlay.hidden = !blocked;
       document.body.classList.toggle('reading-time-expired', blocked);
@@ -106,6 +108,7 @@
     if (!inParentSettings()) authorized = false;
     parental.pause();
     renderParentSettings();
+    renderSelector();
     showLock();
   });
   document.addEventListener('visibilitychange', () => { if (document.hidden) parental.pause(); });
@@ -295,9 +298,9 @@
   renderParentSettings();
   showLock();
   window.setInterval(() => {
-    if (inParentSettings()) parental.pause();
+    if (!counting()) parental.pause();
     else parental.tick(Date.now(), !document.hidden && !parental.locked());
-    $('.family-time', toolbar).textContent = showMinutes(parental.remainingMs());
+    $('.family-time', toolbar).textContent = timeLabel();
     showLock();
   }, 1000);
 })();

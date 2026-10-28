@@ -31,6 +31,28 @@ for (const file of ['assets/js/avatar-parts.js', 'assets/js/pet-parts.js', 'asse
 const prefs = window.LivrinhoPreferences;
 const parental = window.LivrinhoParental;
 
+// Somente a prateleira, os livros e as telas de criação consomem tempo.
+for (const [page, hash] of [
+  ['/prateleira-magica/livro.html', ''],
+  ['/prateleira-magica/prateleira.html', ''],
+  ['/prateleira-magica/perfil.html', '#personalizar'],
+  ['/prateleira-magica/perfil.html', '#predefinidos'],
+  ['/prateleira-magica/perfil.html', '#foto']
+]) {
+  assert(parental.shouldCount(page, hash), `Deveria contar tempo: ${page}${hash}`);
+}
+for (const [page, hash] of [
+  ['/prateleira-magica/', ''],
+  ['/prateleira-magica/index.html', ''],
+  ['/prateleira-magica/perfil.html', ''],
+  ['/prateleira-magica/perfil.html', '#conquistas'],
+  ['/prateleira-magica/perfil.html', '#pais']
+]) {
+  assert(!parental.shouldCount(page, hash), `Deveria pausar: ${page}${hash}`);
+}
+assert(read('assets/js/parental-ui.js').includes('parental.locked() && counting()'),
+  'O bloqueio só deve cobrir as áreas que consomem tempo');
+
 // Migração do perfil único sem perder o nome, avatar ou medalhas.
 assert.equal(prefs.load().name, 'Ellie');
 assert.equal(prefs.load().skinColor, '#8bcfff');
@@ -119,4 +141,5 @@ assert(read('perfil.html').includes('id="tabPais"'));
 console.log('✓ Perfil antigo preservado; múltiplas crianças com avatares e medalhas isolados');
 console.log('✓ Padrão Você; dados pessoais exclusivos da área dos pais e presets condicionais');
 console.log('✓ Limites independentes, contagem visível, pausa, bloqueio, reinício e renovação diária');
+console.log('✓ Temporizador somente na prateleira, leitura e personalização; landing e pais pausados');
 console.log('✓ Senha com hash e salt, campos parentais protegidos e componentes offline em todas as telas');

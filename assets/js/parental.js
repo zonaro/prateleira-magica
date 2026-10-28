@@ -39,6 +39,13 @@
   function limitMinutes(id = preferences.family().activeId) {
     return policy().limits[id] || 60;
   }
+  // O tempo pertence à leitura e à criação do personagem, não às telas de
+  // apresentação, conquistas ou administração dos responsáveis.
+  function shouldCount(pathname, hash = '') {
+    const page = String(pathname || '').split('/').pop();
+    if (page === 'livro.html' || page === 'prateleira.html') return true;
+    return page === 'perfil.html' && ['#personalizar', '#predefinidos', '#foto'].includes(hash);
+  }
   function setLimit(id, minutes) {
     if (!preferences.family().profiles.some((entry) => entry.id === id)) throw Error('Perfil inválido.');
     if (Number(minutes) < 5 || Number(minutes) > 480 || !Number.isInteger(Number(minutes))) {
@@ -137,6 +144,6 @@
     const lease = read(LEASE_KEY, null);
     if (lease?.owner === tabId) write(LEASE_KEY, { owner: tabId, until: 0 });
   }
-  window.LivrinhoParental = { policy, setLimit, limitMinutes, hasPin, setPin, verifyPin,
+  window.LivrinhoParental = { policy, setLimit, limitMinutes, shouldCount, hasPin, setPin, verifyPin,
     usedMs, remainingMs, locked, resetTime, forgetProfile, tick, pause, dateKey };
 })();
