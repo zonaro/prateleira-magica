@@ -78,7 +78,7 @@ function fakeElement() {
 }
 function createTabs({ available, hash = '' }) {
   const ids = ['tabConquistas', 'profileOverview', 'tabPresets', 'profilePresets',
-    'tabPersonalizar', 'profileEditor', 'tabFoto', 'profilePhoto'];
+    'tabPersonalizar', 'profileEditor', 'tabFoto', 'profilePhoto', 'tabPais', 'profileParents'];
   const elements = Object.fromEntries(ids.map((id) => [id, fakeElement()]));
   elements.tabFoto.hidden = true;
   elements.profilePhoto.hidden = true;

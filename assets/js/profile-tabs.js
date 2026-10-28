@@ -4,7 +4,8 @@
     { name: 'conquistas', tab: document.getElementById('tabConquistas'), panel: document.getElementById('profileOverview') },
     { name: 'predefinidos', tab: document.getElementById('tabPresets'), panel: document.getElementById('profilePresets') },
     { name: 'personalizar', tab: document.getElementById('tabPersonalizar'), panel: document.getElementById('profileEditor') },
-    { name: 'foto', tab: document.getElementById('tabFoto'), panel: document.getElementById('profilePhoto') }
+    { name: 'foto', tab: document.getElementById('tabFoto'), panel: document.getElementById('profilePhoto') },
+    { name: 'pais', tab: document.getElementById('tabPais'), panel: document.getElementById('profileParents') }
   ];
   if (tabs.some(({ tab, panel }) => !tab || !panel)) return;
   const photoTab = document.getElementById('tabFoto');
@@ -15,7 +16,8 @@
     const hash = location.hash;
     const selected = hash === '#foto' ? (photoReady ? 'foto' : 'personalizar')
       : hash === '#personalizar' ? 'personalizar'
-      : hash === '#predefinidos' ? 'predefinidos' : 'conquistas';
+      : hash === '#predefinidos' ? 'predefinidos'
+      : hash === '#pais' ? 'pais' : 'conquistas';
     for (const { name, tab, panel } of tabs) {
       const active = name === selected;
       tab.classList.toggle('active', active);

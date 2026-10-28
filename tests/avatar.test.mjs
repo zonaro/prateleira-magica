@@ -481,9 +481,12 @@ const ui = fs.readFileSync(path.join(root, 'assets/js/settings-ui.js'), 'utf8');
 for (const marker of ['outfitStyles', 'hairColorOptions', 'outfitColorOptions', 'bottomStyles',
   'bottomColorOptions', 'shoeColorOptions', 'customHairColor', 'customOutfitColor',
   'footwearStyles', 'sockPatterns', 'accessoryColorOptions', 'customAccessoryColor',
-  'toyStyles', 'toyColorOptions', 'customToyColor',
-  'downloadProfile', 'importProfile', 'profileFile', 'parseProfileSVG']) {
+  'toyStyles', 'toyColorOptions', 'customToyColor']) {
   assert(ui.includes(marker), `Editor sem o controle ${marker}`);
+}
+const parentsUi = fs.readFileSync(path.join(root, 'assets/js/parental-ui.js'), 'utf8');
+for (const marker of ['downloadProfile', 'importProfile', 'profileFile', 'parseProfileSVG']) {
+  assert(parentsUi.includes(marker), `Configuração dos pais sem ${marker}`);
 }
 const editorCss = fs.readFileSync(path.join(root, 'assets/css/app.css'), 'utf8');
 assert(editorCss.includes('.avatar-style.locked') && editorCss.includes('grayscale(1)'),

@@ -92,6 +92,8 @@ assert(await cache.match(`${scope}assets/vendor/NameToColor.js`), 'NameToColor o
 assert(await cache.match(`${scope}assets/vendor/NameToColor.ptBR.js`), 'Traduções pt-BR não foram salvas offline');
 assert(await cache.match(`${scope}assets/vendor/page-flip.browser.js`), 'Motor da virada de páginas deve funcionar offline');
 assert(await cache.match(`${scope}assets/js/profile-tabs.js`), 'Abas do perfil não funcionam offline');
+assert(await cache.match(`${scope}assets/js/parental.js`), 'Limites por criança precisam funcionar offline');
+assert(await cache.match(`${scope}assets/js/parental-ui.js`), 'Controles parentais precisam funcionar offline');
 const petCatalog = JSON.parse(fs.readFileSync(path.join(root, 'assets/pets/catalog.json'), 'utf8'));
 for (const pet of petCatalog.pets) {
   assert(await cache.match(`${scope}${pet.file}`), `Pet original não foi salvo offline: ${pet.id}`);

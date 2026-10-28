@@ -78,12 +78,14 @@ assert(ui.includes('draft = preferences.clean(lastSaved)'),
   'Rascunho deve ser cópia independente; caso contrário o próximo clique não será salvo');
 assert(ui.includes('undoHistory.push(lastSaved)') && ui.includes('undoHistory.pop()'),
   'O editor deve permitir desfazer escolhas feitas nesta visita');
-assert(ui.includes('fillDialog(preferences.DEFAULTS)') && ui.includes('window.confirm(warning)'),
-  'Recomeçar precisa apagar inclusive as conquistas somente após confirmação');
+const parentalUi = read('assets/js/parental-ui.js');
+assert(!ui.includes('id="clearProfile"') && parentalUi.includes('preferences.removeProfile(selectedId)')
+  && parentalUi.includes('window.confirm('),
+  'Excluir o perfil e as conquistas deve ficar somente nas configurações dos pais com confirmação');
 assert(!ui.includes('type="submit" class="settings-save"'), 'Não deve existir botão de salvar');
 assert(!ui.includes('O NameToColor') && !ui.includes('imagem SVG'),
   'Termos técnicos não devem aparecer nas instruções para crianças');
-assert(ui.includes('↓ Exportar perfil') && ui.includes('↑ Importar perfil'));
+assert(parentalUi.includes('↓ Exportar perfil') && parentalUi.includes('↑ Importar perfil'));
 const reader = read('assets/js/reader.js');
 assert(reader.includes('LivrinhoColorExplorer.create'), 'Página interativa não é renderizada no leitor');
 const book = JSON.parse(read('books/o-reino-das-cores.json'));
@@ -94,5 +96,5 @@ assert.equal(book.medal, '🎨 Medalha das Cores');
 console.log('✓ NameToColor + pacote pt-BR integrados offline: palavras, cores e nomes');
 console.log('✓ 10 moods, harmonias e tema global reversível');
 console.log('✓ Oito color pickers com palavra livre, nome, ouvir, atualização direta, desfazer e paleta');
-console.log('✓ Personalização com gravação automática, desfazer e limpeza confirmada do perfil');
+console.log('✓ Personalização com gravação automática e desfazer; exclusão de perfis reservada aos pais');
 console.log('✓ Livro interativo com sete cores únicas no desafio e Medalha das Cores');

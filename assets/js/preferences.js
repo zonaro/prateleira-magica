@@ -4,9 +4,10 @@
   const avatar = window.LivrinhoAvatar;
   if (!avatar) throw Error('O módulo de avatares precisa ser carregado antes das preferências.');
   const STORAGE_KEY = 'prateleira-de-livrinhos:protagonista:v1';
+  const FAMILY_KEY = 'prateleira-magica:familia:v1';
   const DEFAULTS = Object.freeze({
-    name: 'Ellie',
-    pronunciation: 'Éli',
+    name: 'Você',
+    pronunciation: 'Você',
     birthDate: '',
     gender: 'feminino',
     petId: null,
@@ -42,6 +43,7 @@
     neutro: { pronome: 'elu', possessivo: 'delu' }
   };
   let memory = { ...DEFAULTS };
+  let memoryFamily = null;
   const svgSources = new Map();
 
   function validBirthDate(value) {
@@ -155,19 +157,82 @@
     return result;
   }
 
-  function load() {
+  function normalizeFamily(value) {
+    const records = Array.isArray(value?.profiles) ? value.profiles : [];
+    const profiles = records.slice(0, 30).filter((item) => item && typeof item.id === 'string'
+      && /^[a-z0-9-]{1,64}$/.test(item.id) && item.profile && typeof item.profile === 'object')
+      .map(({ id, profile }) => ({ id, profile: clean(profile) }));
+    if (!profiles.length) profiles.push({ id: 'child-1', profile: clean(DEFAULTS) });
+    const activeId = profiles.some((item) => item.id === value?.activeId) ? value.activeId : profiles[0].id;
+    return { version: 1, profiles, activeId };
+  }
+
+  function family() {
     try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) memory = clean(JSON.parse(saved));
+      const saved = localStorage.getItem(FAMILY_KEY);
+      if (saved) return memoryFamily = normalizeFamily(JSON.parse(saved));
+      const old = localStorage.getItem(STORAGE_KEY);
+      if (old) return memoryFamily = normalizeFamily({ profiles: [{ id: 'child-1', profile: JSON.parse(old) }], activeId: 'child-1' });
     } catch { /* private browsing can disable storage */ }
+    return memoryFamily = normalizeFamily(memoryFamily || { profiles: [{ id: 'child-1', profile: memory }] });
+  }
+
+  function persistFamily(state, event = 'livrinhos:protagonist-changed') {
+    memoryFamily = normalizeFamily(state);
+    memory = clean(memoryFamily.profiles.find((item) => item.id === memoryFamily.activeId).profile);
+    try { localStorage.setItem(FAMILY_KEY, JSON.stringify(memoryFamily)); } catch { /* memória temporária */ }
+    if (event) document.dispatchEvent(new CustomEvent(event, { detail: clean(memory) }));
     return clean(memory);
   }
 
+  function load() {
+    const state = family();
+    return clean(state.profiles.find((item) => item.id === state.activeId).profile);
+  }
+
   function save(values) {
-    memory = clean(values);
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(memory)); } catch { /* keep an in-memory copy */ }
-    document.dispatchEvent(new CustomEvent('livrinhos:protagonist-changed', { detail: clean(memory) }));
-    return clean(memory);
+    const state = family();
+    state.profiles.find((item) => item.id === state.activeId).profile = clean(values);
+    return persistFamily(state);
+  }
+
+  function selectProfile(id) {
+    const state = family();
+    if (!state.profiles.some((entry) => entry.id === id)) return false;
+    state.activeId = id;
+    persistFamily(state);
+    return true;
+  }
+
+  function addProfile() {
+    const state = family();
+    if (state.profiles.length >= 30) throw Error('Limite de 30 perfis neste aparelho.');
+    let id;
+    do { id = `child-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`; }
+    while (state.profiles.some((entry) => entry.id === id));
+    state.profiles.push({ id, profile: clean(DEFAULTS) });
+    state.activeId = id;
+    persistFamily(state);
+    return id;
+  }
+
+  function removeProfile(id) {
+    const state = family();
+    if (state.profiles.length <= 1) throw Error('Mantenha pelo menos um perfil de criança.');
+    if (!state.profiles.some((entry) => entry.id === id)) return false;
+    state.profiles = state.profiles.filter((entry) => entry.id !== id);
+    if (state.activeId === id) state.activeId = state.profiles[0].id;
+    persistFamily(state);
+    return true;
+  }
+
+  function saveProfile(id, changes) {
+    const state = family();
+    const entry = state.profiles.find((item) => item.id === id);
+    if (!entry) throw Error('Perfil de criança não encontrado.');
+    entry.profile = clean({ ...entry.profile, ...changes });
+    persistFamily(state);
+    return clean(entry.profile);
   }
 
   function bookProgress(id) {
@@ -190,8 +255,9 @@
     }
     const state = load();
     state.achievements.books[id] = next;
-    memory = clean(state);
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(memory)); } catch { /* segue em memória */ }
+    const familyState = family();
+    familyState.profiles.find((item) => item.id === familyState.activeId).profile = clean(state);
+    persistFamily(familyState, null);
     document.dispatchEvent(new CustomEvent('livrinhos:progress-changed', { detail: { id, progress: next } }));
     return next;
   }
@@ -202,8 +268,9 @@
     const state = load();
     if (state.achievements.pageReturn) return false;
     state.achievements.pageReturn = true;
-    memory = clean(state);
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(memory)); } catch { /* apenas memória */ }
+    const familyState = family();
+    familyState.profiles.find((item) => item.id === familyState.activeId).profile = clean(state);
+    persistFamily(familyState, null);
     document.dispatchEvent(new CustomEvent('livrinhos:progress-changed',
       { detail: { achievement: 'pageReturn' } }));
     return true;
@@ -296,6 +363,7 @@
   }
 
   window.LivrinhoPreferences = { DEFAULTS, styles, outfits, bottoms, pets, genders, load, save, clean,
+    family, selectProfile, addProfile, removeProfile, saveProfile,
     ageOnDate, medalCount, validBirthDate,
     bookProgress, recordBookProgress, unlockYoYo, exportProfileSVG, parseProfileSVG,
     personalize, avatarSymbol, avatarSVG, personalizeIllustration };

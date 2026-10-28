@@ -86,11 +86,11 @@ controller.updateListenButton();
 assert.equal(buttons['.listen-text'].textContent, 'Pausar');
 voice.stop();
 
-const settings = fs.readFileSync(path.join(root, 'assets/js/settings-ui.js'), 'utf8');
+const settings = fs.readFileSync(path.join(root, 'assets/js/parental-ui.js'), 'utf8');
 const profile = fs.readFileSync(path.join(root, 'perfil.html'), 'utf8');
-assert(settings.includes('id="hearPronunciation"') && settings.includes('pronunciationInput.value.trim()'),
-  'Editor precisa testar o conteúdo atual do campo de pronúncia');
-assert(settings.includes('narrator.play(value'), 'O editor deve usar o narrador compartilhado');
+assert(settings.includes('id="parentHearName"') && settings.includes("$('#parentChildPronunciation').value.trim()"),
+  'Área dos pais precisa testar o conteúdo atual do campo de pronúncia');
+assert(settings.includes('LivrinhoSpeech?.play('), 'Área dos pais deve usar o narrador compartilhado');
 assert(profile.includes('assets/js/speech.js') && fs.readFileSync(path.join(root, 'livro.html'), 'utf8').includes('assets/js/speech.js'));
 console.log('✓ Narração pausa e continua do último limite de palavra, ignorando a pausa quebrada do navegador');
-console.log('✓ Botão do leitor alterna Ouvir/Pausar/Continuar e editor testa a pronúncia digitada');
+console.log('✓ Botão do leitor alterna Ouvir/Pausar/Continuar e responsáveis testam a pronúncia digitada');

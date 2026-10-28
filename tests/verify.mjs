@@ -19,6 +19,7 @@ const required = [
   'assets/css/app.css', 'assets/images/pix-qrcode.png', 'assets/js/library.js', 'assets/js/reader.js', 'assets/js/avatar-parts.js', 'assets/js/avatar-presets.js', 'assets/js/avatar.js',
   'assets/data/avatar-presets.json',
   'assets/js/preferences.js', 'assets/js/avatar-photo-colors.js', 'assets/js/avatar-photo.js', 'assets/js/settings-ui.js', 'assets/js/profile.js', 'assets/js/page-turn.js',
+  'assets/js/parental.js', 'assets/js/parental-ui.js',
   'assets/js/colors.js', 'assets/js/color-explorer.js', 'assets/js/music-keyboard.js', 'assets/vendor/NameToColor.js', 'assets/vendor/NameToColor.ptBR.js',
   'assets/js/pet-parts.js', 'assets/pets/catalog.json',
   'tools/vendor-mediapipe.mjs', 'tools/mediapipe-dependencies.json',
@@ -27,6 +28,7 @@ const required = [
 required.forEach(reference);
 
 for (const scriptFile of ['assets/js/avatar.js', 'assets/js/library.js', 'assets/js/reader.js', 'assets/js/preferences.js',
+  'assets/js/parental.js', 'assets/js/parental-ui.js',
   'assets/js/settings-ui.js', 'assets/js/avatar-photo-colors.js', 'assets/js/avatar-photo.js', 'assets/js/profile.js', 'assets/js/page-turn.js', 'assets/js/colors.js',
   'assets/js/color-explorer.js', 'assets/js/music-keyboard.js', 'assets/js/avatar-presets.js', 'assets/js/pet-parts.js', 'assets/js/pwa.js', 'sw.js']) {
   new Script(read(scriptFile), { filename: scriptFile });

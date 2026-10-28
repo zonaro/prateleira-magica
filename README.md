@@ -28,7 +28,7 @@ Abra `http://localhost:8000/`. Por segurança do navegador, abrir o HTML diretam
 index.html                         Prateleira / catálogo
 livro.html                         Leitor de livros
 personagem.html                    Redirecionamento legado para a aba Personalizar
-perfil.html                        Abas Meu perfil (medalhas) e Personalizar (avatar)
+perfil.html                        Perfil, avatar e Configurações dos pais
 books/index.json                   Manifesto dos livros disponíveis
 books/<slug>.json                  História completa e exercícios de cada livro
 assets/css/app.css                 Estilos da biblioteca e do leitor
@@ -46,8 +46,10 @@ assets/js/avatar-parts.js          Peças vetoriais extraídas dos SVGs originai
 assets/js/avatar-presets.js        Arte integral dos 73 personagens prontos (gerada)
 assets/js/pet-parts.js             Vetores das 20 pelúcias originais (gerados)
 assets/js/avatar.js                Compositor das peças originais + pernas customizáveis
-assets/js/preferences.js           Nome, nascimento, pronomes, pelúcia, progresso e conquistas
-assets/js/settings-ui.js           Editor de personagem, pelúcias e backup SVG
+assets/js/preferences.js           Perfis independentes, identidade, pelúcia, progresso e conquistas
+assets/js/parental.js              Senha com hash, tempo diário e limites individuais
+assets/js/parental-ui.js           Seletor de criança, bloqueio e configurações dos pais
+assets/js/settings-ui.js           Editor infantil só de aparência e pelúcias
 assets/js/profile.js               Tela de perfil, livros lidos e medalhas
 assets/js/profile-tabs.js          Navegação acessível entre abas do perfil
 assets/js/pwa.js                   Instalação PWA e status de conexão
@@ -61,6 +63,7 @@ manifest.webmanifest               Manifesto instalável
 sw.js                              Cache offline
 tests/verify.mjs                   Testes de integridade
 tests/preferences.test.mjs         Testes da personalização
+tests/family-parental.test.mjs     Testes de perfis múltiplos, tempo e senha
 tests/offline.test.mjs             Teste completo do cache offline
 tests/colors.test.mjs              Gerador de cores, harmonias, moods e novo livro
 tests/progression.test.mjs         Desafio final e trava de páginas
@@ -81,6 +84,14 @@ docs/avatar-components.md         Proveniência, extração e compatibilidade
 ```
 
 Nenhum framework, empacotador, servidor PHP ou banco de dados é necessário.
+
+## Crianças e configurações dos pais
+
+O nome inicial é **Você**. Na aba **Configurações dos pais**, os responsáveis podem adicionar até 30 perfis de crianças, escolher o perfil ativo e definir, para cada uma, nome, pronúncia (com botão para ouvir), data de nascimento, gênero e limite diário de uso. Por padrão, cada criança tem **60 minutos por dia**; o limite pode ser ajustado de 5 a 480 minutos. Avatar, medalhas e progresso de leitura ficam separados por criança.
+
+O tempo é contado enquanto o aplicativo está visível, em todas as telas. Ao esgotar o limite, a leitura é bloqueada até o **dia seguinte**, ou até um responsável inserir a senha e reiniciar o contador. A senha também protege o acesso às configurações parentais; é preciso criá-la no primeiro uso, e é recomendável anotá-la em local seguro. Se ainda não houver senha, os pais podem entrar na área para configurá-la. A troca de criança é feita no seletor flutuante. Usar o mesmo aplicativo em outro dispositivo não sincroniza perfis ou tempo automaticamente.
+
+Os dados antigos do perfil único são migrados automaticamente, sem apagar conquistas. O backup SVG de cada criança, inclusive exportação e importação, está na área dos pais; **não inclui a senha ou o limite de tempo**. Os dados e o hash com sal da senha são armazenados localmente (`localStorage`), sem envio a servidores. Como o aplicativo é inteiramente client-side, esses controles ajudam no uso cotidiano, mas **não são uma barreira inviolável** contra alterações no armazenamento do navegador ou no relógio do dispositivo.
 
 ## Adicionar outro livro
 

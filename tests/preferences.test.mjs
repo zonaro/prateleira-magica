@@ -26,7 +26,7 @@ vm.runInNewContext(avatarSource, context, { filename: 'avatar.js' });
 vm.runInNewContext(source, context, { filename: 'preferences.js' });
 const prefs = window.LivrinhoPreferences;
 assert(prefs);
-assert.equal(prefs.load().name, 'Ellie');
+assert.equal(prefs.load().name, 'Você');
 
 for (const [gender, pronome, possessivo] of [
   ['masculino', 'ele', 'dele'],
@@ -78,9 +78,15 @@ assert(editor.includes('id="settingsApp"') && editor.includes('settings-ui.js'),
 assert(editor.includes('pet-parts.js'), 'Pet precisa ser renderizado no editor');
 const editorUi = fs.readFileSync(path.join(root, 'assets/js/settings-ui.js'), 'utf8');
 assert(editorUi.includes('settings-layout') && editorUi.includes('settings-preview-column'));
-for (const marker of ['birthDate', 'petStyles', 'petUnlockStatus', 'petId']) {
+for (const marker of ['petStyles', 'petUnlockStatus', 'petId']) {
   assert(editorUi.includes(marker), `Editor sem ${marker}`);
 }
+for (const marker of ['parentChildBirth', 'parentChildGender', 'parentChildPronunciation', 'parentChildName']) {
+  assert(fs.readFileSync(path.join(root, 'assets/js/parental-ui.js'), 'utf8').includes(marker),
+    `Configuração dos pais sem ${marker}`);
+}
+assert(!editorUi.includes('id="childName"') && !editorUi.includes('id="childPronunciation"'),
+  'Nome e pronúncia não devem aparecer no editor infantil');
 assert(!editorUi.includes('showModal('), 'O editor ainda abre um popup');
 assert(fs.readFileSync(path.join(root, 'index.html'), 'utf8').includes('href="./perfil.html#personalizar"'));
 assert(fs.readFileSync(path.join(root, 'personagem.html'), 'utf8').includes('perfil.html#personalizar'));

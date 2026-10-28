@@ -1141,6 +1141,65 @@ html[data-color-theme] .profile-tabs{border-color:var(--outline);background:var(
 .reader-shell .book.reader-simple > .flip-page[hidden] { display:none!important; }
 .reader-shell .book.reader-simple.reader-portrait > .flip-page { flex:1 1 100%; }
 .reader-shell .book.reader-simple > .flip-page .read-panel { overflow-y:auto; }
+
+/* Perfis infantis e controle de tempo (funcionam também offline). */
+.family-switcher { position:fixed;right:14px;bottom:16px;z-index:90;
+  color:#50366b;font-size:14px;max-width:calc(100vw - 24px) }
+.reader-screen .family-switcher { bottom:100px }
+.family-toggle { border:2px solid #b89fdd;border-radius:18px;background:#fff9ff;
+  padding:10px 15px;box-shadow:0 5px 18px #4b325e30;font:inherit;font-weight:900;color:inherit;cursor:pointer }
+.family-menu { position:absolute;right:0;bottom:calc(100% + 8px);width:min(290px,calc(100vw - 24px));
+  border:2px solid #dbc9ec;border-radius:18px;padding:14px;background:#fffafc;box-shadow:0 8px 24px #49305245 }
+.family-menu strong { display:block;margin-bottom:9px }
+.family-children,.parental-profile-choices { display:grid;gap:6px;margin-bottom:10px }
+.family-children button,.parental-profile-choices button { font:inherit;text-align:left;background:#f0e8ff;
+  color:#543d72;border:1px solid #d0b9ec;border-radius:11px;padding:10px;cursor:pointer }
+.family-children button:disabled,.parental-profile-choices button:disabled { opacity:.55;cursor:default }
+.family-menu a,.parental-block-card a { color:#6548a4;font-weight:900 }
+.parental-blocker { position:fixed;inset:0;z-index:9999;display:grid;place-items:center;
+  background:#29213ce8;backdrop-filter:blur(8px);padding:14px;overflow:auto }
+.parental-blocker[hidden],.family-menu[hidden],.parent-gate[hidden],#parentControls[hidden],
+  #parentPinWarning[hidden],.parental-unlock-form[hidden] { display:none!important }
+.parental-block-card { width:min(480px,100%);padding:clamp(22px,5vw,38px);border-radius:28px;
+  background:#fffcf3;box-shadow:0 12px 50px #140d2670;text-align:center;color:#42315d }
+.parental-block-card h2 { margin:5px 0;font-size:clamp(26px,5vw,37px) }
+.parental-block-card p { line-height:1.5 }
+.parental-block-icon { font-size:60px }
+.parental-unlock-form { display:flex;flex-wrap:wrap;gap:8px;margin:13px 0 }
+.parental-unlock-form input { flex:1 1 150px;min-width:0 }
+.parental-block-card input,.parent-settings-card input,.parent-settings-card select {
+  border:2px solid #d9c6ea;border-radius:11px;padding:11px 12px;background:#fff;color:#46395a;font:inherit;max-width:100%;min-height:42px }
+.parental-block-card button,.parent-settings-card button { border:0;border-radius:12px;padding:12px 16px;
+  color:#fff;background:#8360bc;font:inherit;font-weight:850;cursor:pointer }
+.parental-block-card button:disabled,.parent-settings-card button:disabled { opacity:.55;cursor:default }
+.parental-locked-profiles { text-align:left;margin:19px 0 12px }
+.parent-settings-card { width:min(850px,calc(100% - 20px));margin:14px auto 90px;
+  background:#fffaf9;border:2px solid #ecdfed;border-radius:24px;padding:clamp(20px,4vw,38px);
+  box-shadow:0 8px 24px #44315015;color:#403350 }
+.parent-settings-card h1 { font-size:clamp(25px,4vw,34px);margin:8px 0 }
+.parent-settings-card h2 { font-size:22px }
+.parent-settings-card label { display:block;font-weight:850;margin-top:12px }
+.parent-settings-card input:not([type="file"]),.parent-settings-card select { width:100% }
+.parent-settings-card .pronunciation-input-row { display:flex;gap:9px }
+.parent-settings-card .pronunciation-input-row input { flex:1;min-width:0 }
+.parent-settings-card .pronunciation-input-row button { flex:none }
+.parent-children-header { display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap }
+.parent-children-list { display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 20px }
+.parent-children-list button { background:#efe6f6;color:#654894 }
+.parent-children-list button.active { background:#7150a4;color:#fff }
+.parent-child-form,.parent-password,.parent-settings-card .profile-backup { background:#fff;border:1px solid #e7d9e9;
+  border-radius:17px;padding:19px;margin:18px 0 }
+.parent-form-buttons { display:flex;flex-wrap:wrap;gap:10px;margin-top:18px }
+.parent-settings-card .settings-reset { background:#a34367 }
+.parent-warning { background:#fff0d2;border:1px solid #ecc382;padding:13px;border-radius:11px }
+.parent-settings-card [role="status"] { min-height:19px;color:#69508f;font-weight:750 }
+@media(max-width:600px) {
+  .family-switcher { right:8px;bottom:8px;font-size:12px }
+  .family-toggle { padding:9px 10px }
+  .reader-screen .family-switcher { bottom:94px }
+  .parent-settings-card { margin-top:0;width:calc(100% - 12px);padding:14px }
+  .parent-child-form,.parent-password,.parent-settings-card .profile-backup { padding:13px }
+}
 @media(max-width:520px) {
   .reader-motion-settings { font-size:13px; padding:6px 4px 12px; }
   .reader-motion-settings select { flex:1 1 175px; }
